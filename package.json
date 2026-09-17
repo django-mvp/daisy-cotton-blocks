@@ -11,7 +11,7 @@
   },
   "$comment": "`build` and `test` exist under those exact names so the verify gate's node adapter finds them — it treats a step as present only when package.json declares a script of that name. `test` is the same check the Stylesheet workflow runs, so a stale committed stylesheet fails locally before a pull request is opened rather than in CI after.",
   "devDependencies": {
-    "@tailwindcss/cli": "4.3.2",
-    "tailwindcss": "4.3.2"
+    "@tailwindcss/cli": "4.3.3",
+    "tailwindcss": "4.3.3"
   }
 }
