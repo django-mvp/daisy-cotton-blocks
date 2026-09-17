@@ -1,0 +1,14 @@
+{
+  "name": "django-mvp-bits",
+  "private": true,
+  "description": "Stylesheet build for django-mvp-bits. The built CSS is committed, so installing the Python package needs none of this.",
+  "scripts": {
+    "build:css": "tailwindcss -i assets/mvp-bits.css -o mvp_bits/static/css/mvp-bits.css",
+    "build:css:prod": "tailwindcss -i assets/mvp-bits.css -o mvp_bits/static/css/mvp-bits.css --minify",
+    "watch:css": "tailwindcss -i assets/mvp-bits.css -o mvp_bits/static/css/mvp-bits.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.2",
+    "tailwindcss": "4.3.2"
+  }
+}

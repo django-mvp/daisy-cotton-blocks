@@ -1,0 +1,55 @@
+name: Stylesheet
+
+# The stylesheet is built from assets/mvp-bits.css and COMMITTED, so that
+# installing the package needs no Node toolchain. This job is what stops the
+# committed file drifting from its source: it rebuilds and fails if the result
+# differs from what is in the tree.
+#
+# The other half of the contract — that this stylesheet shares no selector with
+# django-mvp's — is tested in tests/test_stylesheet.py instead, because it needs
+# only the two built files and therefore runs locally and on every Python
+# version the test matrix covers.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'assets/**'
+      - 'mvp_bits/static/css/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/stylesheet.yml'
+  # No paths filter on pull_request: this check is ruleset-required, and a
+  # path-filtered required check never reports on out-of-scope PRs, blocking merge.
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  build-is-current:
+    name: Built stylesheet matches its source
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install toolchain
+        run: npm ci
+
+      - name: Rebuild the stylesheet
+        run: npm run build:css
+
+      - name: Fail if the committed stylesheet is stale
+        run: |
+          if ! git diff --exit-code -- mvp_bits/static/css/mvp-bits.css; then
+            echo "::error::mvp_bits/static/css/mvp-bits.css is out of date." \
+                 "Run 'npm run build:css' and commit the result."
+            exit 1
+          fi
