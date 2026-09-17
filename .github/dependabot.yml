@@ -47,6 +47,29 @@ updates:
         patterns:
           - "*"
 
+  # Node toolchain. This repo builds a stylesheet with the Tailwind CLI, so npm
+  # is a real dependency surface here even though no other family package has
+  # one. Tailwind's releases move the utility vocabulary, which is exactly what
+  # tests/test_stylesheet.py measures, so an upgrade wants to arrive as a single
+  # reviewable PR whose checks say whether the contract still holds.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "javascript"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
+
   # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
