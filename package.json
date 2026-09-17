@@ -5,8 +5,11 @@
   "scripts": {
     "build:css": "tailwindcss -i assets/mvp-bits.css -o mvp_bits/static/css/mvp-bits.css",
     "build:css:prod": "tailwindcss -i assets/mvp-bits.css -o mvp_bits/static/css/mvp-bits.css --minify",
-    "watch:css": "tailwindcss -i assets/mvp-bits.css -o mvp_bits/static/css/mvp-bits.css --watch"
+    "watch:css": "tailwindcss -i assets/mvp-bits.css -o mvp_bits/static/css/mvp-bits.css --watch",
+    "build": "npm run build:css",
+    "test": "npm run build:css && git diff --exit-code -- mvp_bits/static/css/mvp-bits.css"
   },
+  "$comment": "`build` and `test` exist under those exact names so the verify gate's node adapter finds them — it treats a step as present only when package.json declares a script of that name. `test` is the same check the Stylesheet workflow runs, so a stale committed stylesheet fails locally before a pull request is opened rather than in CI after.",
   "devDependencies": {
     "@tailwindcss/cli": "4.3.3",
     "tailwindcss": "4.3.3"
