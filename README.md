@@ -60,8 +60,11 @@ Components are then available in templates under the `mvp-bits` namespace:
 - **Not a CSS framework.** No daisyUI plugin, no theme layer, no preflight. Those come from django-mvp.
 - **Not a replacement for django-mvp's components.** django-mvp owns the application chrome. This package owns the marketing surface.
 - **Not a fixed catalogue.** The set of blocks grows as new ones are designed. There is no taxonomy to fill in.
+- **Not page templates.** Blocks only. You pick the ones you want and assemble the page yourself. There is no one-tag landing page.
 
 **Tie-breaks.** When two of these pull against each other: additive-only beats convenience, theme-driven beats hard-coded, and a block that composes existing daisyUI markup beats one that invents its own.
+
+The directions the package works toward are in [GOALS.md](https://github.com/django-mvp/django-mvp-bits/blob/main/GOALS.md).
 
 ## Building the stylesheet
 
