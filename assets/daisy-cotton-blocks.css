@@ -43,8 +43,13 @@
  * daisyUI classes the host is expected to provide.
  */
 @import "tailwindcss/theme.css" theme(reference);
-@import "tailwindcss/utilities.css" layer(utilities);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
 
+/* `source(none)` turns off Tailwind's automatic detection, which would otherwise
+ * walk the whole repository and pull class tokens out of the example project and
+ * the test suite. Neither ships to anyone, and utilities emitted for the demo's
+ * markup would be dead weight in every install. The one scan root is this
+ * package's own templates. */
 @source "../daisy_cotton_blocks/templates";
 
 /* daisyUI's semantic palette, declared so the generator knows these colour
