@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     # Development only, and a dev dependency for that reason: the gallery
     # serves component source code, so urls.py mounts it under DEBUG alone.
     "django_cotton_gallery",
+    # Reloads the browser on a change to a template, a stylesheet or Python.
+    # It comes from the mvp-shared dev bundle rather than a pin of its own, and
+    # its middleware is inert unless DEBUG is on.
+    "django_browser_reload",
     "easy_icons",
     "flex_menu",
     "mvp",
@@ -59,6 +63,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # Last, because it rewrites the response body to insert its script tag and
+    # anything that encodes or compresses the body has to run after it.
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = "example.urls"

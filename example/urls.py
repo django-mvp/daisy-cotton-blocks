@@ -6,6 +6,8 @@ from example.views import GroupView, HomeView
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
     path("components/<slug:slug>/", GroupView.as_view(), name="group"),
+    # The endpoint the browser holds open to hear about a reload.
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 # The component gallery, under DEBUG only. It serves the source of every

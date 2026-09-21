@@ -26,6 +26,12 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     "flex_menu",
     "django_cotton",
+    # The suite runs against the demo's URLconf, which includes this app's
+    # routes, and its static files are resolved through the staticfiles
+    # finders. The gallery is deliberately NOT here: its routes are behind
+    # DEBUG, nothing under tests/ exercises them, and its app registry hook
+    # prints a mounted-and-serving banner into every test run.
+    "django_browser_reload",
     "example",
     "daisy_cotton_blocks",
 ]
