@@ -195,11 +195,12 @@ class TestStylesheetStaysOutOfTheHostsWay:
     def test_stylesheet_emits_no_daisyui_component_rules(
         self, blocks_classes: set[str]
     ) -> None:
-        """daisyUI is the host's to provide, and two copies would fight.
+        """The guard on rule 2 of the stylesheet contract: no daisyUI plugin.
 
-        A daisyUI class emitted here would be a second definition of a component
-        the host already styles, and which of the two won would come down to the
-        order a project happened to link them in.
+        Plain Tailwind cannot emit `btn` however it is configured, so what this
+        catches is someone adding `@plugin "daisyui"` to the entry — the one
+        change that would make this package ship a second definition of every
+        component the host already styles, with link order deciding which wins.
         """
         emitted = sorted(blocks_classes & HOST_PROVIDED_CLASSES)
         assert not emitted, (
