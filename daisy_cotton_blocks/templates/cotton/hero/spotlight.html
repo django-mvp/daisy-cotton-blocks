@@ -1,0 +1,73 @@
+{% comment %}
+  ============================================================
+  <c-hero.spotlight> — full-bleed image behind centred copy
+
+  The editorial arrangement: a photograph or an illustration filling the block,
+  dimmed, with the copy over it. Reach for it when the image is the argument —
+  a place, a piece of equipment, a person — and there is no interface worth
+  showing.
+
+  The image is an <img> layer, not a CSS `background-image`. Three reasons, in
+  order: an author-supplied URL interpolated into a `style` attribute is a CSS
+  injection surface that escaping alone does not close; an <img> carries `alt`,
+  so an image that means something can say so; and a project that later wants
+  `srcset` or `loading` can pass them straight through.
+
+  Text on this block is `neutral-content` over daisyUI's own `hero-overlay`,
+  which is the theme's `neutral` at 50%. The `dim` option raises that. Because
+  the image underneath is the project's and its brightness is unknown, `dim`
+  is the control that makes the copy readable — treat "does the copy still
+  read?" as the setting's whole purpose.
+
+  Attributes
+    image     URL of the background image, required for the layer to render
+    alt       alternative text. Leave empty when the image is decoration —
+              which it is whenever the copy over it says the same thing.
+    eyebrow   short line above the heading
+    title     heading text; pass markup through the `title` slot instead
+    lead      supporting sentence under the heading
+    level     heading level, 1-6, default 1
+    dim       soft | medium | strong — how far the image is dimmed, default medium
+    size      sm | md | lg | screen — how much vertical room the block takes
+    class     extra classes on the outer section
+
+  Slots
+    announcement  above the eyebrow
+    actions       the button row
+    footnote      under the actions
+  ============================================================
+{% endcomment %}
+<c-vars image alt="" eyebrow title lead level="1" dim="medium" size="md" announcement actions footnote class />
+<section class="hero relative isolate overflow-hidden text-neutral-content
+                {% if size == 'sm' %}py-16 md:py-20{% elif size == 'lg' %}py-32 md:py-40{% elif size == 'screen' %}min-h-screen py-24{% else %}py-24 md:py-32{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  {% if image %}
+    <img src="{{ image }}"
+         alt="{{ alt }}"
+         class="absolute inset-0 h-full w-full object-cover object-center"
+         {% if not alt %}aria-hidden="true"{% endif %} />
+  {% endif %}
+  <div class="hero-overlay
+              {% if dim == 'soft' %}opacity-40{% elif dim == 'strong' %}opacity-80{% else %}opacity-60{% endif %}"></div>
+  <div class="hero-content w-full px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+      {{ announcement }}
+      {% if eyebrow %}
+        <p class="text-sm font-semibold tracking-widest uppercase">{{ eyebrow }}</p>
+      {% endif %}
+      {# djlint:off #}
+      <h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">{{ title }}</h{{ level }}>
+      {# djlint:on #}
+      {% if lead %}
+        <p class="max-w-2xl text-lg leading-relaxed text-pretty sm:text-xl">{{ lead }}</p>
+      {% endif %}
+      {% if actions %}
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>
+      {% endif %}
+      {% if footnote %}
+        <div class="pt-2 text-sm">{{ footnote }}</div>
+      {% endif %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,74 @@
+{% comment %}
+  Demo scenery, not a block. A plausible application panel for the `media`
+  slots, built entirely out of django-mvp's own components rather than shipped
+  as an image.
+
+  Two reasons it is drawn rather than photographed. It follows the theme
+  switcher like everything else on the page, which is the claim the blocks are
+  making. And it is the honest demonstration of what the media slot is for: the
+  block owns the frame and the proportions, the project puts its own components
+  inside.
+
+  Nothing here is part of the package.
+{% endcomment %}
+<c-vars class />
+<div class="w-full bg-base-100 p-4 {{ class }}" aria-hidden="true">
+  {# A scrollable region rather than three stats crushed together at 320px. #}
+  <div class="overflow-x-auto">
+    <div class="stats w-full">
+      <div class="stat">
+        <div class="stat-title">Deploys today</div>
+        <div class="stat-value">31</div>
+        <div class="stat-desc">4 awaiting approval</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Median lead time</div>
+        <div class="stat-value">18m</div>
+        <div class="stat-desc">Down from 44m</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Failed</div>
+        <div class="stat-value">2</div>
+        <div class="stat-desc">Both rolled back</div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 overflow-x-auto">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Version</th>
+          <th>Shipped</th>
+          <th>State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>checkout-api</td>
+          <td>4.12.0</td>
+          <td>12 minutes ago</td>
+          <td><span class="badge badge-success">Live</span></td>
+        </tr>
+        <tr>
+          <td>ledger</td>
+          <td>2.8.3</td>
+          <td>an hour ago</td>
+          <td><span class="badge badge-success">Live</span></td>
+        </tr>
+        <tr>
+          <td>notifications</td>
+          <td>1.31.0</td>
+          <td>an hour ago</td>
+          <td><span class="badge badge-warning">Rolling out</span></td>
+        </tr>
+        <tr>
+          <td>search-indexer</td>
+          <td>0.9.7</td>
+          <td>yesterday</td>
+          <td><span class="badge badge-error">Rolled back</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

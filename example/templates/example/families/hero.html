@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% comment %}
+  The hero catalogue. Each block is rendered live at full width, then shown as
+  the markup that produced it, then the page closes on the options that change
+  a block without changing its layout.
+
+  Headings run h1 (the page) → h2 (each block's tag) → h3 (the heading inside
+  the live block), which is why every specimen passes `level="3"`. The blocks
+  default to `level="1"`, which is right on a real landing page and wrong here.
+{% endcomment %}
+
+{% block title %}Hero blocks{% endblock title %}
+
+{% block content %}
+  <c-container class="py-10">
+    <h1 class="text-3xl font-bold">Hero blocks</h1>
+    <p class="mt-4 max-w-3xl text-lg text-base-content/80">
+      The block at the top of a page. Four of them, because the arrangement is fixed per block and a
+      different arrangement is a different tag — <code>tone</code> and <code>size</code> change how a
+      block looks, never where its pieces sit.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold">What every hero takes</h2>
+    <p class="mt-3 max-w-3xl text-base-content/80">
+      The four blocks share one vocabulary, so moving a page from one to another is a tag change and
+      nothing else.
+    </p>
+    <div class="mt-4 overflow-x-auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Kind</th>
+            <th>What it does</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>eyebrow</code></td>
+            <td>attribute</td>
+            <td>A short line above the heading — a category, a release name.</td>
+          </tr>
+          <tr>
+            <td><code>title</code></td>
+            <td>attribute or slot</td>
+            <td>The heading. Use the slot when it contains markup.</td>
+          </tr>
+          <tr>
+            <td><code>lead</code></td>
+            <td>attribute or slot</td>
+            <td>The sentence under the heading.</td>
+          </tr>
+          <tr>
+            <td><code>level</code></td>
+            <td>attribute</td>
+            <td>Heading level, 1 to 6. Defaults to 1, which is right for a landing page.</td>
+          </tr>
+          <tr>
+            <td><code>tone</code></td>
+            <td>attribute</td>
+            <td>
+              <code>base</code>, <code>soft</code>, <code>glow</code> or <code>neutral</code>. The surface
+              under the copy.
+            </td>
+          </tr>
+          <tr>
+            <td><code>size</code></td>
+            <td>attribute</td>
+            <td>
+              <code>sm</code>, <code>md</code>, <code>lg</code> — and <code>screen</code> on the two
+              blocks it makes sense for.
+            </td>
+          </tr>
+          <tr>
+            <td><code>announcement</code></td>
+            <td>slot</td>
+            <td>Sits above everything. A pill linking to the latest release, usually.</td>
+          </tr>
+          <tr>
+            <td><code>actions</code></td>
+            <td>slot</td>
+            <td>The button row. You write the links, so they can post, submit or carry anything.</td>
+          </tr>
+          <tr>
+            <td><code>footnote</code></td>
+            <td>slot</td>
+            <td>Under the buttons. "No card required", a rating, a row of logos.</td>
+          </tr>
+          <tr>
+            <td><code>media</code></td>
+            <td>slot</td>
+            <td>The visual, on the two blocks that have one. Anything at all.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Every colour on this page comes from the active theme. Switch it in the bar above and the blocks
+      follow, including the glow and the marked words in the headings.
+    </p>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Where the markup below says <code>&lt;c-demo.screenshot&gt;</code>, a real project puts its own
+      screenshot. It is drawn out of django-mvp's components here rather than shipped as an image, so
+      that it follows the theme along with everything else — and because that is what the
+      <code>media</code> slot is for.
+    </p>
+  </c-container>
+
+  {# ────────────────────────────────────────────────────────────── centred #}
+  <c-demo.specimen tag="c-hero.centred"
+                   anchor="centred"
+                   summary="One column, centred, no media. For when the words are the product: a launch note, a documentation site, a service with nothing to screenshot.">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred tone="glow"
+               size="lg"
+               eyebrow="Version 2.0"
+               title="Ship the page, not the CSS"
+               lead="Drop a block in, pass it your words, and let it take the colours from the theme you already run.">
+  <c-slot name="announcement">
+    <a class="badge badge-primary badge-lg" href="/changelog/">What's new in 2.0 →</a>
+  </c-slot>
+  <c-slot name="actions">
+    <a class="btn btn-primary btn-lg" href="/start/">Get started</a>
+    <a class="btn btn-outline btn-lg" href="/blocks/">Browse the blocks</a>
+  </c-slot>
+  <c-slot name="footnote">MIT licensed · no build step · works with any daisyUI theme</c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="3"
+                    tone="glow"
+                    size="lg"
+                    eyebrow="Version 2.0"
+                    title="Ship the page, not the CSS"
+                    lead="Drop a block in, pass it your words, and let it take the colours from the theme you already run.">
+      <c-slot name="announcement">
+        <a class="badge badge-primary badge-lg" href="#centred">What's new in 2.0 →</a>
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#centred">Get started</a>
+        <a class="btn btn-outline btn-lg" href="#centred">Browse the blocks</a>
+      </c-slot>
+      <c-slot name="footnote">MIT licensed · no build step · works with any daisyUI theme</c-slot>
+    </c-hero.centred>
+  </c-demo.specimen>
+
+  {# ──────────────────────────────────────────────────────────────── split #}
+  <c-demo.specimen tag="c-hero.split"
+                   anchor="split"
+                   summary="Copy beside a visual, stacking to one column below the lg breakpoint with the copy first. The media slot takes anything — a screenshot, a mockup, an illustration, a sign-up card.">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.split tone="soft"
+             media-side="end"
+             eyebrow="Deploy tracking"
+             title="Every release, and who shipped it"
+             lead="Meridian watches your pipelines and tells you what changed, when it went out, and which change is the one that broke the graph.">
+  <c-slot name="actions">
+    <a class="btn btn-primary btn-lg" href="/trial/">Start a free trial</a>
+    <a class="btn btn-ghost btn-lg" href="/tour/">Take the tour</a>
+  </c-slot>
+  <c-slot name="footnote">Connects to GitHub, GitLab and Bitbucket.</c-slot>
+  <c-slot name="media">
+    <c-mockup.browser url="app.example.com/overview" class="shadow-2xl">
+      <c-demo.screenshot />
+    </c-mockup.browser>
+  </c-slot>
+</c-hero.split>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.split level="3"
+                  tone="soft"
+                  media-side="end"
+                  eyebrow="Deploy tracking"
+                  title="Every release, and who shipped it"
+                  lead="Meridian watches your pipelines and tells you what changed, when it went out, and which change is the one that broke the graph.">
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#split">Start a free trial</a>
+        <a class="btn btn-ghost btn-lg" href="#split">Take the tour</a>
+      </c-slot>
+      <c-slot name="footnote">Connects to GitHub, GitLab and Bitbucket.</c-slot>
+      <c-slot name="media">
+        <c-mockup.browser url="app.example.com/overview" class="shadow-2xl"><c-demo.screenshot /></c-mockup.browser>
+      </c-slot>
+    </c-hero.split>
+  </c-demo.specimen>
+
+  {# ───────────────────────────────────────────────────────────── showcase #}
+  <c-demo.specimen tag="c-hero.showcase"
+                   anchor="showcase"
+                   summary="Centred copy over a wide product panel that runs past the foot of the block, so the page reads as continuing. The one to reach for when a screenshot explains the product faster than a paragraph.">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.showcase tone="glow" size="lg">
+  <c-slot name="title">Your whole estate, <c-hero.highlight>on one screen</c-hero.highlight></c-slot>
+  <c-slot name="lead">
+    Two hundred services, four regions, one page that answers whether anything is on fire.
+  </c-slot>
+  <c-slot name="actions">
+    <a class="btn btn-primary btn-lg" href="/signup/">Create an account</a>
+    <a class="btn btn-outline btn-lg" href="/demo/">See a live demo</a>
+  </c-slot>
+  <c-slot name="media">
+    <c-demo.screenshot />
+  </c-slot>
+</c-hero.showcase>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.showcase level="3" tone="glow" size="lg">
+      <c-slot name="title">Your whole estate, <c-hero.highlight>on one screen</c-hero.highlight></c-slot>
+      <c-slot name="lead">
+        Two hundred services, four regions, one page that answers whether anything is on fire.
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#showcase">Create an account</a>
+        <a class="btn btn-outline btn-lg" href="#showcase">See a live demo</a>
+      </c-slot>
+      <c-slot name="media">
+        <c-demo.screenshot />
+      </c-slot>
+    </c-hero.showcase>
+  </c-demo.specimen>
+
+  {# ──────────────────────────────────────────────────────────── spotlight #}
+  <c-demo.specimen tag="c-hero.spotlight"
+                   anchor="spotlight"
+                   summary="A full-bleed image with the copy over it. For when the image is the argument — a place, a piece of equipment, a person — and there is no interface worth showing.">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.spotlight image="{% static 'marketing/basalt.jpg' %}"
+                 alt=""
+                 dim="strong"
+                 size="lg"
+                 eyebrow="Field season 2026"
+                 title="Measurements from where the heat is"
+                 lead="Four hundred boreholes across the East African Rift, reduced, quality-scored and published under one licence.">
+  <c-slot name="actions">
+    <a class="btn btn-primary btn-lg" href="/data/">Browse the dataset</a>
+    <a class="btn btn-outline btn-lg" href="/method/">How it was measured</a>
+  </c-slot>
+</c-hero.spotlight>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.spotlight level="3"
+                      image="{% static 'example/spotlight.svg' %}"
+                      alt=""
+                      dim="strong"
+                      size="lg"
+                      eyebrow="Field season 2026"
+                      title="Measurements from where the heat is"
+                      lead="Four hundred boreholes across the East African Rift, reduced, quality-scored and published under one licence.">
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#spotlight">Browse the dataset</a>
+        <a class="btn btn-outline btn-lg" href="#spotlight">How it was measured</a>
+      </c-slot>
+    </c-hero.spotlight>
+  </c-demo.specimen>
+
+  {# ──────────────────────────────────────────────────── making it yours #}
+  <section class="border-t border-base-300">
+    <c-container class="py-10">
+      <h2 id="tones" class="text-2xl font-semibold">The same block, four surfaces</h2>
+      <p class="mt-3 max-w-3xl text-base-content/80">
+        One tag, one set of words, four values of <code>tone</code>. Nothing moves; the surface under
+        the copy changes. <code>glow</code> puts two blurred discs of the theme's own colours behind
+        the text at low opacity, which is why it still reads on every theme in the bar above.
+      </p>
+      <pre class="mt-4 w-full overflow-x-auto rounded-lg border border-base-300 bg-base-200 p-4 text-xs"><code>{% filter force_escape %}{% verbatim %}<c-hero.centred tone="base"    size="sm" title="…" />
+<c-hero.centred tone="soft"    size="sm" title="…" />
+<c-hero.centred tone="glow"    size="sm" title="…" />
+<c-hero.centred tone="neutral" size="sm" title="…" />{% endverbatim %}{% endfilter %}</code></pre>
+    </c-container>
+  </section>
+
+  <div class="border-t border-base-300">
+    <c-hero.centred level="3"
+                    tone="base"
+                    size="sm"
+                    eyebrow="tone=&quot;base&quot;"
+                    title="The plain surface"
+                    lead="base-100, the page's own background. The default, and the one to use when the hero sits above more content in the same colour.">
+      <c-slot name="actions">
+        <a class="btn btn-primary" href="#tones">Primary action</a>
+        <a class="btn btn-ghost" href="#tones">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </div>
+  <div class="border-t border-base-300">
+    <c-hero.centred level="3"
+                    tone="soft"
+                    size="sm"
+                    eyebrow="tone=&quot;soft&quot;"
+                    title="One step off the page"
+                    lead="base-200. Separates the hero from what follows without asking for attention.">
+      <c-slot name="actions">
+        <a class="btn btn-primary" href="#tones">Primary action</a>
+        <a class="btn btn-ghost" href="#tones">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </div>
+  <div class="border-t border-base-300">
+    <c-hero.centred level="3"
+                    tone="glow"
+                    size="sm"
+                    eyebrow="tone=&quot;glow&quot;"
+                    title="Colour, without a colour"
+                    lead="Two blurred discs of primary and secondary behind the copy. Decorative, hidden from screen readers, and faint enough that the text keeps its contrast.">
+      <c-slot name="actions">
+        <a class="btn btn-primary" href="#tones">Primary action</a>
+        <a class="btn btn-ghost" href="#tones">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </div>
+  <div class="border-t border-base-300">
+    <c-hero.centred level="3"
+                    tone="neutral"
+                    size="sm"
+                    eyebrow="tone=&quot;neutral&quot;"
+                    title="The dark band"
+                    lead="The theme's neutral pair, which every daisyUI theme defines to be readable together. The one tone that stays dark on a light theme.">
+      <c-slot name="actions">
+        <a class="btn btn-primary" href="#tones">Primary action</a>
+        <a class="btn btn-outline" href="#tones">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </div>
+
+  {# ───────────────────────────────────────────────── the two other seams #}
+  <section class="border-t border-base-300">
+    <c-container class="py-10">
+      <h2 id="seams" class="text-2xl font-semibold">Two more places a project takes over</h2>
+
+      <h3 class="mt-8 text-lg font-semibold">Marking the words that carry the headline</h3>
+      <p class="mt-3 max-w-3xl text-base-content/80">
+        Pass the heading as a slot instead of an attribute and you can mark part of it.
+        <code>&lt;c-hero.highlight&gt;</code> fills the words it wraps with one of the theme's colour
+        pairs, so the fill and the text on it move together when the theme changes.
+      </p>
+      <pre class="mt-4 w-full overflow-x-auto rounded-lg border border-base-300 bg-base-200 p-4 text-xs"><code>{% filter force_escape %}{% verbatim %}<c-hero.centred>
+  <c-slot name="title">
+    Ship the page, <c-hero.highlight color="accent">not the CSS</c-hero.highlight>
+  </c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</code></pre>
+      <p class="mt-4 flex flex-wrap items-center gap-3 text-2xl font-bold">
+        <span>Ship the page, <c-hero.highlight>not the CSS</c-hero.highlight></span>
+        <span>Ship the page, <c-hero.highlight color="secondary">not the CSS</c-hero.highlight></span>
+        <span>Ship the page, <c-hero.highlight color="accent">not the CSS</c-hero.highlight></span>
+      </p>
+
+      <h3 class="mt-10 text-lg font-semibold">Leaving pieces out</h3>
+      <p class="mt-3 max-w-3xl text-base-content/80">
+        Everything except the heading is optional, and a block that is given less closes the gap
+        rather than leaving a hole. The smallest hero on this page is one attribute.
+      </p>
+      <pre class="mt-4 w-full overflow-x-auto rounded-lg border border-base-300 bg-base-200 p-4 text-xs"><code>{% filter force_escape %}{% verbatim %}<c-hero.centred title="Nothing else is required" />{% endverbatim %}{% endfilter %}</code></pre>
+
+      <h3 class="mt-10 text-lg font-semibold">Which edge the visual sits on</h3>
+      <p class="mt-3 max-w-3xl text-base-content/80">
+        <code>c-hero.split</code> takes <code>media-side="start"</code> to mirror the two columns at
+        wide widths. Below the breakpoint both settings stack the same way, copy first, because the
+        reading order should not depend on the screen.
+      </p>
+    </c-container>
+  </section>
+
+  <div class="border-t border-base-300">
+    <c-hero.centred level="3" size="sm" title="Nothing else is required" />
+  </div>
+
+  <div class="border-t border-base-300">
+    <c-hero.split level="3"
+                  media-side="start"
+                  size="sm"
+                  eyebrow="media-side is start"
+                  title="Mirrored at width, identical when stacked"
+                  lead="Narrow the window past the lg breakpoint and this block reads in the same order as the one further up the page.">
+      <c-slot name="actions">
+        <a class="btn btn-primary" href="#seams">Primary action</a>
+      </c-slot>
+      <c-slot name="media">
+        <c-mockup.browser url="app.example.com/overview" class="shadow-2xl"><c-demo.screenshot /></c-mockup.browser>
+      </c-slot>
+    </c-hero.split>
+  </div>
+{% endblock content %}

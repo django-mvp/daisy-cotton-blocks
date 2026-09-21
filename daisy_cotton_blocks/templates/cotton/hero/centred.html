@@ -1,0 +1,77 @@
+{% comment %}
+  ============================================================
+  <c-hero.centred> — the default opening block
+
+  One column, centred, no media. The arrangement to reach for when the words
+  are the product: a documentation site, a launch announcement, a service that
+  has nothing to screenshot yet.
+
+  Attributes
+    eyebrow   short line above the heading (a category, a release name)
+    title     heading text; pass markup through the `title` slot instead
+    lead      supporting sentence under the heading
+    level     heading level, 1-6, default 1
+    tone      base | soft | glow | neutral — the surface treatment
+    size      sm | md | lg | screen — how much vertical room the block takes
+    class     extra classes on the outer section
+
+  Slots
+    announcement  above the eyebrow (a pill linking to the latest release)
+    actions       the button row; write real <a class="btn"> markup here
+    footnote      under the actions (a trust line, a "no card required")
+
+  Why the actions are a slot and not a pair of label/href attributes: a call to
+  action is where a project needs full control — a form submit, an hx-post, a
+  target, a tracking attribute — and building the link here would put an
+  author-supplied URL inside an href this template is responsible for escaping.
+  The layout is the hard part and the part this block owns.
+  ============================================================
+{% endcomment %}
+<c-vars eyebrow title lead level="1" tone="base" size="md" announcement actions footnote class />
+<section class="relative isolate overflow-hidden
+                {% if tone == 'soft' %}bg-base-200 text-base-content{% elif tone == 'neutral' %}bg-neutral text-neutral-content{% else %}bg-base-100 text-base-content{% endif %}
+                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% elif size == 'screen' %}flex min-h-screen items-center py-24{% else %}py-16 md:py-24{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  {% if tone == 'glow' %}
+    {% comment %}
+      Decorative only, and hidden from assistive technology. Two heavily
+      blurred discs of the theme's own colours, at low opacity, so the surface
+      under the text stays effectively base-100 and the body copy keeps the
+      contrast measured for it. Nothing here carries meaning.
+    {% endcomment %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute -top-32 -left-24 h-96 w-96 rounded-full bg-primary opacity-20 blur-3xl"></div>
+      <div class="absolute -right-24 -bottom-40 h-96 w-96 rounded-full bg-secondary opacity-20 blur-3xl"></div>
+    </div>
+  {% endif %}
+  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+      {{ announcement }}
+      {% if eyebrow %}
+        <p class="text-sm font-semibold tracking-widest uppercase
+                  {% if tone == 'neutral' %}text-neutral-content{% else %}text-base-content/80{% endif %}">
+          {{ eyebrow }}
+        </p>
+      {% endif %}
+      {# djlint:off #}
+      <h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">{{ title }}</h{{ level }}>
+      {# djlint:on #}
+      {% if lead %}
+        <p class="max-w-2xl text-lg leading-relaxed text-pretty sm:text-xl
+                  {% if tone == 'neutral' %}text-neutral-content{% else %}text-base-content/80{% endif %}">
+          {{ lead }}
+        </p>
+      {% endif %}
+      {% if actions %}
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>
+      {% endif %}
+      {% if footnote %}
+        <div class="pt-2 text-sm
+                    {% if tone == 'neutral' %}text-neutral-content{% else %}text-base-content/80{% endif %}">
+          {{ footnote }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

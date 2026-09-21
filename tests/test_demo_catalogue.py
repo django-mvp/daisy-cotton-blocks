@@ -30,15 +30,34 @@ class TestPlannedFamilyPages:
         assert response.status_code == 200
         assert label.encode() in response.content
 
-    def test_a_family_page_carries_no_template_of_its_own(self, client) -> None:
+    def test_a_family_with_no_blocks_yet_carries_no_template_of_its_own(
+        self, client
+    ) -> None:
         """They render the packaged placeholder, deliberately and visibly.
 
         Asserting the placeholder rather than the absence of content, because
         "this page has nothing on it" and "this page failed to render" look
         identical from a status code.
+
+        Pricing rather than hero: a family takes a page of its own the moment
+        somebody writes example/families/<slug>.html, and hero now has one.
         """
-        response = client.get(reverse("group", kwargs={"slug": "hero"}))
+        response = client.get(reverse("group", kwargs={"slug": "pricing"}))
         assert b"have a template yet" in response.content
+
+    def test_the_hero_family_has_a_catalogue_page(self, client) -> None:
+        """The first family with blocks, and the first with a page of its own."""
+        response = client.get(reverse("group", kwargs={"slug": "hero"}))
+
+        assert response.status_code == 200
+        assert b"have a template yet" not in response.content
+        for tag in (
+            b"c-hero.centred",
+            b"c-hero.split",
+            b"c-hero.showcase",
+            b"c-hero.spotlight",
+        ):
+            assert tag in response.content
 
     def test_an_unknown_family_is_not_found(self, client) -> None:
         response = client.get(reverse("group", kwargs={"slug": "nonexistent"}))

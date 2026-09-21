@@ -70,6 +70,21 @@
   --color-base-100: var(--color-base-100);
   --color-base-200: var(--color-base-200);
   --color-base-300: var(--color-base-300);
+
+  /* The `-content` half of each pair. A block that paints a filled surface has
+   * to put daisyUI's matching foreground on it — `bg-primary` together with
+   * `text-primary-content` — because those two are chosen against each other
+   * per theme and nothing else is guaranteed to be readable on top.
+   *
+   * Declaring only the fill colours is the same silent failure this block was
+   * written to prevent, one step along: `bg-primary` builds,
+   * `text-primary-content` does not, and the words disappear into the fill on
+   * every theme whose primary is light. */
+  --color-primary-content: var(--color-primary-content);
+  --color-secondary-content: var(--color-secondary-content);
+  --color-accent-content: var(--color-accent-content);
+  --color-neutral-content: var(--color-neutral-content);
+  --color-base-content: var(--color-base-content);
 }
 
 /* Vertical rhythm for full-page sections. Tailwind's default scale is there for

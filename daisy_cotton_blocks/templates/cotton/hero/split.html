@@ -1,0 +1,76 @@
+{% comment %}
+  ============================================================
+  <c-hero.split> — copy beside a visual
+
+  Two columns on a wide screen, one on a narrow one. The arrangement for a
+  product with something to show: a screenshot, a mockup, an illustration, a
+  short form. The media is a slot, so what goes in it is entirely the
+  project's — this block owns the proportions, the alignment and the stacking.
+
+  Below the `lg` breakpoint the columns become one, copy first, media second,
+  whichever side the media sits on at width. That is a reflow, not a second
+  design: the same content in the same reading order.
+
+  Attributes
+    eyebrow     short line above the heading
+    title       heading text; pass markup through the `title` slot instead
+    lead        supporting sentence under the heading
+    level       heading level, 1-6, default 1
+    tone        base | soft | glow | neutral — the surface treatment
+    size        sm | md | lg — how much vertical room the block takes
+    media-side  end (default) or start — which edge the media sits on at width
+    class       extra classes on the outer section
+
+  Slots
+    announcement  above the eyebrow
+    actions       the button row
+    footnote      under the actions
+    media         the visual. Anything: an <img>, a mockup, a card, an SVG.
+  ============================================================
+{% endcomment %}
+<c-vars eyebrow title lead level="1" tone="base" size="md" media-side="end" announcement actions footnote media class />
+<section class="relative isolate overflow-hidden
+                {% if tone == 'soft' %}bg-base-200 text-base-content{% elif tone == 'neutral' %}bg-neutral text-neutral-content{% else %}bg-base-100 text-base-content{% endif %}
+                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  {% if tone == 'glow' %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute -top-40 -right-32 h-96 w-96 rounded-full bg-primary opacity-20 blur-3xl"></div>
+      <div class="absolute -bottom-40 -left-32 h-96 w-96 rounded-full bg-secondary opacity-20 blur-3xl"></div>
+    </div>
+  {% endif %}
+  <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div class="flex flex-col gap-6 text-center lg:text-left
+                  {% if media_side == 'start' %}lg:order-2{% endif %}">
+        {{ announcement }}
+        {% if eyebrow %}
+          <p class="text-sm font-semibold tracking-widest uppercase
+                    {% if tone == 'neutral' %}text-neutral-content{% else %}text-base-content/80{% endif %}">
+            {{ eyebrow }}
+          </p>
+        {% endif %}
+        {# djlint:off #}
+        <h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl">{{ title }}</h{{ level }}>
+        {# djlint:on #}
+        {% if lead %}
+          <p class="max-w-xl text-lg leading-relaxed text-pretty sm:text-xl
+                    {% if tone == 'neutral' %}text-neutral-content{% else %}text-base-content/80{% endif %}">
+            {{ lead }}
+          </p>
+        {% endif %}
+        {% if actions %}
+          <div class="flex flex-wrap items-center justify-center gap-3 pt-2 lg:justify-start">{{ actions }}</div>
+        {% endif %}
+        {% if footnote %}
+          <div class="pt-2 text-sm
+                      {% if tone == 'neutral' %}text-neutral-content{% else %}text-base-content/80{% endif %}">
+            {{ footnote }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="w-full {% if media_side == 'start' %}lg:order-1{% endif %}">{{ media }}</div>
+    </div>
+  </div>
+</section>

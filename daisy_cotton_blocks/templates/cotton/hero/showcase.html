@@ -1,0 +1,93 @@
+{% comment %}
+  ============================================================
+  <c-hero.showcase> — centred copy over a large product visual
+
+  The arrangement that puts the product itself under the headline, wide and
+  lifted, with the bottom of it running past the fold so the page reads as
+  having more below. Reach for it when a screenshot explains the product
+  faster than a paragraph does, which is most of the time.
+
+  The media panel is wider than the copy above it on purpose: the copy is
+  reading material and stays inside a comfortable measure, while the visual is
+  looking material and takes the room.
+
+  Attributes
+    eyebrow   short line above the heading
+    title     heading text; pass markup through the `title` slot instead
+    lead      supporting sentence under the heading
+    level     heading level, 1-6, default 1
+    tone      base | soft | glow | neutral — the surface treatment
+    size      sm | md | lg — how much vertical room the block takes
+    class     extra classes on the outer section
+
+  Slots
+    announcement  above the eyebrow
+    actions       the button row
+    footnote      under the actions, above the visual
+    media         the visual. It is framed and lifted by this block, so pass
+                  the bare thing — an <img>, a mockup, a live component.
+  ============================================================
+{% endcomment %}
+<c-vars eyebrow title lead level="1" tone="base" size="md" announcement actions footnote media class />
+{% comment %}
+  `z-10` and no `overflow-hidden` on the section, both because of the media
+  panel below: it is pulled past the section's foot with a negative margin, and
+  it has to survive both the section clipping its own overflow and the next
+  section painting over it. The decorative layer does its own clipping.
+{% endcomment %}
+<section class="relative isolate z-10
+                {% if tone == 'soft' %}bg-base-200 text-base-content{% elif tone == 'neutral' %}bg-neutral text-neutral-content{% else %}bg-base-100 text-base-content{% endif %}
+                {% if size == 'sm' %}pt-12 md:pt-16{% elif size == 'lg' %}pt-24 md:pt-32{% else %}pt-16 md:pt-24{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  {% if tone == 'glow' %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-primary opacity-20 blur-3xl"></div>
+      <div class="absolute top-40 -right-32 h-96 w-96 rounded-full bg-secondary opacity-20 blur-3xl"></div>
+    </div>
+  {% endif %}
+  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+      {{ announcement }}
+      {% if eyebrow %}
+        <p class="text-sm font-semibold tracking-widest uppercase
+                  {% if tone == 'neutral' %}text-neutral-content{% else %}text-base-content/80{% endif %}">
+          {{ eyebrow }}
+        </p>
+      {% endif %}
+      {# djlint:off #}
+      <h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">{{ title }}</h{{ level }}>
+      {# djlint:on #}
+      {% if lead %}
+        <p class="max-w-2xl text-lg leading-relaxed text-pretty sm:text-xl
+                  {% if tone == 'neutral' %}text-neutral-content{% else %}text-base-content/80{% endif %}">
+          {{ lead }}
+        </p>
+      {% endif %}
+      {% if actions %}
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>
+      {% endif %}
+      {% if footnote %}
+        <div class="pt-2 text-sm
+                    {% if tone == 'neutral' %}text-neutral-content{% else %}text-base-content/80{% endif %}">
+          {{ footnote }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  {% if media %}
+    {% comment %}
+      The frame, not the content. `-mb-16` pulls the panel past the section's
+      own foot so the visual meets whatever block comes next, which is what
+      makes the page read as continuing rather than stopping here. The ring and
+      the shadow together are what lift it: a shadow alone reads as flat on a
+      dark theme, where shadows are hard to see.
+    {% endcomment %}
+    <div class="mx-auto mt-14 -mb-16 w-full max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="overflow-hidden rounded-2xl shadow-2xl ring-1
+                  {% if tone == 'neutral' %}ring-neutral-content/20{% else %}ring-base-300{% endif %}">
+        {{ media }}
+      </div>
+    </div>
+  {% endif %}
+</section>

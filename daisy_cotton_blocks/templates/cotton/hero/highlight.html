@@ -1,0 +1,31 @@
+{% comment %}
+  ============================================================
+  <c-hero.highlight> — mark the words that carry the headline
+
+  Not a block. A one-line inline component for use inside a hero heading,
+  where it paints the words it wraps as a filled swash in one of the theme's
+  colours:
+
+      <c-hero.centred>
+        <c-slot name="title">Ship the page, <c-hero.highlight>not the CSS</c-hero.highlight></c-slot>
+      </c-hero.centred>
+
+  It uses daisyUI's colour-and-content pairs, so the fill and the text on it
+  move together with the theme. Those pairs are designed against large text,
+  and on some themes they clear the 3:1 large-text bar without clearing the
+  4.5:1 body-text one — which is why this belongs in a heading and nowhere
+  else.
+
+  Attributes
+    color   primary (default) | secondary | accent
+    class   extra classes
+  ============================================================
+{% endcomment %}
+<c-vars color="primary" class />
+{% if color == 'secondary' %}
+  <span class="rounded-lg bg-secondary px-2 text-secondary-content {{ class }}" {{ attrs }}>{{ slot }}</span>
+{% elif color == 'accent' %}
+  <span class="rounded-lg bg-accent px-2 text-accent-content {{ class }}" {{ attrs }}>{{ slot }}</span>
+{% else %}
+  <span class="rounded-lg bg-primary px-2 text-primary-content {{ class }}" {{ attrs }}>{{ slot }}</span>
+{% endif %}

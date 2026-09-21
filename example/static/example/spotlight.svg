@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Demo scenery for <c-hero.spotlight>. Drawn here rather than fetched, because
+  a stock photograph would put this package's demo on somebody else's origin
+  and licence for no gain. A real project passes a real photograph.
+
+  Deliberately fixed colours, not theme colours: a photograph does not
+  re-theme either, and the block has to look right with an image it cannot
+  predict. That is what the `dim` option exists to handle.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1b2a4a"/>
+      <stop offset="55%" stop-color="#3d3355"/>
+      <stop offset="100%" stop-color="#7a4a48"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.72" cy="0.62" r="0.28">
+      <stop offset="0%" stop-color="#ffb066" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#ffb066" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d1526" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0d1526" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1152" cy="558" r="360" fill="url(#sun)"/>
+  <circle cx="1152" cy="558" r="58" fill="#ffd9a8" opacity="0.9"/>
+
+  <!-- Ridge lines, far to near, each a little darker and a little sharper. -->
+  <path d="M0 620 L180 548 L330 592 L470 520 L620 574 L780 506 L940 566 L1100 512 L1280 578 L1440 528 L1600 586 L1600 900 L0 900 Z"
+        fill="#2b2f4d" opacity="0.62"/>
+  <path d="M0 690 L150 632 L300 678 L450 604 L600 664 L760 600 L920 672 L1080 614 L1250 686 L1420 626 L1600 690 L1600 900 L0 900 Z"
+        fill="#232742" opacity="0.78"/>
+  <path d="M0 772 L170 716 L340 780 L520 706 L700 778 L880 712 L1060 786 L1240 722 L1420 792 L1600 736 L1600 900 L0 900 Z"
+        fill="#181b31"/>
+  <path d="M0 856 L200 812 L400 866 L620 810 L840 870 L1060 816 L1300 874 L1600 820 L1600 900 L0 900 Z"
+        fill="#10121f"/>
+
+  <rect width="1600" height="900" fill="url(#haze)"/>
+</svg>
