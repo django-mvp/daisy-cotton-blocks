@@ -8,7 +8,7 @@
 {# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
 {# @slot:background — A background block, rendered into a layer behind the copy #}
 {# @slot:announcement — Above the eyebrow. A pill linking to the latest release, usually. #}
-{# @slot:actions — The button row. Write real anchor markup, so it can post, submit or carry anything. #}
+{# @slot:actions <a class="btn btn-primary btn-lg" href="#">Get started</a> <a class="btn btn-outline btn-lg" href="#">Learn more</a> — The button row. Write real anchor markup, so it can post, submit or carry anything. #}
 {# @slot:footnote — Under the actions. A trust line, a rating, a row of logos. #}
 {% comment %}
   ============================================================
@@ -23,7 +23,7 @@
   which is what the component gallery reads to build its controls. Everything
   below is the reasoning those one-liners have no room for.
 
-  ── What goes in <c-vars>, and what does not ────────────────────────────────
+  ── What goes in the c-vars declaration, and what does not ──────────────────
 
   Props only. Slot names are deliberately absent, even though several component
   libraries list them there — Cotton fills a named slot whether or not it is
@@ -31,10 +31,15 @@
   that name from reaching `{{ attrs }}`. Nobody passes `actions="..."` as an
   attribute.
 
-  Leaving them out keeps one list meaning one thing: `<c-vars>` is the prop set,
-  the `@prop` lines document it, and the two can be checked against each other
-  mechanically. With slot names mixed in, every one of them reads as an
-  undocumented prop.
+  Leaving them out keeps one list meaning one thing: the declaration is the
+  prop set, the `@prop` lines document it, and the two can be checked against
+  each other mechanically. With slot names mixed in, every one of them reads as
+  an undocumented prop.
+
+  Note the spelling above: the tag's own name never appears in prose here,
+  written out in angle brackets. The gallery's parser scans the raw source for
+  the first occurrence and would read a mention inside a comment as the
+  declaration itself, leaving every real prop reported as missing.
 
   ── The background slot ─────────────────────────────────────────────────────
 
