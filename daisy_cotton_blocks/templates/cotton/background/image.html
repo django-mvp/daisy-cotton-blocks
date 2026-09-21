@@ -27,10 +27,15 @@
     position  an object-position utility suffix: center, top, bottom, left,
               right. Default center.
     class     extra classes on the layer
+
+  Roots at `absolute inset-0`, like every background block, so that two written
+  into the same slot land on top of each other rather than one below the other.
+  See <c-background.glow> for the reasoning. A background belongs in a
+  `background` slot and nowhere else.
   ============================================================
 {% endcomment %}
 <c-vars src dim="medium" position="center" class />
-<div class="relative h-full w-full {{ class }}">
+<div class="absolute inset-0 {{ class }}">
   {% if src %}
     <img src="{{ src }}"
          alt=""

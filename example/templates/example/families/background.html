@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% comment %}
+  The background catalogue, laid out as a grid so the four blocks and their
+  options can be compared against each other rather than scrolled past one at
+  a time.
+
+  Every cell holds the same hero with the same words, so the only thing that
+  differs down the page is what went in the background slot.
+
+  Headings run h1 (the page) → h2 (each block's tag) → h3 (inside each live
+  block), which is why every hero here passes level="3".
+{% endcomment %}
+
+{% block title %}Backgrounds{% endblock title %}
+
+{% block content %}
+  <c-container class="py-10">
+    <h1 class="text-3xl font-bold">Backgrounds</h1>
+    <p class="mt-4 max-w-3xl text-lg text-base-content/80">
+      A background is not part of a layout, so it is not part of a block. Each one here is its own
+      block that goes in another block's <code>background</code> slot, which means any background
+      composes with any layout.
+    </p>
+
+    <h2 class="mt-10 text-xl font-semibold">How the slot works</h2>
+    <p class="mt-3 max-w-3xl text-base-content/80">
+      A hero is a stacking context, and whatever goes in the slot is rendered into a layer at
+      <code>-z-10</code> inside it: above the block's own surface colour, below every piece of copy.
+      Nothing in the slot needs to know its own position or z-index.
+    </p>
+    <pre class="mt-4 w-full overflow-x-auto rounded-lg border border-base-300 bg-base-200 p-4 text-xs"><code>{% filter force_escape %}{% verbatim %}<c-hero.split title="Any layout">
+  <c-slot name="background"><c-background.grid /></c-slot>
+</c-hero.split>
+
+<c-hero.showcase title="Takes any background">
+  <c-slot name="background"><c-background.glow from="accent" /></c-slot>
+</c-hero.showcase>{% endverbatim %}{% endfilter %}</code></pre>
+
+    <h2 class="mt-10 text-xl font-semibold">Two rules that come with them</h2>
+    <ul class="mt-3 max-w-3xl list-disc space-y-2 ps-6 text-base-content/80">
+      <li>
+        <strong>A background is decoration.</strong> The layer is hidden from assistive technology, so
+        nothing in it is announced and <code>&lt;c-background.image&gt;</code> takes no alternative
+        text. An image that carries meaning goes in the <code>media</code> slot of
+        <code>c-hero.split</code> or <code>c-hero.showcase</code>, where it is a real
+        <code>&lt;img&gt;</code> with an <code>alt</code>.
+      </li>
+      <li>
+        <strong>A dark background needs <code>invert</code> on the block.</strong> A background cannot
+        reach up to recolour the copy above it, so the block carries the switch and each background
+        below says whether it wants one.
+      </li>
+    </ul>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Switch the theme in the bar above. Every one of these is built from the semantic palette, so
+      the whole page should follow — and the copy should stay readable on all of them, which is the
+      thing worth checking hardest.
+    </p>
+  </c-container>
+
+  {# ───────────────────────────────────────────────────────────────── glow #}
+  <section class="border-t border-base-300">
+    <c-container class="py-10">
+      <h2 id="glow" class="text-2xl font-semibold">
+        <code class="rounded bg-base-200 px-2 py-1">&lt;c-background.glow&gt;</code>
+      </h2>
+      <p class="mt-3 max-w-3xl text-base-content/80">
+        Two heavily blurred discs of the theme's own colours. Low opacity on purpose: the surface
+        under the copy stays close to the page's own, so the text keeps the contrast it was designed
+        for. Takes <code>from</code>, <code>to</code> and <code>intensity</code>. No
+        <code>invert</code>.
+      </p>
+      <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.glow />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" size="sm" title="The default" lead="Primary and secondary, softly.">
+            <c-slot name="background"><c-background.glow /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.glow intensity="bold" />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" size="sm" title="Turned up" lead="Worth a look on a dark theme.">
+            <c-slot name="background"><c-background.glow intensity="bold" /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.glow from="accent" to="primary" />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" size="sm" title="Another pair" lead="Any two names from the palette.">
+            <c-slot name="background"><c-background.glow from="accent" to="primary" /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.glow intensity="faint" />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" size="sm" title="Almost nothing" lead="A hint of warmth under dense copy.">
+            <c-slot name="background"><c-background.glow intensity="faint" /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+      </div>
+    </c-container>
+  </section>
+
+  {# ───────────────────────────────────────────────────────────── gradient #}
+  <section class="border-t border-base-300">
+    <c-container class="py-10">
+      <h2 id="gradient" class="text-2xl font-semibold">
+        <code class="rounded bg-base-200 px-2 py-1">&lt;c-background.gradient&gt;</code>
+      </h2>
+      <p class="mt-3 max-w-3xl text-base-content/80">
+        A wash between two palette colours, in any of the eight directions. Takes <code>from</code>,
+        <code>via</code>, <code>to</code>, <code>direction</code> and <code>opacity</code>. At
+        <code>opacity="full"</code> it needs <code>invert</code>, and that combination is the one to
+        check on a light theme as well as a dark one.
+      </p>
+      <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.gradient />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" size="sm" title="The default" lead="Primary to secondary, down and right.">
+            <c-slot name="background"><c-background.gradient /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.gradient from="base-100" to="primary" direction="t" />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" size="sm" title="Rising" lead="Colour pooling at the foot of the block.">
+            <c-slot name="background"><c-background.gradient from="base-100" to="primary" direction="t" /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.gradient from="primary" via="secondary" to="accent" />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" size="sm" title="Three stops" lead="A middle colour, for a longer run.">
+            <c-slot name="background"><c-background.gradient from="primary" via="secondary" to="accent" /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert>
+  <c-slot name="background">
+    <c-background.gradient from="neutral" to="primary" opacity="full" />
+  </c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3"
+                          invert
+                          size="sm"
+                          title="Full strength"
+                          lead="Needs invert, and needs checking on every theme.">
+            <c-slot name="background"><c-background.gradient from="neutral" to="primary" opacity="full" /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+      </div>
+    </c-container>
+  </section>
+
+  {# ───────────────────────────────────────────────────────────────── grid #}
+  <section class="border-t border-base-300">
+    <c-container class="py-10">
+      <h2 id="grid" class="text-2xl font-semibold">
+        <code class="rounded bg-base-200 px-2 py-1">&lt;c-background.grid&gt;</code>
+      </h2>
+      <p class="mt-3 max-w-3xl text-base-content/80">
+        A faint ruled grid. The rules are drawn in <code>currentColor</code>, so it inherits the
+        block's own text colour and works on a light theme, a dark theme and behind
+        <code>invert</code> without being told which. Takes <code>size</code>,
+        <code>intensity</code> and <code>flat</code>. The quietest of the four, which is why it sits
+        under dense copy better than a wash does.
+      </p>
+      <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.grid />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" size="sm" title="The default" lead="Fading out towards the foot of the block.">
+            <c-slot name="background"><c-background.grid /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.grid flat />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" size="sm" title="Ruled evenly" lead="No fade, for a block that ends on a border.">
+            <c-slot name="background"><c-background.grid flat /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.grid size="sm" intensity="bold" />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" size="sm" title="Tighter and darker" lead="Graph paper rather than a hint.">
+            <c-slot name="background"><c-background.grid size="sm" intensity="bold" /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert class="bg-neutral">
+  <c-slot name="background"><c-background.grid size="lg" /></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3"
+                          invert
+                          class="bg-neutral"
+                          size="sm"
+                          title="On a dark band"
+                          lead="Same block, inheriting the inverted text colour.">
+            <c-slot name="background"><c-background.grid size="lg" /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+      </div>
+    </c-container>
+  </section>
+
+  {# ──────────────────────────────────────────────────────────────── image #}
+  <section class="border-t border-base-300">
+    <c-container class="py-10">
+      <h2 id="image" class="text-2xl font-semibold">
+        <code class="rounded bg-base-200 px-2 py-1">&lt;c-background.image&gt;</code>
+      </h2>
+      <p class="mt-3 max-w-3xl text-base-content/80">
+        A picture, dimmed by the theme's own <code>neutral</code>. Always wants <code>invert</code>.
+        Takes <code>src</code>, <code>dim</code> and <code>position</code>. Because the package
+        cannot see the picture, <code>dim</code> is what makes the copy readable — treat "does this
+        still read?" as the setting's whole purpose.
+      </p>
+      <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.image src="..." dim="soft" />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" invert size="sm" title="Soft" lead="The picture leads. Check the copy against it.">
+            <c-slot name="background"><c-background.image src="{% static 'example/spotlight.svg' %}" dim="soft" /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.image src="..." dim="medium" />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" invert size="sm" title="Medium" lead="The default, and the usual answer.">
+            <c-slot name="background"><c-background.image src="{% static 'example/spotlight.svg' %}" /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.image src="..." dim="strong" />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" invert size="sm" title="Strong" lead="The copy leads and the picture is texture.">
+            <c-slot name="background"><c-background.image src="{% static 'example/spotlight.svg' %}" dim="strong" /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+
+        <c-demo.tile>
+          <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.image src="..." position="top" />{% endverbatim %}{% endfilter %}</c-slot>
+          <c-hero.centred level="3" invert size="sm" title="Anchored" lead="Where the picture sits inside its frame.">
+            <c-slot name="background"><c-background.image src="{% static 'example/spotlight.svg' %}" position="top" /></c-slot>
+          </c-hero.centred>
+        </c-demo.tile>
+      </div>
+    </c-container>
+  </section>
+
+  {# ─────────────────────────────────────────────────── stacking two layers #}
+  <section class="border-t border-base-300">
+    <c-container class="py-10">
+      <h2 id="stacking" class="text-2xl font-semibold">More than one layer</h2>
+      <p class="mt-3 max-w-3xl text-base-content/80">
+        The slot takes markup, not just one block, so two backgrounds stack in the order they are
+        written — later on top. Nothing special is needed for it to work, which is the useful
+        consequence of the layer owning the positioning rather than the backgrounds doing it
+        themselves.
+      </p>
+      <pre class="mt-4 w-full overflow-x-auto rounded-lg border border-base-300 bg-base-200 p-4 text-xs"><code>{% filter force_escape %}{% verbatim %}<c-slot name="background">
+  <c-background.glow intensity="bold" />
+  <c-background.grid intensity="faint" />
+</c-slot>{% endverbatim %}{% endfilter %}</code></pre>
+    </c-container>
+  </section>
+
+  <div class="border-t border-base-300">
+    <c-hero.centred level="3"
+                    size="lg"
+                    eyebrow="Two layers"
+                    title="Colour underneath, structure over it"
+                    lead="A glow for warmth and a grid for texture, written one after the other in the same slot.">
+      <c-slot name="background">
+        <c-background.glow intensity="bold" />
+        <c-background.grid intensity="faint" />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#stacking">Primary action</a>
+        <a class="btn btn-outline btn-lg" href="#stacking">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </div>
+{% endblock content %}

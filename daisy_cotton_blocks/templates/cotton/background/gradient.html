@@ -23,9 +23,14 @@
     opacity     faint | soft | full — how much of the block's own surface
                 shows through. Default soft.
     class       extra classes on the layer
+
+  Roots at `absolute inset-0`, like every background block, so that two written
+  into the same slot land on top of each other rather than one below the other.
+  See <c-background.glow> for the reasoning. A background belongs in a
+  `background` slot and nowhere else.
   ============================================================
 {% endcomment %}
 <c-vars from="primary" via to="secondary" direction="br" opacity="soft" class />
-<div class="h-full w-full bg-gradient-to-{{ direction }} from-{{ from }} {% if via %}via-{{ via }}{% endif %} to-{{ to }}
+<div class="absolute inset-0 bg-gradient-to-{{ direction }} from-{{ from }} {% if via %}via-{{ via }}{% endif %} to-{{ to }}
             {% if opacity == 'faint' %}opacity-10{% elif opacity == 'full' %}opacity-100{% else %}opacity-20{% endif %}
             {{ class }}"></div>

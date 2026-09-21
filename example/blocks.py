@@ -1,4 +1,4 @@
-"""The block families the roadmap plans.
+"""The block families this package has, or plans.
 
 Declared once and used to build both the sidebar and the placeholder pages, so
 a family is named in exactly one place.
@@ -9,8 +9,14 @@ a family is named in exactly one place.
 # already ruled out: a family called "section" would render as
 # <c-section.something>, which collides with the component of that name in
 # django-mvp and in most other component libraries. Hence "content".
+#
+# Backgrounds are the one entry the roadmap does not name. They fell out of
+# designing the heroes: a background is not part of a layout, so it became its
+# own family that composes with every other one. The roadmap item covering it
+# is still to be written.
 PLANNED_FAMILIES: tuple[tuple[str, str], ...] = (
     ("hero", "Hero"),
+    ("background", "Backgrounds"),
     ("content", "Content sections"),
     ("cta", "Calls to action"),
     ("pricing", "Pricing"),

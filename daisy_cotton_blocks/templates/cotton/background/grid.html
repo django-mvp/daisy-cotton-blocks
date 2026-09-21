@@ -22,13 +22,18 @@
                 comes next.
     class       extra classes on the layer
 
+  Roots at `absolute inset-0`, like every background block, so that two written
+  into the same slot land on top of each other rather than one below the other.
+  See <c-background.glow> for the reasoning. A background belongs in a
+  `background` slot and nowhere else.
+
   `flat` is a bare attribute rather than `fade=False`, because a Cotton
   attribute arrives as a string and the string "False" is truthy in a Django
   template — a default-on boolean that reads as off is a trap, not an option.
   ============================================================
 {% endcomment %}
 <c-vars size="md" intensity="soft" flat class />
-<div class="h-full w-full
+<div class="absolute inset-0
             bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)]
             {% if size == 'sm' %}bg-[size:2rem_2rem]{% elif size == 'lg' %}bg-[size:5rem_5rem]{% else %}bg-[size:3.5rem_3.5rem]{% endif %}
             {% if intensity == 'faint' %}opacity-5{% elif intensity == 'bold' %}opacity-20{% else %}opacity-10{% endif %}

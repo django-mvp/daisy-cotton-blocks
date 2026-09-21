@@ -51,10 +51,16 @@ class TestPlannedFamilyPages:
 
         assert response.status_code == 200
         assert b"have a template yet" not in response.content
+        for tag in (b"c-hero.centred", b"c-hero.split", b"c-hero.showcase"):
+            assert tag in response.content
+
+    def test_the_background_family_has_a_catalogue_page(self, client) -> None:
+        """Backgrounds are blocks too, and get a page rather than a strip."""
+        response = client.get(reverse("group", kwargs={"slug": "background"}))
+
+        assert response.status_code == 200
+        assert b"have a template yet" not in response.content
         for tag in (
-            b"c-hero.centred",
-            b"c-hero.split",
-            b"c-hero.showcase",
             b"c-background.glow",
             b"c-background.gradient",
             b"c-background.grid",

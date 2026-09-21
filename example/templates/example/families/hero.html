@@ -2,8 +2,8 @@
 {% load static %}
 
 {% comment %}
-  The hero catalogue: three layouts, then the backgrounds that go under any of
-  them.
+  The hero catalogue: three layouts. The backgrounds that go under them have
+  their own page, so this one stays about arrangement.
 
   Headings run h1 (the page) → h2 (each block's tag) → h3 (the heading inside
   the live block), which is why every specimen passes `level="3"`. The blocks
@@ -129,6 +129,10 @@
       one.
     </p>
     <p class="mt-4 max-w-3xl text-base-content/80">
+      The backgrounds themselves, their options and what they look like under the same hero are on
+      the <a class="link" href="{% url 'group' slug='background' %}">Backgrounds</a> page.
+    </p>
+    <p class="mt-4 max-w-3xl text-base-content/80">
       Every colour on this page comes from the active theme. Switch it in the bar above and all of it
       follows. Where the markup says <code>&lt;c-demo.screenshot&gt;</code>, a real project puts its
       own screenshot.
@@ -246,104 +250,5 @@
         <c-demo.screenshot />
       </c-slot>
     </c-hero.showcase>
-  </c-demo.specimen>
-
-  {# ────────────────────────────────────────────────────────── backgrounds #}
-  <section class="border-t border-base-300">
-    <c-container class="py-10">
-      <h2 id="backgrounds" class="text-2xl font-semibold">Backgrounds</h2>
-      <p class="mt-3 max-w-3xl text-base-content/80">
-        Four so far, each its own block. The same hero is under all of them, so what changes below is
-        only what went in the slot.
-      </p>
-    </c-container>
-  </section>
-
-  <c-demo.specimen tag="c-background.glow"
-                   anchor="bg-glow"
-                   summary="Two heavily blurred discs of the theme's own colours. Low opacity on purpose: the surface under the copy stays close to the page's own, so the text keeps the contrast it was designed for. Takes from, to and intensity.">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-slot name="background">
-  <c-background.glow from="primary" to="secondary" intensity="soft" />
-</c-slot>{% endverbatim %}{% endfilter %}</c-slot>
-
-    <c-hero.centred level="3"
-                    size="sm"
-                    title="Colour, without a colour"
-                    lead="Faint enough to sit under dense copy, and it re-themes with everything else.">
-      <c-slot name="background">
-        <c-background.glow />
-      </c-slot>
-      <c-slot name="actions">
-        <a class="btn btn-primary" href="#bg-glow">Primary action</a>
-        <a class="btn btn-ghost" href="#bg-glow">Secondary</a>
-      </c-slot>
-    </c-hero.centred>
-  </c-demo.specimen>
-
-  <c-demo.specimen tag="c-background.gradient"
-                   anchor="bg-gradient"
-                   summary="A wash between two palette colours. Kept at partial opacity here so the copy keeps its contrast — at full strength it needs invert on the block, and wants checking on a light theme and a dark one. Takes from, via, to, direction and opacity.">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-slot name="background">
-  <c-background.gradient from="primary" to="accent" direction="br" opacity="soft" />
-</c-slot>{% endverbatim %}{% endfilter %}</c-slot>
-
-    <c-hero.centred level="3"
-                    size="sm"
-                    title="A wash across the block"
-                    lead="Two stops from the semantic palette, in any of the eight directions.">
-      <c-slot name="background">
-        <c-background.gradient from="primary" to="accent" />
-      </c-slot>
-      <c-slot name="actions">
-        <a class="btn btn-primary" href="#bg-gradient">Primary action</a>
-        <a class="btn btn-ghost" href="#bg-gradient">Secondary</a>
-      </c-slot>
-    </c-hero.centred>
-  </c-demo.specimen>
-
-  <c-demo.specimen tag="c-background.grid"
-                   anchor="bg-grid"
-                   summary="A faint ruled grid, drawn in currentColor so it inherits the block's own text colour and works on a light theme, a dark theme and behind invert without being told which. Fades out towards the foot unless you pass flat.">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-slot name="background">
-  <c-background.grid size="md" intensity="soft" />
-</c-slot>{% endverbatim %}{% endfilter %}</c-slot>
-
-    <c-hero.centred level="3"
-                    size="sm"
-                    title="A surface, not a colour"
-                    lead="The quietest of the four, which is why it sits under dense copy better than a wash does.">
-      <c-slot name="background">
-        <c-background.grid />
-      </c-slot>
-      <c-slot name="actions">
-        <a class="btn btn-primary" href="#bg-grid">Primary action</a>
-        <a class="btn btn-ghost" href="#bg-grid">Secondary</a>
-      </c-slot>
-    </c-hero.centred>
-  </c-demo.specimen>
-
-  <c-demo.specimen tag="c-background.image"
-                   anchor="bg-image"
-                   summary="A picture, dimmed by the theme's own neutral. This is the one that needs invert on the block. dim is what makes the copy readable over a picture the package cannot see, so it is the setting to check on every theme.">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert size="lg" title="…">
-  <c-slot name="background">
-    <c-background.image src="{% static 'marketing/basalt.jpg' %}" dim="strong" />
-  </c-slot>
-</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
-
-    <c-hero.centred level="3"
-                    invert
-                    size="lg"
-                    eyebrow="Field season 2026"
-                    title="Measurements from where the heat is"
-                    lead="Four hundred boreholes across the East African Rift, reduced, quality-scored and published under one licence.">
-      <c-slot name="background">
-        <c-background.image src="{% static 'example/spotlight.svg' %}" dim="strong" />
-      </c-slot>
-      <c-slot name="actions">
-        <a class="btn btn-primary btn-lg" href="#bg-image">Browse the dataset</a>
-        <a class="btn btn-outline btn-lg" href="#bg-image">How it was measured</a>
-      </c-slot>
-    </c-hero.centred>
   </c-demo.specimen>
 {% endblock content %}
