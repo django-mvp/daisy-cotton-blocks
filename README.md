@@ -66,7 +66,7 @@ Blocks are then available as Cotton tags:
 
 **Tie-breaks.** When two of these pull against each other: theme-driven beats hard-coded, a block that composes existing daisyUI markup beats one that invents its own, and leaving a job to the project beats doing it here.
 
-The directions the package works toward are in [GOALS.md](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/GOALS.md).
+The directions the package works toward are in [GOALS.md](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/GOALS.md), and the order they are being built in is in the [roadmap](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/docs/ROADMAP.md).
 
 ## Building the stylesheet
 
