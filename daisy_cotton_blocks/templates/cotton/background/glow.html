@@ -1,3 +1,8 @@
+{# @description Two heavily blurred discs of the theme's own colours. No invert needed. #}
+{# @prop from:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The disc at the top" #}
+{# @prop to:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"secondary" | description:"The disc at the foot" #}
+{# @prop intensity:select['faint', 'soft', 'bold'] | default:"soft" | description:"How far the discs come through. Check bold against a dark theme." #}
+{# @prop class:text | description:"Extra classes on the layer" #}
 {% comment %}
   ============================================================
   <c-background.glow> — two blurred discs of colour
@@ -6,13 +11,6 @@
   surface under the copy stays close to the page's own background and the text
   keeps the contrast it was designed for. That restraint is the whole point:
   colour on a saturated gradient is what fails on a theme you did not test.
-
-  Attributes
-    from        the disc at the top, a semantic palette name. Default primary.
-    to          the disc at the foot. Default secondary.
-    intensity   faint | soft | bold — how far the discs come through.
-                Default soft. `bold` is worth checking against a dark theme.
-    class       extra classes on the layer
 
   Every background block roots at `absolute inset-0` rather than filling its
   parent in normal flow, which is what lets two of them be written into the

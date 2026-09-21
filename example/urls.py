@@ -1,4 +1,5 @@
-from django.urls import path
+from django.conf import settings
+from django.urls import include, path
 
 from example.views import GroupView, HomeView
 
@@ -6,6 +7,14 @@ urlpatterns = [
     path("", HomeView.as_view(), name="home"),
     path("components/<slug:slug>/", GroupView.as_view(), name="group"),
 ]
+
+# The component gallery, under DEBUG only. It serves the source of every
+# component it indexes, so it is a development tool and never a public route —
+# which is also why it is a dev dependency rather than a runtime one. Its own
+# routes are all under the /django-cotton-gallery/ prefix, so including it at
+# the root adds nothing else.
+if settings.DEBUG:
+    urlpatterns += [path("", include("django_cotton_gallery.urls"))]
 
 # Django reads these only from the module named by ROOT_URLCONF.
 handler400 = "mvp.views.bad_request"

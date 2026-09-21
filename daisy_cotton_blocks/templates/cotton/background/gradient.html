@@ -1,3 +1,10 @@
+{# @description A wash between two palette colours. Needs invert at full opacity. #}
+{# @prop from:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The first stop" #}
+{# @prop via:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | description:"An optional middle stop" #}
+{# @prop to:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"secondary" | description:"The last stop" #}
+{# @prop direction:select['t', 'tr', 'r', 'br', 'b', 'bl', 'l', 'tl'] | default:"br" | description:"Which way the wash runs" #}
+{# @prop opacity:select['faint', 'soft', 'full'] | default:"soft" | description:"How much of the block's own surface shows through. full needs invert." #}
+{# @prop class:text | description:"Extra classes on the layer" #}
 {% comment %}
   ============================================================
   <c-background.gradient> — a wash between two theme colours
@@ -13,16 +20,6 @@
       surface and the copy keeps the contrast measured for that surface.
     - Or go full strength and set `invert` on the block, which puts the copy
       in `neutral-content`. Check it against a light theme and a dark one.
-
-  Attributes
-    from        the first stop, a semantic palette name. Default primary.
-    via         an optional middle stop.
-    to          the last stop. Default secondary.
-    direction   a Tailwind gradient direction: t, tr, r, br, b, bl, l, tl.
-                Default br.
-    opacity     faint | soft | full — how much of the block's own surface
-                shows through. Default soft.
-    class       extra classes on the layer
 
   Roots at `absolute inset-0`, like every background block, so that two written
   into the same slot land on top of each other rather than one below the other.

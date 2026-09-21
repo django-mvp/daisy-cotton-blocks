@@ -33,9 +33,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "example",
+    # Above "example" for the gallery's benefit, not for template resolution.
+    # The gallery scans exactly one cotton/ directory: the first template root
+    # that has one, in this order. Below "example" it would index the demo's
+    # own scaffolding components and never see the package's blocks. Nothing
+    # collides — the two apps share no template path.
     "daisy_cotton_blocks",
+    "example",
     "django_cotton",
+    # Development only, and a dev dependency for that reason: the gallery
+    # serves component source code, so urls.py mounts it under DEBUG alone.
+    "django_cotton_gallery",
     "easy_icons",
     "flex_menu",
     "mvp",
@@ -99,6 +107,7 @@ EASY_ICONS = {
         "icons": {
             "home": "bi bi-house",
             "block": "bi bi-square",
+            "gallery": "bi bi-grid-3x3-gap",
         },
     }
 }

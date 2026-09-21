@@ -1,3 +1,16 @@
+{# @description Centred copy over a wide, lifted product panel. #}
+{# @prop eyebrow:text | description:"Short line above the heading" #}
+{# @prop title:text | default:"Your whole estate, on one screen" | description:"The heading. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The supporting sentence under the heading" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"1" | description:"Heading level. 1 is right for a landing page." #}
+{# @prop invert:boolean | default:False | description:"Light copy, for a dark background" #}
+{# @prop size:select['sm', 'md', 'lg'] | default:"md" | description:"How much vertical room the block takes" #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here." #}
+{# @slot:background — A background block, rendered into a layer behind the copy #}
+{# @slot:announcement — Above the eyebrow #}
+{# @slot:actions — The button row #}
+{# @slot:footnote — Under the actions, above the visual #}
+{# @slot:media — The visual. This block frames and lifts it, so pass the bare thing. #}
 {% comment %}
   ============================================================
   <c-hero.showcase> — centred copy over a large product visual
@@ -11,27 +24,12 @@
   reading material and stays inside a comfortable measure, the visual is
   looking material and takes the room.
 
-  Attributes
-    eyebrow   short line above the heading
-    title     heading text; pass markup through the `title` slot instead
-    lead      supporting sentence under the heading
-    level     heading level, 1-6, default 1
-    invert    set it when the background is dark, which puts the copy in
-              `neutral-content`
-    size      sm | md | lg — how much vertical room the block takes
-    class     extra classes on the outer section
-
-  Slots
-    background    a <c-background.*> block. See <c-hero.centred> for the note
-                  on how the layer works.
-    announcement  above the eyebrow
-    actions       the button row
-    footnote      under the actions, above the visual
-    media         the visual. It is framed and lifted by this block, so pass
-                  the bare thing — an <img>, a mockup, a live component.
+  The attributes and slots are declared in the annotations above this block.
+  See <c-hero.centred> for the note on how the background layer works, and for
+  why the actions are a slot rather than a pair of label/href attributes.
   ============================================================
 {% endcomment %}
-<c-vars eyebrow title lead level="1" invert size="md" background announcement actions footnote media class />
+<c-vars eyebrow title lead level="1" invert size="md" class />
 <section class="relative isolate overflow-hidden
                 {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
                 {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}

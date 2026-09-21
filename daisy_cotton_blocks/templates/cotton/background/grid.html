@@ -1,3 +1,8 @@
+{# @description A faint ruled grid, drawn in currentColor so it follows the block's text colour. #}
+{# @prop size:select['sm', 'md', 'lg'] | default:"md" | description:"How far apart the rules sit" #}
+{# @prop intensity:select['faint', 'soft', 'bold'] | default:"soft" | description:"How far the rules come through" #}
+{# @prop flat:boolean | default:False | description:"Rule the whole area evenly instead of fading out towards the foot" #}
+{# @prop class:text | description:"Extra classes on the layer" #}
 {% comment %}
   ============================================================
   <c-background.grid> — a faint ruled grid
@@ -13,14 +18,6 @@
   The pattern is a Tailwind arbitrary value rather than an inline `style`,
   so a project running a strict Content-Security-Policy without
   `style-src 'unsafe-inline'` still gets it.
-
-  Attributes
-    size        sm | md | lg — how far apart the rules sit. Default md.
-    intensity   faint | soft | bold. Default soft.
-    flat        rule the whole area evenly. By default the grid fades out
-                towards the foot of the block so it does not run into whatever
-                comes next.
-    class       extra classes on the layer
 
   Roots at `absolute inset-0`, like every background block, so that two written
   into the same slot land on top of each other rather than one below the other.

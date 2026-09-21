@@ -1,3 +1,8 @@
+{# @description A picture, dimmed by the theme's neutral. Always pair it with invert on the block. #}
+{# @prop src:text | description:"URL of the image. Without one the layer renders only the dim." #}
+{# @prop dim:select['soft', 'medium', 'strong'] | default:"medium" | description:"How far the picture is dimmed. This is what makes the copy readable." #}
+{# @prop position:select['center', 'top', 'bottom', 'left', 'right'] | default:"center" | description:"Where the picture sits inside its frame" #}
+{# @prop class:text | description:"Extra classes on the layer" #}
 {% comment %}
   ============================================================
   <c-background.image> — a picture behind the copy, dimmed
@@ -20,13 +25,6 @@
   what makes the copy readable. Treat "does the copy still read over this
   picture?" as the setting's whole purpose — on every theme, since the dimming
   layer is the theme's own `neutral`.
-
-  Attributes
-    src       URL of the image. Required, or the layer renders only the dim.
-    dim       soft | medium | strong. Default medium.
-    position  an object-position utility suffix: center, top, bottom, left,
-              right. Default center.
-    class     extra classes on the layer
 
   Roots at `absolute inset-0`, like every background block, so that two written
   into the same slot land on top of each other rather than one below the other.

@@ -1,29 +1,40 @@
+{# @description One column, centred. The default opener, for when the words are the product. #}
+{# @prop eyebrow:text | description:"Short line above the heading — a category, a release name" #}
+{# @prop title:text | default:"Ship the page, not the CSS" | description:"The heading. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The supporting sentence under the heading" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"1" | description:"Heading level. 1 is right for a landing page." #}
+{# @prop invert:boolean | default:False | description:"Light copy, for a dark background. Each background says whether it wants this." #}
+{# @prop size:select['sm', 'md', 'lg', 'screen'] | default:"md" | description:"How much vertical room the block takes" #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
+{# @slot:background — A background block, rendered into a layer behind the copy #}
+{# @slot:announcement — Above the eyebrow. A pill linking to the latest release, usually. #}
+{# @slot:actions — The button row. Write real anchor markup, so it can post, submit or carry anything. #}
+{# @slot:footnote — Under the actions. A trust line, a rating, a row of logos. #}
 {% comment %}
   ============================================================
   <c-hero.centred> — the default opening block
 
-  One column, centred. The arrangement to reach for when the words are the
-  product: a launch announcement, a documentation site, a service with nothing
-  to screenshot. With `<c-background.image>` in the background slot it is also
-  the image-backed hero.
+  The arrangement to reach for when the words are the product: a launch
+  announcement, a documentation site, a service with nothing to screenshot.
+  With `<c-background.image>` in the background slot it is also the
+  image-backed hero.
 
-  Attributes
-    eyebrow   short line above the heading (a category, a release name)
-    title     heading text; pass markup through the `title` slot instead
-    lead      supporting sentence under the heading
-    level     heading level, 1-6, default 1
-    invert    set it when the background is dark, which puts the copy in
-              `neutral-content`. Each background block's own notes say whether
-              it needs this.
-    size      sm | md | lg | screen — how much vertical room the block takes
-    class     extra classes on the outer section. This is where a plain
-              surface colour goes: `class="bg-base-200"`.
+  The attributes and slots are declared in the annotations above this block,
+  which is what the component gallery reads to build its controls. Everything
+  below is the reasoning those one-liners have no room for.
 
-  Slots
-    background    a <c-background.*> block, or any markup. See the note below.
-    announcement  above the eyebrow (a pill linking to the latest release)
-    actions       the button row; write real <a class="btn"> markup here
-    footnote      under the actions (a trust line, a "no card required")
+  ── What goes in <c-vars>, and what does not ────────────────────────────────
+
+  Props only. Slot names are deliberately absent, even though several component
+  libraries list them there — Cotton fills a named slot whether or not it is
+  declared, and the only thing declaring one buys is stopping an *attribute* of
+  that name from reaching `{{ attrs }}`. Nobody passes `actions="..."` as an
+  attribute.
+
+  Leaving them out keeps one list meaning one thing: `<c-vars>` is the prop set,
+  the `@prop` lines document it, and the two can be checked against each other
+  mechanically. With slot names mixed in, every one of them reads as an
+  undocumented prop.
 
   ── The background slot ─────────────────────────────────────────────────────
 
@@ -46,7 +57,7 @@
   layout is the hard part and the part this block owns.
   ============================================================
 {% endcomment %}
-<c-vars eyebrow title lead level="1" invert size="md" background announcement actions footnote class />
+<c-vars eyebrow title lead level="1" invert size="md" class />
 <section class="relative isolate overflow-hidden
                 {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
                 {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% elif size == 'screen' %}flex min-h-screen items-center py-24{% else %}py-16 md:py-24{% endif %}

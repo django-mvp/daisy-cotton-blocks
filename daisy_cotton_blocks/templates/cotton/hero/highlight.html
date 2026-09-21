@@ -1,3 +1,7 @@
+{# @description Fills the words it wraps with one of the theme's colour pairs. Headings only. #}
+{# @prop color:select['primary', 'secondary', 'accent'] | default:"primary" | description:"Which colour pair fills the swash" #}
+{# @prop class:text | description:"Extra classes on the span" #}
+{# @slot not the CSS — The words to mark #}
 {% comment %}
   ============================================================
   <c-hero.highlight> — mark the words that carry the headline
@@ -16,9 +20,6 @@
   4.5:1 body-text one — which is why this belongs in a heading and nowhere
   else.
 
-  Attributes
-    color   primary (default) | secondary | accent
-    class   extra classes
   ============================================================
 {% endcomment %}
 <c-vars color="primary" class />

@@ -47,6 +47,7 @@ mvp-shared = { git = "https://github.com/django-mvp/shared.git", tag = "v0.4.1",
 # A host for the example project and the coverage test: django-mvp is one
 # ready-made daisyUI and Cotton host, which is all the demo needs it to be.
 django-mvp = ">=0.23.0"
+django-cotton-gallery = "^1.0.0"
 
 [build-system]
 requires = ['poetry-core (>=2.0,<3.0)']
