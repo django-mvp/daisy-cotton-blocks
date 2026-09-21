@@ -1,0 +1,48 @@
+{% extends "mvp/base.html" %}
+
+{% block content %}
+  <c-container>
+    <c-section title="What this is">
+      <p>
+        A library of page blocks for Django projects running
+        <a class="link" href="https://django-cotton.com/">django-cotton</a> and
+        <a class="link" href="https://daisyui.com/">daisyUI</a>. Heroes, section layouts, calls to
+        action and the rest of the furniture a public-facing page needs.
+      </p>
+      <p>
+        Component libraries in this space cover the application: navigation, forms, tables,
+        dialogs. They stop at the pages that sit in front of it, which get assembled by hand out
+        of raw utility classes in every project, every time.
+      </p>
+      <p>
+        Blocks are configured through their attributes and take their colours from whatever
+        daisyUI theme the project already runs. Change the theme from the bar above and everything
+        on this page follows it, which is the behaviour every block is held to.
+      </p>
+    </c-section>
+
+    <c-section title="What it deliberately is not">
+      <ul class="list-disc ps-6 space-y-2">
+        <li>
+          <strong>Not an application.</strong> No models, views, forms, URLs or migrations. A
+          block's content comes from the template author, never from a queryset.
+        </li>
+        <li>
+          <strong>Not a CSS framework.</strong> daisyUI, its themes and the page reset all come
+          from the project. This package ships only the plain utilities its own blocks need.
+        </li>
+        <li>
+          <strong>Not page templates.</strong> Blocks only. You pick the ones you want and
+          assemble the page yourself.
+        </li>
+      </ul>
+    </c-section>
+
+    <c-section title="Where this demo is up to">
+      <p>
+        No blocks are written yet. The pages in the sidebar hold a place for each family the
+        roadmap plans, and each one renders the shell and nothing else until its blocks exist.
+      </p>
+    </c-section>
+  </c-container>
+{% endblock content %}
