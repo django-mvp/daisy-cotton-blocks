@@ -55,7 +55,10 @@ class TestPlannedFamilyPages:
             b"c-hero.centred",
             b"c-hero.split",
             b"c-hero.showcase",
-            b"c-hero.spotlight",
+            b"c-background.glow",
+            b"c-background.gradient",
+            b"c-background.grid",
+            b"c-background.image",
         ):
             assert tag in response.content
 

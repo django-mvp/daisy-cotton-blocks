@@ -2,9 +2,8 @@
 {% load static %}
 
 {% comment %}
-  The hero catalogue. Each block is rendered live at full width, then shown as
-  the markup that produced it, then the page closes on the options that change
-  a block without changing its layout.
+  The hero catalogue: three layouts, then the backgrounds that go under any of
+  them.
 
   Headings run h1 (the page) → h2 (each block's tag) → h3 (the heading inside
   the live block), which is why every specimen passes `level="3"`. The blocks
@@ -17,14 +16,14 @@
   <c-container class="py-10">
     <h1 class="text-3xl font-bold">Hero blocks</h1>
     <p class="mt-4 max-w-3xl text-lg text-base-content/80">
-      The block at the top of a page. Four of them, because the arrangement is fixed per block and a
-      different arrangement is a different tag — <code>tone</code> and <code>size</code> change how a
-      block looks, never where its pieces sit.
+      The block at the top of a page. Three arrangements, because the arrangement is fixed per block
+      and a different arrangement is a different tag — and a separate family of backgrounds that goes
+      under any of them.
     </p>
 
     <h2 class="mt-10 text-xl font-semibold">What every hero takes</h2>
     <p class="mt-3 max-w-3xl text-base-content/80">
-      The four blocks share one vocabulary, so moving a page from one to another is a tag change and
+      The three blocks share one vocabulary, so moving a page from one to another is a tag change and
       nothing else.
     </p>
     <div class="mt-4 overflow-x-auto">
@@ -58,20 +57,35 @@
             <td>Heading level, 1 to 6. Defaults to 1, which is right for a landing page.</td>
           </tr>
           <tr>
-            <td><code>tone</code></td>
+            <td><code>invert</code></td>
             <td>attribute</td>
-            <td>
-              <code>base</code>, <code>soft</code>, <code>glow</code> or <code>neutral</code>. The surface
-              under the copy.
-            </td>
+            <td>Puts the copy in <code>neutral-content</code>, for a dark background.</td>
           </tr>
           <tr>
             <td><code>size</code></td>
             <td>attribute</td>
             <td>
-              <code>sm</code>, <code>md</code>, <code>lg</code> — and <code>screen</code> on the two
-              blocks it makes sense for.
+              <code>sm</code>, <code>md</code>, <code>lg</code> — and <code>screen</code> on
+              <code>c-hero.centred</code>.
             </td>
+          </tr>
+          <tr>
+            <td><code>reverse</code></td>
+            <td>attribute</td>
+            <td>
+              <code>c-hero.split</code> only. Swaps the two columns at wide widths. No effect once the
+              block has stacked.
+            </td>
+          </tr>
+          <tr>
+            <td><code>class</code></td>
+            <td>attribute</td>
+            <td>Lands on the outer section. Where a plain surface colour goes: <code>bg-base-200</code>.</td>
+          </tr>
+          <tr>
+            <td><code>background</code></td>
+            <td>slot</td>
+            <td>A background block, or any markup. Rendered into a layer behind the copy.</td>
           </tr>
           <tr>
             <td><code>announcement</code></td>
@@ -91,32 +105,45 @@
           <tr>
             <td><code>media</code></td>
             <td>slot</td>
-            <td>The visual, on the two blocks that have one. Anything at all.</td>
+            <td>The visual, on <code>split</code> and <code>showcase</code>. Anything at all.</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="mt-4 max-w-3xl text-base-content/80">
-      Every colour on this page comes from the active theme. Switch it in the bar above and the blocks
-      follow, including the glow and the marked words in the headings.
+
+    <h2 class="mt-10 text-xl font-semibold">How the background slot works</h2>
+    <p class="mt-3 max-w-3xl text-base-content/80">
+      A hero is a stacking context, and whatever goes in the slot is rendered into a layer at
+      <code>-z-10</code> inside it: above the block's own surface colour, below every piece of copy.
+      Nothing in the slot needs to know its own position or z-index, so any background composes with
+      any layout.
+    </p>
+    <p class="mt-3 max-w-3xl text-base-content/80">
+      The layer is hidden from assistive technology, which makes a background decoration by
+      definition. An image that carries meaning goes in the <code>media</code> slot instead, where it
+      is an <code>&lt;img&gt;</code> with an <code>alt</code>.
+    </p>
+    <p class="mt-3 max-w-3xl text-base-content/80">
+      A dark background needs light copy, and a background cannot reach up to recolour the block
+      above it — so the block carries <code>invert</code> and each background says whether it wants
+      one.
     </p>
     <p class="mt-4 max-w-3xl text-base-content/80">
-      Where the markup below says <code>&lt;c-demo.screenshot&gt;</code>, a real project puts its own
-      screenshot. It is drawn out of django-mvp's components here rather than shipped as an image, so
-      that it follows the theme along with everything else — and because that is what the
-      <code>media</code> slot is for.
+      Every colour on this page comes from the active theme. Switch it in the bar above and all of it
+      follows. Where the markup says <code>&lt;c-demo.screenshot&gt;</code>, a real project puts its
+      own screenshot.
     </p>
   </c-container>
 
   {# ────────────────────────────────────────────────────────────── centred #}
   <c-demo.specimen tag="c-hero.centred"
                    anchor="centred"
-                   summary="One column, centred, no media. For when the words are the product: a launch note, a documentation site, a service with nothing to screenshot.">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred tone="glow"
-               size="lg"
+                   summary="One column, centred. For when the words are the product: a launch note, a documentation site, a service with nothing to screenshot.">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg"
                eyebrow="Version 2.0"
                title="Ship the page, not the CSS"
                lead="Drop a block in, pass it your words, and let it take the colours from the theme you already run.">
+  <c-slot name="background"><c-background.glow /></c-slot>
   <c-slot name="announcement">
     <a class="badge badge-primary badge-lg" href="/changelog/">What's new in 2.0 →</a>
   </c-slot>
@@ -128,11 +155,13 @@
 </c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
 
     <c-hero.centred level="3"
-                    tone="glow"
                     size="lg"
                     eyebrow="Version 2.0"
                     title="Ship the page, not the CSS"
                     lead="Drop a block in, pass it your words, and let it take the colours from the theme you already run.">
+      <c-slot name="background">
+        <c-background.glow />
+      </c-slot>
       <c-slot name="announcement">
         <a class="badge badge-primary badge-lg" href="#centred">What's new in 2.0 →</a>
       </c-slot>
@@ -147,9 +176,9 @@
   {# ──────────────────────────────────────────────────────────────── split #}
   <c-demo.specimen tag="c-hero.split"
                    anchor="split"
-                   summary="Copy beside a visual, stacking to one column below the lg breakpoint with the copy first. The media slot takes anything — a screenshot, a mockup, an illustration, a sign-up card.">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.split tone="soft"
-             media-side="end"
+                   summary="Copy beside a visual, stacking to one column below the lg breakpoint with the copy first. Shown with reverse set, so the visual leads at width, and with no background block at all — just a surface colour on the section.">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.split reverse
+             class="bg-base-200"
              eyebrow="Deploy tracking"
              title="Every release, and who shipped it"
              lead="Meridian watches your pipelines and tells you what changed, when it went out, and which change is the one that broke the graph.">
@@ -166,8 +195,8 @@
 </c-hero.split>{% endverbatim %}{% endfilter %}</c-slot>
 
     <c-hero.split level="3"
-                  tone="soft"
-                  media-side="end"
+                  reverse
+                  class="bg-base-200"
                   eyebrow="Deploy tracking"
                   title="Every release, and who shipped it"
                   lead="Meridian watches your pipelines and tells you what changed, when it went out, and which change is the one that broke the graph.">
@@ -177,7 +206,9 @@
       </c-slot>
       <c-slot name="footnote">Connects to GitHub, GitLab and Bitbucket.</c-slot>
       <c-slot name="media">
-        <c-mockup.browser url="app.example.com/overview" class="shadow-2xl"><c-demo.screenshot /></c-mockup.browser>
+        <c-mockup.browser url="app.example.com/overview" class="shadow-2xl">
+          <c-demo.screenshot />
+        </c-mockup.browser>
       </c-slot>
     </c-hero.split>
   </c-demo.specimen>
@@ -185,8 +216,9 @@
   {# ───────────────────────────────────────────────────────────── showcase #}
   <c-demo.specimen tag="c-hero.showcase"
                    anchor="showcase"
-                   summary="Centred copy over a wide product panel that runs past the foot of the block, so the page reads as continuing. The one to reach for when a screenshot explains the product faster than a paragraph.">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.showcase tone="glow" size="lg">
+                   summary="Centred copy over a wide product panel. The one to reach for when a screenshot explains the product faster than a paragraph, and wants more room than split gives it.">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.showcase size="lg">
+  <c-slot name="background"><c-background.grid /></c-slot>
   <c-slot name="title">Your whole estate, <c-hero.highlight>on one screen</c-hero.highlight></c-slot>
   <c-slot name="lead">
     Two hundred services, four regions, one page that answers whether anything is on fire.
@@ -195,12 +227,13 @@
     <a class="btn btn-primary btn-lg" href="/signup/">Create an account</a>
     <a class="btn btn-outline btn-lg" href="/demo/">See a live demo</a>
   </c-slot>
-  <c-slot name="media">
-    <c-demo.screenshot />
-  </c-slot>
+  <c-slot name="media"><c-demo.screenshot /></c-slot>
 </c-hero.showcase>{% endverbatim %}{% endfilter %}</c-slot>
 
-    <c-hero.showcase level="3" tone="glow" size="lg">
+    <c-hero.showcase level="3" size="lg">
+      <c-slot name="background">
+        <c-background.grid />
+      </c-slot>
       <c-slot name="title">Your whole estate, <c-hero.highlight>on one screen</c-hero.highlight></c-slot>
       <c-slot name="lead">
         Two hundred services, four regions, one page that answers whether anything is on fire.
@@ -215,35 +248,102 @@
     </c-hero.showcase>
   </c-demo.specimen>
 
-  {# ──────────────────────────────────────────────────────────── spotlight #}
-  <c-demo.specimen tag="c-hero.spotlight"
-                   anchor="spotlight"
-                   summary="A full-bleed image with the copy over it. For when the image is the argument — a place, a piece of equipment, a person — and there is no interface worth showing.">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.spotlight image="{% static 'marketing/basalt.jpg' %}"
-                 alt=""
-                 dim="strong"
-                 size="lg"
-                 eyebrow="Field season 2026"
-                 title="Measurements from where the heat is"
-                 lead="Four hundred boreholes across the East African Rift, reduced, quality-scored and published under one licence.">
-  <c-slot name="actions">
-    <a class="btn btn-primary btn-lg" href="/data/">Browse the dataset</a>
-    <a class="btn btn-outline btn-lg" href="/method/">How it was measured</a>
-  </c-slot>
-</c-hero.spotlight>{% endverbatim %}{% endfilter %}</c-slot>
+  {# ────────────────────────────────────────────────────────── backgrounds #}
+  <section class="border-t border-base-300">
+    <c-container class="py-10">
+      <h2 id="backgrounds" class="text-2xl font-semibold">Backgrounds</h2>
+      <p class="mt-3 max-w-3xl text-base-content/80">
+        Four so far, each its own block. The same hero is under all of them, so what changes below is
+        only what went in the slot.
+      </p>
+    </c-container>
+  </section>
 
-    <c-hero.spotlight level="3"
-                      image="{% static 'example/spotlight.svg' %}"
-                      alt=""
-                      dim="strong"
-                      size="lg"
-                      eyebrow="Field season 2026"
-                      title="Measurements from where the heat is"
-                      lead="Four hundred boreholes across the East African Rift, reduced, quality-scored and published under one licence.">
-      <c-slot name="actions">
-        <a class="btn btn-primary btn-lg" href="#spotlight">Browse the dataset</a>
-        <a class="btn btn-outline btn-lg" href="#spotlight">How it was measured</a>
+  <c-demo.specimen tag="c-background.glow"
+                   anchor="bg-glow"
+                   summary="Two heavily blurred discs of the theme's own colours. Low opacity on purpose: the surface under the copy stays close to the page's own, so the text keeps the contrast it was designed for. Takes from, to and intensity.">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-slot name="background">
+  <c-background.glow from="primary" to="secondary" intensity="soft" />
+</c-slot>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="3"
+                    size="sm"
+                    title="Colour, without a colour"
+                    lead="Faint enough to sit under dense copy, and it re-themes with everything else.">
+      <c-slot name="background">
+        <c-background.glow />
       </c-slot>
-    </c-hero.spotlight>
+      <c-slot name="actions">
+        <a class="btn btn-primary" href="#bg-glow">Primary action</a>
+        <a class="btn btn-ghost" href="#bg-glow">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.specimen>
+
+  <c-demo.specimen tag="c-background.gradient"
+                   anchor="bg-gradient"
+                   summary="A wash between two palette colours. Kept at partial opacity here so the copy keeps its contrast — at full strength it needs invert on the block, and wants checking on a light theme and a dark one. Takes from, via, to, direction and opacity.">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-slot name="background">
+  <c-background.gradient from="primary" to="accent" direction="br" opacity="soft" />
+</c-slot>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="3"
+                    size="sm"
+                    title="A wash across the block"
+                    lead="Two stops from the semantic palette, in any of the eight directions.">
+      <c-slot name="background">
+        <c-background.gradient from="primary" to="accent" />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary" href="#bg-gradient">Primary action</a>
+        <a class="btn btn-ghost" href="#bg-gradient">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.specimen>
+
+  <c-demo.specimen tag="c-background.grid"
+                   anchor="bg-grid"
+                   summary="A faint ruled grid, drawn in currentColor so it inherits the block's own text colour and works on a light theme, a dark theme and behind invert without being told which. Fades out towards the foot unless you pass flat.">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-slot name="background">
+  <c-background.grid size="md" intensity="soft" />
+</c-slot>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="3"
+                    size="sm"
+                    title="A surface, not a colour"
+                    lead="The quietest of the four, which is why it sits under dense copy better than a wash does.">
+      <c-slot name="background">
+        <c-background.grid />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary" href="#bg-grid">Primary action</a>
+        <a class="btn btn-ghost" href="#bg-grid">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.specimen>
+
+  <c-demo.specimen tag="c-background.image"
+                   anchor="bg-image"
+                   summary="A picture, dimmed by the theme's own neutral. This is the one that needs invert on the block. dim is what makes the copy readable over a picture the package cannot see, so it is the setting to check on every theme.">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert size="lg" title="…">
+  <c-slot name="background">
+    <c-background.image src="{% static 'marketing/basalt.jpg' %}" dim="strong" />
+  </c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="3"
+                    invert
+                    size="lg"
+                    eyebrow="Field season 2026"
+                    title="Measurements from where the heat is"
+                    lead="Four hundred boreholes across the East African Rift, reduced, quality-scored and published under one licence.">
+      <c-slot name="background">
+        <c-background.image src="{% static 'example/spotlight.svg' %}" dim="strong" />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#bg-image">Browse the dataset</a>
+        <a class="btn btn-outline btn-lg" href="#bg-image">How it was measured</a>
+      </c-slot>
+    </c-hero.centred>
   </c-demo.specimen>
 {% endblock content %}

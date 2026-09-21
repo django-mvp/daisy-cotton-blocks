@@ -7,16 +7,23 @@
   paragraph does, which is most of the time, and when the visual wants more
   room than `<c-hero.split>` gives it.
 
+  The media panel is wider than the copy above it on purpose: the copy is
+  reading material and stays inside a comfortable measure, the visual is
+  looking material and takes the room.
+
   Attributes
     eyebrow   short line above the heading
     title     heading text; pass markup through the `title` slot instead
     lead      supporting sentence under the heading
     level     heading level, 1-6, default 1
-    tone      base | soft | glow | neutral — the surface treatment
+    invert    set it when the background is dark, which puts the copy in
+              `neutral-content`
     size      sm | md | lg — how much vertical room the block takes
     class     extra classes on the outer section
 
   Slots
+    background    a <c-background.*> block. See <c-hero.centred> for the note
+                  on how the layer works.
     announcement  above the eyebrow
     actions       the button row
     footnote      under the actions, above the visual
@@ -24,24 +31,21 @@
                   the bare thing — an <img>, a mockup, a live component.
   ============================================================
 {% endcomment %}
-<c-vars eyebrow title lead level="1" tone="base" size="md" announcement actions footnote media class />
+<c-vars eyebrow title lead level="1" invert size="md" background announcement actions footnote media class />
 <section class="relative isolate overflow-hidden
-                {% if tone == 'soft' %}bg-base-200 text-base-content{% elif tone == 'neutral' %}bg-neutral text-neutral-content{% else %}bg-base-100 text-base-content{% endif %}
+                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
                 {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
                 {{ class }}"
          {{ attrs }}>
-  {% if tone == 'glow' %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-      <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-primary opacity-20 blur-3xl"></div>
-      <div class="absolute top-40 -right-32 h-96 w-96 rounded-full bg-secondary opacity-20 blur-3xl"></div>
-    </div>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
   {% endif %}
   <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
     <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
       {{ announcement }}
       {% if eyebrow %}
         <p class="text-sm font-semibold tracking-widest uppercase
-                  {% if tone == 'neutral' %}text-neutral-content{% else %}text-base-content/80{% endif %}">
+                  {% if not invert %}text-base-content/80{% endif %}">
           {{ eyebrow }}
         </p>
       {% endif %}
@@ -50,7 +54,7 @@
       {# djlint:on #}
       {% if lead %}
         <p class="max-w-2xl text-lg leading-relaxed text-pretty sm:text-xl
-                  {% if tone == 'neutral' %}text-neutral-content{% else %}text-base-content/80{% endif %}">
+                  {% if not invert %}text-base-content/80{% endif %}">
           {{ lead }}
         </p>
       {% endif %}
@@ -58,26 +62,19 @@
         <div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>
       {% endif %}
       {% if footnote %}
-        <div class="pt-2 text-sm
-                    {% if tone == 'neutral' %}text-neutral-content{% else %}text-base-content/80{% endif %}">
-          {{ footnote }}
-        </div>
+        <div class="pt-2 text-sm {% if not invert %}text-base-content/80{% endif %}">{{ footnote }}</div>
       {% endif %}
     </div>
   </div>
   {% if media %}
     {% comment %}
-      The frame, not the content. Wider than the copy above it on purpose: the
-      copy is reading material and stays inside a comfortable measure, the
-      visual is looking material and takes the room.
-
-      The ring and the shadow together are what lift it. A shadow alone reads
-      as flat on a dark theme, where shadows are hard to perceive, so elevation
-      is carried by a surface edge as well as by the shadow.
+      The frame, not the content. The ring and the shadow together are what
+      lift it: a shadow alone reads as flat on a dark theme, where shadows are
+      hard to perceive, so elevation is carried by a surface edge as well.
     {% endcomment %}
     <div class="mx-auto mt-14 w-full max-w-5xl px-4 sm:px-6 lg:px-8">
       <div class="overflow-hidden rounded-2xl shadow-2xl ring-1
-                  {% if tone == 'neutral' %}ring-neutral-content/20{% else %}ring-base-300{% endif %}">
+                  {% if invert %}ring-neutral-content/20{% else %}ring-base-300{% endif %}">
         {{ media }}
       </div>
     </div>

@@ -1,0 +1,24 @@
+{% comment %}
+  ============================================================
+  <c-background.glow> — two blurred discs of colour
+
+  Goes in a block's `background` slot. Heavily blurred, low opacity, so the
+  surface under the copy stays close to the page's own background and the text
+  keeps the contrast it was designed for. That restraint is the whole point:
+  colour on a saturated gradient is what fails on a theme you did not test.
+
+  Attributes
+    from        the disc at the top, a semantic palette name. Default primary.
+    to          the disc at the foot. Default secondary.
+    intensity   faint | soft | bold — how far the discs come through.
+                Default soft. `bold` is worth checking against a dark theme.
+    class       extra classes on the layer
+  ============================================================
+{% endcomment %}
+<c-vars from="primary" to="secondary" intensity="soft" class />
+<div class="relative h-full w-full overflow-hidden {{ class }}">
+  <div class="absolute -top-32 -left-24 h-96 w-96 rounded-full blur-3xl bg-{{ from }}
+              {% if intensity == 'faint' %}opacity-10{% elif intensity == 'bold' %}opacity-30{% else %}opacity-20{% endif %}"></div>
+  <div class="absolute -right-24 -bottom-40 h-96 w-96 rounded-full blur-3xl bg-{{ to }}
+              {% if intensity == 'faint' %}opacity-10{% elif intensity == 'bold' %}opacity-30{% else %}opacity-20{% endif %}"></div>
+</div>

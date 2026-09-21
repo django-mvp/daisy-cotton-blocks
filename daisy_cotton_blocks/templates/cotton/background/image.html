@@ -1,0 +1,41 @@
+{% comment %}
+  ============================================================
+  <c-background.image> — a picture behind the copy, dimmed
+
+  Goes in a block's `background` slot. Pair it with `invert` on the block, so
+  the copy is set in `neutral-content` over the dimming layer.
+
+  **A background image is decoration.** The block hides this whole layer from
+  assistive technology, so the picture carries no alternative text and says
+  nothing a screen reader will hear. An image that means something — a chart,
+  a diagram, a photograph the copy refers to — belongs in the `media` slot of
+  `<c-hero.split>` or `<c-hero.showcase>`, where it is an <img> with an `alt`.
+
+  An <img> layer rather than a CSS `background-image`: an author-supplied URL
+  interpolated into a `style` attribute is a CSS injection surface that HTML
+  escaping does not close, and a project that wants `srcset` or `loading` can
+  pass them straight through here.
+
+  Because the picture is the project's and its brightness is unknown, `dim` is
+  what makes the copy readable. Treat "does the copy still read over this
+  picture?" as the setting's whole purpose — on every theme, since the dimming
+  layer is the theme's own `neutral`.
+
+  Attributes
+    src       URL of the image. Required, or the layer renders only the dim.
+    dim       soft | medium | strong. Default medium.
+    position  an object-position utility suffix: center, top, bottom, left,
+              right. Default center.
+    class     extra classes on the layer
+  ============================================================
+{% endcomment %}
+<c-vars src dim="medium" position="center" class />
+<div class="relative h-full w-full {{ class }}">
+  {% if src %}
+    <img src="{{ src }}"
+         alt=""
+         class="absolute inset-0 h-full w-full object-cover object-{{ position }}" />
+  {% endif %}
+  <div class="absolute inset-0 bg-neutral
+              {% if dim == 'soft' %}opacity-50{% elif dim == 'strong' %}opacity-85{% else %}opacity-70{% endif %}"></div>
+</div>

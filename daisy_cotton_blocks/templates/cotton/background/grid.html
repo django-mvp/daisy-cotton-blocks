@@ -1,0 +1,36 @@
+{% comment %}
+  ============================================================
+  <c-background.grid> — a faint ruled grid
+
+  Goes in a block's `background` slot. The quietest of the backgrounds: it
+  gives a block a surface without giving it a colour, which is why it sits
+  under dense copy better than a gradient does.
+
+  The rules are drawn in `currentColor`, so the grid inherits the block's own
+  text colour and works on a light theme, a dark theme and behind `invert`
+  without being told which it is. Its opacity is what keeps it decorative.
+
+  The pattern is a Tailwind arbitrary value rather than an inline `style`,
+  so a project running a strict Content-Security-Policy without
+  `style-src 'unsafe-inline'` still gets it.
+
+  Attributes
+    size        sm | md | lg — how far apart the rules sit. Default md.
+    intensity   faint | soft | bold. Default soft.
+    flat        rule the whole area evenly. By default the grid fades out
+                towards the foot of the block so it does not run into whatever
+                comes next.
+    class       extra classes on the layer
+
+  `flat` is a bare attribute rather than `fade=False`, because a Cotton
+  attribute arrives as a string and the string "False" is truthy in a Django
+  template — a default-on boolean that reads as off is a trap, not an option.
+  ============================================================
+{% endcomment %}
+<c-vars size="md" intensity="soft" flat class />
+<div class="h-full w-full
+            bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)]
+            {% if size == 'sm' %}bg-[size:2rem_2rem]{% elif size == 'lg' %}bg-[size:5rem_5rem]{% else %}bg-[size:3.5rem_3.5rem]{% endif %}
+            {% if intensity == 'faint' %}opacity-5{% elif intensity == 'bold' %}opacity-20{% else %}opacity-10{% endif %}
+            {% if not flat %}[mask-image:linear-gradient(to_bottom,black,transparent)]{% endif %}
+            {{ class }}"></div>
