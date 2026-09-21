@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     "flex_menu",
     "django_cotton",
-    "mvp_bits",
+    "daisy_cotton_blocks",
     "example",
 ]
 

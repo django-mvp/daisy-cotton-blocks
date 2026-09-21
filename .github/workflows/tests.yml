@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'mvp_bits/**'
+      - 'daisy_cotton_blocks/**'
       - 'tests/**'
       - 'assets/**'
       - 'pyproject.toml'
@@ -21,7 +21,7 @@ jobs:
   call-tests:
     uses: django-mvp/shared/.github/workflows/tests.yml@v0.4.1
     with:
-      coverage-package: mvp_bits
+      coverage-package: daisy_cotton_blocks
       django-versions: '["5.2", "6.0"]'
       # Test and lint tooling lives in the single (non-optional) dev group via
       # the mvp-shared bundle, so the default `--with test` would fail. Empty

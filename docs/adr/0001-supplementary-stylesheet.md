@@ -1,6 +1,9 @@
 # ADR 0001 — Ship a supplementary stylesheet rather than reuse django-mvp's alone
 
-**Status:** accepted
+**Status:** superseded by [0002](0002-stylesheet-carries-what-a-host-cannot.md)
+
+ADR 0002 keeps the committed build artifact and drops everything that rested on django-mvp being
+the host, once the package stopped requiring it.
 
 ## Decision
 

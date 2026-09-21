@@ -1,18 +1,17 @@
 [project]
-name = "django-mvp-bits"
+name = "daisy-cotton-blocks"
 version = "0.0.1"
-description = "Configurable page blocks for django-mvp projects: heroes, sections, calls to action"
+description = "Configurable page blocks for django-cotton and daisyUI: heroes, sections, calls to action"
 authors = [
     { name = "Samuel Jennings", email = "samuel.scott.jennings@gmail.com" },
 ]
 license = "MIT"
 readme = "README.md"
 requires-python = ">=3.12,<4.0"
-# django-mvp is a hard dependency, not an integration. Every component here is
-# markup over the classes django-mvp's stylesheet ships, and the supplementary
-# stylesheet in this package deliberately omits everything django-mvp already
-# emits. Without it loaded first, these components have no styling at all.
-dependencies = ["django>=5.2", "django-mvp>=0.23.0"]
+# The host supplies daisyUI and its active theme, by whatever means it likes.
+# This package renders daisyUI markup and ships the plain Tailwind utilities
+# that markup needs, so the only code dependency is Cotton itself.
+dependencies = ["django>=5.2", "django-cotton>=2.6"]
 keywords = ["django", "tailwind", "daisyui", "components", "landing-page", "cotton"]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -29,17 +28,13 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/django-mvp/django-mvp-bits"
-Repository = "https://github.com/django-mvp/django-mvp-bits"
-Issues = "https://github.com/django-mvp/django-mvp-bits/issues"
+Homepage = "https://github.com/django-mvp/daisy-cotton-blocks"
+Repository = "https://github.com/django-mvp/daisy-cotton-blocks"
+Issues = "https://github.com/django-mvp/daisy-cotton-blocks/issues"
 
 [tool.poetry]
-packages = [{ include = "mvp_bits" }]
+packages = [{ include = "daisy_cotton_blocks" }]
 requires-poetry = '>=2.0,<3.0'
-
-# django-cotton is deliberately absent from the dependency list. django-mvp
-# pins it exactly (==2.6.1); a second constraint here could only ever fight
-# that one, and this package has no say in which version a project runs.
 
 [tool.poetry.group.dev.dependencies]
 # Family toolchain bundle; the pin tag is the family-standard version. Ships
@@ -48,6 +43,10 @@ mvp-shared = { git = "https://github.com/django-mvp/shared.git", tag = "v0.4.1",
     "dev",
     "test",
 ] }
+
+# A host for the example project and the coverage test: django-mvp is one
+# ready-made daisyUI and Cotton host, which is all the demo needs it to be.
+django-mvp = ">=0.23.0"
 
 [build-system]
 requires = ['poetry-core (>=2.0,<3.0)']
@@ -71,7 +70,7 @@ show_missing = true
 
 [tool.coverage.run]
 branch = true
-source = ["mvp_bits"]
+source = ["daisy_cotton_blocks"]
 
 [tool.djlint]
 profile = "django"
@@ -101,7 +100,7 @@ extend = "ruff-base.toml"
 "example/*" = ["S101", "S105", "S106"]
 
 [tool.mypy]
-files = ["mvp_bits"]
+files = ["daisy_cotton_blocks"]
 disallow_untyped_defs = "False"
 disallow_any_unimported = "False"
 ignore_missing_imports = "True"
@@ -111,7 +110,7 @@ warn_return_any = "True"
 warn_unused_ignores = "True"
 show_error_codes = "True"
 exclude = ["docs/", "migrations/", "tests/settings.py"]
-mypy_path = "mvp_bits/"
+mypy_path = "daisy_cotton_blocks/"
 plugins = ["mypy_django_plugin.main"]
 
 [tool.django-stubs]
@@ -123,7 +122,7 @@ ignore_missing_model_attributes = "True"
 # should. test_app.py's subject is the Django app registry and the layout of the
 # installed package; test_stylesheet.py's subject is a built CSS artifact and the
 # class tokens in the templates. Conforming to the mirror rule would mean
-# inventing mvp_bits/app.py and mvp_bits/stylesheet.py purely to give two test
+# inventing daisy_cotton_blocks/app.py and daisy_cotton_blocks/stylesheet.py purely to give two test
 # files something to point at.
 non-mirror-paths = ["tests/test_app.py", "tests/test_stylesheet.py"]
 
@@ -131,10 +130,8 @@ non-mirror-paths = ["tests/test_app.py", "tests/test_stylesheet.py"]
 extend_exclude = ["tests/", "example/", "docs/"]
 
 [tool.deptry.per_rule_ignores]
-# django-mvp is a real runtime dependency that no Python module here imports.
-# This package's dependence on it is at the template and stylesheet level: its
-# components render daisyUI markup django-mvp's stylesheet defines, and the
-# stylesheet shipped here deliberately omits everything django-mvp already
-# emits. Dropping the dependency would leave every component unstyled while
-# every import still resolved.
-DEP002 = ["django-mvp"]
+# django-cotton is a real runtime dependency that no Python module here imports.
+# Every block is a Cotton component, so the dependence is at the template layer:
+# without Cotton installed and in INSTALLED_APPS, a <c-hero.centred> tag renders
+# as literal text while every Python import still resolves.
+DEP002 = ["django-cotton"]

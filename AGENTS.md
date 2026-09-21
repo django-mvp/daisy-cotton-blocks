@@ -1,18 +1,18 @@
-# AGENTS.md — Agent Configuration for django-mvp-bits
+# AGENTS.md — Agent Configuration for daisy-cotton-blocks
 
 <!-- Thin index only — bloat here = ignored instructions. Details live in the pointed-to files. -->
 
-django-mvp-bits ships page blocks: configurable regions of a public-facing page, each rendered by
-one Cotton component under the `mvp-bits` namespace and styled by classes django-mvp's stylesheet
-already provides, plus a supplement that adds what it does not. `CONTEXT.md` defines these terms;
-use them.
+daisy-cotton-blocks ships page blocks: configurable regions of a public-facing page, each rendered
+by one Cotton component and styled by daisyUI classes the host project provides, plus the plain
+Tailwind utilities this package ships itself. `CONTEXT.md` defines these terms, including why
+*variant* is not one of them. Use them.
 
 Presentation only. No models, no views, no forms, no URLs, no migrations. Anything needing one of
-those belongs upstream in django-mvp.
+those belongs to the project, not here.
 
 ## Stack & commands
 
-- **Stack:** Python 3.12+ / Django 5.2 and 6.0, Poetry-managed, built on django-mvp and Cotton
+- **Stack:** Python 3.12+ / Django 5.2 and 6.0, Poetry-managed, built on Cotton and daisyUI
 - **Install:** `poetry install` **and** `npm install` (the stylesheet build)
 - **Test:** `poetry run pytest`
 - **Lint:** `poetry run pre-commit run --all-files` (ruff lint + format, mypy, deptry)
@@ -26,28 +26,33 @@ migrations, and a raw invocation reports findings in paths the gate does not cov
 
 ## The stylesheet contract
 
-The one rule that is easy to break by accident, and the reason two of the tests exist.
+The division of labour that is easy to break by accident, and the reason the stylesheet tests
+exist.
 
-`mvp_bits/static/css/mvp-bits.css` is **committed**, so installing the package needs no Node
-toolchain. It is built from `assets/mvp-bits.css`, which is Tailwind only — no daisyUI plugin, no
-theme layer, no preflight — and which whitelists every class by hand rather than scanning
-templates. Scanning would re-emit whatever the templates share with django-mvp, which is the
-duplication the design exists to prevent.
+`daisy_cotton_blocks/static/css/daisy-cotton-blocks.css` is **committed**, so installing the
+package needs no Node toolchain. It is built from `assets/daisy-cotton-blocks.css`, which is
+Tailwind only — no daisyUI plugin, no theme layer, no preflight — and which scans this package's
+templates plus an inline list for classes scanning cannot see.
 
-Three consequences worth knowing before editing `assets/mvp-bits.css`:
+The host provides daisyUI, its themes and preflight. This package provides the plain utilities its
+own templates use, because a host's Tailwind build scans the host's source and never reaches
+site-packages.
 
-1. **The whitelist has gaps that look like typos.** The spacing scale skips 16. `space-y` skips 4.
-   There is `transition-all` but no `transition-colors`. django-mvp already emits each of those.
-   Do not close a gap without running the tests.
-2. **The boundary is arbitrary and moves.** Those classes are not in django-mvp's own safelist —
-   they leak into its build because it scans daisyUI's component sources, so a daisyUI upgrade
-   shifts the line in both directions.
-3. **A whitelisted class can still emit nothing.** Adding a class to the whitelist is not proof it
-   builds. `from-primary` needs daisyUI's palette declared in the `@theme reference` block, or it
-   silently produces no rule and the page renders unstyled markup.
+Three consequences worth knowing before editing `assets/daisy-cotton-blocks.css`:
 
-After any change to the whitelist: `npm run build:css`, then `poetry run pytest`, then commit the
-rebuilt CSS alongside the entry.
+1. **Overlap with the host is fine.** A project on django-mvp loads two stylesheets that both
+   define `py-20`. Do not try to trim it. The case that matters is a host on a different Tailwind
+   version, where one class name carries two different declarations and link order decides.
+2. **daisyUI classes are the host's.** The ones blocks may rely on are listed in
+   `HOST_PROVIDED_CLASSES` in `tests/test_stylesheet.py`. Using one that is not listed fails the
+   suite, and adding one raises the daisyUI floor for every project — a minor-version change, per
+   constitution Article XV.
+3. **A named class can still emit nothing.** Listing a class is not proof it builds. `from-primary`
+   needs daisyUI's palette declared in the `@theme reference` block, or it silently produces no
+   rule and the page renders unstyled markup.
+
+After any change to what the stylesheet emits: `npm run build:css`, then `poetry run pytest`, then
+commit the rebuilt CSS alongside the entry.
 
 ## Agent skills
 
@@ -82,8 +87,8 @@ The required checks are:
 
 The last one is repo-local, from `stylesheet.yml`, and carries **no prefix** — anything matching
 check names against the `call-*` pattern will miss it. It rebuilds the stylesheet with the Tailwind
-CLI and fails if the committed file differs. Its other half, that the supplement shares no selector
-with django-mvp's, is a pytest case instead, so it also runs locally and on every matrix cell.
+CLI and fails if the committed file differs. What the stylesheet contains, rather than whether it
+is current, is covered by pytest instead, so it runs locally and on every matrix cell.
 
 `tests.yml`, `build.yml` and `stylesheet.yml` deliberately carry no `paths:` filter on
 `pull_request`. A required check that is filtered out never reports, and a check that never
@@ -114,6 +119,6 @@ Feature work follows a spec-driven process: spec → plan → tasks → implemen
 `specs/NNN-slug/` directories generated per feature. Project standards and the quality bar live in
 `CONSTITUTION.md`.
 
-`docs/brainstorm.md` holds the working notes the package was founded on — the prior-art survey and
-why the stylesheet is built the way it is. Those are conclusions, not ratified decisions; anything
-that hardens goes to `CONSTITUTION.md` or an ADR.
+`docs/brainstorm.md` holds the working notes the package was founded on, chiefly the prior-art
+survey. Those are conclusions, not ratified decisions. Anything that has hardened is in
+`CONSTITUTION.md` or an ADR, and `docs/adr/0002` is the one to read before touching the stylesheet.

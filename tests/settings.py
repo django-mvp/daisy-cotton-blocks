@@ -1,18 +1,18 @@
-"""Django settings for testing django-mvp-bits."""
+"""Django settings for testing daisy-cotton-blocks."""
 
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-test-key-for-mvp-bits-tests-only"
+SECRET_KEY = "django-insecure-test-key-for-daisy-cotton-blocks-tests-only"
 
 DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "testserver"]
 
-# django-mvp and the apps it composes. Nothing here is optional: the components
-# in this package render daisyUI markup that django-mvp's stylesheet and
-# templates supply, and django-mvp itself depends on the rest.
+# Cotton is the only app this package needs. django-mvp and the apps it composes
+# are here as a stand-in host: they are what the example project runs on, and
+# django-mvp's stylesheet is what the example's markup is measured against.
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     "flex_menu",
     "django_cotton",
-    "mvp_bits",
+    "daisy_cotton_blocks",
 ]
 
 MIDDLEWARE = [

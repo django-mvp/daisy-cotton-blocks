@@ -16,6 +16,9 @@
   .m-14 {
     margin: calc(var(--spacing, 0.25rem) * 14);
   }
+  .m-16 {
+    margin: calc(var(--spacing, 0.25rem) * 16);
+  }
   .m-20 {
     margin: calc(var(--spacing, 0.25rem) * 20);
   }
@@ -33,6 +36,9 @@
   }
   .mx-14 {
     margin-inline: calc(var(--spacing, 0.25rem) * 14);
+  }
+  .mx-16 {
+    margin-inline: calc(var(--spacing, 0.25rem) * 16);
   }
   .mx-20 {
     margin-inline: calc(var(--spacing, 0.25rem) * 20);
@@ -52,6 +58,9 @@
   .my-14 {
     margin-block: calc(var(--spacing, 0.25rem) * 14);
   }
+  .my-16 {
+    margin-block: calc(var(--spacing, 0.25rem) * 16);
+  }
   .my-20 {
     margin-block: calc(var(--spacing, 0.25rem) * 20);
   }
@@ -70,6 +79,9 @@
   .mt-14 {
     margin-top: calc(var(--spacing, 0.25rem) * 14);
   }
+  .mt-16 {
+    margin-top: calc(var(--spacing, 0.25rem) * 16);
+  }
   .mt-20 {
     margin-top: calc(var(--spacing, 0.25rem) * 20);
   }
@@ -87,6 +99,9 @@
   }
   .mb-14 {
     margin-bottom: calc(var(--spacing, 0.25rem) * 14);
+  }
+  .mb-16 {
+    margin-bottom: calc(var(--spacing, 0.25rem) * 16);
   }
   .mb-20 {
     margin-bottom: calc(var(--spacing, 0.25rem) * 20);
@@ -205,6 +220,11 @@
     --tw-space-y-reverse: 0;
     margin-block-start: calc(calc(var(--spacing, 0.25rem) * 3) * var(--tw-space-y-reverse));
     margin-block-end: calc(calc(var(--spacing, 0.25rem) * 3) * calc(1 - var(--tw-space-y-reverse)));
+  }
+  :where(.space-y-4 > :not(:last-child)) {
+    --tw-space-y-reverse: 0;
+    margin-block-start: calc(calc(var(--spacing, 0.25rem) * 4) * var(--tw-space-y-reverse));
+    margin-block-end: calc(calc(var(--spacing, 0.25rem) * 4) * calc(1 - var(--tw-space-y-reverse)));
   }
   :where(.space-y-6 > :not(:last-child)) {
     --tw-space-y-reverse: 0;
@@ -352,6 +372,9 @@
   .p-14 {
     padding: calc(var(--spacing, 0.25rem) * 14);
   }
+  .p-16 {
+    padding: calc(var(--spacing, 0.25rem) * 16);
+  }
   .p-20 {
     padding: calc(var(--spacing, 0.25rem) * 20);
   }
@@ -369,6 +392,9 @@
   }
   .px-14 {
     padding-inline: calc(var(--spacing, 0.25rem) * 14);
+  }
+  .px-16 {
+    padding-inline: calc(var(--spacing, 0.25rem) * 16);
   }
   .px-20 {
     padding-inline: calc(var(--spacing, 0.25rem) * 20);
@@ -388,6 +414,9 @@
   .py-14 {
     padding-block: calc(var(--spacing, 0.25rem) * 14);
   }
+  .py-16 {
+    padding-block: calc(var(--spacing, 0.25rem) * 16);
+  }
   .py-20 {
     padding-block: calc(var(--spacing, 0.25rem) * 20);
   }
@@ -405,6 +434,9 @@
   }
   .pt-14 {
     padding-top: calc(var(--spacing, 0.25rem) * 14);
+  }
+  .pt-16 {
+    padding-top: calc(var(--spacing, 0.25rem) * 16);
   }
   .pt-20 {
     padding-top: calc(var(--spacing, 0.25rem) * 20);
@@ -424,6 +456,9 @@
   .pb-14 {
     padding-bottom: calc(var(--spacing, 0.25rem) * 14);
   }
+  .pb-16 {
+    padding-bottom: calc(var(--spacing, 0.25rem) * 16);
+  }
   .pb-20 {
     padding-bottom: calc(var(--spacing, 0.25rem) * 20);
   }
@@ -441,6 +476,21 @@
   }
   .transition-all {
     transition-property: all;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
+    transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));
+  }
+  .transition-colors {
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
+    transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));
+  }
+  .transition-opacity {
+    transition-property: opacity;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
+    transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));
+  }
+  .transition-shadow {
+    transition-property: box-shadow;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
     transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));
   }
@@ -469,9 +519,17 @@
     --tw-ease: var(--ease-in, cubic-bezier(0.4, 0, 1, 1));
     transition-timing-function: var(--ease-in, cubic-bezier(0.4, 0, 1, 1));
   }
+  .ease-in-out {
+    --tw-ease: var(--ease-in-out, cubic-bezier(0.4, 0, 0.2, 1));
+    transition-timing-function: var(--ease-in-out, cubic-bezier(0.4, 0, 0.2, 1));
+  }
   .ease-linear {
     --tw-ease: linear;
     transition-timing-function: linear;
+  }
+  .ease-out {
+    --tw-ease: var(--ease-out, cubic-bezier(0, 0, 0.2, 1));
+    transition-timing-function: var(--ease-out, cubic-bezier(0, 0, 0.2, 1));
   }
   @media (hover: hover) {
     .hover\:-translate-y-1:hover {
@@ -551,6 +609,9 @@
     .md\:m-14 {
       margin: calc(var(--spacing, 0.25rem) * 14);
     }
+    .md\:m-16 {
+      margin: calc(var(--spacing, 0.25rem) * 16);
+    }
     .md\:m-20 {
       margin: calc(var(--spacing, 0.25rem) * 20);
     }
@@ -568,6 +629,9 @@
     }
     .md\:mx-14 {
       margin-inline: calc(var(--spacing, 0.25rem) * 14);
+    }
+    .md\:mx-16 {
+      margin-inline: calc(var(--spacing, 0.25rem) * 16);
     }
     .md\:mx-20 {
       margin-inline: calc(var(--spacing, 0.25rem) * 20);
@@ -587,6 +651,9 @@
     .md\:my-14 {
       margin-block: calc(var(--spacing, 0.25rem) * 14);
     }
+    .md\:my-16 {
+      margin-block: calc(var(--spacing, 0.25rem) * 16);
+    }
     .md\:my-20 {
       margin-block: calc(var(--spacing, 0.25rem) * 20);
     }
@@ -605,6 +672,9 @@
     .md\:mt-14 {
       margin-top: calc(var(--spacing, 0.25rem) * 14);
     }
+    .md\:mt-16 {
+      margin-top: calc(var(--spacing, 0.25rem) * 16);
+    }
     .md\:mt-20 {
       margin-top: calc(var(--spacing, 0.25rem) * 20);
     }
@@ -622,6 +692,9 @@
     }
     .md\:mb-14 {
       margin-bottom: calc(var(--spacing, 0.25rem) * 14);
+    }
+    .md\:mb-16 {
+      margin-bottom: calc(var(--spacing, 0.25rem) * 16);
     }
     .md\:mb-20 {
       margin-bottom: calc(var(--spacing, 0.25rem) * 20);
@@ -657,6 +730,11 @@
       margin-block-start: calc(calc(var(--spacing, 0.25rem) * 3) * var(--tw-space-y-reverse));
       margin-block-end: calc(calc(var(--spacing, 0.25rem) * 3) * calc(1 - var(--tw-space-y-reverse)));
     }
+    :where(.md\:space-y-4 > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing, 0.25rem) * 4) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing, 0.25rem) * 4) * calc(1 - var(--tw-space-y-reverse)));
+    }
     :where(.md\:space-y-6 > :not(:last-child)) {
       --tw-space-y-reverse: 0;
       margin-block-start: calc(calc(var(--spacing, 0.25rem) * 6) * var(--tw-space-y-reverse));
@@ -680,6 +758,9 @@
     .md\:p-14 {
       padding: calc(var(--spacing, 0.25rem) * 14);
     }
+    .md\:p-16 {
+      padding: calc(var(--spacing, 0.25rem) * 16);
+    }
     .md\:p-20 {
       padding: calc(var(--spacing, 0.25rem) * 20);
     }
@@ -697,6 +778,9 @@
     }
     .md\:px-14 {
       padding-inline: calc(var(--spacing, 0.25rem) * 14);
+    }
+    .md\:px-16 {
+      padding-inline: calc(var(--spacing, 0.25rem) * 16);
     }
     .md\:px-20 {
       padding-inline: calc(var(--spacing, 0.25rem) * 20);
@@ -716,6 +800,9 @@
     .md\:py-14 {
       padding-block: calc(var(--spacing, 0.25rem) * 14);
     }
+    .md\:py-16 {
+      padding-block: calc(var(--spacing, 0.25rem) * 16);
+    }
     .md\:py-20 {
       padding-block: calc(var(--spacing, 0.25rem) * 20);
     }
@@ -734,6 +821,9 @@
     .md\:pt-14 {
       padding-top: calc(var(--spacing, 0.25rem) * 14);
     }
+    .md\:pt-16 {
+      padding-top: calc(var(--spacing, 0.25rem) * 16);
+    }
     .md\:pt-20 {
       padding-top: calc(var(--spacing, 0.25rem) * 20);
     }
@@ -751,6 +841,9 @@
     }
     .md\:pb-14 {
       padding-bottom: calc(var(--spacing, 0.25rem) * 14);
+    }
+    .md\:pb-16 {
+      padding-bottom: calc(var(--spacing, 0.25rem) * 16);
     }
     .md\:pb-20 {
       padding-bottom: calc(var(--spacing, 0.25rem) * 20);
@@ -784,6 +877,9 @@
     .lg\:m-14 {
       margin: calc(var(--spacing, 0.25rem) * 14);
     }
+    .lg\:m-16 {
+      margin: calc(var(--spacing, 0.25rem) * 16);
+    }
     .lg\:m-20 {
       margin: calc(var(--spacing, 0.25rem) * 20);
     }
@@ -801,6 +897,9 @@
     }
     .lg\:mx-14 {
       margin-inline: calc(var(--spacing, 0.25rem) * 14);
+    }
+    .lg\:mx-16 {
+      margin-inline: calc(var(--spacing, 0.25rem) * 16);
     }
     .lg\:mx-20 {
       margin-inline: calc(var(--spacing, 0.25rem) * 20);
@@ -820,6 +919,9 @@
     .lg\:my-14 {
       margin-block: calc(var(--spacing, 0.25rem) * 14);
     }
+    .lg\:my-16 {
+      margin-block: calc(var(--spacing, 0.25rem) * 16);
+    }
     .lg\:my-20 {
       margin-block: calc(var(--spacing, 0.25rem) * 20);
     }
@@ -838,6 +940,9 @@
     .lg\:mt-14 {
       margin-top: calc(var(--spacing, 0.25rem) * 14);
     }
+    .lg\:mt-16 {
+      margin-top: calc(var(--spacing, 0.25rem) * 16);
+    }
     .lg\:mt-20 {
       margin-top: calc(var(--spacing, 0.25rem) * 20);
     }
@@ -855,6 +960,9 @@
     }
     .lg\:mb-14 {
       margin-bottom: calc(var(--spacing, 0.25rem) * 14);
+    }
+    .lg\:mb-16 {
+      margin-bottom: calc(var(--spacing, 0.25rem) * 16);
     }
     .lg\:mb-20 {
       margin-bottom: calc(var(--spacing, 0.25rem) * 20);
@@ -890,6 +998,11 @@
       margin-block-start: calc(calc(var(--spacing, 0.25rem) * 3) * var(--tw-space-y-reverse));
       margin-block-end: calc(calc(var(--spacing, 0.25rem) * 3) * calc(1 - var(--tw-space-y-reverse)));
     }
+    :where(.lg\:space-y-4 > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing, 0.25rem) * 4) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing, 0.25rem) * 4) * calc(1 - var(--tw-space-y-reverse)));
+    }
     :where(.lg\:space-y-6 > :not(:last-child)) {
       --tw-space-y-reverse: 0;
       margin-block-start: calc(calc(var(--spacing, 0.25rem) * 6) * var(--tw-space-y-reverse));
@@ -913,6 +1026,9 @@
     .lg\:p-14 {
       padding: calc(var(--spacing, 0.25rem) * 14);
     }
+    .lg\:p-16 {
+      padding: calc(var(--spacing, 0.25rem) * 16);
+    }
     .lg\:p-20 {
       padding: calc(var(--spacing, 0.25rem) * 20);
     }
@@ -930,6 +1046,9 @@
     }
     .lg\:px-14 {
       padding-inline: calc(var(--spacing, 0.25rem) * 14);
+    }
+    .lg\:px-16 {
+      padding-inline: calc(var(--spacing, 0.25rem) * 16);
     }
     .lg\:px-20 {
       padding-inline: calc(var(--spacing, 0.25rem) * 20);
@@ -949,6 +1068,9 @@
     .lg\:py-14 {
       padding-block: calc(var(--spacing, 0.25rem) * 14);
     }
+    .lg\:py-16 {
+      padding-block: calc(var(--spacing, 0.25rem) * 16);
+    }
     .lg\:py-20 {
       padding-block: calc(var(--spacing, 0.25rem) * 20);
     }
@@ -967,6 +1089,9 @@
     .lg\:pt-14 {
       padding-top: calc(var(--spacing, 0.25rem) * 14);
     }
+    .lg\:pt-16 {
+      padding-top: calc(var(--spacing, 0.25rem) * 16);
+    }
     .lg\:pt-20 {
       padding-top: calc(var(--spacing, 0.25rem) * 20);
     }
@@ -984,6 +1109,9 @@
     }
     .lg\:pb-14 {
       padding-bottom: calc(var(--spacing, 0.25rem) * 14);
+    }
+    .lg\:pb-16 {
+      padding-bottom: calc(var(--spacing, 0.25rem) * 16);
     }
     .lg\:pb-20 {
       padding-bottom: calc(var(--spacing, 0.25rem) * 20);
