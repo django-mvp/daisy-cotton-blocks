@@ -1,6 +1,6 @@
 name: Stylesheet
 
-# The stylesheet is built from assets/mvp-bits.css and COMMITTED, so that
+# The stylesheet is built from assets/daisy-cotton-blocks.css and COMMITTED, so that
 # installing the package needs no Node toolchain. This job is what stops the
 # committed file drifting from its source: it rebuilds and fails if the result
 # differs from what is in the tree.
@@ -16,7 +16,7 @@ on:
       - main
     paths:
       - 'assets/**'
-      - 'mvp_bits/static/css/**'
+      - 'daisy_cotton_blocks/static/css/**'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/stylesheet.yml'
@@ -48,8 +48,8 @@ jobs:
 
       - name: Fail if the committed stylesheet is stale
         run: |
-          if ! git diff --exit-code -- mvp_bits/static/css/mvp-bits.css; then
-            echo "::error::mvp_bits/static/css/mvp-bits.css is out of date." \
+          if ! git diff --exit-code -- daisy_cotton_blocks/static/css/daisy-cotton-blocks.css; then
+            echo "::error::daisy_cotton_blocks/static/css/daisy-cotton-blocks.css is out of date." \
                  "Run 'npm run build:css' and commit the result."
             exit 1
           fi

@@ -1,0 +1,96 @@
+/* Tailwind entry for the stylesheet this package ships.
+ *
+ * Build with `npm run build:css`. The output at
+ * daisy_cotton_blocks/static/css/daisy-cotton-blocks.css is committed, so a
+ * project installing this package needs no Node toolchain to use it.
+ *
+ * ── What this file is ────────────────────────────────────────────────────────
+ *
+ * The blocks in this package are daisyUI markup. daisyUI itself, its themes and
+ * Tailwind's preflight all come from the host project, by whatever means it
+ * already uses. What a host cannot supply is the plain Tailwind utilities this
+ * package's own templates ask for: a host's build scans the host's source, and
+ * this package's templates live in site-packages where that scan never reaches.
+ *
+ * So this file emits exactly those utilities and nothing else. Three rules
+ * follow, and all three are load-bearing:
+ *
+ *   1. No daisyUI plugin. This is plain Tailwind. The blocks use daisyUI's
+ *      classes, and the host is what emits them.
+ *
+ *   2. No preflight, no theme variables. `theme(reference)` makes the scale
+ *      available to the utility generator without writing any of it to the
+ *      output, and the utilities resolve against the custom properties the
+ *      host's daisyUI build already defines on :root. That is also why these
+ *      blocks follow whatever daisyUI theme the host is running, for free.
+ *
+ *   3. Overlap with the host's build is expected, not a defect. A project
+ *      running django-mvp loads two stylesheets that both define `py-20`, and
+ *      two identical rules cost bytes and nothing else. The one case worth
+ *      knowing about is a host on a different Tailwind version, where the same
+ *      class name can carry different declarations and link order decides.
+ *
+ * ── How the class list is built ──────────────────────────────────────────────
+ *
+ * The templates below are scanned, so a utility used by a new block is picked
+ * up by rebuilding and needs no edit here. The `@source inline(...)` entries
+ * cover what scanning cannot see: a class composed at render time, and the
+ * utilities the first blocks are being designed against, which are listed here
+ * ahead of the markup that will use them.
+ *
+ * tests/test_stylesheet.py measures the result — every class this package's
+ * own templates ask for resolves to a rule in this stylesheet, or is one of the
+ * daisyUI classes the host is expected to provide.
+ */
+@import "tailwindcss/theme.css" theme(reference);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@source "../daisy_cotton_blocks/templates";
+
+/* daisyUI's semantic palette, declared so the generator knows these colour
+ * names exist. `reference` is doing the work: it registers the names without
+ * writing a single custom property to the output, so the gradient utilities
+ * below resolve against the values the host's daisyUI build defines on :root.
+ *
+ * Without this block the direction classes (bg-gradient-to-br) build and the
+ * colour stops (from-primary, to-secondary) silently do not, because `primary`
+ * is a daisyUI colour and nothing in Tailwind's core theme has heard of it.
+ * The result is a gradient that renders as nothing at all.
+ */
+@theme reference {
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+  --color-neutral: var(--color-neutral);
+  --color-base-100: var(--color-base-100);
+  --color-base-200: var(--color-base-200);
+  --color-base-300: var(--color-base-300);
+}
+
+/* Vertical rhythm for full-page sections. Tailwind's default scale is there for
+   the taking, but only the steps a block actually reaches for are emitted. */
+@source inline("{,md:,lg:}{p,px,py,pt,pb}-{14,16,20,24,28,32,40}");
+@source inline("{,md:,lg:}{m,mx,my,mt,mb}-{14,16,20,24,28,32,40}");
+
+/* Stacked content inside a block. */
+@source inline("{,md:,lg:}space-y-{2,3,4,6,8,10,12}");
+
+/* Column order, so a two-column block can put its image first on mobile and
+   second on desktop without duplicating the markup. */
+@source inline("{,md:,lg:}order-{1,2,first,last}");
+@source inline("{,md:,lg:}grid-flow-{row,col,dense}");
+
+/* Gradients over daisyUI's semantic palette, so a gradient re-themes with
+   everything else rather than pinning a literal colour into the markup. */
+@source inline("bg-gradient-to-{t,tr,r,br,b,bl,l,tl}");
+@source inline("{from,via,to}-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
+
+/* Transforms and the transitions that animate them. */
+@source inline("{,hover:}{scale-{95,100,105,110},translate-y-{0,1,2,4,8},-translate-y-{1,2,4,8}}");
+@source inline("transition-{all,transform,colors,opacity,shadow}");
+@source inline("duration-{75,500,700,1000}");
+@source inline("ease-{linear,in,out,in-out}");
+@source inline("animate-{none,spin,ping,pulse,bounce}");
+
+/* Media framing for screenshots and illustrations inside a block. */
+@source inline("aspect-{auto,square,video}");

@@ -1,22 +1,25 @@
-"""The contract between this package's stylesheet and django-mvp's.
+"""The contract between this package's stylesheet and the host project's.
 
-This package ships a supplement, not a second stylesheet. Every rule it emits
-must be one django-mvp does not already emit, because a project loads both and
-duplicated rules are pure page weight.
+The blocks here are daisyUI markup. daisyUI, its themes and Tailwind's preflight
+all come from the host. What the host cannot supply is the plain Tailwind
+utilities this package's own templates ask for, because a host's build scans the
+host's source and never reaches site-packages.
 
-Stating that in a comment does not keep it true. django-mvp's utility surface
-moves for reasons that have nothing to do with this package: it scans daisyUI's
-component sources for class tokens, so upgrading daisyUI silently adds and
-removes classes from its build. These tests measure the result instead of
-trusting it.
+So the stylesheet shipped here has to be self-sufficient for those utilities, and
+that is what these tests measure. Overlap with a host's own build is expected and
+deliberately not tested: a project running django-mvp loads two stylesheets that
+both define ``py-20``, which costs bytes and nothing else.
 
-Both files are located through the staticfiles finders rather than by walking up
-from a module's ``__file__``, because that is how a project actually reaches
-them — and because ``mvp`` is a namespace package, whose ``__file__`` is None.
+django-mvp appears below only as a stand-in host. The example project runs on it,
+so its stylesheet is what the example's markup is checked against.
 
-The companion check — that the committed build still matches assets/mvp-bits.css
-— needs the Node toolchain. It runs in the Stylesheet workflow, and locally via
-`npm test`, which `forge verify` picks up through the node adapter.
+Stylesheets are located through the staticfiles finders rather than by walking up
+from a module's ``__file__``, because that is how a project actually reaches them
+-- and because ``mvp`` is a namespace package, whose ``__file__`` is None.
+
+The companion check -- that the committed build still matches
+assets/daisy-cotton-blocks.css -- needs the Node toolchain. It runs in the
+Stylesheet workflow, and locally via ``npm test``.
 """
 
 import re
@@ -25,20 +28,64 @@ from pathlib import Path
 import pytest
 from django.contrib.staticfiles import finders
 
-MVP_STYLESHEET = "css/django-mvp.css"
-BITS_STYLESHEET = "css/mvp-bits.css"
+BLOCKS_STYLESHEET = "css/daisy-cotton-blocks.css"
+HOST_STYLESHEET = "css/django-mvp.css"
 
 CLASS_TOKEN = re.compile(r"\.((?:[A-Za-z0-9_-]|\\.)+)")
 
 # Anchored to the repo root rather than the working directory, so the scan
 # finds the same templates however pytest was invoked.
 REPO_ROOT = Path(__file__).resolve().parent.parent
-TEMPLATE_ROOTS = (
-    REPO_ROOT / "mvp_bits" / "templates",
-    REPO_ROOT / "example" / "templates",
-)
+PACKAGE_TEMPLATES = REPO_ROOT / "daisy_cotton_blocks" / "templates"
+EXAMPLE_TEMPLATES = REPO_ROOT / "example" / "templates"
 
 CLASS_ATTRIBUTE = re.compile(r"""\bclass\s*=\s*["']([^"']*)["']""")
+
+# The daisyUI classes a block may use without this package emitting a rule for
+# them. This list is the host contract, written out: a project installing this
+# package is already running daisyUI, and these are the parts of it blocks reach
+# for.
+#
+# It is deliberately explicit rather than inferred. Reaching for a daisyUI class
+# that is not listed here fails the coverage test below, which is the prompt to
+# decide whether the host really should be expected to provide it.
+HOST_PROVIDED_CLASSES = frozenset(
+    {
+        "avatar",
+        "badge",
+        "btn",
+        "btn-accent",
+        "btn-ghost",
+        "btn-lg",
+        "btn-link",
+        "btn-neutral",
+        "btn-outline",
+        "btn-primary",
+        "btn-secondary",
+        "btn-sm",
+        "card",
+        "card-actions",
+        "card-body",
+        "card-title",
+        "collapse",
+        "collapse-arrow",
+        "collapse-content",
+        "collapse-title",
+        "divider",
+        "hero",
+        "hero-content",
+        "hero-overlay",
+        "link",
+        "mockup-browser",
+        "mockup-phone",
+        "mockup-window",
+        "stat",
+        "stat-desc",
+        "stat-title",
+        "stat-value",
+        "stats",
+    }
+)
 
 
 def locate(static_path: str) -> Path:
@@ -76,117 +123,141 @@ def class_selectors(stylesheet: Path) -> set[str]:
     return found
 
 
-def template_classes() -> dict[str, set[str]]:
-    """Every static class token this package's own templates ask for.
+def template_classes(root: Path) -> dict[str, set[str]]:
+    """Every static class token the templates under ``root`` ask for.
 
     Keyed by class, valued by the templates using it, so a failure names the
     file to go and look at. Tokens carrying Django template syntax are skipped:
     a class composed at render time cannot be resolved by reading the source,
-    which is the same reason the whitelist in assets/mvp-bits.css has to name
-    those by hand.
+    which is why assets/daisy-cotton-blocks.css names those inline.
     """
     used: dict[str, set[str]] = {}
-    for root in TEMPLATE_ROOTS:
-        for template in root.rglob("*.html"):
-            markup = template.read_text(encoding="utf-8")
-            for attribute in CLASS_ATTRIBUTE.findall(markup):
-                if "{{" in attribute or "{%" in attribute:
-                    continue
-                for token in attribute.split():
-                    used.setdefault(token, set()).add(
-                        str(template.relative_to(REPO_ROOT))
-                    )
+    if not root.is_dir():
+        return used
+    for template in root.rglob("*.html"):
+        markup = template.read_text(encoding="utf-8")
+        for attribute in CLASS_ATTRIBUTE.findall(markup):
+            if "{{" in attribute or "{%" in attribute:
+                continue
+            for token in attribute.split():
+                used.setdefault(token, set()).add(str(template.relative_to(REPO_ROOT)))
     return used
 
 
-@pytest.fixture(scope="module")
-def mvp_classes() -> set[str]:
-    return class_selectors(locate(MVP_STYLESHEET))
+def report_missing(missing: dict[str, set[str]]) -> str:
+    return "\n".join(
+        [f"{len(missing)} class(es) resolve to no rule:"]
+        + [
+            f"  {token} — used in {', '.join(sorted(templates))}"
+            for token, templates in sorted(missing.items())
+        ]
+    )
 
 
 @pytest.fixture(scope="module")
-def bits_classes() -> set[str]:
-    return class_selectors(locate(BITS_STYLESHEET))
+def blocks_classes() -> set[str]:
+    return class_selectors(locate(BLOCKS_STYLESHEET))
 
 
-class TestSupplementIsAdditive:
-    """The supplement adds to django-mvp's stylesheet and restates none of it."""
+@pytest.fixture(scope="module")
+def host_classes() -> set[str]:
+    return class_selectors(locate(HOST_STYLESHEET))
 
-    def test_both_stylesheets_are_discoverable(self) -> None:
+
+class TestStylesheetStaysOutOfTheHostsWay:
+    """What this package ships, and what it leaves to the host."""
+
+    def test_stylesheet_is_discoverable(self) -> None:
         """A missing file would make every assertion below vacuously true."""
-        assert locate(MVP_STYLESHEET).is_file()
-        assert locate(BITS_STYLESHEET).is_file()
+        assert locate(BLOCKS_STYLESHEET).is_file()
 
-    def test_stylesheets_are_not_empty(
-        self, mvp_classes: set[str], bits_classes: set[str]
-    ) -> None:
-        """Guards the parser, not the stylesheets.
+    def test_stylesheet_is_not_empty(self, blocks_classes: set[str]) -> None:
+        """Guards the parser, not the stylesheet.
 
-        An extractor that silently returned nothing would make the overlap test
-        pass no matter how much the two files duplicated.
+        An extractor that silently returned nothing would make the coverage test
+        pass however little the stylesheet actually emitted.
         """
-        assert len(mvp_classes) > 1000, (
-            f"only parsed {len(mvp_classes)} classes out of django-mvp's stylesheet"
-        )
-        assert len(bits_classes) > 100, (
-            f"only parsed {len(bits_classes)} classes out of this package's stylesheet"
-        )
-
-    def test_no_selector_is_defined_by_both_stylesheets(
-        self, mvp_classes: set[str], bits_classes: set[str]
-    ) -> None:
-        """The whole contract, in one assertion."""
-        overlap = sorted(mvp_classes & bits_classes)
-        assert not overlap, (
-            f"{len(overlap)} class(es) are defined by both stylesheets: {', '.join(overlap)}. "
-            "django-mvp already ships these, so remove them from the whitelist in "
-            "assets/mvp-bits.css and rebuild with `npm run build:css`."
+        assert len(blocks_classes) > 100, (
+            f"only parsed {len(blocks_classes)} classes out of the stylesheet"
         )
 
     def test_stylesheet_carries_no_theme_or_preflight(self) -> None:
-        """The supplement must not restate what django-mvp defines.
+        """Both belong to the host, and emitting them here would fight it.
 
         Re-emitting the theme layer would put a second `:root` block on the page
-        and let this package silently win a cascade it has no business entering;
-        a second preflight would reset elements django-mvp has already styled.
+        and let this package silently win a cascade it has no business entering.
+        A second preflight would reset elements the host has already styled.
         """
-        css = locate(BITS_STYLESHEET).read_text(encoding="utf-8")
+        css = locate(BLOCKS_STYLESHEET).read_text(encoding="utf-8")
         assert ":root" not in css, "the stylesheet re-emits Tailwind's theme layer"
         assert "box-sizing" not in css, "the stylesheet re-emits Tailwind's preflight"
 
-
-class TestWhitelistCoversTemplates:
-    """Every class the templates ask for is one of the two stylesheets emits."""
-
-    def test_every_class_used_in_a_template_actually_exists(
-        self, mvp_classes: set[str], bits_classes: set[str]
+    def test_stylesheet_emits_no_daisyui_component_rules(
+        self, blocks_classes: set[str]
     ) -> None:
-        """A whitelisted class that emits no rule is invisible without this test.
+        """daisyUI is the host's to provide, and two copies would fight.
 
-        The failure it catches looks like nothing at all: the page renders, the
-        class sits in the DOM, and no rule matches it. That is how the gradient
-        on the example page shipped dead — `bg-gradient-to-br` built, while
-        `from-primary` and `to-secondary` did not, because daisyUI's palette is
-        not in the theme this stylesheet references.
-
-        This is about whether our own whitelist is right, not about whether
-        django-mvp is stable. Losing a class because django-mvp stopped emitting
-        it is a supported outcome: this package does not work without
-        django-mvp's stylesheet and has never pretended otherwise.
+        A daisyUI class emitted here would be a second definition of a component
+        the host already styles, and which of the two won would come down to the
+        order a project happened to link them in.
         """
-        available = mvp_classes | bits_classes
-        used = template_classes()
-        assert used, "no template classes were found to check — the scanner is broken"
+        emitted = sorted(blocks_classes & HOST_PROVIDED_CLASSES)
+        assert not emitted, (
+            f"the stylesheet emits {len(emitted)} daisyUI class(es): "
+            f"{', '.join(emitted)}. These come from the host."
+        )
+
+
+class TestBlocksAreSelfSufficient:
+    """Every utility a block asks for is one this package ships."""
+
+    def test_every_class_used_by_a_block_resolves(
+        self, blocks_classes: set[str]
+    ) -> None:
+        """The contract a host cannot help with.
+
+        A host's Tailwind build scans the host's own source, so a utility used
+        only inside this package's templates is absent from it. The failure that
+        causes looks like nothing at all: the page renders, the class sits in
+        the DOM, and no rule matches it. That is how the gradient on the example
+        page shipped dead — `bg-gradient-to-br` built, while `from-primary` and
+        `to-secondary` did not.
+
+        daisyUI's own classes are excluded, because those are exactly what the
+        host is expected to bring.
+        """
+        used = template_classes(PACKAGE_TEMPLATES)
+        if not used:
+            pytest.skip("the package ships no blocks yet, so there is nothing to check")
 
         missing = {
-            token: sorted(templates)
+            token: templates
+            for token, templates in used.items()
+            if token not in blocks_classes and token not in HOST_PROVIDED_CLASSES
+        }
+        assert not missing, (
+            report_missing(missing)
+            + "\nAdd them to assets/daisy-cotton-blocks.css and rebuild with "
+            "`npm run build:css`, or list them in HOST_PROVIDED_CLASSES if the "
+            "host should be providing them."
+        )
+
+    def test_example_page_renders_against_its_host(
+        self, blocks_classes: set[str], host_classes: set[str]
+    ) -> None:
+        """The example is a host project, so it may use anything its host emits.
+
+        Held to a wider bar than a block on purpose: the example demonstrates a
+        page built on django-mvp, and page markup outside a block is free to use
+        django-mvp's own utilities.
+        """
+        used = template_classes(EXAMPLE_TEMPLATES)
+        assert used, "no template classes were found to check — the scanner is broken"
+
+        available = blocks_classes | host_classes
+        missing = {
+            token: templates
             for token, templates in used.items()
             if token not in available
         }
-        assert not missing, "\n".join(
-            [f"{len(missing)} class(es) resolve to no rule in either stylesheet:"]
-            + [
-                f"  {token} — used in {', '.join(templates)}"
-                for token, templates in sorted(missing.items())
-            ]
-        )
+        assert not missing, report_missing(missing)

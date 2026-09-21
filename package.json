@@ -1,15 +1,15 @@
 {
-  "name": "django-mvp-bits",
+  "name": "daisy-cotton-blocks",
   "private": true,
-  "description": "Stylesheet build for django-mvp-bits. The built CSS is committed, so installing the Python package needs none of this.",
+  "description": "Stylesheet build for daisy-cotton-blocks. The built CSS is committed, so installing the Python package needs none of this.",
   "scripts": {
-    "build:css": "tailwindcss -i assets/mvp-bits.css -o mvp_bits/static/css/mvp-bits.css",
-    "build:css:prod": "tailwindcss -i assets/mvp-bits.css -o mvp_bits/static/css/mvp-bits.css --minify",
-    "watch:css": "tailwindcss -i assets/mvp-bits.css -o mvp_bits/static/css/mvp-bits.css --watch",
+    "build:css": "tailwindcss -i assets/daisy-cotton-blocks.css -o daisy_cotton_blocks/static/css/daisy-cotton-blocks.css",
+    "build:css:prod": "tailwindcss -i assets/daisy-cotton-blocks.css -o daisy_cotton_blocks/static/css/daisy-cotton-blocks.css --minify",
+    "watch:css": "tailwindcss -i assets/daisy-cotton-blocks.css -o daisy_cotton_blocks/static/css/daisy-cotton-blocks.css --watch",
     "build": "npm run build:css",
-    "test": "npm run build:css && git diff --exit-code -- mvp_bits/static/css/mvp-bits.css"
+    "test": "npm run build:css && git diff --exit-code -- daisy_cotton_blocks/static/css/daisy-cotton-blocks.css"
   },
-  "$comment": "`build` and `test` exist under those exact names so the verify gate's node adapter finds them — it treats a step as present only when package.json declares a script of that name. `test` is the same check the Stylesheet workflow runs, so a stale committed stylesheet fails locally before a pull request is opened rather than in CI after.",
+  "$comment": "`build` and `test` exist under those exact names so the verify gate's node adapter finds them \u2014 it treats a step as present only when package.json declares a script of that name. `test` is the same check the Stylesheet workflow runs, so a stale committed stylesheet fails locally before a pull request is opened rather than in CI after.",
   "devDependencies": {
     "@tailwindcss/cli": "4.3.3",
     "tailwindcss": "4.3.3"

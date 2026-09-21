@@ -1,4 +1,4 @@
-# django-mvp-bits Constitution
+# daisy-cotton-blocks Constitution
 
 The standards every change to this repository is held to. Read at planning and at review.
 Changes here are rare and deliberate, never made in the middle of a feature.
@@ -67,7 +67,7 @@ the `locale/` directory and the base English catalog.
 Tests are organized for fast, targeted discovery.
 
 - **Mirror the source tree.** Every test module mirrors the path of the module it exercises:
-  `mvp_bits/models.py` → `tests/test_models.py`. Test subpackages carry `__init__.py` to match.
+  `daisy_cotton_blocks/models.py` → `tests/test_models.py`. Test subpackages carry `__init__.py` to match.
   Where one source module defines several units, it stays one test module and the split is
   expressed with classes, not extra files.
 
@@ -116,33 +116,34 @@ alternative of doing the work in the calling template.
 
 The boundary is what lets a project adopt this package without a database change or a deployment
 step. When a block needs something on the far side of it, such as a model, a view mixin or a form,
-the work belongs upstream in django-mvp and is raised there as an issue. It is never reimplemented
-here and never worked around by reaching into django-mvp's internals.
+that work belongs to the project or to a package that does own an application surface. It is never
+reimplemented here.
 
-### Article XII — The supplement adds, never restates
+### Article XII — The stylesheet carries what a host cannot
 
-`mvp_bits/static/css/mvp-bits.css` supplements django-mvp's stylesheet. It is governed by four
-rules, in order of how load-bearing they are:
+`daisy_cotton_blocks/static/css/daisy-cotton-blocks.css` is the one stylesheet this package ships,
+and it exists for a single reason: a host's Tailwind build scans the host's own source, so the
+plain utilities used inside this package's templates are absent from it. Four rules govern it, in
+order of how load-bearing they are:
 
-1. **Zero overlap, measured.** Not minimal overlap. No class selector is defined by both
-   stylesheets, and `tests/test_stylesheet.py` measures it on every run rather than trusting it.
-2. **Tailwind only.** No daisyUI plugin, no theme layer, no preflight. Components use daisyUI
-   classes, and django-mvp is what emits them.
-3. **Nothing is discovered by scanning.** Every class the build may emit is whitelisted by hand in
-   `assets/mvp-bits.css`. Scanning this package's templates would re-emit whatever they share with
-   django-mvp, which is the duplication the design exists to prevent.
-4. **The dependency is hard and has no fallback.** django-mvp's stylesheet loads first or these
-   components are unstyled. That is the intended failure mode.
+1. **Utilities only, and only the ones the blocks use.** The file is built by scanning this
+   package's templates, with `@source inline(...)` covering what scanning cannot see — classes
+   composed at render time, and the utilities the next blocks are being designed against.
+2. **No daisyUI, no theme, no preflight.** All three belong to the host. `theme(reference)` gives
+   the generator the scale without writing any of it out, and the emitted utilities resolve against
+   the custom properties the host's daisyUI build defines on `:root`. That is also what makes a
+   block follow whatever theme is active, for free.
+3. **Overlap with a host's build is expected and untested.** Two identical rules cost bytes and
+   nothing else. The case that is worth knowing about is a host on a different Tailwind version,
+   where one class name can carry two different declarations and link order decides.
+4. **The host contract is written down, never assumed.** The daisyUI classes a block may rely on
+   are listed in `HOST_PROVIDED_CLASSES` in `tests/test_stylesheet.py`. Reaching for one that is
+   not listed fails the suite, which is the prompt to decide whether a host should really be
+   expected to provide it.
 
-**The whitelist has gaps that read as typos and they are deliberate.** The spacing scale skips 16.
-`space-y` skips 4. There is `transition-all` and no `transition-colors`. django-mvp already emits
-each of those, having picked them up from scanning daisyUI's own sources, so the boundary follows
-no rule anyone wrote down and it moves on a daisyUI upgrade. A gap is closed only with a test run
-behind it, never on the reasoning that it looks like an oversight.
-
-**A whitelisted class is not a built class.** Adding one to the whitelist is not proof it emits a
-rule; a colour utility needs the semantic palette declared in the `@theme reference` block or it
-silently produces nothing and the page renders unstyled markup.
+**An emitted class is not a built class.** Naming a class in the inline list is not proof it
+produces a rule. A colour utility needs the semantic palette declared in the `@theme reference`
+block or it silently produces nothing and the page renders unstyled markup.
 
 **The built file is committed, and rebuilt on the branch that changes its input.** Installing the
 package needs no Node toolchain, which is what the committed artifact buys. `npm test` and the
@@ -152,17 +153,24 @@ disagree.
 ### Article XIII — Blocks are configured, not edited
 
 A block is named for its role on the page, never for its implementation or an external design
-system, and its attributes are the only supported way to customize it. Where a consumer needs more
-control than the attributes give, the answer is a template override, not a wider attribute surface.
+system. Its attributes are the only supported way to change its presentation, and where a project
+needs more control than they give, the answer is a template override rather than a wider attribute
+surface.
+
+**Layout is fixed per block, and an attribute never changes it.** A different arrangement is a
+different block in the same family — `<c-hero.centred>` beside `<c-hero.split>` — not an option on
+one component that branches internally. A block that grows a layout switch is two blocks that have
+not been separated yet.
 
 Colour comes from daisyUI's semantic palette (`primary`, `base-100` and the rest), never a literal
 value and never a Tailwind palette name. That is what makes a page built from these blocks re-theme
 with the rest of the site instead of drifting away from it.
 
-Reusable markup is expressed as a Cotton component under `mvp_bits/templates/cotton/mvp_bits/`,
-named in lowercase-kebab form, never as an `{% include %}` partial. The `mvp-bits` namespace is
-mandatory: without it a component here would shadow, or be shadowed by, one of django-mvp's
-depending on `INSTALLED_APPS` order.
+Reusable markup is expressed as a Cotton component under `daisy_cotton_blocks/templates/cotton/`,
+named in lowercase-kebab form, never as an `{% include %}` partial. Blocks sit at the top of that
+directory rather than under a prefix of their own, so a tag reads `<c-hero.centred>`. The cost is
+accepted and real: a project defining its own `cotton/hero/centred.html` shadows this one, or is
+shadowed by it, depending on `INSTALLED_APPS` order.
 
 ### Article XIV — Rendered markup is a contract
 
@@ -179,21 +187,25 @@ template and nothing about what the browser draws.
 
 ### Article XV — Compatibility
 
-The package is pre-1.0 and says so in the README. Component names, attribute surfaces and the set
-of classes the supplement emits may change between minor versions, and every such change is
-recorded in the CHANGELOG. Default behaviour stays stable across patch releases. There are no
-compatibility aliases: an API is changed cleanly, and the CHANGELOG is how a consumer finds out.
+The package is pre-1.0 and says so in the README. Block names, attribute surfaces and the set of
+classes the stylesheet emits may change between minor versions, and every such change is recorded
+in the CHANGELOG. Default behaviour stays stable across patch releases. There are no compatibility
+aliases: an API is changed cleanly, and the CHANGELOG is how a project finds out.
 
 Supported versions are Python 3.12 or later and the currently-supported Django releases, with the
 CI matrix as the authoritative statement of both. Dropping either is a minor-version change with a
-CHANGELOG entry. The django-mvp floor moves forward whenever a block needs a class or a component
-that an older release does not ship, and moving it is a CHANGELOG entry, not a silent bump.
+CHANGELOG entry.
+
+**The daisyUI requirement is a compatibility surface and moves like one.** Blocks are written
+against daisyUI 5. Adding a class from a later daisyUI to `HOST_PROVIDED_CLASSES` raises the floor
+for every project installing this package, so it is a minor-version change with a CHANGELOG entry,
+never a silent addition alongside the block that wanted it.
 
 ### Article XVI — Nothing executable is fetched at page load
 
-Blocks depend only on the runtime django-mvp already bundles — Alpine, htmx and theme-change. No
-component pulls a script, a font or a stylesheet from a third-party origin, and none is added to
-the package's own bundle without a decision recorded as an ADR.
+No block pulls a script, a font or a stylesheet from a third-party origin. Where a block needs
+behaviour, it uses what the host project already runs, and any JavaScript this package ships of its
+own is bundled rather than fetched.
 
 This is a marketing-surface library, which is exactly the kind of code that attracts a CDN tag for
 an animation library or a web font. A project that installs this package gains no external origin
@@ -213,7 +225,7 @@ Read at planning and at review; applies to every change.
 - The package builds, its metadata is valid, and the README renders on the package index with
   absolute URLs.
 
-`djlint` is configured in `pyproject.toml` and can be run over `mvp_bits/templates`, but it is
+`djlint` is configured in `pyproject.toml` and can be run over `daisy_cotton_blocks/templates`, but it is
 deliberately **not** a gate: it misfires against Cotton's `<c-vars>` syntax and needs ignore rules
 first. Do not cite it as an enforced standard until it runs in CI.
 
@@ -227,4 +239,4 @@ first. Do not cite it as an enforced standard until it runs in CI.
 
 ---
 
-**Version**: 1.0.0 | **Ratified**: 2026-09-17 | **Last Amended**: 2026-09-17
+**Version**: 2.0.0 | **Ratified**: 2026-09-17 | **Last Amended**: 2026-09-21

@@ -25,7 +25,7 @@ version = "2.13.0"
 description = "Powerful and Lightweight Python Tree Data Structure with various plugins"
 optional = false
 python-versions = "<4.0,>=3.9.2"
-groups = ["main"]
+groups = ["dev"]
 files = [
     {file = "anytree-2.13.0-py3-none-any.whl", hash = "sha256:4cbcf10df36b1f1cba131b7e487ff3edafc9d6e932a3c70071b5b768bab901ff"},
     {file = "anytree-2.13.0.tar.gz", hash = "sha256:c9d3aa6825fdd06af7ebb05b4ef291d2db63e62bb1f9b7d9b71354be9d362714"},
@@ -524,7 +524,7 @@ version = "1.0.3"
 description = "Tailwind CSS for Django Crispy Forms"
 optional = false
 python-versions = ">=3.8"
-groups = ["main"]
+groups = ["dev"]
 files = [
     {file = "crispy-tailwind-1.0.3.tar.gz", hash = "sha256:2bc9f616d406e4b003f25d46fcb0079f1c2522719d97adb107667271d849459a"},
     {file = "crispy_tailwind-1.0.3-py3-none-any.whl", hash = "sha256:31427f66b1c4fd0d6fb040f4197cfb97d104cdbe7641ea2dea940c0057c4db4b"},
@@ -641,7 +641,7 @@ version = "2.6.1"
 description = "Enabling Modern UI Composition in Django."
 optional = false
 python-versions = "<4,>=3.8"
-groups = ["main"]
+groups = ["main", "dev"]
 files = [
     {file = "django_cotton-2.6.1-py3-none-any.whl", hash = "sha256:775dda0336c08d33a6daf10557eb261746b1b8e5f260b669cc6b37115571cb08"},
     {file = "django_cotton-2.6.1.tar.gz", hash = "sha256:bedfa4561e2505fca5b88396acb9bdfaea85167eeef11813676fedab45906088"},
@@ -672,7 +672,7 @@ version = "2.7"
 description = "Best way to have Django DRY forms"
 optional = false
 python-versions = ">=3.10"
-groups = ["main"]
+groups = ["dev"]
 files = [
     {file = "django_crispy_forms-2.7-py3-none-any.whl", hash = "sha256:42a7ecb05ac3fd050d006dfe7aeceb7f318c30e5b5124ff619e2be252f36f096"},
     {file = "django_crispy_forms-2.7.tar.gz", hash = "sha256:4c59bed60417375cba26cebb2c67ab350b655934670270b1c89dbcd7e60f1b4c"},
@@ -719,7 +719,7 @@ version = "0.6.0"
 description = "Easy, flexible icons for Django"
 optional = false
 python-versions = "<4.0,>=3.11"
-groups = ["main"]
+groups = ["dev"]
 files = [
     {file = "django_easy_icons-0.6.0-py3-none-any.whl", hash = "sha256:ddddbfa7dd9cb1112310018d7be212cf057db200e69a06c4dc4b66bbebbd30df"},
     {file = "django_easy_icons-0.6.0.tar.gz", hash = "sha256:7be23b3d8e16022c382c3e35ae38a6ea547bf3741da1e58258b83c7b242602c2"},
@@ -749,7 +749,7 @@ version = "0.4.3"
 description = "Flexible site menus for Django"
 optional = false
 python-versions = "<4.0,>=3.11"
-groups = ["main"]
+groups = ["dev"]
 files = [
     {file = "django_flex_menus-0.4.3-py3-none-any.whl", hash = "sha256:35de7cdbc3d7798ac35cd661f87b0197bcaba35f5f5bd62732ab3654d9f9f534"},
     {file = "django_flex_menus-0.4.3.tar.gz", hash = "sha256:26a6f0d627c8e6108041cfc1f997bd09d130b86ab07ace78349f6dbe312e3417"},
@@ -783,7 +783,7 @@ version = "0.23.0"
 description = "MVP framework for Django - scaffold production-ready applications with sophisticated layouts and UI patterns designed for data-centric applications."
 optional = false
 python-versions = "<4.0,>=3.12"
-groups = ["main"]
+groups = ["dev"]
 files = [
     {file = "django_mvp-0.23.0-py3-none-any.whl", hash = "sha256:deeb8ab10596a7cf6401bba1e377eb3cfee705d26af9cd300c48ce19812b6615"},
     {file = "django_mvp-0.23.0.tar.gz", hash = "sha256:568bc9c25cf0330218608b0d5ad0217864c6b140119e068a6e5cf8b05e346426"},
@@ -1513,7 +1513,7 @@ version = "1.3.4"
 description = "A deep merge function for 🐍."
 optional = false
 python-versions = ">=3.6"
-groups = ["main"]
+groups = ["dev"]
 files = [
     {file = "mergedeep-1.3.4-py3-none-any.whl", hash = "sha256:70775750742b25c0d8f36c55aed03d24c3384d17c951b3175d898bd778ef0307"},
     {file = "mergedeep-1.3.4.tar.gz", hash = "sha256:0096d52e9dad9939c3d975a774666af186eda617e6ca84df4c94dec30004f2a8"},
@@ -3006,4 +3006,4 @@ dev = ["pytest", "setuptools"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4.0"
-content-hash = "b3cc4b449e1e0648ed078f48c9400df09fd608ee20ba22357cd5ec50e4d0ec9a"
+content-hash = "6d153322f65e997af7a7ba5db1fbbc09b5ba2d9c88070e4361513f5af0f7526e"

@@ -7,9 +7,10 @@ architectural commitment belongs in an ADR.
 
 ## The gap
 
-django-mvp is an application shell. It has no answer for the pages in front of
-the application: the landing page, the pricing page, the sign-up pitch. Its
-existing `<c-section>` is a titled content region with a toolbar, and its
+Component libraries in this space are application shells. They have no answer
+for the pages in front of the application: the landing page, the pricing page,
+the sign-up pitch. django-mvp, where the idea started, is representative — its
+`<c-section>` is a titled content region with a toolbar and its
 `<c-section.hero>` is a daisyUI hero with a background image. Both are
 application chrome. Neither is marketing furniture.
 
@@ -39,57 +40,17 @@ blocks, Flowbite, Preline. None are Django packages and none theme off daisyUI.
 The empty niche is specifically: daisyUI-themed, Cotton-native page blocks that
 inherit whatever theme the host project already runs.
 
-## The stylesheet, and why it works the way it does
+## The stylesheet
 
-The original intent was to add no CSS at all and build everything from what
-django-mvp ships. That does not survive contact with django-mvp's build.
+The original intent was to add no CSS at all and build everything from what a
+host project already ships. That does not survive contact with how Tailwind
+builds: a host scans its own source and never reaches an installed package's
+templates, so the plain utilities a block uses are absent from it however
+complete the host's own build is.
 
-django-mvp's stylesheet is Tailwind's theme and preflight, the whole daisyUI
-component set, and a hand-curated pack of layout utilities. Measured against it,
-the utilities a modern hero actually needs are mostly absent: no gradients, no
-transforms, no `aspect-*`, no `ring-*`, no `animate-*`, and a spacing scale that
-stops at `12` (3rem). It ships `transition` and the short durations but nothing
-transformable to apply them to. That curation is deliberate — `shadow-*` is
-excluded on the grounds that a loose box-shadow works against a unified UI — and
-it is the right call for an application shell. It is simply not enough to build
-a landing page from.
-
-So this package ships a supplement. The constraints on it, in order of how
-load-bearing they are:
-
-1. **Additive only.** Zero overlap with django-mvp's build. Not "minimal
-   overlap" — zero, measured.
-2. **Tailwind only.** No daisyUI plugin. Components use daisyUI classes;
-   django-mvp is what emits them.
-3. **No theme, no preflight.** `theme(reference)` gives the utility generator
-   the scale without writing any of it out, and the emitted utilities resolve
-   against the custom properties django-mvp already defines. This is also what
-   makes the components theme-follow for free.
-4. **No template scanning.** `source(none)`, and every class whitelisted by
-   hand. Scanning this package's templates would re-emit whatever they share
-   with django-mvp, which is the duplication the whole design exists to avoid.
-5. **Hard dependency, no fallback.** Load django-mvp's stylesheet first or these
-   components are unstyled. That is the intended failure mode, not a bug to
-   defend against.
-
-### The arbitrary boundary
-
-Rule 1 cannot be satisfied by reading django-mvp's safelist. Its build scans
-daisyUI's component sources for class tokens, so daisyUI's own internal usage
-leaks classes into the output that nobody listed anywhere. The result is a
-boundary with no logic to it:
-
-- `py-16` and `mb-16` ship; `py-20`, `py-24` and `py-32` do not.
-- `transition-colors`, `-opacity` and `-shadow` ship; `transition-all` and
-  `-transform` do not.
-- `ease-out` and `ease-in-out` ship; `ease-linear` and `ease-in` do not.
-- `space-y-4` ships; no other `space-y` value does.
-
-It will move again on the next daisyUI upgrade. The whitelist in
-`assets/mvp-bits.css` therefore has gaps in it that read as typos, and
-`tests/test_stylesheet.py` is what stops someone closing them.
-
-Measured at scaffold time: 269 classes here, 2333 in django-mvp, overlap 0.
+The reasoning that follows from that, and the reasoning it replaced, are in
+`docs/adr/0002` and `docs/adr/0001`. The rules themselves are Article XII of
+`CONSTITUTION.md`. Nothing about the stylesheet is settled here.
 
 ## Scope
 

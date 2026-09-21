@@ -1,7 +1,7 @@
 # Family-standard pre-commit configuration for django-mvp repositories.
 #
 # Copy to the repo root as `.pre-commit-config.yaml` and replace
-# mvp_bits with the repo's package directory (e.g. `licensing`).
+# daisy_cotton_blocks with the repo's package directory (e.g. `licensing`).
 #
 # The Python tools (ruff, mypy, deptry) run as *local* hooks inside the Poetry
 # env, so their versions come from the mvp-shared[dev] bundle — one version
@@ -56,7 +56,7 @@ repos:
         # mirrors-mypy ships.
         require_serial: true
         types: [python]
-        files: ^mvp_bits/
+        files: ^daisy_cotton_blocks/
       - id: deptry
         name: deptry
         entry: poetry run deptry .
