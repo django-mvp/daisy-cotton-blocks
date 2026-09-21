@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     "flex_menu",
     "django_cotton",
+    "example",
     "daisy_cotton_blocks",
 ]
 
@@ -39,7 +40,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "tests.urls"
+# The demo's URLconf, so the catalogue views are reachable from the suite.
+ROOT_URLCONF = "example.urls"
 
 TEMPLATES = [
     {
@@ -67,6 +69,18 @@ DATABASES = {
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = ["tailwind"]
 CRISPY_TEMPLATE_PACK = "tailwind"
+
+# Borrowed from the demo rather than restated. The suite renders the demo's own
+# pages, so a second copy of its icon, menu and shell configuration here would
+# be a second thing to keep true, and the copy that drifts is always the one
+# nobody is reading when a page mysteriously stops rendering.
+from example.settings import (  # noqa: E402
+    EASY_ICONS,
+    FLEX_MENUS,
+    MVP_CONFIG,
+)
+
+__all__ = ["EASY_ICONS", "FLEX_MENUS", "MVP_CONFIG"]
 
 STATIC_URL = "/static/"
 

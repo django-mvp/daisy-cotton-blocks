@@ -118,13 +118,19 @@ django_settings_module = "tests.settings"
 ignore_missing_model_attributes = "True"
 
 [tool.forge.conformance]
-# Neither of these test modules has a source module to mirror, and neither
-# should. test_app.py's subject is the Django app registry and the layout of the
-# installed package; test_stylesheet.py's subject is a built CSS artifact and the
-# class tokens in the templates. Conforming to the mirror rule would mean
-# inventing daisy_cotton_blocks/app.py and daisy_cotton_blocks/stylesheet.py purely to give two test
-# files something to point at.
-non-mirror-paths = ["tests/test_app.py", "tests/test_stylesheet.py"]
+# None of these test modules has a source module to mirror, and none should.
+# test_app.py's subject is the Django app registry and the layout of the
+# installed package; test_stylesheet.py's subject is a built CSS artifact and
+# the class tokens in the templates; test_demo_catalogue.py's subject is the
+# example project, which is a development target and is not part of the
+# distribution at all. Conforming to the mirror rule would mean inventing
+# modules inside the package purely to give three test files something to
+# point at.
+non-mirror-paths = [
+    "tests/test_app.py",
+    "tests/test_stylesheet.py",
+    "tests/test_demo_catalogue.py",
+]
 
 [tool.deptry]
 extend_exclude = ["tests/", "example/", "docs/"]
