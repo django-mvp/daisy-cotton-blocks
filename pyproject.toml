@@ -132,6 +132,8 @@ ignore_missing_model_attributes = "True"
 #                          installed package
 #   test_stylesheet.py     a built CSS artifact, and the class tokens in the
 #                          templates
+#   test_annotations.py    the annotation comments at the head of each block
+#                          template
 #   test_hero_blocks.py    the templates under cotton/hero/, which are Cotton
 #   test_background_blocks.py  components rather than Python modules
 #   test_demo_catalogue.py the example project, a development target that is
@@ -139,6 +141,7 @@ ignore_missing_model_attributes = "True"
 non-mirror-paths = [
     "tests/test_app.py",
     "tests/test_stylesheet.py",
+    "tests/test_annotations.py",
     "tests/test_hero_blocks.py",
     "tests/test_background_blocks.py",
     "tests/test_demo_catalogue.py",

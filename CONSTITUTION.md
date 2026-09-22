@@ -211,6 +211,47 @@ This is a marketing-surface library, which is exactly the kind of code that attr
 an animation library or a web font. A project that installs this package gains no external origin
 it did not already have.
 
+### Article XVII — A block documents itself, in its own template
+
+Every packaged component carries its reference in annotation comments at the head of its own
+template, in the format [django-cotton-gallery](https://github.com/velezanthony/django-cotton-gallery)
+parses:
+
+- `{# @description ... #}` — one line saying what the block is and when to reach for it.
+- `{# @prop name:type | default:"..." | description:"..." #}` — one per attribute in `<c-vars>`,
+  with `select['a', 'b']` where the attribute takes a fixed set of values.
+- `{# @slot:name — what goes in it #}` — one per named slot the template renders.
+
+Each annotation is a **single-line** Django comment. The lexer's `{#...#}` pattern does not cross a
+newline, so a comment closed on a later line is not a comment at all and is served to the reader as
+page text.
+
+**These annotations are the only description of a block's attributes.** The component gallery builds
+its live controls from them and each block's page in the example project builds its tables from the
+same comments, so nothing restates them by hand. A second copy is a second thing to keep true, and
+the one that drifts is always the one being read.
+
+Three rules about what goes where, each of which has already cost time:
+
+- **Slot names stay out of `<c-vars>`.** Cotton fills a named slot whether or not it is declared,
+  and declaring one only keeps a same-named *attribute* out of `{{ attrs }}`, which nobody passes.
+  Leaving them out lets the declaration mean one thing — the prop set — and lets it be checked
+  against the `@prop` lines mechanically. With slot names mixed in, every one reads as an
+  undocumented prop.
+- **Never write the component's own tag out in angle brackets inside its comments.** The parser
+  scans the raw source for the first occurrence and reads a mention inside a comment as the
+  declaration itself, which reports every real prop as missing.
+- **Reasoning lives below the annotations, in a `{% comment %}` block.** The one-liners are the
+  reference; a measurement, a stacking-context argument or a rejected alternative belongs in the
+  prose underneath, where it does not have to fit on one line.
+
+**This is gated, not encouraged.** `tests/test_annotations.py` runs the gallery's own linter over
+every packaged component and fails on any issue it reports, at any severity, and separately checks
+that each component has a description and an `@slot` for every named slot it renders. The linter
+is the gallery's rather than ours on purpose: a second implementation of the format would drift
+from the one that has to parse it, and the first symptom would be a page describing an attribute
+that no longer exists.
+
 ## Quality bar
 
 Read at planning and at review; applies to every change.
@@ -222,6 +263,8 @@ Read at planning and at review; applies to every change.
   `pre-commit run --all-files`, which is the gate, rather than a bare invocation that reports
   findings in paths the hooks exclude.
 - The committed stylesheet matches its source, locally via `npm test` and in CI.
+- Every packaged component's annotations lint clean, per Article XVII. `python manage.py cotton_lint`
+  reports the same findings with a component gallery to look at them in.
 - The package builds, its metadata is valid, and the README renders on the package index with
   absolute URLs.
 
@@ -239,4 +282,4 @@ first. Do not cite it as an enforced standard until it runs in CI.
 
 ---
 
-**Version**: 2.0.0 | **Ratified**: 2026-09-17 | **Last Amended**: 2026-09-21
+**Version**: 2.1.0 | **Ratified**: 2026-09-17 | **Last Amended**: 2026-09-22

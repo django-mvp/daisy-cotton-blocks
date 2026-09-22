@@ -33,7 +33,7 @@ Serves G2 and G3.
 
 ### R2 — Hero blocks
 
-*feature · advances G1, G5*
+*delivered in [#15](https://github.com/django-mvp/daisy-cotton-blocks/issues/15) · advances G1, G5*
 
 The block at the top of a page, and the first one anybody will reach for. It sets the conventions every later family follows: how content is passed in, how a secondary action is expressed, how a block behaves when an optional piece is left out, and what a block does on a narrow screen. Getting those wrong here means correcting them everywhere later, which is why this comes before anything else.
 
@@ -45,6 +45,23 @@ The block at the top of a page, and the first one anybody will reach for. It set
 - Rendered-output tests and documentation shipped with the blocks.
 
 Serves G1 and G5. Out of scope: any content that would come from a queryset.
+
+### R12 — Background layers
+
+*delivered in [#16](https://github.com/django-mvp/daisy-cotton-blocks/issues/16) · advances G1, G5, G6*
+
+A backdrop is not part of a layout, so it is not part of a block. Each background is its own block that goes in another block's `background` slot, which means any background composes with any layout and neither has to know about the other. The family came out of designing the heroes, and it sits here because the convention it settles — a decorative layer behind the copy, hidden from assistive technology, positioned against the slot rather than the page — is one every later family inherits rather than reinvents.
+
+**Deliverables:**
+
+- A background block per treatment, each usable behind any block that offers the slot.
+- A stacking arrangement that lets two of them be written into one slot and both be seen.
+- A statement, per background, of whether the copy above it needs inverting, since a layer cannot reach up and recolour its sibling.
+- Rendered-output tests and documentation shipped with the blocks.
+
+Serves G1, G5 and G6. Out of scope: a background that carries meaning. The layer is decoration by definition and takes no alternative text, so a picture the reader needs belongs in a media slot where it is a real image with an `alt`.
+
+**What is still open after the first four.** The slot is offered by the hero family alone today. Every family that frames a full-width region wants the same backdrop, and a background composes with any of them for free once the slot is there, so the slot travels with R3, R4 and R9 rather than waiting for an item of its own. Further treatments arrive when a page wants them, noise and a dot grid being the obvious candidates.
 
 ### R3 — Content section blocks
 
