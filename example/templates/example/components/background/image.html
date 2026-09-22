@@ -4,14 +4,7 @@
 {% block title %}Image{% endblock title %}
 
 {% block content %}
-  <c-demo.head tag="c-background.image"
-               summary="A picture, dimmed by the theme's own neutral, for a block's background slot. Always pair it with invert on the block.">
-    <p class="mt-4 max-w-3xl text-base-content/80">
-      Takes <code>src</code>, <code>dim</code> and <code>position</code>. Because the package cannot
-      see the picture, <code>dim</code> is what makes the copy readable — treat "does this still
-      read?" as the setting's whole purpose, on every theme, since the dimming layer is the theme's
-      own <code>neutral</code>.
-    </p>
+  <c-demo.head tag="c-background.image">
     <p class="mt-4 max-w-3xl text-base-content/80">
       <strong>A background image is decoration.</strong> The block hides the whole layer from
       assistive technology, so the picture carries no alternative text. An image that means
@@ -20,6 +13,9 @@
       <a class="link" href="{% url 'component' family='hero' component='showcase' %}">showcase</a>,
       where it is a real <code>&lt;img&gt;</code> with an <code>alt</code>.
     </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
     <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
       <c-demo.tile>
         <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.image src="…" dim="soft" />{% endverbatim %}{% endfilter %}</c-slot>
@@ -49,7 +45,7 @@
         </c-hero.centred>
       </c-demo.tile>
     </div>
-  </c-demo.head>
+  </c-container>
 
   <c-demo.live label="At full width" anchor="full">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert size="lg" title="…">

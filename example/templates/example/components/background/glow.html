@@ -3,17 +3,15 @@
 {% block title %}Glow{% endblock title %}
 
 {% block content %}
-  <c-demo.head tag="c-background.glow"
-               summary="Two heavily blurred discs of the theme's own colours, for a block's background slot.">
+  <c-demo.head tag="c-background.glow">
     <p class="mt-4 max-w-3xl text-base-content/80">
       Low opacity on purpose. The surface under the copy stays close to the page's own, so the text
       keeps the contrast it was designed for — which is what separates this from setting a saturated
       colour behind a headline and hoping.
     </p>
-    <p class="mt-4 max-w-3xl text-base-content/80">
-      Takes <code>from</code>, <code>to</code> and <code>intensity</code>. No <code>invert</code>
-      needed on the block.
-    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
     <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
       <c-demo.tile>
         <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.glow />{% endverbatim %}{% endfilter %}</c-slot>
@@ -43,7 +41,7 @@
         </c-hero.centred>
       </c-demo.tile>
     </div>
-  </c-demo.head>
+  </c-container>
 
   <c-demo.live label="At full width" anchor="full">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg" title="…">

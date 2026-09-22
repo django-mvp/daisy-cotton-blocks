@@ -1,13 +1,20 @@
+{% load component_docs %}
 {% comment %}
-  Demo scaffolding, not a block. The head of a component page: its tag, what
-  it is for, and room for a line or two of anything else worth saying before
-  the block itself.
+  Demo scaffolding, not a block. The head of a component page: its tag, the
+  sentence the component describes itself by, room for whatever else the page
+  wants to say, and then its attributes and slots.
+
+  Both the summary and the tables come from the component's own annotations
+  rather than being written again here. A page that restated them would be a
+  second source for the same facts, and the one that drifts is always the one
+  a reader is looking at.
 {% endcomment %}
-<c-vars tag summary />
+<c-vars tag />
 <c-container class="py-10">
   <h1 class="text-3xl font-bold">
     <code class="rounded bg-base-200 px-2 py-1">&lt;{{ tag }}&gt;</code>
   </h1>
-  <p class="mt-4 max-w-3xl text-lg text-base-content/80">{{ summary }}</p>
+  <p class="mt-4 max-w-3xl text-lg text-base-content/80">{% component_description tag %}</p>
   {{ slot }}
+  {% component_docs tag %}
 </c-container>

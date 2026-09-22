@@ -3,14 +3,10 @@
 {% block title %}Gradient{% endblock title %}
 
 {% block content %}
-  <c-demo.head tag="c-background.gradient"
-               summary="A wash between two palette colours, in any of the eight directions, for a block's background slot.">
-    <p class="mt-4 max-w-3xl text-base-content/80">
-      Takes <code>from</code>, <code>via</code>, <code>to</code>, <code>direction</code> and
-      <code>opacity</code>. At <code>opacity="full"</code> it needs <code>invert</code> on the
-      block, and that pairing is the one worth checking on a light theme as well as a dark one —
-      copy on a full-strength primary wash fails contrast on several of daisyUI's own themes.
-    </p>
+  <c-demo.head tag="c-background.gradient">
+  </c-demo.head>
+
+  <c-container class="pb-10">
     <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
       <c-demo.tile>
         <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.gradient />{% endverbatim %}{% endfilter %}</c-slot>
@@ -48,7 +44,7 @@
         </c-hero.centred>
       </c-demo.tile>
     </div>
-  </c-demo.head>
+  </c-container>
 
   <c-demo.live label="At full width" anchor="full">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg" title="…">

@@ -3,18 +3,15 @@
 {% block title %}Grid{% endblock title %}
 
 {% block content %}
-  <c-demo.head tag="c-background.grid"
-               summary="A faint ruled grid, for a block's background slot. The quietest of the four, which is why it sits under dense copy better than a wash does.">
+  <c-demo.head tag="c-background.grid">
     <p class="mt-4 max-w-3xl text-base-content/80">
       The rules are drawn in <code>currentColor</code>, so the grid inherits the block's own text
       colour and works on a light theme, a dark theme and behind <code>invert</code> without being
       told which it is.
     </p>
-    <p class="mt-4 max-w-3xl text-base-content/80">
-      Takes <code>size</code>, <code>intensity</code> and <code>flat</code>. The pattern is a
-      Tailwind arbitrary value rather than an inline style, so a project running a strict
-      Content-Security-Policy still gets it.
-    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
     <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
       <c-demo.tile>
         <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.grid />{% endverbatim %}{% endfilter %}</c-slot>
@@ -51,7 +48,7 @@
         </c-hero.centred>
       </c-demo.tile>
     </div>
-  </c-demo.head>
+  </c-container>
 
   <c-demo.live label="At full width" anchor="full">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg" title="…">
