@@ -1,0 +1,107 @@
+{# @description One column, centred. The default opener, for when the words are the product. #}
+{# @prop eyebrow:text | description:"Short line above the heading — a category, a release name" #}
+{# @prop title:text | default:"Ship the page, not the CSS" | description:"The heading. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The supporting sentence under the heading" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"1" | description:"Heading level. 1 is right for a landing page." #}
+{# @prop invert:boolean | default:False | description:"Light copy, for a dark background. Each background says whether it wants this." #}
+{# @prop size:select['sm', 'md', 'lg', 'screen'] | default:"md" | description:"How much vertical room the block takes" #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
+{# @slot:background — A background block, rendered into a layer behind the copy #}
+{# @slot:announcement — Above the eyebrow. A pill linking to the latest release, usually. #}
+{# @slot:actions <a class="btn btn-primary btn-lg" href="#">Get started</a> <a class="btn btn-outline btn-lg" href="#">Learn more</a> — The button row. Write real anchor markup, so it can post, submit or carry anything. #}
+{# @slot:footnote — Under the actions. A trust line, a rating, a row of logos. #}
+{% comment %}
+  ============================================================
+  <c-hero.centred> — the default opening block
+
+  The arrangement to reach for when the words are the product: a launch
+  announcement, a documentation site, a service with nothing to screenshot.
+  With `<c-background.image>` in the background slot it is also the
+  image-backed hero.
+
+  The attributes and slots are declared in the annotations above this block,
+  which is what the component gallery reads to build its controls. Everything
+  below is the reasoning those one-liners have no room for.
+
+  ── What goes in the c-vars declaration, and what does not ──────────────────
+
+  Props only. Slot names are deliberately absent, even though several component
+  libraries list them there — Cotton fills a named slot whether or not it is
+  declared, and the only thing declaring one buys is stopping an *attribute* of
+  that name from reaching `{{ attrs }}`. Nobody passes `actions="..."` as an
+  attribute.
+
+  Leaving them out keeps one list meaning one thing: the declaration is the
+  prop set, the `@prop` lines document it, and the two can be checked against
+  each other mechanically. With slot names mixed in, every one of them reads as
+  an undocumented prop.
+
+  Note the spelling above: the tag's own name never appears in prose here,
+  written out in angle brackets. The gallery's parser scans the raw source for
+  the first occurrence and would read a mention inside a comment as the
+  declaration itself, leaving every real prop reported as missing.
+
+  ── The background slot ─────────────────────────────────────────────────────
+
+  The section is a stacking context, and whatever goes in the slot is rendered
+  into a layer at `-z-10` inside it. That puts the background above the
+  section's own surface colour and below every piece of copy, without anything
+  in the slot needing to know its own z-index or position. Backgrounds compose
+  with layouts freely: any background under any hero.
+
+  The layer is hidden from assistive technology, so a background is decoration
+  by definition. An image that carries meaning belongs in the `media` slot of
+  `<c-hero.split>` or `<c-hero.showcase>`, where it is an <img> with an `alt`.
+
+  ── Why the actions are a slot ──────────────────────────────────────────────
+
+  Not a pair of label/href attributes: a call to action is where a project
+  needs full control — a form submit, an `hx-post`, a target, a tracking
+  attribute — and building the link here would put an author-supplied URL
+  inside an href this template is responsible for escaping, for no gain. The
+  layout is the hard part and the part this block owns.
+  ============================================================
+{% endcomment %}
+<c-vars eyebrow title lead level="1" invert size="md" class />
+<section class="relative isolate overflow-hidden
+                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
+                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% elif size == 'screen' %}flex min-h-screen items-center py-24{% else %}py-16 md:py-24{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+      {{ announcement }}
+      {% if eyebrow %}
+        <p class="text-sm font-semibold tracking-widest uppercase
+                  {% if not invert %}text-base-content/80{% endif %}">
+          {{ eyebrow }}
+        </p>
+      {% endif %}
+      {# djlint:off #}
+      <h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">{{ title }}</h{{ level }}>
+      {# djlint:on #}
+      {% if lead %}
+        {% comment %}
+          `/80` and never lower. Measured across the ten daisyUI themes the demo
+          offers, `base-content` at 80% over `base-100` bottoms out at 4.95:1 on
+          winter, which clears WCAG 1.4.3's 4.5:1. At 70% winter falls to 3.86:1.
+          Under `invert` the copy is full strength, because `neutral-content` at
+          80% over `neutral` drops to 4.09:1 on synthwave.
+        {% endcomment %}
+        <p class="max-w-2xl text-lg leading-relaxed text-pretty sm:text-xl
+                  {% if not invert %}text-base-content/80{% endif %}">
+          {{ lead }}
+        </p>
+      {% endif %}
+      {% if actions %}
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>
+      {% endif %}
+      {% if footnote %}
+        <div class="pt-2 text-sm {% if not invert %}text-base-content/80{% endif %}">{{ footnote }}</div>
+      {% endif %}
+    </div>
+  </div>
+</section>

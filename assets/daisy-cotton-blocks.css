@@ -70,6 +70,21 @@
   --color-base-100: var(--color-base-100);
   --color-base-200: var(--color-base-200);
   --color-base-300: var(--color-base-300);
+
+  /* The `-content` half of each pair. A block that paints a filled surface has
+   * to put daisyUI's matching foreground on it — `bg-primary` together with
+   * `text-primary-content` — because those two are chosen against each other
+   * per theme and nothing else is guaranteed to be readable on top.
+   *
+   * Declaring only the fill colours is the same silent failure this block was
+   * written to prevent, one step along: `bg-primary` builds,
+   * `text-primary-content` does not, and the words disappear into the fill on
+   * every theme whose primary is light. */
+  --color-primary-content: var(--color-primary-content);
+  --color-secondary-content: var(--color-secondary-content);
+  --color-accent-content: var(--color-accent-content);
+  --color-neutral-content: var(--color-neutral-content);
+  --color-base-content: var(--color-base-content);
 }
 
 /* Vertical rhythm for full-page sections. Tailwind's default scale is there for
@@ -89,6 +104,17 @@
    everything else rather than pinning a literal colour into the markup. */
 @source inline("bg-gradient-to-{t,tr,r,br,b,bl,l,tl}");
 @source inline("{from,via,to}-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
+
+/* Flat fills over the same palette. The background blocks take a colour name
+   as an attribute and compose the class at render time, which the scanner
+   cannot see — that is exactly what this list is for. */
+@source inline("bg-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
+
+/* How far a background layer comes through. Also composed at render time. */
+@source inline("opacity-{5,10,20,30,40,50,60,70,80,85,90,100}");
+
+/* Where a background image sits inside its frame. */
+@source inline("object-{cover,contain,center,top,bottom,left,right}");
 
 /* Transforms and the transitions that animate them. */
 @source inline("{,hover:}{scale-{95,100,105,110},translate-y-{0,1,2,4,8},-translate-y-{1,2,4,8}}");

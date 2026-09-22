@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Glow{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-background.glow">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Low opacity on purpose. The surface under the copy stays close to the page's own, so the text
+      keeps the contrast it was designed for — which is what separates this from setting a saturated
+      colour behind a headline and hoping.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.glow />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="The default" lead="Primary and secondary, softly.">
+          <c-slot name="background"><c-background.glow /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.glow intensity="bold" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="Turned up" lead="Worth a look on a dark theme.">
+          <c-slot name="background"><c-background.glow intensity="bold" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.glow from="accent" to="primary" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="Another pair" lead="Any two names from the palette.">
+          <c-slot name="background"><c-background.glow from="accent" to="primary" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.glow intensity="faint" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="Almost nothing" lead="A hint of warmth under dense copy.">
+          <c-slot name="background"><c-background.glow intensity="faint" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+    </div>
+  </c-container>
+
+  <c-demo.live label="At full width" anchor="full">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg" title="…">
+  <c-slot name="background"><c-background.glow /></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2"
+                    size="lg"
+                    title="Colour, without a colour"
+                    lead="Faint enough to sit under dense copy, and it re-themes with everything else on the page.">
+      <c-slot name="background">
+        <c-background.glow />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#full">Primary action</a>
+        <a class="btn btn-outline btn-lg" href="#full">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

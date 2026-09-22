@@ -27,6 +27,7 @@ from pathlib import Path
 
 import pytest
 from django.contrib.staticfiles import finders
+from django_cotton_gallery.core.annotations import AnnotationParser
 
 BLOCKS_STYLESHEET = "css/daisy-cotton-blocks.css"
 HOST_STYLESHEET = "css/django-mvp.css"
@@ -361,8 +362,7 @@ class TestBlocksAreSelfSufficient:
         host is expected to bring.
         """
         used = template_classes(PACKAGE_TEMPLATES)
-        if not used:
-            pytest.skip("the package ships no blocks yet, so there is nothing to check")
+        assert used, "no template classes were found to check — the scanner is broken"
 
         missing = unresolved_classes(used, blocks_classes | HOST_PROVIDED_CLASSES)
         assert not missing, (
@@ -392,9 +392,9 @@ class TestBlocksAreSelfSufficient:
     ) -> None:
         """The check above, run against the defect it exists to catch.
 
-        Written out because the package ships no blocks yet, so the check
-        itself has nothing to walk and skips. A gate that has never been shown
-        to go red is not yet evidence of anything.
+        Written against markup of its own rather than a block, because the
+        check is only evidence of anything once it has been shown to go red,
+        and every block in the package is expected to keep it green.
         """
         (tmp_path / "block.html").write_text(
             '<section class="py-16 space-y-4\n'
@@ -409,3 +409,97 @@ class TestBlocksAreSelfSufficient:
 
         assert set(missing) == {"not-a-utility-anything-emits"}
         assert "block.html" in report_missing(missing)
+
+
+def block_tags() -> list[str]:
+    """Every block the package ships, as the Cotton tag it is used as."""
+    return sorted(
+        f"c-{template.parent.name}.{template.stem}"
+        for template in (PACKAGE_TEMPLATES / "cotton").rglob("*.html")
+    )
+
+
+def source_of(tag: str) -> str:
+    family, component = tag.removeprefix("c-").split(".")
+    return (PACKAGE_TEMPLATES / "cotton" / family / f"{component}.html").read_text(
+        encoding="utf-8"
+    )
+
+
+def classes_reaching_the_dom(render, tag: str) -> set[str]:
+    """Every class the block puts in the DOM, across the values it accepts.
+
+    Rendered once with its defaults and then once per declared option, rather
+    than combinatorially: each option writes its own class independently of the
+    others, so one variant per option covers every branch that composes one.
+    """
+    component = AnnotationParser().parse(source_of(tag))
+    variants = [""] + [
+        f'{prop.clean_name}="{option}"'
+        for prop in component.props
+        for option in prop.options
+    ]
+
+    found: set[str] = set()
+    for variant in variants:
+        html = render(f"<{tag} {variant} />")
+        for attribute in CLASS_ATTRIBUTE.finditer(html):
+            found |= set(attribute.group("value").split())
+    return found
+
+
+class TestClassesComposedAtRenderTime:
+    """The classes the source scan above deliberately cannot see.
+
+    A background takes a palette colour as an attribute and assembles
+    `bg-{{ from }}` while it renders. Reading the template cannot say what that
+    becomes, so those classes are covered by the `@source inline(...)` list in
+    assets/daisy-cotton-blocks.css instead — and naming a class in that list is
+    not proof that it produces a rule. A colour utility whose palette entry is
+    missing from the `@theme reference` block builds to nothing at all, and the
+    page that results renders markup with no styling attached to it.
+
+    So this renders each block across every value its own annotations declare
+    and checks what actually lands in the DOM, which is the only thing that
+    settles the question.
+    """
+
+    @pytest.mark.parametrize("tag", block_tags())
+    def test_every_class_a_block_renders_resolves(
+        self, render, blocks_classes: set[str], tag: str
+    ) -> None:
+        used = classes_reaching_the_dom(render, tag)
+        assert used, f"{tag} rendered no classes at all"
+
+        missing = sorted(
+            token
+            for token in used
+            if token not in blocks_classes | HOST_PROVIDED_CLASSES
+        )
+
+        assert not missing, (
+            f"{tag} renders {len(missing)} class(es) that resolve to no rule: "
+            f"{', '.join(missing)}.\nAdd them to the @source inline(...) list in "
+            "assets/daisy-cotton-blocks.css and rebuild with `npm run build:css`."
+        )
+
+    def test_a_palette_colour_with_no_rule_behind_it_is_caught(
+        self, render, blocks_classes: set[str]
+    ) -> None:
+        """The check above, run against the defect it exists to catch.
+
+        `chartreuse` is not one of daisyUI's colours and nothing emits a rule
+        for it, which is exactly the shape of the failure: an attribute value
+        composes a class name, the class name reaches the DOM, and no rule
+        matches it.
+        """
+        html = render('<c-background.glow from="chartreuse" />')
+        rendered = {
+            token
+            for attribute in CLASS_ATTRIBUTE.finditer(html)
+            for token in attribute.group("value").split()
+        }
+
+        missing = rendered - (blocks_classes | HOST_PROVIDED_CLASSES)
+
+        assert missing == {"bg-chartreuse"}

@@ -1,0 +1,71 @@
+{# @description Copy beside a visual, stacking to one column below the lg breakpoint. #}
+{# @prop eyebrow:text | description:"Short line above the heading" #}
+{# @prop title:text | default:"Every release, and who shipped it" | description:"The heading. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The supporting sentence under the heading" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"1" | description:"Heading level. 1 is right for a landing page." #}
+{# @prop reverse:boolean | default:False | description:"Swap the columns at wide widths. No effect once the block has stacked." #}
+{# @prop invert:boolean | default:False | description:"Light copy, for a dark background" #}
+{# @prop size:select['sm', 'md', 'lg'] | default:"md" | description:"How much vertical room the block takes" #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here." #}
+{# @slot:background — A background block, rendered into a layer behind the copy #}
+{# @slot:announcement — Above the eyebrow #}
+{# @slot:actions <a class="btn btn-primary btn-lg" href="#">Get started</a> <a class="btn btn-outline btn-lg" href="#">Learn more</a> — The button row. Write real anchor markup, so it can post, submit or carry anything. #}
+{# @slot:footnote — Under the actions #}
+{# @slot:media — The visual. An image, a mockup, a card, an SVG, a form. #}
+{% comment %}
+  ============================================================
+  <c-hero.split> — copy beside a visual
+
+  Two columns on a wide screen, one on a narrow one. The arrangement for a
+  product with something to show: a screenshot, a mockup, an illustration, a
+  short form. The media is a slot, so what goes in it is entirely the
+  project's — this block owns the proportions, the alignment and the stacking.
+
+  Below the `lg` breakpoint the columns become one, copy first, media second,
+  whichever way round they sit at width. That is a reflow, not a second
+  design: the same content in the same reading order.
+
+  The attributes and slots are declared in the annotations above this block.
+  See <c-hero.centred> for the note on how the background layer works, and for
+  why the actions are a slot rather than a pair of label/href attributes.
+  ============================================================
+{% endcomment %}
+<c-vars eyebrow title lead level="1" reverse invert size="md" class />
+<section class="relative isolate overflow-hidden
+                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
+                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+  <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div class="flex flex-col gap-6 text-center lg:text-left {% if reverse %}lg:order-2{% endif %}">
+        {{ announcement }}
+        {% if eyebrow %}
+          <p class="text-sm font-semibold tracking-widest uppercase
+                    {% if not invert %}text-base-content/80{% endif %}">
+            {{ eyebrow }}
+          </p>
+        {% endif %}
+        {# djlint:off #}
+        <h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl">{{ title }}</h{{ level }}>
+        {# djlint:on #}
+        {% if lead %}
+          <p class="max-w-xl text-lg leading-relaxed text-pretty sm:text-xl
+                    {% if not invert %}text-base-content/80{% endif %}">
+            {{ lead }}
+          </p>
+        {% endif %}
+        {% if actions %}
+          <div class="flex flex-wrap items-center justify-center gap-3 pt-2 lg:justify-start">{{ actions }}</div>
+        {% endif %}
+        {% if footnote %}
+          <div class="pt-2 text-sm {% if not invert %}text-base-content/80{% endif %}">{{ footnote }}</div>
+        {% endif %}
+      </div>
+      <div class="w-full {% if reverse %}lg:order-1{% endif %}">{{ media }}</div>
+    </div>
+  </div>
+</section>

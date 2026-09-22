@@ -22,9 +22,14 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "testserver"]
 from example.settings import (  # noqa: E402
     EASY_ICONS,
     FLEX_MENUS,
-    INSTALLED_APPS,
     MVP_CONFIG,
 )
+from example.settings import INSTALLED_APPS as DEMO_INSTALLED_APPS  # noqa: E402
+
+# Everything the demo installs, less the component gallery. The gallery prints a
+# mounted-and-serving notice from an app registry hook, which would land in every
+# test run, and nothing under tests/ exercises its pages.
+INSTALLED_APPS = [app for app in DEMO_INSTALLED_APPS if app != "django_cotton_gallery"]
 
 __all__ = ["EASY_ICONS", "FLEX_MENUS", "INSTALLED_APPS", "MVP_CONFIG"]
 

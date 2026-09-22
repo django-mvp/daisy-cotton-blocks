@@ -1,0 +1,64 @@
+{% load static %}
+{% comment %}
+  ============================================================
+  Asset injection for the component gallery.
+
+  The gallery has minimal chrome of its own and ships no front-end stack, so
+  without this file the blocks render as unstyled markup: the classes are in
+  the DOM and no rule matches them, which looks like nothing at all rather
+  than like an error.
+
+  It is picked up automatically from templates/django_cotton_gallery/ — no
+  settings change, and no context processor, which is what the settings-based
+  EXTRA_CSS route would also need.
+
+  The gallery renders this partial twice: once into its own <head>, and once
+  into a <template id="cg-frame-head"> that it copies into the iframe each
+  component preview lives in. Both stylesheets therefore reach the preview,
+  which is the half that matters.
+
+  Comments here are {% templatetag openblock %} comment {% templatetag closeblock %} rather than the hash form, because Django's
+  hash comment is single-line: a multi-line one is not stripped and is served
+  into the head as stray text.
+  ============================================================
+{% endcomment %}
+{% comment %}
+  The host half of this package's contract: daisyUI 5, its themes and
+  Tailwind's preflight. Exactly what the example project loads, because the
+  gallery has to stand in for a host the same way the demo does.
+{% endcomment %}
+<link rel="stylesheet" href="{% static 'css/django-mvp.css' %}" />
+{% comment %}
+  This package's own build, second and deliberately so: it carries the plain
+  Tailwind utilities the blocks use, which a host's build never emits because
+  it scans the host's source and never reaches site-packages. Where the two
+  overlap the later link wins, and this one is written against this markup.
+{% endcomment %}
+<link rel="stylesheet" href="{% static 'css/daisy-cotton-blocks.css' %}" />
+{% comment %}
+  daisyUI reads its palette off `data-theme` on <html>, and so does the
+  gallery's own light/dark toggle — it writes `cg-theme` to localStorage and
+  sets `data-theme="dark"` on its own document before first paint.
+
+  The preview iframe is a separate document that inherits neither. Mirroring
+  the gallery's choice into it keeps a block's colours matching the chrome
+  around it, and is the difference between a dark-mode gallery showing a white
+  hero and showing the block as a project on a dark theme would.
+
+  Guarded on being framed, so this never touches the gallery's own document:
+  there the attribute is the toggle's to own, and writing `data-theme="light"`
+  over its absence would be this file second-guessing it. In light mode daisyUI
+  needs nothing anyway — its default theme is also emitted on :root.
+{% endcomment %}
+<script>
+  (() => {
+    if (window.self === window.top) return;
+    try {
+      const dark = window.top.localStorage.getItem('cg-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    } catch (e) {
+      // Cross-origin or storage disabled. :root already carries the default
+      // theme, so the preview still renders — just always in the light one.
+    }
+  })();
+</script>

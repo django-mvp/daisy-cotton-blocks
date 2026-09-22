@@ -1,0 +1,15 @@
+{% comment %}
+  Demo scaffolding, not a block. One cell of the background gallery: a live
+  block above the line, the markup that produced it below.
+
+  A background is judged against copy sitting on it, so each cell holds a real
+  hero rather than a bare swatch — a colour that looks pleasant on its own and
+  eats the text underneath is the failure worth catching here.
+{% endcomment %}
+<c-vars markup />
+<div class="flex flex-col overflow-hidden rounded-xl ring-1 ring-base-300">
+  <div class="flex-1">{{ slot }}</div>
+  <div class="border-t border-base-300 bg-base-200 p-3">
+    <code class="text-xs">{{ markup }}</code>
+  </div>
+</div>
