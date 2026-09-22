@@ -36,6 +36,10 @@ INSTALLED_APPS = [
     "example",
     "daisy_cotton_blocks",
     "django_cotton",
+    # Reloads the browser on a change to a template, a stylesheet or Python.
+    # It arrives with the shared development bundle rather than a pin of its
+    # own, and its middleware removes itself from the chain unless DEBUG is on.
+    "django_browser_reload",
     "easy_icons",
     "flex_menu",
     "mvp",
@@ -51,6 +55,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # Last, because it rewrites the response body to insert its script tag and
+    # anything that encodes or compresses the body has to run after it.
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = "example.urls"

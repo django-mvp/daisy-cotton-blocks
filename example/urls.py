@@ -1,10 +1,12 @@
-from django.urls import path
+from django.urls import include, path
 
 from example.views import GroupView, HomeView
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
     path("components/<slug:slug>/", GroupView.as_view(), name="group"),
+    # The endpoint an open page holds to hear that something on disk changed.
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 # Django reads these only from the module named by ROOT_URLCONF.
