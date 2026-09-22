@@ -4,6 +4,12 @@
 
 {% block content %}
   <c-demo.head tag="c-background.gradient">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      At <code>opacity="full"</code> this needs <code>invert</code> on the block, and that pairing
+      is the one worth checking on a light theme as well as a dark one: copy on a full-strength
+      primary wash fails the contrast floor on several of daisyUI's own themes. The lower settings
+      leave the block's own surface showing through, which is what keeps the copy readable.
+    </p>
   </c-demo.head>
 
   <c-container class="pb-10">
