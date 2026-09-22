@@ -10,26 +10,27 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "testserver"]
 
-# Cotton is the only app this package needs. django-mvp and the apps it composes
-# are here as a stand-in host: they are what the example project runs on, and
-# django-mvp's stylesheet is what the example's markup is measured against.
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "mvp",
-    "easy_icons",
-    "crispy_forms",
-    "crispy_tailwind",
-    "flex_menu",
-    "django_cotton",
-    "example",
-    "daisy_cotton_blocks",
-]
+# Borrowed from the demo rather than restated. The suite renders the demo's own
+# pages, so a second copy of its app list, icons, menus and shell configuration
+# here would be a second thing to keep true, and the copy that drifts is always
+# the one nobody is reading when a page mysteriously stops rendering.
+#
+# The app list matters most of all, because its order is load-bearing: the demo
+# owns the unqualified `base.html` only while "example" sits above "mvp", and a
+# second list that puts them the other way round renders the suite a page the
+# browser never serves.
+from example.settings import (  # noqa: E402
+    EASY_ICONS,
+    FLEX_MENUS,
+    INSTALLED_APPS,
+    MVP_CONFIG,
+)
 
+__all__ = ["EASY_ICONS", "FLEX_MENUS", "INSTALLED_APPS", "MVP_CONFIG"]
+
+# Not borrowed. The demo's chain ends with the middleware that rewrites a
+# response to insert the browser-reload script, which has no business running
+# underneath assertions about what a page contains.
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -69,18 +70,6 @@ DATABASES = {
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = ["tailwind"]
 CRISPY_TEMPLATE_PACK = "tailwind"
-
-# Borrowed from the demo rather than restated. The suite renders the demo's own
-# pages, so a second copy of its icon, menu and shell configuration here would
-# be a second thing to keep true, and the copy that drifts is always the one
-# nobody is reading when a page mysteriously stops rendering.
-from example.settings import (  # noqa: E402
-    EASY_ICONS,
-    FLEX_MENUS,
-    MVP_CONFIG,
-)
-
-__all__ = ["EASY_ICONS", "FLEX_MENUS", "MVP_CONFIG"]
 
 STATIC_URL = "/static/"
 

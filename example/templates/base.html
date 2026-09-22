@@ -1,0 +1,32 @@
+{% extends "mvp/base.html" %}
+{% load static %}
+
+{% comment %}
+  The demo's project base.
+
+  django-mvp ships a `base.html` of its own that forwards to `mvp/base.html`
+  and deliberately defines nothing, so that its packaged view templates always
+  reach the shell. "example" sits above "mvp" in INSTALLED_APPS, so this file
+  takes that name instead and every page goes through it — the demo's own
+  templates and the packaged placeholder the family pages render alike.
+
+  It exists for one line: the stylesheet this package ships has to be on the
+  page. A host's Tailwind build scans the host's own source and never reaches
+  an installed package's templates, so the plain utilities the blocks use are
+  absent from django-mvp's stylesheet however complete that build is. Without
+  the link below a block renders as unstyled markup — the classes sit in the
+  DOM and no rule matches them, which looks like nothing at all rather than
+  like an error. docs/adr/0002 is the long version.
+
+  This is the install step a real project performs, which is why the demo
+  performs it the same way rather than reaching into the shell.
+
+  After the host's own stylesheet, deliberately. The two builds overlap on the
+  utilities they share, and where a declaration differs the later link wins;
+  this package's build is the one written against its own markup.
+{% endcomment %}
+
+{% block styles %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/daisy-cotton-blocks.css' %}" />
+{% endblock styles %}
