@@ -54,6 +54,28 @@ Three consequences worth knowing before editing `assets/daisy-cotton-blocks.css`
 After any change to what the stylesheet emits: `npm run build:css`, then `poetry run pytest`, then
 commit the rebuilt CSS alongside the entry.
 
+## Every block documents itself
+
+A new block is not finished until its own template carries the annotation comments that describe
+it. Constitution Article XVII is the contract and `tests/test_annotations.py` is the gate. A block
+that skips them fails the suite.
+
+The short version: a single-line `{# @description ... #}`, one `{# @prop ... #}` per attribute in
+`<c-vars>`, and one `{# @slot:name — ... #}` per named slot the template renders. Copy the shape
+from `cotton/hero/centred.html`, which carries every form of all three. Three traps, each of which
+has cost time already:
+
+1. **Each annotation is one line.** Django's `{#...#}` pattern does not cross a newline, so a
+   comment closed on the next line is not a comment and is served to the reader as page text.
+2. **Slot names stay out of `<c-vars>`.** Cotton fills a named slot whether or not it is declared,
+   and a declared one reads to the linter as an undocumented prop.
+3. **Never write the block's own tag in angle brackets inside its comments.** The parser takes the
+   first occurrence in the source as the declaration and then reports every real prop as missing.
+
+Reasoning goes below the annotations in a `{% comment %}` block, never into the one-liners.
+`poetry run python manage.py cotton_lint` reports the same findings as the test, with a browsable
+gallery to look at them in.
+
 ## Agent skills
 
 ### Issue tracker
