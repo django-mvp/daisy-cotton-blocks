@@ -39,7 +39,22 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 PACKAGE_TEMPLATES = REPO_ROOT / "daisy_cotton_blocks" / "templates"
 EXAMPLE_TEMPLATES = REPO_ROOT / "example" / "templates"
 
-CLASS_ATTRIBUTE = re.compile(r"""\bclass\s*=\s*["']([^"']*)["']""")
+# The closing quote is the same character as the opening one, never whichever
+# quote turns up first. A branch comparing against a string literal --
+# `{% if size == 'sm' %}` -- puts single quotes inside a double-quoted
+# attribute, and ending the match at the first of those silently drops every
+# class after it.
+CLASS_ATTRIBUTE = re.compile(
+    r"""\bclass\s*=\s*(?P<quote>["'])(?P<value>.*?)(?P=quote)""", re.S
+)
+
+TEMPLATE_TAG = re.compile(r"\{%.*?%\}", re.S)
+TEMPLATE_VARIABLE = re.compile(r"\{\{.*?\}\}", re.S)
+
+# Stands in for a value only the renderer knows, and is not a character any
+# class name may contain, so a token that kept one is a token that was still
+# being assembled when the source ran out.
+COMPOSED_AT_RENDER_TIME = "\x00"
 
 # The daisyUI classes a block may use without this package emitting a rule for
 # them. This list is the host contract, written out: a project installing this
@@ -123,25 +138,64 @@ def class_selectors(stylesheet: Path) -> set[str]:
     return found
 
 
+def literal_classes(attribute: str) -> list[str]:
+    """The class tokens in ``attribute`` that are written out in the source.
+
+    Template syntax is stripped rather than treated as a reason to give up on
+    the attribute, because a block that varies its surface or its spacing puts
+    the syntax and the classes in the same attribute:
+
+        class="relative isolate
+               {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}"
+
+    The two kinds of syntax are stripped differently, and that difference is
+    the whole of this function.
+
+    A ``{% ... %}`` tag writes no text of its own, so it is a boundary between
+    tokens: the classes in each branch of an ``{% if %}`` are whole names and
+    can each be looked up. Replacing it with a space is what keeps the last
+    class of one branch from running into the first of the next.
+
+    A ``{{ ... }}`` does write text, so a token touching one is finished at
+    render time and reading the source cannot say what it becomes. Those are
+    dropped, and covering them is what the ``@source inline(...)`` list in
+    assets/daisy-cotton-blocks.css is for.
+    """
+    text = TEMPLATE_TAG.sub(" ", attribute)
+    text = TEMPLATE_VARIABLE.sub(COMPOSED_AT_RENDER_TIME, text)
+    return [token for token in text.split() if COMPOSED_AT_RENDER_TIME not in token]
+
+
 def template_classes(root: Path) -> dict[str, set[str]]:
-    """Every static class token the templates under ``root`` ask for.
+    """Every literal class token the templates under ``root`` ask for.
 
     Keyed by class, valued by the templates using it, so a failure names the
-    file to go and look at. Tokens carrying Django template syntax are skipped:
-    a class composed at render time cannot be resolved by reading the source,
-    which is why assets/daisy-cotton-blocks.css names those inline.
+    file to go and look at. Paths are shown relative to the repository when
+    they sit inside it, which the scan roots that matter do.
     """
     used: dict[str, set[str]] = {}
     if not root.is_dir():
         return used
     for template in root.rglob("*.html"):
         markup = template.read_text(encoding="utf-8")
-        for attribute in CLASS_ATTRIBUTE.findall(markup):
-            if "{{" in attribute or "{%" in attribute:
-                continue
-            for token in attribute.split():
-                used.setdefault(token, set()).add(str(template.relative_to(REPO_ROOT)))
+        name = (
+            template.relative_to(REPO_ROOT)
+            if template.is_relative_to(REPO_ROOT)
+            else template
+        )
+        for attribute in CLASS_ATTRIBUTE.finditer(markup):
+            for token in literal_classes(attribute.group("value")):
+                used.setdefault(token, set()).add(str(name))
     return used
+
+
+def unresolved_classes(
+    used: dict[str, set[str]], available: set[str]
+) -> dict[str, set[str]]:
+    """The classes in ``used`` that ``available`` has no rule for."""
+    return {
+        token: templates for token, templates in used.items() if token not in available
+    }
 
 
 def report_missing(missing: dict[str, set[str]]) -> str:
@@ -152,6 +206,85 @@ def report_missing(missing: dict[str, set[str]]) -> str:
             for token, templates in sorted(missing.items())
         ]
     )
+
+
+class TestTheClassScanner:
+    """What `template_classes` reads out of an attribute, and what it leaves alone.
+
+    Blocks branch on their attributes, so nearly every class attribute a block
+    writes carries template syntax somewhere in it. A scanner that gave up on
+    the whole attribute would walk every block in the package and check none of
+    them, which looks exactly like a suite that is passing.
+    """
+
+    def scan(self, tmp_path: Path, markup: str) -> dict[str, set[str]]:
+        (tmp_path / "block.html").write_text(markup, encoding="utf-8")
+        return template_classes(tmp_path)
+
+    def test_a_literal_class_beside_template_syntax_is_read(
+        self, tmp_path: Path
+    ) -> None:
+        found = self.scan(tmp_path, '<section class="isolate {{ class }}">')
+        assert "isolate" in found
+
+    def test_both_branches_of_a_conditional_are_read(self, tmp_path: Path) -> None:
+        """A dead class hides in whichever branch nobody is looking at."""
+        found = self.scan(
+            tmp_path,
+            '<section class="{% if invert %}text-neutral-content'
+            '{% else %}text-base-content{% endif %}">',
+        )
+        assert {"text-neutral-content", "text-base-content"} <= set(found)
+
+    def test_two_branches_do_not_fuse_into_one_token(self, tmp_path: Path) -> None:
+        """`{% endif %}` separates them in the source and has to separate them here.
+
+        Dropping a tag without putting something in its place runs the last
+        class of one branch into the first of the next, and the invented token
+        that makes resolves to no rule — a failure report naming a class that
+        appears nowhere in the template it blames.
+        """
+        found = self.scan(
+            tmp_path,
+            '<section class="{% if a %}py-12{% endif %}{% if b %}py-16{% endif %}">',
+        )
+        assert {"py-12", "py-16"} <= set(found)
+        assert "py-12py-16" not in found
+
+    def test_a_class_after_a_quoted_comparison_is_read(self, tmp_path: Path) -> None:
+        """The comparison's own quotes are not the end of the attribute."""
+        found = self.scan(
+            tmp_path,
+            "<section class=\"{% if size == 'sm' %}py-12{% else %}py-24{% endif %}\">",
+        )
+        assert {"py-12", "py-24"} <= set(found)
+
+    def test_an_attribute_spanning_several_lines_is_read_whole(
+        self, tmp_path: Path
+    ) -> None:
+        found = self.scan(
+            tmp_path,
+            '<section class="relative\n                isolate\n'
+            '                overflow-hidden">',
+        )
+        assert {"relative", "isolate", "overflow-hidden"} <= set(found)
+
+    def test_a_class_composed_at_render_time_is_left_to_the_inline_list(
+        self, tmp_path: Path
+    ) -> None:
+        """Reading the source cannot say what `text-{{ tone }}-content` becomes.
+
+        Half a class name is worse than no class name: it would be reported as
+        missing on every build, and the way to quiet it would be to emit a rule
+        for a class that never reaches the DOM.
+        """
+        found = self.scan(tmp_path, '<section class="isolate text-{{ tone }}-content">')
+        assert set(found) == {"isolate"}
+
+    def test_a_template_is_named_by_the_classes_it_uses(self, tmp_path: Path) -> None:
+        """The report is only actionable if it says where to go and look."""
+        found = self.scan(tmp_path, '<section class="isolate">')
+        assert found["isolate"] == {str(tmp_path / "block.html")}
 
 
 @pytest.fixture(scope="module")
@@ -231,11 +364,7 @@ class TestBlocksAreSelfSufficient:
         if not used:
             pytest.skip("the package ships no blocks yet, so there is nothing to check")
 
-        missing = {
-            token: templates
-            for token, templates in used.items()
-            if token not in blocks_classes and token not in HOST_PROVIDED_CLASSES
-        }
+        missing = unresolved_classes(used, blocks_classes | HOST_PROVIDED_CLASSES)
         assert not missing, (
             report_missing(missing)
             + "\nAdd them to assets/daisy-cotton-blocks.css and rebuild with "
@@ -255,10 +384,28 @@ class TestBlocksAreSelfSufficient:
         used = template_classes(EXAMPLE_TEMPLATES)
         assert used, "no template classes were found to check — the scanner is broken"
 
-        available = blocks_classes | host_classes
-        missing = {
-            token: templates
-            for token, templates in used.items()
-            if token not in available
-        }
+        missing = unresolved_classes(used, blocks_classes | host_classes)
         assert not missing, report_missing(missing)
+
+    def test_a_dead_class_in_a_conditional_branch_is_caught(
+        self, tmp_path: Path, blocks_classes: set[str]
+    ) -> None:
+        """The check above, run against the defect it exists to catch.
+
+        Written out because the package ships no blocks yet, so the check
+        itself has nothing to walk and skips. A gate that has never been shown
+        to go red is not yet evidence of anything.
+        """
+        (tmp_path / "block.html").write_text(
+            '<section class="py-16 space-y-4\n'
+            "               {% if size == 'sm' %}md:py-16"
+            '{% else %}not-a-utility-anything-emits{% endif %}">',
+            encoding="utf-8",
+        )
+
+        missing = unresolved_classes(
+            template_classes(tmp_path), blocks_classes | HOST_PROVIDED_CLASSES
+        )
+
+        assert set(missing) == {"not-a-utility-anything-emits"}
+        assert "block.html" in report_missing(missing)
