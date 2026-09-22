@@ -1,0 +1,80 @@
+{# @description Centred copy over a wide, lifted product panel. #}
+{# @prop eyebrow:text | description:"Short line above the heading" #}
+{# @prop title:text | default:"Your whole estate, on one screen" | description:"The heading. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The supporting sentence under the heading" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"1" | description:"Heading level. 1 is right for a landing page." #}
+{# @prop invert:boolean | default:False | description:"Light copy, for a dark background" #}
+{# @prop size:select['sm', 'md', 'lg'] | default:"md" | description:"How much vertical room the block takes" #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here." #}
+{# @slot:background — A background block, rendered into a layer behind the copy #}
+{# @slot:announcement — Above the eyebrow #}
+{# @slot:actions <a class="btn btn-primary btn-lg" href="#">Get started</a> <a class="btn btn-outline btn-lg" href="#">Learn more</a> — The button row. Write real anchor markup, so it can post, submit or carry anything. #}
+{# @slot:footnote — Under the actions, above the visual #}
+{# @slot:media — The visual. This block frames and lifts it, so pass the bare thing. #}
+{% comment %}
+  ============================================================
+  <c-hero.showcase> — centred copy over a large product visual
+
+  The arrangement that puts the product itself under the headline, wide and
+  lifted. Reach for it when a screenshot explains the product faster than a
+  paragraph does, which is most of the time, and when the visual wants more
+  room than `<c-hero.split>` gives it.
+
+  The media panel is wider than the copy above it on purpose: the copy is
+  reading material and stays inside a comfortable measure, the visual is
+  looking material and takes the room.
+
+  The attributes and slots are declared in the annotations above this block.
+  See <c-hero.centred> for the note on how the background layer works, and for
+  why the actions are a slot rather than a pair of label/href attributes.
+  ============================================================
+{% endcomment %}
+<c-vars eyebrow title lead level="1" invert size="md" class />
+<section class="relative isolate overflow-hidden
+                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
+                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+      {{ announcement }}
+      {% if eyebrow %}
+        <p class="text-sm font-semibold tracking-widest uppercase
+                  {% if not invert %}text-base-content/80{% endif %}">
+          {{ eyebrow }}
+        </p>
+      {% endif %}
+      {# djlint:off #}
+      <h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">{{ title }}</h{{ level }}>
+      {# djlint:on #}
+      {% if lead %}
+        <p class="max-w-2xl text-lg leading-relaxed text-pretty sm:text-xl
+                  {% if not invert %}text-base-content/80{% endif %}">
+          {{ lead }}
+        </p>
+      {% endif %}
+      {% if actions %}
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>
+      {% endif %}
+      {% if footnote %}
+        <div class="pt-2 text-sm {% if not invert %}text-base-content/80{% endif %}">{{ footnote }}</div>
+      {% endif %}
+    </div>
+  </div>
+  {% if media %}
+    {% comment %}
+      The frame, not the content. The ring and the shadow together are what
+      lift it: a shadow alone reads as flat on a dark theme, where shadows are
+      hard to perceive, so elevation is carried by a surface edge as well.
+    {% endcomment %}
+    <div class="mx-auto mt-14 w-full max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="overflow-hidden rounded-2xl shadow-2xl ring-1
+                  {% if invert %}ring-neutral-content/20{% else %}ring-base-300{% endif %}">
+        {{ media }}
+      </div>
+    </div>
+  {% endif %}
+</section>

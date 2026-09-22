@@ -1,0 +1,29 @@
+{# @description Two heavily blurred discs of the theme's own colours. No invert needed. #}
+{# @prop from:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The disc at the top" #}
+{# @prop to:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"secondary" | description:"The disc at the foot" #}
+{# @prop intensity:select['faint', 'soft', 'bold'] | default:"soft" | description:"How far the discs come through. Check bold against a dark theme." #}
+{# @prop class:text | description:"Extra classes on the layer" #}
+{% comment %}
+  ============================================================
+  <c-background.glow> — two blurred discs of colour
+
+  Goes in a block's `background` slot. Heavily blurred, low opacity, so the
+  surface under the copy stays close to the page's own background and the text
+  keeps the contrast it was designed for. That restraint is the whole point:
+  colour on a saturated gradient is what fails on a theme you did not test.
+
+  Every background block roots at `absolute inset-0` rather than filling its
+  parent in normal flow, which is what lets two of them be written into the
+  same slot and land on top of each other. Two block-level layers in flow would
+  stack one *below* the other and the second would never be seen. So a
+  background belongs in a `background` slot and nowhere else — the slot's
+  wrapper is what it positions against.
+  ============================================================
+{% endcomment %}
+<c-vars from="primary" to="secondary" intensity="soft" class />
+<div class="absolute inset-0 overflow-hidden {{ class }}">
+  <div class="absolute -top-32 -left-24 h-96 w-96 rounded-full blur-3xl bg-{{ from }}
+              {% if intensity == 'faint' %}opacity-10{% elif intensity == 'bold' %}opacity-30{% else %}opacity-20{% endif %}"></div>
+  <div class="absolute -right-24 -bottom-40 h-96 w-96 rounded-full blur-3xl bg-{{ to }}
+              {% if intensity == 'faint' %}opacity-10{% elif intensity == 'bold' %}opacity-30{% else %}opacity-20{% endif %}"></div>
+</div>

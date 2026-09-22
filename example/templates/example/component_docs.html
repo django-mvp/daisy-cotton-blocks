@@ -1,0 +1,103 @@
+{% comment %}
+  The reference tables for one component, built from its own @prop and @slot
+  annotations by the component_docs tag.
+
+  Nothing renders when the component has no annotations — an empty heading over
+  an empty table would read as "documented, with nothing in it".
+{% endcomment %}
+{% if component.props or component.slots %}
+  <div class="mt-10">
+    {% if component.props %}
+      <h2 class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">Attributes</h2>
+      <div class="mt-3 overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Accepts</th>
+              <th>Default</th>
+              <th>What it does</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for prop in component.props %}
+              {% if not prop.hidden %}
+                <tr>
+                  <td class="whitespace-nowrap">
+                    <code class="rounded bg-base-200 px-2 py-1 text-xs">{{ prop.clean_name }}</code>
+                    {% if prop.required %}<span class="badge badge-warning badge-sm">required</span>{% endif %}
+                    {% if prop.deprecated %}<span class="badge badge-error badge-sm">deprecated</span>{% endif %}
+                  </td>
+                  <td>
+                    {% if prop.options %}
+                      <span class="flex flex-wrap gap-1">
+                        {% for option in prop.options %}
+                          <code class="rounded bg-base-200 px-2 py-1 text-xs">{{ option }}</code>
+                        {% endfor %}
+                      </span>
+                    {% else %}
+                      <span class="text-sm text-base-content/80">{{ prop.type }}</span>
+                    {% endif %}
+                  </td>
+                  <td class="whitespace-nowrap">
+                    {% if prop.has_default %}
+                      <code class="rounded bg-base-200 px-2 py-1 text-xs">{{ prop.default }}</code>
+                    {% else %}
+                      <span class="text-base-content/80">—</span>
+                    {% endif %}
+                  </td>
+                  <td>
+                    {{ prop.description }}
+                    {% if prop.deprecated %}<span class="text-base-content/80">{{ prop.deprecated }}</span>{% endif %}
+                  </td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if component.accepts_attrs %}
+        <p class="mt-3 text-sm text-base-content/80">
+          Any other attribute you pass is forwarded to the block's outer element, so
+          <code>id</code>, <code>data-</code> and the rest reach the markup untouched.
+        </p>
+      {% endif %}
+    {% endif %}
+
+    {% if component.slots %}
+      <h2 class="mt-8 text-sm font-semibold tracking-widest text-base-content/80 uppercase">Slots</h2>
+      <div class="mt-3 overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>What goes in it</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for slot in component.slots %}
+              <tr>
+                <td class="whitespace-nowrap">
+                  <code class="rounded bg-base-200 px-2 py-1 text-xs">{{ slot.name|default:"default" }}</code>
+                </td>
+                <td>{{ slot.description }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+
+    {% comment %}
+      The `as` form of {% templatetag openblock %} url {% templatetag closeblock %} is the one that does not raise when the route is
+      missing, which matters here: the gallery is mounted under DEBUG only, so
+      a bare reverse would take this panel down with it wherever it is not.
+    {% endcomment %}
+    {% url 'django_cotton_gallery:index' as gallery_url %}
+    <p class="mt-3 text-sm text-base-content/80">
+      Read from <code>{{ tag }}</code>'s own annotations{% if gallery_url %}, the same ones the
+      <a class="link" href="{{ gallery_url }}">component gallery</a> builds its live controls
+      from{% endif %}.
+    </p>
+  </div>
+{% endif %}

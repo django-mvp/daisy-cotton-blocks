@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Split{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-hero.split">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Below the <code>lg</code> breakpoint the columns become one, copy first, media second,
+      whichever way round they sit at width. Narrow the window on either example below and both
+      read in the same order.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="Media on the trailing edge" anchor="default">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.split class="bg-base-200"
+             eyebrow="Deploy tracking"
+             title="Every release, and who shipped it"
+             lead="Meridian watches your pipelines and tells you what changed, when it went out, and which change is the one that broke the graph.">
+  <c-slot name="actions">
+    <a class="btn btn-primary btn-lg" href="/trial/">Start a free trial</a>
+    <a class="btn btn-ghost btn-lg" href="/tour/">Take the tour</a>
+  </c-slot>
+  <c-slot name="footnote">Connects to GitHub, GitLab and Bitbucket.</c-slot>
+  <c-slot name="media">
+    <c-mockup.browser url="app.example.com/overview" class="shadow-2xl">
+      <c-demo.screenshot />
+    </c-mockup.browser>
+  </c-slot>
+</c-hero.split>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.split level="2"
+                  class="bg-base-200"
+                  eyebrow="Deploy tracking"
+                  title="Every release, and who shipped it"
+                  lead="Meridian watches your pipelines and tells you what changed, when it went out, and which change is the one that broke the graph.">
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#default">Start a free trial</a>
+        <a class="btn btn-ghost btn-lg" href="#default">Take the tour</a>
+      </c-slot>
+      <c-slot name="footnote">Connects to GitHub, GitLab and Bitbucket.</c-slot>
+      <c-slot name="media">
+        <c-mockup.browser url="app.example.com/overview" class="shadow-2xl">
+          <c-demo.screenshot />
+        </c-mockup.browser>
+      </c-slot>
+    </c-hero.split>
+  </c-demo.live>
+
+  <c-demo.live label="Reversed, with a background" anchor="reversed">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.split reverse
+             eyebrow="Reversed"
+             title="Mirrored at width, identical when stacked">
+  <c-slot name="background"><c-background.grid /></c-slot>
+  <c-slot name="media">…</c-slot>
+</c-hero.split>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.split level="2"
+                  reverse
+                  eyebrow="Reversed"
+                  title="Mirrored at width, identical when stacked"
+                  lead="The visual leads on a wide screen. Narrow the window past the lg breakpoint and the copy comes first again, the same way round as the block above.">
+      <c-slot name="background">
+        <c-background.grid />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#reversed">Primary action</a>
+      </c-slot>
+      <c-slot name="media">
+        <c-mockup.browser url="app.example.com/overview" class="shadow-2xl">
+          <c-demo.screenshot />
+        </c-mockup.browser>
+      </c-slot>
+    </c-hero.split>
+  </c-demo.live>
+{% endblock content %}

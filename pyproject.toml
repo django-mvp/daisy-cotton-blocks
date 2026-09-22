@@ -48,6 +48,12 @@ mvp-shared = { git = "https://github.com/django-mvp/shared.git", tag = "v0.4.1",
 # ready-made daisyUI and Cotton host, which is all the demo needs it to be.
 django-mvp = ">=0.23.0"
 
+# The component gallery, which reads the annotations on each block and gives
+# back a live playground and a linter. A development dependency, and its URLs
+# are mounted under DEBUG only: it serves component source and evaluates URL
+# parameters through the template engine.
+django-cotton-gallery = "^1.0.0"
+
 [build-system]
 requires = ['poetry-core (>=2.0,<3.0)']
 build-backend = "poetry.core.masonry.api"
@@ -119,17 +125,24 @@ ignore_missing_model_attributes = "True"
 
 [tool.forge.conformance]
 # None of these test modules has a source module to mirror, and none should.
-# test_app.py's subject is the Django app registry and the layout of the
-# installed package; test_stylesheet.py's subject is a built CSS artifact and
-# the class tokens in the templates; test_demo_catalogue.py's subject is the
-# example project, which is a development target and is not part of the
-# distribution at all. Conforming to the mirror rule would mean inventing
-# modules inside the package purely to give three test files something to
-# point at.
+# Conforming to the mirror rule would mean inventing modules inside the package
+# purely to give these files something to point at.
+#
+#   test_app.py            the Django app registry, and the layout of the
+#                          installed package
+#   test_stylesheet.py     a built CSS artifact, and the class tokens in the
+#                          templates
+#   test_hero_blocks.py    the templates under cotton/hero/, which are Cotton
+#   test_background_blocks.py  components rather than Python modules
+#   test_demo_catalogue.py the example project, a development target that is
+#   test_component_docs.py not part of the distribution at all
 non-mirror-paths = [
     "tests/test_app.py",
     "tests/test_stylesheet.py",
+    "tests/test_hero_blocks.py",
+    "tests/test_background_blocks.py",
     "tests/test_demo_catalogue.py",
+    "tests/test_component_docs.py",
 ]
 
 [tool.deptry]

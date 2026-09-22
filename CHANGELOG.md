@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- The hero family: `<c-hero.centred>`, `<c-hero.split>` and `<c-hero.showcase>`, which share one
+  attribute and slot vocabulary, plus `<c-hero.highlight>` for marking words inside a heading.
+- The background family: `<c-background.glow>`, `<c-background.gradient>`, `<c-background.grid>`
+  and `<c-background.image>`. Each one goes in another block's `background` slot, so any background
+  composes with any layout.
+- Every block carries `@description`, `@prop` and `@slot` annotations. The example project builds
+  each block's reference page from them, and `python manage.py cotton_lint` checks them.
+- The stylesheet emits the palette, gradient, opacity and object-position utilities the background
+  blocks compose while they render, which a scan of the templates cannot see.
+
 ### Changed
 
 - Renamed from `django-mvp-bits` to `daisy-cotton-blocks`. The import package is now

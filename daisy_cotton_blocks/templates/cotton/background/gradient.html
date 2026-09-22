@@ -1,0 +1,33 @@
+{# @description A wash between two palette colours. Needs invert at full opacity. #}
+{# @prop from:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The first stop" #}
+{# @prop via:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | description:"An optional middle stop" #}
+{# @prop to:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"secondary" | description:"The last stop" #}
+{# @prop direction:select['t', 'tr', 'r', 'br', 'b', 'bl', 'l', 'tl'] | default:"br" | description:"Which way the wash runs" #}
+{# @prop opacity:select['faint', 'soft', 'full'] | default:"soft" | description:"How much of the block's own surface shows through. full needs invert." #}
+{# @prop class:text | description:"Extra classes on the layer" #}
+{% comment %}
+  ============================================================
+  <c-background.gradient> — a wash between two theme colours
+
+  Goes in a block's `background` slot.
+
+  Read the contrast warning before reaching for a saturated pair. Copy sitting
+  on a full-strength `primary → secondary` gradient fails WCAG's 4.5:1 on
+  several of daisyUI's own themes, because `primary` is a light colour in some
+  of them. Two ways out, both supported here:
+
+    - Keep `opacity` at its default, so the wash sits over the block's own
+      surface and the copy keeps the contrast measured for that surface.
+    - Or go full strength and set `invert` on the block, which puts the copy
+      in `neutral-content`. Check it against a light theme and a dark one.
+
+  Roots at `absolute inset-0`, like every background block, so that two written
+  into the same slot land on top of each other rather than one below the other.
+  See <c-background.glow> for the reasoning. A background belongs in a
+  `background` slot and nowhere else.
+  ============================================================
+{% endcomment %}
+<c-vars from="primary" via to="secondary" direction="br" opacity="soft" class />
+<div class="absolute inset-0 bg-gradient-to-{{ direction }} from-{{ from }} {% if via %}via-{{ via }}{% endif %} to-{{ to }}
+            {% if opacity == 'faint' %}opacity-10{% elif opacity == 'full' %}opacity-100{% else %}opacity-20{% endif %}
+            {{ class }}"></div>

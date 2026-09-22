@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Gradient{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-background.gradient">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      At <code>opacity="full"</code> this needs <code>invert</code> on the block, and that pairing
+      is the one worth checking on a light theme as well as a dark one: copy on a full-strength
+      primary wash fails the contrast floor on several of daisyUI's own themes. The lower settings
+      leave the block's own surface showing through, which is what keeps the copy readable.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.gradient />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="The default" lead="Primary to secondary, down and right.">
+          <c-slot name="background"><c-background.gradient /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.gradient from="base-100" to="primary" direction="t" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="Rising" lead="Colour pooling at the foot of the block.">
+          <c-slot name="background"><c-background.gradient from="base-100" to="primary" direction="t" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.gradient from="primary" via="secondary" to="accent" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="Three stops" lead="A middle colour, for a longer run.">
+          <c-slot name="background"><c-background.gradient from="primary" via="secondary" to="accent" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert>
+  <c-slot name="background">
+    <c-background.gradient from="neutral" to="primary" opacity="full" />
+  </c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2"
+                        invert
+                        size="sm"
+                        title="Full strength"
+                        lead="Needs invert, and needs checking on every theme.">
+          <c-slot name="background"><c-background.gradient from="neutral" to="primary" opacity="full" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+    </div>
+  </c-container>
+
+  <c-demo.live label="At full width" anchor="full">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg" title="…">
+  <c-slot name="background"><c-background.gradient from="primary" to="accent" /></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2"
+                    size="lg"
+                    title="A wash across the block"
+                    lead="Two stops from the semantic palette, in any of the eight directions.">
+      <c-slot name="background">
+        <c-background.gradient from="primary" to="accent" />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#full">Primary action</a>
+        <a class="btn btn-outline btn-lg" href="#full">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

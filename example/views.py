@@ -12,22 +12,25 @@ class HomeView(MVPTemplateView):
     page_subtitle = "Page blocks for Django projects running Cotton and daisyUI"
 
 
-class GroupView(MVPTemplateView):
-    """One planned block family, holding its place until it has blocks.
+class ComponentView(MVPTemplateView):
+    """One block, shown live with the markup that produced it.
 
-    Deliberately carries no template of its own. django-mvp defaults an
-    unconfigured template to a packaged placeholder, so these pages render the
-    shell and say plainly that nothing is wired up yet, which is the honest
-    state of every one of them right now.
+    A page per component rather than per family: a family page grew a section
+    per block and every block after the first was below the fold, which is the
+    wrong shape for something whose whole job is to be looked at.
     """
 
+    def get_template_names(self) -> list[str]:
+        return [self.component.template(self.family.slug)]
+
     def get_page_title(self) -> str:
-        return self.kwargs["label"]
+        return self.component.label
 
     def dispatch(self, request, *args, **kwargs):
-        label = blocks.planned_family(kwargs["slug"])
-        if label is None:
-            raise Http404(f"no block family named {kwargs['slug']}")
-        kwargs["label"] = label
-        self.kwargs["label"] = label
+        found = blocks.find(kwargs["family"], kwargs["component"])
+        if found is None:
+            raise Http404(
+                f"no component named {kwargs['family']}.{kwargs['component']}"
+            )
+        self.family, self.component = found
         return super().dispatch(request, *args, **kwargs)

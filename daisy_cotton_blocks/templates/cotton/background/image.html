@@ -1,0 +1,44 @@
+{# @description A picture, dimmed by the theme's neutral. Always pair it with invert on the block. #}
+{# @prop src:text | description:"URL of the image. Without one the layer renders only the dim." #}
+{# @prop dim:select['soft', 'medium', 'strong'] | default:"medium" | description:"How far the picture is dimmed. This is what makes the copy readable." #}
+{# @prop position:select['center', 'top', 'bottom', 'left', 'right'] | default:"center" | description:"Where the picture sits inside its frame" #}
+{# @prop class:text | description:"Extra classes on the layer" #}
+{% comment %}
+  ============================================================
+  <c-background.image> — a picture behind the copy, dimmed
+
+  Goes in a block's `background` slot. Pair it with `invert` on the block, so
+  the copy is set in `neutral-content` over the dimming layer.
+
+  **A background image is decoration.** The block hides this whole layer from
+  assistive technology, so the picture carries no alternative text and says
+  nothing a screen reader will hear. An image that means something — a chart,
+  a diagram, a photograph the copy refers to — belongs in the `media` slot of
+  `<c-hero.split>` or `<c-hero.showcase>`, where it is an <img> with an `alt`.
+
+  An <img> layer rather than a CSS `background-image`: an author-supplied URL
+  interpolated into a `style` attribute is a CSS injection surface that HTML
+  escaping does not close, and a project that wants `srcset` or `loading` can
+  pass them straight through here.
+
+  Because the picture is the project's and its brightness is unknown, `dim` is
+  what makes the copy readable. Treat "does the copy still read over this
+  picture?" as the setting's whole purpose — on every theme, since the dimming
+  layer is the theme's own `neutral`.
+
+  Roots at `absolute inset-0`, like every background block, so that two written
+  into the same slot land on top of each other rather than one below the other.
+  See <c-background.glow> for the reasoning. A background belongs in a
+  `background` slot and nowhere else.
+  ============================================================
+{% endcomment %}
+<c-vars src dim="medium" position="center" class />
+<div class="absolute inset-0 {{ class }}">
+  {% if src %}
+    <img src="{{ src }}"
+         alt=""
+         class="absolute inset-0 h-full w-full object-cover object-{{ position }}" />
+  {% endif %}
+  <div class="absolute inset-0 bg-neutral
+              {% if dim == 'soft' %}opacity-50{% elif dim == 'strong' %}opacity-85{% else %}opacity-70{% endif %}"></div>
+</div>
