@@ -1,0 +1,23 @@
+{% comment %}
+  Demo scaffolding, not a block. One live block with the markup that produced
+  it underneath.
+
+  The live render sits outside any container: these blocks are full-bleed by
+  design and judging one inside a padded column tells you nothing.
+{% endcomment %}
+<c-vars label anchor markup />
+<section class="border-t border-base-300">
+  {% if label %}
+    <c-container class="py-6">
+      <h2 {% if anchor %}id="{{ anchor }}"{% endif %} class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">
+        {{ label }}
+      </h2>
+    </c-container>
+  {% endif %}
+  <div class="border-t border-b border-base-300">{{ slot }}</div>
+  {% if markup %}
+    <c-container class="py-8">
+      <pre class="w-full overflow-x-auto rounded-lg border border-base-300 bg-base-200 p-4 text-xs"><code>{{ markup }}</code></pre>
+    </c-container>
+  {% endif %}
+</section>

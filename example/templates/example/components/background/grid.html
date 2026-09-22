@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Grid{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-background.grid"
+               summary="A faint ruled grid, for a block's background slot. The quietest of the four, which is why it sits under dense copy better than a wash does.">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      The rules are drawn in <code>currentColor</code>, so the grid inherits the block's own text
+      colour and works on a light theme, a dark theme and behind <code>invert</code> without being
+      told which it is.
+    </p>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Takes <code>size</code>, <code>intensity</code> and <code>flat</code>. The pattern is a
+      Tailwind arbitrary value rather than an inline style, so a project running a strict
+      Content-Security-Policy still gets it.
+    </p>
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.grid />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="The default" lead="Fading out towards the foot of the block.">
+          <c-slot name="background"><c-background.grid /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.grid flat />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="Ruled evenly" lead="No fade, for a block that ends on a border.">
+          <c-slot name="background"><c-background.grid flat /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.grid size="sm" intensity="bold" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="Tighter and darker" lead="Graph paper rather than a hint.">
+          <c-slot name="background"><c-background.grid size="sm" intensity="bold" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert class="bg-neutral">
+  <c-slot name="background"><c-background.grid size="lg" /></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2"
+                        invert
+                        class="bg-neutral"
+                        size="sm"
+                        title="On a dark band"
+                        lead="Same block, inheriting the inverted text colour.">
+          <c-slot name="background"><c-background.grid size="lg" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+    </div>
+  </c-demo.head>
+
+  <c-demo.live label="At full width" anchor="full">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg" title="…">
+  <c-slot name="background"><c-background.grid /></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2"
+                    size="lg"
+                    title="A surface, not a colour"
+                    lead="It gives a block something to sit on without giving it a hue, which is what makes it the safe one under a long headline.">
+      <c-slot name="background">
+        <c-background.grid />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#full">Primary action</a>
+        <a class="btn btn-outline btn-lg" href="#full">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

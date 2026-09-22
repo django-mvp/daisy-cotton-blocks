@@ -1,9 +1,8 @@
-"""The demo shell: a home page and a placeholder page per planned block family.
+"""The demo shell: a home page, and a page per component the package ships.
 
-There is nothing to discover yet. The package ships no blocks, so these tests
-hold the two things that exist: the home page, and the family pages the
-roadmap plans, each of which carries no template of its own and renders
-django-mvp's packaged placeholder.
+The catalogue in ``example.blocks`` is the single declaration the sidebar, the
+URLconf and these tests all read, so the failure worth guarding against is a
+component named in one of them and missing from another.
 """
 
 import pytest
@@ -12,65 +11,76 @@ from django.urls import reverse
 from example import blocks
 
 
-class TestPlannedFamilyPages:
-    """A page per family the roadmap plans, holding its place until it has blocks."""
+class TestComponentPages:
+    """A page per component, built from the same declaration as the sidebar."""
 
-    @pytest.mark.parametrize(("slug", "label"), blocks.PLANNED_FAMILIES)
-    def test_every_planned_family_has_a_reachable_page(
-        self, client, slug: str, label: str
+    @pytest.mark.parametrize(("family", "component"), blocks.every_component())
+    def test_every_component_has_a_reachable_page(
+        self, client, family: blocks.Family, component: blocks.Component
     ) -> None:
-        """Parametrised so adding a family without routing it fails here.
+        """Parametrised so declaring a component without a page fails here.
 
-        The sidebar and the URLconf are both built from PLANNED_FAMILIES, so
-        the failure this guards against is the declaration and the routing
-        drifting apart — which shows up as a sidebar entry leading to a 404.
+        The sidebar and the URLconf are both built from the catalogue, so the
+        drift this catches shows up as a sidebar entry leading to a 404, or a
+        route with no template behind it.
         """
-        response = client.get(reverse("group", kwargs={"slug": slug}))
+        response = client.get(
+            reverse(
+                "component",
+                kwargs={"family": family.slug, "component": component.slug},
+            )
+        )
 
         assert response.status_code == 200
-        assert label.encode() in response.content
+        assert component.tag(family.slug).encode() in response.content
 
-    def test_a_family_with_no_blocks_yet_carries_no_template_of_its_own(
-        self, client
-    ) -> None:
-        """They render the packaged placeholder, deliberately and visibly.
+    def test_a_component_page_renders_its_block(self, client) -> None:
+        """Asserting rendered output, not the presence of a tag name.
 
-        Asserting the placeholder rather than the absence of content, because
-        "this page has nothing on it" and "this page failed to render" look
-        identical from a status code.
-
-        Pricing rather than hero: a family takes a page of its own the moment
-        somebody writes example/families/<slug>.html, and hero now has one.
+        A page that failed to compile its Cotton tags would still contain the
+        tag text in its own code sample, so the check has to be something only
+        a rendered block produces.
         """
-        response = client.get(reverse("group", kwargs={"slug": "pricing"}))
-        assert b"have a template yet" in response.content
+        response = client.get(
+            reverse("component", kwargs={"family": "hero", "component": "centred"})
+        )
 
-    def test_the_hero_family_has_a_catalogue_page(self, client) -> None:
-        """The first family with blocks, and the first with a page of its own."""
-        response = client.get(reverse("group", kwargs={"slug": "hero"}))
+        assert b"Ship the page, not the CSS" in response.content
+        assert b"relative isolate overflow-hidden" in response.content
 
-        assert response.status_code == 200
-        assert b"have a template yet" not in response.content
-        for tag in (b"c-hero.centred", b"c-hero.split", b"c-hero.showcase"):
-            assert tag in response.content
-
-    def test_the_background_family_has_a_catalogue_page(self, client) -> None:
-        """Backgrounds are blocks too, and get a page rather than a strip."""
-        response = client.get(reverse("group", kwargs={"slug": "background"}))
-
-        assert response.status_code == 200
-        assert b"have a template yet" not in response.content
-        for tag in (
-            b"c-background.glow",
-            b"c-background.gradient",
-            b"c-background.grid",
-            b"c-background.image",
-        ):
-            assert tag in response.content
+    def test_an_unknown_component_is_not_found(self, client) -> None:
+        response = client.get(
+            reverse("component", kwargs={"family": "hero", "component": "nonexistent"})
+        )
+        assert response.status_code == 404
 
     def test_an_unknown_family_is_not_found(self, client) -> None:
-        response = client.get(reverse("group", kwargs={"slug": "nonexistent"}))
+        response = client.get(
+            reverse(
+                "component", kwargs={"family": "nonexistent", "component": "centred"}
+            )
+        )
         assert response.status_code == 404
+
+
+class TestCatalogue:
+    """What the sidebar and the URLconf are both built from."""
+
+    def test_only_families_with_blocks_are_declared(self) -> None:
+        """The placeholder pages are gone, and stay gone.
+
+        A family without blocks used to hold a page that said so. Nothing is
+        served by a sidebar full of entries leading to that message, so a
+        family arrives here when it has something to show.
+        """
+        assert [family.slug for family in blocks.FAMILIES] == ["hero", "background"]
+
+    def test_every_component_names_its_cotton_tag(self) -> None:
+        assert blocks.FAMILIES[0].components[0].tag("hero") == "c-hero.centred"
+
+    def test_an_unknown_slug_resolves_to_nothing(self) -> None:
+        assert blocks.find("hero", "nonexistent") is None
+        assert blocks.find("nonexistent", "centred") is None
 
 
 class TestHomePage:

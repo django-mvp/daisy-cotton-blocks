@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Showcase{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-hero.showcase"
+               summary="Centred copy over a wide, lifted product panel. Reach for it when a screenshot explains the product faster than a paragraph, and wants more room than the split arrangement gives it.">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      The panel is wider than the copy above it on purpose: the copy is reading material and stays
+      inside a comfortable measure, the visual is looking material and takes the room.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="With a ruled grid behind it" anchor="default">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.showcase size="lg">
+  <c-slot name="background"><c-background.grid /></c-slot>
+  <c-slot name="title">Your whole estate, <c-hero.highlight>on one screen</c-hero.highlight></c-slot>
+  <c-slot name="lead">
+    Two hundred services, four regions, one page that answers whether anything is on fire.
+  </c-slot>
+  <c-slot name="actions">
+    <a class="btn btn-primary btn-lg" href="/signup/">Create an account</a>
+    <a class="btn btn-outline btn-lg" href="/demo/">See a live demo</a>
+  </c-slot>
+  <c-slot name="media"><c-demo.screenshot /></c-slot>
+</c-hero.showcase>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.showcase level="2" size="lg">
+      <c-slot name="background">
+        <c-background.grid />
+      </c-slot>
+      <c-slot name="title">Your whole estate, <c-hero.highlight>on one screen</c-hero.highlight></c-slot>
+      <c-slot name="lead">
+        Two hundred services, four regions, one page that answers whether anything is on fire.
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#default">Create an account</a>
+        <a class="btn btn-outline btn-lg" href="#default">See a live demo</a>
+      </c-slot>
+      <c-slot name="media">
+        <c-demo.screenshot />
+      </c-slot>
+    </c-hero.showcase>
+  </c-demo.live>
+
+  <c-demo.live label="Inverted, on a dark band" anchor="inverted">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.showcase invert class="bg-neutral" size="lg" title="…">
+  <c-slot name="background"><c-background.glow intensity="bold" /></c-slot>
+  <c-slot name="media"><c-demo.screenshot /></c-slot>
+</c-hero.showcase>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.showcase level="2"
+                     invert
+                     class="bg-neutral"
+                     size="lg"
+                     eyebrow="Same block"
+                     title="The panel lifts off a dark surface too"
+                     lead="The frame is a ring and a shadow together, because a shadow alone reads as flat wherever the surface behind it is dark.">
+      <c-slot name="background">
+        <c-background.glow intensity="bold" />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#inverted">Create an account</a>
+      </c-slot>
+      <c-slot name="media">
+        <c-demo.screenshot />
+      </c-slot>
+    </c-hero.showcase>
+  </c-demo.live>
+{% endblock content %}

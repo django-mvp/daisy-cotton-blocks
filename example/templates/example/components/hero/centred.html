@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Centred{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-hero.centred"
+               summary="One column, centred. The default opener, for when the words are the product: a launch note, a documentation site, a service with nothing to screenshot.">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      With <code>&lt;c-background.image&gt;</code> in the background slot and <code>invert</code> set,
+      this is also the image-backed hero. There is no separate block for that.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="With a glow behind it" anchor="glow">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg"
+               eyebrow="Version 2.0"
+               title="Ship the page, not the CSS"
+               lead="Drop a block in, pass it your words, and let it take the colours from the theme you already run.">
+  <c-slot name="background"><c-background.glow /></c-slot>
+  <c-slot name="announcement">
+    <a class="badge badge-primary badge-lg" href="/changelog/">What's new in 2.0 →</a>
+  </c-slot>
+  <c-slot name="actions">
+    <a class="btn btn-primary btn-lg" href="/start/">Get started</a>
+    <a class="btn btn-outline btn-lg" href="/blocks/">Browse the blocks</a>
+  </c-slot>
+  <c-slot name="footnote">MIT licensed · no build step · works with any daisyUI theme</c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2"
+                    size="lg"
+                    eyebrow="Version 2.0"
+                    title="Ship the page, not the CSS"
+                    lead="Drop a block in, pass it your words, and let it take the colours from the theme you already run.">
+      <c-slot name="background">
+        <c-background.glow />
+      </c-slot>
+      <c-slot name="announcement">
+        <a class="badge badge-primary badge-lg" href="#glow">What's new in 2.0 →</a>
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#glow">Get started</a>
+        <a class="btn btn-outline btn-lg" href="#glow">Browse the blocks</a>
+      </c-slot>
+      <c-slot name="footnote">MIT licensed · no build step · works with any daisyUI theme</c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+
+  <c-demo.live label="Over a picture, inverted" anchor="inverted">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert
+               size="lg"
+               eyebrow="Field season 2026"
+               title="Measurements from where the heat is"
+               lead="Four hundred boreholes across the East African Rift, reduced, quality-scored and published under one licence.">
+  <c-slot name="background">
+    <c-background.image src="{% static 'marketing/basalt.jpg' %}" dim="strong" />
+  </c-slot>
+  <c-slot name="actions">
+    <a class="btn btn-primary btn-lg" href="/data/">Browse the dataset</a>
+    <a class="btn btn-outline btn-lg" href="/method/">How it was measured</a>
+  </c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2"
+                    invert
+                    size="lg"
+                    eyebrow="Field season 2026"
+                    title="Measurements from where the heat is"
+                    lead="Four hundred boreholes across the East African Rift, reduced, quality-scored and published under one licence.">
+      <c-slot name="background">
+        <c-background.image src="{% static 'example/spotlight.svg' %}" dim="strong" />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#inverted">Browse the dataset</a>
+        <a class="btn btn-outline btn-lg" href="#inverted">How it was measured</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+
+  <c-demo.live label="The minimum" anchor="minimum">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred title="Nothing else is required" />{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2" size="sm" title="Nothing else is required" />
+  </c-demo.live>
+{% endblock content %}

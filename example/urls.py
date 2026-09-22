@@ -1,11 +1,15 @@
 from django.conf import settings
 from django.urls import include, path
 
-from example.views import GroupView, HomeView
+from example.views import ComponentView, HomeView
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
-    path("components/<slug:slug>/", GroupView.as_view(), name="group"),
+    path(
+        "components/<slug:family>/<slug:component>/",
+        ComponentView.as_view(),
+        name="component",
+    ),
     # The endpoint the browser holds open to hear about a reload.
     path("__reload__/", include("django_browser_reload.urls")),
 ]
