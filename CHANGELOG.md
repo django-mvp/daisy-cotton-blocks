@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The project is built and developed with uv instead of Poetry: `uv sync` installs the development
+  environment and `uv.lock` replaces `poetry.lock`. The published package is unchanged.
+- Django 6.1 is supported, and tested on every change alongside 5.2 and 6.0.
 - Renamed from `django-mvp-bits` to `daisy-cotton-blocks`. The import package is now
   `daisy_cotton_blocks` and the stylesheet ships as `css/daisy-cotton-blocks.css`.
 - The package no longer requires django-mvp. It works on any Django project running Cotton and
