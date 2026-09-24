@@ -12,14 +12,14 @@ those belongs to the project, not here.
 
 ## Stack & commands
 
-- **Stack:** Python 3.12+ / Django 5.2 and 6.0, Poetry-managed, built on Cotton and daisyUI
-- **Install:** `poetry install` **and** `npm install` (the stylesheet build)
-- **Test:** `poetry run pytest`
-- **Lint:** `poetry run pre-commit run --all-files` (ruff lint + format, mypy, deptry)
-- **Type-check:** `poetry run mypy`
-- **Build (Python):** `poetry build`
+- **Stack:** Python 3.12+ / Django 5.2, 6.0 and 6.1, uv-managed, built on Cotton and daisyUI
+- **Install:** `uv sync` **and** `npm install` (the stylesheet build)
+- **Test:** `uv run pytest`
+- **Lint:** `uv run pre-commit run --all-files` (ruff lint + format, mypy, deptry)
+- **Type-check:** `uv run mypy`
+- **Build (Python):** `uv build`
 - **Build (stylesheet):** `npm run build:css`, or `npm run watch:css` while working
-- **Example project:** `poetry run python manage.py runserver 0.0.0.0:8018`
+- **Example project:** `uv run python manage.py runserver 0.0.0.0:8018`
 
 Lint is the pre-commit run, not a bare `ruff check .`: the hook config excludes `docs/` and
 migrations, and a raw invocation reports findings in paths the gate does not cover.
@@ -51,7 +51,7 @@ Three consequences worth knowing before editing `assets/daisy-cotton-blocks.css`
    needs daisyUI's palette declared in the `@theme reference` block, or it silently produces no
    rule and the page renders unstyled markup.
 
-After any change to what the stylesheet emits: `npm run build:css`, then `poetry run pytest`, then
+After any change to what the stylesheet emits: `npm run build:css`, then `uv run pytest`, then
 commit the rebuilt CSS alongside the entry.
 
 ## Every block documents itself
@@ -73,7 +73,7 @@ has cost time already:
    first occurrence in the source as the declaration and then reports every real prop as missing.
 
 Reasoning goes below the annotations in a `{% comment %}` block, never into the one-liners.
-`poetry run python manage.py cotton_lint` reports the same findings as the test, with a browsable
+`uv run python manage.py cotton_lint` reports the same findings as the test, with a browsable
 gallery to look at them in.
 
 ## Agent skills
