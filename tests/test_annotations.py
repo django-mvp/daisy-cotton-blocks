@@ -1,4 +1,4 @@
-"""Every packaged block documents itself in its own template, per Article XVII.
+"""Every packaged block documents itself in its own template, per Article XVI.
 
 The annotations at the head of each component are the only description of what
 it accepts. The component gallery builds its live controls from them and each

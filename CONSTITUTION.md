@@ -5,12 +5,10 @@ Changes here are rare and deliberate, never made in the middle of a feature.
 
 ## Core articles
 
-### Article I — Test-First
+### Article I — Testing
 
-Every behaviour change follows the traffic-light cycle: **Red** — write a test and watch it fail;
-**Green** — write the least code that makes it pass; **Refactor** — clean up with the tests staying
-green. No implementation before a failing test exists for the behaviour. Pre-existing tests are
-never modified or deleted without a recorded, approved decision.
+Every change follows [`docs/contributing/standards/testing.md`](docs/contributing/standards/testing.md): what gets a test
+and what does not, the test-first cycle, test structure and fixtures, and the coverage floors.
 
 ### Article II — Simplicity
 
@@ -38,10 +36,12 @@ in code, fixtures or version control.
 
 ### Article VI — Documentation
 
-Public API changes ship their documentation in the same pull request: README and CHANGELOG updated,
-docstrings on public surfaces. Public surface here means a component, one of its attributes or
-slots, a template tag or filter, and what the shipped stylesheet covers. Adding, renaming, removing
+Public API changes ship their documentation in the same pull request: README and CHANGELOG
+updated. Public surface here means a component, one of its attributes or slots, a template tag or
+filter, and what the shipped stylesheet covers. Adding, renaming, removing
 or changing the default of any of those leaves the work unfinished until the documentation says so.
+Docstrings, component annotations and code comments follow
+[`docs/contributing/standards/code-documentation.md`](docs/contributing/standards/code-documentation.md).
 
 ### Article VII — Dependency discipline
 
@@ -62,27 +62,7 @@ author through attributes and slots. The article bites on the exceptions: a defa
 placeholder, an ARIA label, a screen-reader-only heading. The first block that ships one also ships
 the `locale/` directory and the base English catalog.
 
-### Article IX — Test structure & fixtures (Django)
-
-Tests are organized for fast, targeted discovery.
-
-- **Mirror the source tree.** Every test module mirrors the path of the module it exercises:
-  `daisy_cotton_blocks/models.py` → `tests/test_models.py`. Test subpackages carry `__init__.py` to match.
-  Where one source module defines several units, it stays one test module and the split is
-  expressed with classes, not extra files.
-
-  A test whose subject is not a Python module has nothing to mirror. Those paths are declared in
-  `pyproject.toml` under `[tool.forge.conformance] non-mirror-paths`. That is a statement that no
-  source module exists to mirror, not a waiver for a test that simply sits in the wrong place.
-- **Group related tests into classes.** Within a module, tests are grouped into `Test<Subject>`
-  classes, so one area can be targeted when debugging.
-- **One factory per model, fixtures wrap the factory, shared setup lives in `conftest.py`.**
-  Variants are expressed by overriding fields at the call site, never by subclassing a factory.
-  This package defines no models, so the rule applies to whatever a test needs to construct.
-- **Use the pytest-django toolchain.** Rendering assertions go through the template engine or the
-  test client; query-count guards use `django_assert_num_queries`, never wall-clock timing.
-
-### Article X — Cohesion (Python)
+### Article IX — Cohesion (Python)
 
 Related behaviour is grouped in a class, not scattered across module-level functions. Two or more
 module-level functions belong on a class when they share a subject — the same data, the same first
@@ -100,12 +80,12 @@ the goal, not a hierarchy built for a second implementation that does not exist.
 - Data-model conventions (Django) — nothing here for it to govern.
 
 That article covers model fields, indexing decisions and migration consolidation. This package
-defines no models, and Article XI forbids it from ever defining one. If that boundary is ever
+defines no models, and Article X forbids it from ever defining one. If that boundary is ever
 crossed, the article is adopted in the same change that crosses it.
 
 ## Project articles
 
-### Article XI — No application surface
+### Article X — No application surface
 
 This package ships presentation and nothing else. No models, no views, no forms, no URLs, no
 migrations, no management commands. A component's content arrives from the template author through
@@ -119,7 +99,7 @@ step. When a block needs something on the far side of it, such as a model, a vie
 that work belongs to the project or to a package that does own an application surface. It is never
 reimplemented here.
 
-### Article XII — The stylesheet carries what a host cannot
+### Article XI — The stylesheet carries what a host cannot
 
 `daisy_cotton_blocks/static/css/daisy-cotton-blocks.css` is the one stylesheet this package ships,
 and it exists for a single reason: a host's Tailwind build scans the host's own source, so the
@@ -150,7 +130,7 @@ package needs no Node toolchain, which is what the committed artifact buys. `npm
 `Built stylesheet matches its source` check both fail when the committed file and its source
 disagree.
 
-### Article XIII — Blocks are configured, not edited
+### Article XII — Blocks are configured, not edited
 
 A block is named for its role on the page, never for its implementation or an external design
 system. Its attributes are the only supported way to change its presentation, and where a project
@@ -172,7 +152,7 @@ directory rather than under a prefix of their own, so a tag reads `<c-hero.centr
 accepted and real: a project defining its own `cotton/hero/centred.html` shadows this one, or is
 shadowed by it, depending on `INSTALLED_APPS` order.
 
-### Article XIV — Rendered markup is a contract
+### Article XIII — Rendered markup is a contract
 
 Components render valid, semantic HTML and are accessible by default: a real heading hierarchy,
 alternative text where an image carries meaning, keyboard-reachable interactive elements, and ARIA
@@ -185,7 +165,7 @@ adds a test asserting the part of the contract it changed. Assertions are made a
 output, not against the presence of a class name: a class assertion proves a string is in a
 template and nothing about what the browser draws.
 
-### Article XV — Compatibility
+### Article XIV — Compatibility
 
 The package is pre-1.0 and says so in the README. Block names, attribute surfaces and the set of
 classes the stylesheet emits may change between minor versions, and every such change is recorded
@@ -201,7 +181,7 @@ against daisyUI 5. Adding a class from a later daisyUI to `HOST_PROVIDED_CLASSES
 for every project installing this package, so it is a minor-version change with a CHANGELOG entry,
 never a silent addition alongside the block that wanted it.
 
-### Article XVI — Nothing executable is fetched at page load
+### Article XV — Nothing executable is fetched at page load
 
 No block pulls a script, a font or a stylesheet from a third-party origin. Where a block needs
 behaviour, it uses what the host project already runs, and any JavaScript this package ships of its
@@ -211,7 +191,7 @@ This is a marketing-surface library, which is exactly the kind of code that attr
 an animation library or a web font. A project that installs this package gains no external origin
 it did not already have.
 
-### Article XVII — A block documents itself, in its own template
+### Article XVI — A block documents itself, in its own template
 
 Every packaged component carries its reference in annotation comments at the head of its own
 template, in the format [django-cotton-gallery](https://github.com/velezanthony/django-cotton-gallery)
@@ -242,8 +222,8 @@ Three rules about what goes where, each of which has already cost time:
   scans the raw source for the first occurrence and reads a mention inside a comment as the
   declaration itself, which reports every real prop as missing.
 - **Reasoning lives below the annotations, in a `{% comment %}` block.** The one-liners are the
-  reference; a measurement, a stacking-context argument or a rejected alternative belongs in the
-  prose underneath, where it does not have to fit on one line.
+  reference. The comment underneath gives the why in three lines at most and points at the issue,
+  pull request or ADR that holds a longer argument.
 
 **This is gated, not encouraged.** `tests/test_annotations.py` runs the gallery's own linter over
 every packaged component and fails on any issue it reports, at any severity, and separately checks
@@ -263,7 +243,7 @@ Read at planning and at review; applies to every change.
   `pre-commit run --all-files`, which is the gate, rather than a bare invocation that reports
   findings in paths the hooks exclude.
 - The committed stylesheet matches its source, locally via `npm test` and in CI.
-- Every packaged component's annotations lint clean, per Article XVII. `python manage.py cotton_lint`
+- Every packaged component's annotations lint clean, per Article XVI. `python manage.py cotton_lint`
   reports the same findings with a component gallery to look at them in.
 - The package builds, its metadata is valid, and the README renders on the package index with
   absolute URLs.
@@ -282,4 +262,4 @@ first. Do not cite it as an enforced standard until it runs in CI.
 
 ---
 
-**Version**: 2.1.0 | **Ratified**: 2026-09-17 | **Last Amended**: 2026-09-22
+**Version**: 3.0.0 | **Ratified**: 2026-09-17 | **Last Amended**: 2026-09-28
