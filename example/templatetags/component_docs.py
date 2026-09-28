@@ -35,13 +35,19 @@ parser = AnnotationParser()
 
 
 def template_name(tag: str) -> str:
-    """The template a Cotton tag resolves to.
+    """Return the template a Cotton tag resolves to.
 
     ``c-hero.centred`` and ``<c-hero.centred>`` both give
     ``cotton/hero/centred.html``, which is the path Cotton itself would load.
     Accepting the bracketed form too, because that is how a tag is written
     everywhere else on these pages and requiring one spelling would be a
     detail for the page author to get wrong.
+
+    Args:
+        tag: The Cotton tag, with or without its angle brackets.
+
+    Returns:
+        The template path Cotton would load for the tag.
     """
     name = tag.strip().removeprefix("<").removesuffix(">").removeprefix("c-")
     return f"cotton/{name.replace('.', '/')}.html"
@@ -53,6 +59,12 @@ def parse(tag: str) -> ParsedComponent | None:
     Resolved through Django's own loader rather than by walking the package
     directory, so the file read is the same one Cotton would render — including
     when a project has shadowed it with its own.
+
+    Args:
+        tag: The Cotton tag, with or without its angle brackets.
+
+    Returns:
+        The parsed annotations, or None when no template or file can be found.
     """
     try:
         found = get_template(template_name(tag))
@@ -71,16 +83,28 @@ def component_docs(tag: str) -> dict[str, object]:
     annotations, rather than an empty heading over an empty table: a component
     with nothing documented should read as undocumented, not as documented
     with nothing in it.
+
+    Args:
+        tag: The Cotton tag of the component to document.
+
+    Returns:
+        The context for the reference-table template.
     """
     return {"tag": tag, "component": parse(tag)}
 
 
 @register.simple_tag
 def component_description(tag: str) -> str:
-    """The one-line `@description`, for use as a page's own summary.
+    """Return the one-line `@description`, for use as a page's own summary.
 
     Separate from the tables so a page can lead with the sentence the component
     describes itself by, instead of a second one written by hand that drifts.
+
+    Args:
+        tag: The Cotton tag of the component to describe.
+
+    Returns:
+        The description, or an empty string when the component has none.
     """
     component = parse(tag)
     return component.description if component else ""

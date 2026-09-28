@@ -9,17 +9,37 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Component:
-    """One block, and the page that shows it."""
+    """One block, and the page that shows it.
+
+    Attributes:
+        slug: The component's name within its family, as used in its Cotton tag
+            and its URL.
+        label: The name shown in the sidebar and as the page title.
+    """
 
     slug: str
     label: str
 
     def tag(self, family_slug: str) -> str:
-        """The Cotton tag this component is used as, without its brackets."""
+        """Return the Cotton tag this component is used as, without its brackets.
+
+        Args:
+            family_slug: The slug of the family the component belongs to.
+
+        Returns:
+            The tag, for example ``c-hero.centred``.
+        """
         return f"c-{family_slug}.{self.slug}"
 
     def template(self, family_slug: str) -> str:
-        """The demo page that shows it."""
+        """Return the path of the demo page that shows this component.
+
+        Args:
+            family_slug: The slug of the family the component belongs to.
+
+        Returns:
+            The template path, relative to a template root.
+        """
         return f"example/components/{family_slug}/{self.slug}.html"
 
 
@@ -29,6 +49,11 @@ class Family:
 
     A naming convention rather than a thing in the code — there is no shared
     template and no base component behind one.
+
+    Attributes:
+        slug: The family's name, as used in its Cotton tags and URLs.
+        label: The name shown as the sidebar section heading.
+        components: The blocks in the family, in the order they are listed.
     """
 
     slug: str
@@ -36,6 +61,14 @@ class Family:
     components: tuple[Component, ...]
 
     def find(self, slug: str) -> Component | None:
+        """Return the component with the given slug.
+
+        Args:
+            slug: The component's name within this family.
+
+        Returns:
+            The component, or None when the family has no such component.
+        """
         for component in self.components:
             if component.slug == slug:
                 return component
@@ -70,7 +103,15 @@ FAMILIES: tuple[Family, ...] = (
 
 
 def find(family_slug: str, component_slug: str) -> tuple[Family, Component] | None:
-    """The family and component a pair of slugs names, or None."""
+    """Return the family and component a pair of slugs names.
+
+    Args:
+        family_slug: The slug of the family.
+        component_slug: The slug of the component within that family.
+
+    Returns:
+        The family and its component, or None when either slug names nothing.
+    """
     for family in FAMILIES:
         if family.slug != family_slug:
             continue
@@ -81,7 +122,11 @@ def find(family_slug: str, component_slug: str) -> tuple[Family, Component] | No
 
 
 def every_component() -> list[tuple[Family, Component]]:
-    """Every (family, component) pair, for parametrising over the catalogue."""
+    """Return every (family, component) pair, for parametrising over the catalogue.
+
+    Returns:
+        The pairs, family by family, in declaration order.
+    """
     return [
         (family, component) for family in FAMILIES for component in family.components
     ]

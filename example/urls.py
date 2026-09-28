@@ -1,3 +1,5 @@
+"""URL routes for the example project."""
+
 from django.conf import settings
 from django.urls import include, path
 
