@@ -1,3 +1,8 @@
+{# @description One live block, full width, with the markup that produced it underneath. #}
+{# @prop label:text | description:"Small heading above the live block" #}
+{# @prop anchor:text | description:"The id the label heading carries, so a link can point at this example" #}
+{# @prop markup:text | description:"The escaped markup shown under the live block" #}
+{# @slot A hero block — The live block to show. #}
 <c-vars label anchor markup />
 <section class="border-t border-base-300">
   {% if label %}

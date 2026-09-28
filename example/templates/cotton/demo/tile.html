@@ -1,3 +1,6 @@
+{# @description One cell of the background gallery: a live block above the line, its markup below. #}
+{# @prop markup:text | description:"The escaped markup shown under the live block" #}
+{# @slot A hero block — The live block to show. #}
 <c-vars markup />
 <div class="flex flex-col overflow-hidden rounded-xl ring-1 ring-base-300">
   <div class="flex-1">{{ slot }}</div>
