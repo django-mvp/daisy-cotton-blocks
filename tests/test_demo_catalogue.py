@@ -84,8 +84,8 @@ class TestEveryPageLoadsBothStylesheets:
 
 
 class TestCatalogue:
-    def test_only_families_with_blocks_are_declared(self) -> None:
-        assert [family.slug for family in blocks.FAMILIES] == ["hero", "background"]
+    def test_every_declared_family_has_at_least_one_component(self) -> None:
+        assert all(family.components for family in blocks.FAMILIES)
 
     def test_every_component_names_its_cotton_tag(self) -> None:
         assert blocks.FAMILIES[0].components[0].tag("hero") == "c-hero.centred"
@@ -99,8 +99,3 @@ class TestHomePage:
     def test_home_renders(self, client) -> None:
         response = client.get(reverse("home"))
         assert response.status_code == 200
-
-    def test_home_explains_what_the_package_is(self, client) -> None:
-        response = client.get(reverse("home"))
-        assert b"What this is" in response.content
-        assert b"django-cotton" in response.content

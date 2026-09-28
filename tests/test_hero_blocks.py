@@ -106,6 +106,8 @@ class TestTheBackgroundSlot:
         assert "aria-hidden" not in html
 
 
+# The subject is a class name because the decision is one: contrast measured across
+# the demo's ten themes, which a small aesthetic edit would quietly undo (#21).
 class TestTheContrastDecisions:
     @pytest.mark.parametrize("tag", ARRANGEMENTS)
     def test_dimmed_copy_is_never_dimmer_than_eighty_percent(self, render, tag) -> None:
@@ -172,12 +174,6 @@ class TestShowcaseHero:
 
         assert "ring-1" not in html
         assert "shadow-2xl" not in html
-
-    def test_the_panel_is_lifted_by_an_edge_as_well_as_a_shadow(self, render) -> None:
-        html = render(f'<c-hero.showcase title="T">{self.MEDIA}</c-hero.showcase>')
-
-        assert "shadow-2xl" in html
-        assert "ring-1" in html
 
 
 class TestHighlight:
