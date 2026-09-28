@@ -1,14 +1,45 @@
 # daisy-cotton-blocks
 
-Page blocks for Django projects running [django-cotton](https://django-cotton.com/) and [daisyUI](https://daisyui.com/) — heroes, section layouts, calls to action and the rest of the furniture a public-facing page needs.
+[![Tests](https://github.com/django-mvp/daisy-cotton-blocks/actions/workflows/tests.yml/badge.svg)](https://github.com/django-mvp/daisy-cotton-blocks/actions/workflows/tests.yml) [![Coverage](https://codecov.io/gh/django-mvp/daisy-cotton-blocks/branch/main/graph/badge.svg)](https://codecov.io/gh/django-mvp/daisy-cotton-blocks) ![Python 3.12 | 3.13](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue) ![Django 5.2 | 6.0 | 6.1](https://img.shields.io/badge/django-5.2%20%7C%206.0%20%7C%206.1-blue) [![License: MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/LICENSE)
+
+Configurable page blocks for django-cotton and daisyUI: heroes, sections, calls to action
+
+Built on [django-cotton](https://django-cotton.com/) and [daisyUI](https://daisyui.com/), for the furniture a public-facing page needs.
 
 Component libraries in this space cover the application: navigation, forms, tables, dialogs. They stop at the pages that sit in front of it — the landing page, the pricing page, the sign-up pitch. Those get assembled by hand out of raw utility classes, in every project, every time.
 
 Blocks are configured through attributes and take their colours from whatever daisyUI theme the project already runs, so a page built from them re-themes with the rest of the site.
 
+## Contents
+
+- [Status](#status)
+- [Scope & philosophy](#scope--philosophy)
+- [Requirements](#requirements)
+- [Install](#install)
+- [Blocks](#blocks)
+- [Contributing](#contributing)
+- [Changelog](#changelog)
+- [License](#license)
+
 ## Status
 
-Version 0.0.1. Two families are built, heroes and backgrounds, and nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](CHANGELOG.md) is how a project finds out.
+Version 0.0.1. Two families are built, heroes and backgrounds, and nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/CHANGELOG.md) is how a project finds out.
+
+## Scope & philosophy
+
+**What this is.** A presentation-only component library. Templates, a stylesheet, and the small amount of JavaScript some blocks need. Blocks are configured through attributes and themed by whatever daisyUI theme the project runs, so a page built from them never pins a literal colour into the markup.
+
+**What this deliberately is not.**
+
+- **Not an application.** No models, no views, no forms, no URLs, no migrations. A block's content comes from the template author, never from a queryset.
+- **Not a CSS framework.** No daisyUI plugin, no theme layer, no preflight. Those come from the project.
+- **Not an application component library.** Navigation, forms, tables and dialogs are somebody else's job. This package owns the marketing surface.
+- **Not a fixed catalogue.** The set of blocks grows as new ones are designed. There is no taxonomy to fill in.
+- **Not page templates.** Blocks only. You pick the ones you want and assemble the page yourself. There is no one-tag landing page.
+
+**Tie-breaks.** When two of these pull against each other: theme-driven beats hard-coded, a block that composes existing daisyUI markup beats one that invents its own, and leaving a job to the project beats doing it here.
+
+The directions the package works toward are in [GOALS.md](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/GOALS.md), and the order they are being built in is in the [roadmap](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/docs/ROADMAP.md).
 
 ## Requirements
 
@@ -116,33 +147,14 @@ Two things to know about them. A background belongs in a `background` slot and n
 
 Every attribute, its accepted values and its default are listed on each block's own page in the example project, built from the annotations in the block's template. Run it with `python manage.py runserver` from a checkout.
 
-## Scope & philosophy
+## Contributing
 
-**What this is.** A presentation-only component library. Templates, a stylesheet, and the small amount of JavaScript some blocks need. Blocks are configured through attributes and themed by whatever daisyUI theme the project runs, so a page built from them never pins a literal colour into the markup.
+Development setup, building the stylesheet and the rules changes are held to are in [CONTRIBUTING.md](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/CONTRIBUTING.md).
 
-**What this deliberately is not.**
+## Changelog
 
-- **Not an application.** No models, no views, no forms, no URLs, no migrations. A block's content comes from the template author, never from a queryset.
-- **Not a CSS framework.** No daisyUI plugin, no theme layer, no preflight. Those come from the project.
-- **Not an application component library.** Navigation, forms, tables and dialogs are somebody else's job. This package owns the marketing surface.
-- **Not a fixed catalogue.** The set of blocks grows as new ones are designed. There is no taxonomy to fill in.
-- **Not page templates.** Blocks only. You pick the ones you want and assemble the page yourself. There is no one-tag landing page.
-
-**Tie-breaks.** When two of these pull against each other: theme-driven beats hard-coded, a block that composes existing daisyUI markup beats one that invents its own, and leaving a job to the project beats doing it here.
-
-The directions the package works toward are in [GOALS.md](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/GOALS.md), and the order they are being built in is in the [roadmap](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/docs/ROADMAP.md).
-
-## Building the stylesheet
-
-The built CSS is committed, so installing the package needs no Node toolchain. Contributors changing what it emits do:
-
-```bash
-npm install
-npm run build:css     # or watch:css
-```
-
-`assets/daisy-cotton-blocks.css` is the entry. It scans this package's own templates, so a utility a new block uses is picked up by rebuilding. The `@source inline(...)` entries alongside cover what scanning cannot see: classes composed at render time, and the utilities the first blocks are being designed against. `tests/test_stylesheet.py` measures the result.
+Every release is recorded in [CHANGELOG.md](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/CHANGELOG.md).
 
 ## License
 
-MIT
+[MIT](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/LICENSE)

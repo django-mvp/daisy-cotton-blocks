@@ -94,7 +94,7 @@ See `docs/agents/domain.md`.
 
 ### CI checks
 
-CI runs from the shared reusable workflows in `django-mvp/shared`, pinned at `v0.4.1`. Because
+CI runs from the shared reusable workflows in `django-mvp/shared`, pinned at `v0.6.0`. Because
 they are called rather than inlined, those status checks carry their caller job as a prefix.
 The required checks are:
 
@@ -105,6 +105,8 @@ The required checks are:
 - `call-tests / Test Python 3.12, Django 6.0`
 - `call-tests / Test Python 3.13, Django 5.2`
 - `call-tests / Test Python 3.13, Django 6.0`
+- `call-tests / Test Python 3.12, Django 6.1`
+- `call-tests / Test Python 3.13, Django 6.1`
 - `Built stylesheet matches its source`
 
 The last one is repo-local, from `stylesheet.yml`, and carries **no prefix** — anything matching
