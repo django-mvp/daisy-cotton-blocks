@@ -16,9 +16,7 @@ from django.test import override_settings
 
 from example.templatetags.component_docs import template_name
 
-# Demo scaffolding, and deliberately unannotated: it is a component of the
-# example project rather than one of the blocks this package documents.
-UNANNOTATED = "c-demo.tile"
+UNANNOTATED = "c-unannotated"
 
 
 def docs(render, tag: str) -> str:
