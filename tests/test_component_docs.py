@@ -30,15 +30,10 @@ def description(render, tag: str) -> str:
 
 
 class TestTheTemplateAPathIsReadFrom:
-    """A Cotton tag names a template, and this is the same rule Cotton uses."""
-
     @pytest.mark.parametrize(
         "tag", ["c-hero.centred", "<c-hero.centred>", " c-hero.centred "]
     )
     def test_every_spelling_of_a_tag_reaches_one_template(self, tag: str) -> None:
-        """The bracketed form because that is how a tag is written everywhere
-        else on these pages, and requiring one spelling would be a detail for
-        the page author to get wrong."""
         assert template_name(tag) == "cotton/hero/centred.html"
 
     def test_a_family_becomes_a_directory(self) -> None:
@@ -46,8 +41,6 @@ class TestTheTemplateAPathIsReadFrom:
 
 
 class TestTheAttributeAndSlotTables:
-    """What a component's page shows about how to configure it."""
-
     def test_every_attribute_a_block_declares_is_listed(self, render) -> None:
         html = docs(render, "c-hero.centred")
 
@@ -55,8 +48,6 @@ class TestTheAttributeAndSlotTables:
             assert f">{attribute}</code>" in html
 
     def test_an_attributes_accepted_values_are_listed(self, render) -> None:
-        """A `select` prop is the set of values that block was designed for, so
-        the page shows them rather than the word "select"."""
         html = docs(render, "c-hero.centred")
 
         assert ">sm</code>" in html
@@ -89,12 +80,6 @@ class TestTheAttributeAndSlotTables:
     def test_the_panel_still_renders_where_the_gallery_is_not_mounted(
         self, render
     ) -> None:
-        """The gallery is routed under DEBUG only, so its route is often absent.
-
-        The link is built with the `as` form of the url tag, the form that does
-        not raise when a route is missing. A bare reverse would take the whole
-        reference panel down everywhere the gallery is not.
-        """
         with override_settings(ROOT_URLCONF="tests.urls"):
             html = docs(render, "c-hero.centred")
 
@@ -103,14 +88,10 @@ class TestTheAttributeAndSlotTables:
 
 
 class TestAComponentWithNothingToShow:
-    """Undocumented should read as undocumented, not as documented and empty."""
-
     def test_a_component_with_no_annotations_renders_nothing(self, render) -> None:
         assert docs(render, UNANNOTATED).strip() == ""
 
     def test_a_tag_naming_no_template_renders_nothing(self, render) -> None:
-        """Rather than raising. A page is a reference, and a typo in one tag on
-        it should cost that panel and not the whole page."""
         assert docs(render, "c-hero.nonexistent").strip() == ""
 
     def test_a_component_with_no_annotations_has_no_description(self, render) -> None:
@@ -121,16 +102,12 @@ class TestAComponentWithNothingToShow:
 
 
 class TestThePageSummary:
-    """The one-line description a page leads with."""
-
     def test_it_is_the_components_own_description(self, render) -> None:
         html = description(render, "c-hero.centred")
 
         assert "One column, centred" in html
 
     def test_it_is_read_from_the_component_rather_than_the_page(self, render) -> None:
-        """Two pages describing one component is one source too many, and the
-        one that drifts is always the one being read."""
         assert description(render, "c-background.grid").strip()
         assert description(render, "c-background.grid") != description(
             render, "c-background.glow"
