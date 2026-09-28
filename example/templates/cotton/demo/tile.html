@@ -1,11 +1,6 @@
-{% comment %}
-  Demo scaffolding, not a block. One cell of the background gallery: a live
-  block above the line, the markup that produced it below.
-
-  A background is judged against copy sitting on it, so each cell holds a real
-  hero rather than a bare swatch — a colour that looks pleasant on its own and
-  eats the text underneath is the failure worth catching here.
-{% endcomment %}
+{# @description One cell of the background gallery: a live block above the line, its markup below. #}
+{# @prop markup:text | description:"The escaped markup shown under the live block" #}
+{# @slot A hero block — The live block to show. #}
 <c-vars markup />
 <div class="flex flex-col overflow-hidden rounded-xl ring-1 ring-base-300">
   <div class="flex-1">{{ slot }}</div>

@@ -13,10 +13,8 @@ from mvp.menus import AppMenu, MenuCollapse, MenuGroup
 
 from example.blocks import FAMILIES
 
-# The gallery is routed under DEBUG only, so reversing its URL raises outside
-# development. The entry is built on the same condition rather than guarded at
-# render time, because a sidebar link to a route that does not exist is a 500
-# waiting for somebody to click it.
+# The gallery is routed under DEBUG only, so reversing its URL raises elsewhere.
+# The entry is built on the same condition, or its link would be a 500.
 gallery_entries = (
     [
         MenuItem(
@@ -42,8 +40,7 @@ AppMenu.extend(
             extra_context={"label": "Content"},
             children=[
                 # MenuCollapse rather than a nested MenuGroup: it sets the
-                # `collapsible` flag the sidebar reads, which renders the family
-                # through a <details>/<summary> pair and needs no JavaScript.
+                # `collapsible` flag the sidebar reads, so no JavaScript is needed.
                 MenuCollapse(
                     name=f"family-{family.slug}",
                     extra_context={"label": family.label, "icon": "block"},

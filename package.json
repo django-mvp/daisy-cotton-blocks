@@ -9,7 +9,7 @@
     "build": "npm run build:css",
     "test": "npm run build:css && git diff --exit-code -- daisy_cotton_blocks/static/css/daisy-cotton-blocks.css"
   },
-  "$comment": "`build` and `test` exist under those exact names so the verify gate's node adapter finds them \u2014 it treats a step as present only when package.json declares a script of that name. `test` is the same check the Stylesheet workflow runs, so a stale committed stylesheet fails locally before a pull request is opened rather than in CI after.",
+  "$comment": "`build` and `test` keep those names so tooling that looks for them finds them. `test` is the check the Stylesheet workflow runs, so a stale committed stylesheet fails locally first.",
   "devDependencies": {
     "@tailwindcss/cli": "4.3.3",
     "tailwindcss": "4.3.3"

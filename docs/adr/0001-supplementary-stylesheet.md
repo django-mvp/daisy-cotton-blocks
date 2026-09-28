@@ -12,7 +12,7 @@ django-mvp's. It contains only utilities django-mvp's build does not already emi
 a hand-written whitelist rather than by scanning templates, and the built file is committed so that
 installing the package needs no Node toolchain.
 
-The rules that govern it are Article XII of `CONSTITUTION.md`. This record is why they are those
+The rules that govern it are Article XI of `CONSTITUTION.md`. This record is why they are those
 rules and not others.
 
 ## Why

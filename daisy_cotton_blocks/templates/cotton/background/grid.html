@@ -4,30 +4,8 @@
 {# @prop flat:boolean | default:False | description:"Rule the whole area evenly instead of fading out towards the foot" #}
 {# @prop class:text | description:"Extra classes on the layer" #}
 {% comment %}
-  ============================================================
-  <c-background.grid> — a faint ruled grid
-
-  Goes in a block's `background` slot. The quietest of the backgrounds: it
-  gives a block a surface without giving it a colour, which is why it sits
-  under dense copy better than a gradient does.
-
-  The rules are drawn in `currentColor`, so the grid inherits the block's own
-  text colour and works on a light theme, a dark theme and behind `invert`
-  without being told which it is. Its opacity is what keeps it decorative.
-
-  The pattern is a Tailwind arbitrary value rather than an inline `style`,
-  so a project running a strict Content-Security-Policy without
-  `style-src 'unsafe-inline'` still gets it.
-
-  Roots at `absolute inset-0`, like every background block, so that two written
-  into the same slot land on top of each other rather than one below the other.
-  See <c-background.glow> for the reasoning. A background belongs in a
-  `background` slot and nowhere else.
-
-  `flat` is a bare attribute rather than `fade=False`, because a Cotton
-  attribute arrives as a string and the string "False" is truthy in a Django
-  template — a default-on boolean that reads as off is a trap, not an option.
-  ============================================================
+  The pattern is an arbitrary value rather than an inline `style`, so a strict CSP still gets it.
+  `flat` is a bare attribute because the string "False" is truthy in a Django template (#21).
 {% endcomment %}
 <c-vars size="md" intensity="soft" flat class />
 <div class="absolute inset-0

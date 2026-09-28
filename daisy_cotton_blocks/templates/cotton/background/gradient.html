@@ -6,26 +6,8 @@
 {# @prop opacity:select['faint', 'soft', 'full'] | default:"soft" | description:"How much of the block's own surface shows through. full needs invert." #}
 {# @prop class:text | description:"Extra classes on the layer" #}
 {% comment %}
-  ============================================================
-  <c-background.gradient> — a wash between two theme colours
-
-  Goes in a block's `background` slot.
-
-  Read the contrast warning before reaching for a saturated pair. Copy sitting
-  on a full-strength `primary → secondary` gradient fails WCAG's 4.5:1 on
-  several of daisyUI's own themes, because `primary` is a light colour in some
-  of them. Two ways out, both supported here:
-
-    - Keep `opacity` at its default, so the wash sits over the block's own
-      surface and the copy keeps the contrast measured for that surface.
-    - Or go full strength and set `invert` on the block, which puts the copy
-      in `neutral-content`. Check it against a light theme and a dark one.
-
-  Roots at `absolute inset-0`, like every background block, so that two written
-  into the same slot land on top of each other rather than one below the other.
-  See <c-background.glow> for the reasoning. A background belongs in a
-  `background` slot and nowhere else.
-  ============================================================
+  Copy on a full-strength primary-to-secondary wash fails 4.5:1 on some daisyUI
+  themes, so `full` needs `invert` on the block (#21).
 {% endcomment %}
 <c-vars from="primary" via to="secondary" direction="br" opacity="soft" class />
 <div class="absolute inset-0 bg-gradient-to-{{ direction }} from-{{ from }} {% if via %}via-{{ via }}{% endif %} to-{{ to }}

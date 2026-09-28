@@ -1,3 +1,5 @@
+"""Views for the example project."""
+
 from django.http import Http404
 from mvp.views import MVPTemplateView
 
@@ -21,12 +23,15 @@ class ComponentView(MVPTemplateView):
     """
 
     def get_template_names(self) -> list[str]:
+        """Use the demo page of the requested component."""
         return [self.component.template(self.family.slug)]
 
     def get_page_title(self) -> str:
+        """Title the page with the component's label."""
         return self.component.label
 
     def dispatch(self, request, *args, **kwargs):
+        """Resolve the family and component from the URL, or answer 404."""
         found = blocks.find(kwargs["family"], kwargs["component"])
         if found is None:
             raise Http404(

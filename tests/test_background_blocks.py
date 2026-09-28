@@ -34,32 +34,14 @@ PALETTE = [
 
 
 class TestEveryBackgroundIsALayer:
-    """What all four have in common, and why it is not negotiable."""
-
     @pytest.mark.parametrize("tag", BACKGROUNDS)
     def test_it_roots_at_absolute_inset_zero(self, render, tag) -> None:
-        """Not `h-full w-full`, which is the same picture and the wrong box.
-
-        Two backgrounds written into one slot are two block-level layers in
-        normal flow: the second stacks below the first and is never seen.
-        Positioning each against the slot's own wrapper is what lets them be
-        stacked. The consequence is that a background belongs in a background
-        slot and nowhere else.
-        """
         html = render(f"<{tag} />")
 
         assert re.search(r'class="[^"]*\babsolute inset-0\b', html) is not None
 
     @pytest.mark.parametrize("tag", BACKGROUNDS)
     def test_it_carries_no_inline_style_attribute(self, render, tag) -> None:
-        """Two reasons, and either one on its own would be enough.
-
-        A project running a strict Content-Security-Policy without
-        `style-src 'unsafe-inline'` drops the attribute and gets nothing. And
-        an author-supplied value interpolated into a style attribute is a CSS
-        injection surface that HTML escaping does not close, because the
-        attribute parser hands the decoded quote straight to the CSS parser.
-        """
         html = render(f'<{tag} src="/photo.jpg" />')
 
         assert "style=" not in html
@@ -72,8 +54,6 @@ class TestEveryBackgroundIsALayer:
 
 
 class TestGlow:
-    """Two heavily blurred discs of the theme's own colours."""
-
     def test_it_draws_two_discs(self, render) -> None:
         html = render("<c-background.glow />")
 
@@ -98,8 +78,6 @@ class TestGlow:
     def test_intensity_sets_how_far_the_discs_come_through(
         self, render, intensity, opacity
     ) -> None:
-        """Low by design. The surface under the copy stays close to the page's
-        own, so the contrast the hero was measured for still holds."""
         html = render(f'<c-background.glow intensity="{intensity}" />')
 
         assert opacity in html
@@ -111,8 +89,6 @@ class TestGlow:
 
 
 class TestGradient:
-    """A wash between two palette colours."""
-
     def test_it_runs_from_the_first_stop_to_the_last(self, render) -> None:
         html = render('<c-background.gradient from="accent" to="neutral" />')
 
@@ -142,19 +118,13 @@ class TestGradient:
     def test_opacity_sets_how_much_of_the_surface_shows_through(
         self, render, opacity, expected
     ) -> None:
-        """At a partial value the copy keeps the contrast it was measured for.
-        Full strength needs `invert` on the block, and the page says so."""
         html = render(f'<c-background.gradient opacity="{opacity}" />')
 
         assert expected in html
 
 
 class TestGrid:
-    """A faint ruled grid."""
-
     def test_the_rules_are_drawn_in_the_inherited_text_colour(self, render) -> None:
-        """Which is what makes one grid work on a light theme, a dark theme and
-        behind `invert` without being told which of the three it is in."""
         html = render("<c-background.grid />")
 
         assert "currentColor" in html
@@ -178,32 +148,18 @@ class TestGrid:
         assert "mask-image" in html
 
     def test_flat_takes_the_fade_away(self, render) -> None:
-        """A bare `flat` rather than `fade=False`.
-
-        A Cotton attribute arrives as a string, and the string "False" is
-        truthy in a Django template, so a default-on switch turned off by a
-        falsy-looking string is a trap rather than an option.
-        """
         html = render("<c-background.grid flat />")
 
         assert "mask-image" not in html
 
 
 class TestImage:
-    """A picture dimmed by the theme's neutral."""
-
     def test_the_picture_is_a_real_image_element(self, render) -> None:
-        """Not a CSS background-image, which is the same picture and a worse
-        box: the URL would have to be interpolated into a style attribute."""
         html = render('<c-background.image src="/hero.jpg" />')
 
         assert '<img src="/hero.jpg"' in html
 
     def test_the_picture_carries_empty_alternative_text(self, render) -> None:
-        """The layer is hidden from assistive technology, so this image is
-        decoration by definition and takes no alternative text at all. One that
-        carries meaning belongs in a media slot, where it is the author's img
-        and the author's alt."""
         html = render('<c-background.image src="/hero.jpg" />')
 
         assert 'alt=""' in html
@@ -211,12 +167,6 @@ class TestImage:
     def test_a_url_carrying_a_quote_cannot_break_out_of_the_attribute(
         self, render
     ) -> None:
-        """The src is author-supplied, so it is untrusted input.
-
-        Escaped for the attribute it lands in, per constitution Article V. The
-        quote that would close the attribute and start a new one arrives as a
-        character entity instead.
-        """
         html = render(
             '<c-background.image src="{{ url }}" />',
             url='/x.jpg" onerror="alert(1)',
@@ -226,7 +176,6 @@ class TestImage:
         assert "&quot; onerror=&quot;" in html
 
     def test_there_is_no_image_element_without_a_source(self, render) -> None:
-        """A broken-image icon over the copy is worse than the dim alone."""
         html = render("<c-background.image />")
 
         assert "<img" not in html
@@ -243,8 +192,6 @@ class TestImage:
         [("soft", "opacity-50"), ("medium", "opacity-70"), ("strong", "opacity-85")],
     )
     def test_dim_is_three_named_steps(self, render, dim, expected) -> None:
-        """Named rather than a number, for the same reason the picture is an
-        img: a number would be interpolated into a style attribute."""
         html = render(f'<c-background.image src="/hero.jpg" dim="{dim}" />')
 
         assert expected in html

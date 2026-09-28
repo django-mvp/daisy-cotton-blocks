@@ -11,24 +11,6 @@
 {# @slot:actions <a class="btn btn-primary btn-lg" href="#">Get started</a> <a class="btn btn-outline btn-lg" href="#">Learn more</a> — The button row. Write real anchor markup, so it can post, submit or carry anything. #}
 {# @slot:footnote — Under the actions, above the visual #}
 {# @slot:media — The visual. This block frames and lifts it, so pass the bare thing. #}
-{% comment %}
-  ============================================================
-  <c-hero.showcase> — centred copy over a large product visual
-
-  The arrangement that puts the product itself under the headline, wide and
-  lifted. Reach for it when a screenshot explains the product faster than a
-  paragraph does, which is most of the time, and when the visual wants more
-  room than `<c-hero.split>` gives it.
-
-  The media panel is wider than the copy above it on purpose: the copy is
-  reading material and stays inside a comfortable measure, the visual is
-  looking material and takes the room.
-
-  The attributes and slots are declared in the annotations above this block.
-  See <c-hero.centred> for the note on how the background layer works, and for
-  why the actions are a slot rather than a pair of label/href attributes.
-  ============================================================
-{% endcomment %}
 <c-vars eyebrow title lead level="1" invert size="md" class />
 <section class="relative isolate overflow-hidden
                 {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
@@ -65,11 +47,7 @@
     </div>
   </div>
   {% if media %}
-    {% comment %}
-      The frame, not the content. The ring and the shadow together are what
-      lift it: a shadow alone reads as flat on a dark theme, where shadows are
-      hard to perceive, so elevation is carried by a surface edge as well.
-    {% endcomment %}
+    {# A ring as well as a shadow: a shadow alone reads flat on a dark theme (#21). #}
     <div class="mx-auto mt-14 w-full max-w-5xl px-4 sm:px-6 lg:px-8">
       <div class="overflow-hidden rounded-2xl shadow-2xl ring-1
                   {% if invert %}ring-neutral-content/20{% else %}ring-base-300{% endif %}">

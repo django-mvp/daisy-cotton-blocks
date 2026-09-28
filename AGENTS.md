@@ -46,7 +46,7 @@ Three consequences worth knowing before editing `assets/daisy-cotton-blocks.css`
 2. **daisyUI classes are the host's.** The ones blocks may rely on are listed in
    `HOST_PROVIDED_CLASSES` in `tests/test_stylesheet.py`. Using one that is not listed fails the
    suite, and adding one raises the daisyUI floor for every project — a minor-version change, per
-   constitution Article XV.
+   constitution Article XIV.
 3. **A named class can still emit nothing.** Listing a class is not proof it builds. `from-primary`
    needs daisyUI's palette declared in the `@theme reference` block, or it silently produces no
    rule and the page renders unstyled markup.
@@ -57,7 +57,7 @@ commit the rebuilt CSS alongside the entry.
 ## Every block documents itself
 
 A new block is not finished until its own template carries the annotation comments that describe
-it. Constitution Article XVII is the contract and `tests/test_annotations.py` is the gate. A block
+it. Constitution Article XVI is the contract and `tests/test_annotations.py` is the gate. A block
 that skips them fails the suite.
 
 The short version: a single-line `{# @description ... #}`, one `{# @prop ... #}` per attribute in
@@ -94,7 +94,7 @@ See `docs/agents/domain.md`.
 
 ### CI checks
 
-CI runs from the shared reusable workflows in `django-mvp/shared`, pinned at `v0.4.1`. Because
+CI runs from the shared reusable workflows in `django-mvp/shared`, pinned at `v0.6.0`. Because
 they are called rather than inlined, those status checks carry their caller job as a prefix.
 The required checks are:
 
@@ -105,6 +105,8 @@ The required checks are:
 - `call-tests / Test Python 3.12, Django 6.0`
 - `call-tests / Test Python 3.13, Django 5.2`
 - `call-tests / Test Python 3.13, Django 6.0`
+- `call-tests / Test Python 3.12, Django 6.1`
+- `call-tests / Test Python 3.13, Django 6.1`
 - `Built stylesheet matches its source`
 
 The last one is repo-local, from `stylesheet.yml`, and carries **no prefix** — anything matching

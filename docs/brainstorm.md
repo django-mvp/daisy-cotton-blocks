@@ -49,7 +49,7 @@ templates, so the plain utilities a block uses are absent from it however
 complete the host's own build is.
 
 The reasoning that follows from that, and the reasoning it replaced, are in
-`docs/adr/0002` and `docs/adr/0001`. The rules themselves are Article XII of
+`docs/adr/0002` and `docs/adr/0001`. The rules themselves are Article XI of
 `CONSTITUTION.md`. Nothing about the stylesheet is settled here.
 
 ## Scope

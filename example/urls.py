@@ -1,3 +1,5 @@
+"""URL routes for the example project."""
+
 from django.conf import settings
 from django.urls import include, path
 
@@ -10,15 +12,10 @@ urlpatterns = [
         ComponentView.as_view(),
         name="component",
     ),
-    # The endpoint an open page holds to hear that something on disk changed.
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 
-# The component gallery, under DEBUG only. It serves the source of every
-# component it indexes, so it is a development tool and never a public route —
-# which is also why it is a dev dependency rather than a runtime one. Its own
-# routes are all under the /django-cotton-gallery/ prefix, so including it at
-# the root adds nothing else.
+# Under DEBUG only: the gallery serves the source of every component it indexes.
 if settings.DEBUG:
     urlpatterns += [path("", include("django_cotton_gallery.urls"))]
 

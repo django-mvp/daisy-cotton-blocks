@@ -1,4 +1,4 @@
-"""Every packaged block documents itself in its own template, per Article XVII.
+"""Every packaged block documents itself in its own template, per Article XVI.
 
 The annotations at the head of each component are the only description of what
 it accepts. The component gallery builds its live controls from them and each
@@ -24,9 +24,8 @@ import daisy_cotton_blocks
 
 COMPONENTS = Path(daisy_cotton_blocks.__file__).parent / "templates" / "cotton"
 
-# `{{ name }}` where the template renders a slot rather than a prop. Cotton
-# fills a named slot whether or not it is declared, so the only way to find one
-# is to read what the template renders and subtract what it declares.
+# Cotton fills a named slot whether or not it is declared, so a slot is found by
+# reading what the template renders and subtracting what it declares.
 RENDERED_VARIABLE = re.compile(r"\{\{\s*([a-z_][a-z0-9_]*)\s*\}\}")
 
 # Rendered by Cotton itself, or by the template's own loop and block syntax.
@@ -34,7 +33,6 @@ NOT_A_SLOT = frozenset({"attrs", "slot"})
 
 
 def blocks() -> list[Path]:
-    """Every packaged component, as the path to its template."""
     return sorted(COMPONENTS.rglob("*.html"))
 
 
@@ -48,21 +46,10 @@ def block(request) -> Path:
 
 
 class TestEveryBlockLintsClean:
-    """The gallery's own rules, run over what this package ships."""
-
     def test_there_are_blocks_to_check(self) -> None:
-        """A rename or a moved directory would make every case below vacuous."""
         assert len(blocks()) >= 8
 
     def test_the_component_reports_no_issues(self, block: Path) -> None:
-        """At any severity, including the heuristic ones.
-
-        The gallery weighs hints at zero because a project's context processors
-        can trip them. Nothing here has a context processor: a block's content
-        arrives through attributes and slots and nowhere else, so a variable
-        this package renders and does not declare is a real finding rather than
-        a false one.
-        """
         report = lint_component(str(block), block.read_text(encoding="utf-8"))
 
         assert not report.issues, "\n".join(
@@ -72,26 +59,12 @@ class TestEveryBlockLintsClean:
 
 
 class TestEveryBlockSaysWhatItIs:
-    """The two rules the gallery has no opinion about."""
-
     def test_the_component_has_a_description(self, block: Path) -> None:
-        """A block cannot be chosen from its name.
-
-        The description is what the gallery lists it by and what its page in
-        the example project leads with, so a block without one is browsable and
-        still unchoosable.
-        """
         component = AnnotationParser().parse(block.read_text(encoding="utf-8"))
 
         assert component.description.strip()
 
     def test_every_slot_the_block_renders_is_documented(self, block: Path) -> None:
-        """A slot is invisible from the declaration, so it has to be read off
-        the markup. Cotton fills a named slot whether or not anything declares
-        it, which means an undocumented slot works perfectly and is findable
-        only by reading the template — exactly what these annotations exist to
-        save a reader from.
-        """
         source = block.read_text(encoding="utf-8")
         component = AnnotationParser().parse(source)
 
@@ -109,12 +82,6 @@ class TestEveryBlockSaysWhatItIs:
 
 
 class TestTheGateGoesRed:
-    """Each check above, run against the defect it exists to catch.
-
-    A gate nobody has watched fail is not yet evidence of anything, and every
-    block in the package is expected to keep all three green.
-    """
-
     SOURCE = (
         "{# @description A card. #}\n"
         '{# @prop title:text | description:"The heading" #}\n'
@@ -161,7 +128,6 @@ class TestTheGateGoesRed:
         assert rendered - documented == {"footer"}
 
     def test_the_clean_source_passes_all_three(self) -> None:
-        """Without this, every case above could be passing on a broken fixture."""
         component = AnnotationParser().parse(self.SOURCE)
         report = lint_component("cotton/demo/card.html", self.SOURCE)
 

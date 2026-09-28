@@ -13,7 +13,7 @@ scanning those templates, with an inline list covering classes composed at rende
 its themes and Tailwind's preflight come from the host project. Overlap between this stylesheet and
 a host's own build is expected and is not tested for.
 
-The rules that govern it are Article XII of `CONSTITUTION.md`. This record is why the design
+The rules that govern it are Article XI of `CONSTITUTION.md`. This record is why the design
 changed.
 
 ## Why

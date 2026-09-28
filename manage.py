@@ -6,6 +6,7 @@ import sys
 
 
 def main() -> None:
+    """Run the Django management command named on the command line."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "example.settings")
     from django.core.management import execute_from_command_line
 

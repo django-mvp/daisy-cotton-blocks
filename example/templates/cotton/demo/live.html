@@ -1,10 +1,8 @@
-{% comment %}
-  Demo scaffolding, not a block. One live block with the markup that produced
-  it underneath.
-
-  The live render sits outside any container: these blocks are full-bleed by
-  design and judging one inside a padded column tells you nothing.
-{% endcomment %}
+{# @description One live block, full width, with the markup that produced it underneath. #}
+{# @prop label:text | description:"Small heading above the live block" #}
+{# @prop anchor:text | description:"The id the label heading carries, so a link can point at this example" #}
+{# @prop markup:text | description:"The escaped markup shown under the live block" #}
+{# @slot A hero block — The live block to show. #}
 <c-vars label anchor markup />
 <section class="border-t border-base-300">
   {% if label %}
@@ -14,6 +12,7 @@
       </h2>
     </c-container>
   {% endif %}
+  {# Outside any container: these blocks are full-bleed, and a padded column would misjudge them. #}
   <div class="border-t border-b border-base-300">{{ slot }}</div>
   {% if markup %}
     <c-container class="py-8">
