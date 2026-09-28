@@ -8,9 +8,8 @@ authors = [
 license = "MIT"
 readme = "README.md"
 requires-python = ">=3.12,<4.0"
-# The host supplies daisyUI and its active theme, by whatever means it likes.
-# This package renders daisyUI markup and ships the plain Tailwind utilities
-# that markup needs, so the only code dependency is Cotton itself.
+# The host supplies daisyUI and its theme, so Cotton is the only code dependency
+# (docs/adr/0002-stylesheet-carries-what-a-host-cannot.md).
 dependencies = ["django>=5.2", "django-cotton>=2.6"]
 keywords = ["django", "tailwind", "daisyui", "components", "landing-page", "cotton"]
 classifiers = [
@@ -34,17 +33,12 @@ Repository = "https://github.com/django-mvp/daisy-cotton-blocks"
 Issues = "https://github.com/django-mvp/daisy-cotton-blocks/issues"
 
 [dependency-groups]
-# Toolchain bundle from django-mvp/shared, pinned to a tag below. Ships ruff,
-# mypy, deptry, pre-commit, pytest, pytest-django, coverage, django-stubs.
 dev = [
     "mvp-shared[dev,test]",
-    # A host for the example project and the coverage test: django-mvp is one
-    # ready-made daisyUI and Cotton host, which is all the demo needs it to be.
+    # A ready-made daisyUI and Cotton host for the example project.
     "django-mvp>=0.23.0",
-    # The component gallery, which reads the annotations on each block and gives
-    # back a live playground and a linter. A development dependency, and its URLs
-    # are mounted under DEBUG only: it serves component source and evaluates URL
-    # parameters through the template engine.
+    # Development only, and mounted under DEBUG: it serves component source and
+    # evaluates URL parameters through the template engine.
     "django-cotton-gallery>=1.0.0,<2.0.0",
 ]
 
@@ -95,17 +89,14 @@ include = "H006,H013,H020,H021,H023,H025,H030,H031"
 ignore = "H017"
 extension = "html"
 
-# Lint and format are both ruff's: it replaces black (formatting), isort (the I
-# rules) and pyupgrade (the UP rules), so those three no longer appear here.
-# The family rule set lives in ruff-base.toml, which is copied in rather than
-# referenced remotely — `extend` only accepts a local path.
+# ruff-base.toml is copied in rather than referenced remotely, because `extend`
+# only accepts a local path.
 [tool.ruff]
 extend = "ruff-base.toml"
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101", "S105", "S106", "B017", "A001", "RUF059"]
-# The example project is a demonstration target, never deployed: its settings
-# carry a literal SECRET_KEY on purpose.
+# Never deployed: the example settings carry a literal SECRET_KEY on purpose.
 "example/*" = ["S101", "S105", "S106"]
 
 [tool.mypy]
@@ -127,20 +118,8 @@ django_settings_module = "tests.settings"
 ignore_missing_model_attributes = "True"
 
 [tool.forge.conformance]
-# None of these test modules has a source module to mirror, and none should.
-# Conforming to the mirror rule would mean inventing modules inside the package
-# purely to give these files something to point at.
-#
-#   test_app.py            the Django app registry, and the layout of the
-#                          installed package
-#   test_stylesheet.py     a built CSS artifact, and the class tokens in the
-#                          templates
-#   test_annotations.py    the annotation comments at the head of each block
-#                          template
-#   test_hero_blocks.py    the templates under cotton/hero/, which are Cotton
-#   test_background_blocks.py  components rather than Python modules
-#   test_demo_catalogue.py the example project, a development target that is
-#   test_component_docs.py not part of the distribution at all
+# These suites check templates, a built stylesheet and the example project, none of
+# which is a Python module in the package, so there is nothing to mirror.
 non-mirror-paths = [
     "tests/test_app.py",
     "tests/test_stylesheet.py",
@@ -155,8 +134,6 @@ non-mirror-paths = [
 extend_exclude = ["tests/", "example/", "docs/"]
 
 [tool.deptry.per_rule_ignores]
-# django-cotton is a real runtime dependency that no Python module here imports.
-# Every block is a Cotton component, so the dependence is at the template layer:
-# without Cotton installed and in INSTALLED_APPS, a <c-hero.centred> tag renders
-# as literal text while every Python import still resolves.
+# No Python module imports django-cotton, but without it in INSTALLED_APPS a
+# <c-hero.centred> tag renders as literal text while every import still resolves.
 DEP002 = ["django-cotton"]

@@ -75,9 +75,8 @@ class Family:
         return None
 
 
-# Only the families that have blocks. The roadmap plans nine more, and each one
-# arrives here when it has something to show rather than holding a placeholder
-# page that says it does not.
+# Only families that have blocks: each family docs/ROADMAP.md plans arrives here
+# when it has something to show, not as a placeholder page.
 FAMILIES: tuple[Family, ...] = (
     Family(
         slug="hero",

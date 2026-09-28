@@ -1,16 +1,3 @@
-{% comment %}
-  Demo scenery, not a block. A plausible application panel for the `media`
-  slots, built entirely out of django-mvp's own components rather than shipped
-  as an image.
-
-  Two reasons it is drawn rather than photographed. It follows the theme
-  switcher like everything else on the page, which is the claim the blocks are
-  making. And it is the honest demonstration of what the media slot is for: the
-  block owns the frame and the proportions, the project puts its own components
-  inside.
-
-  Nothing here is part of the package.
-{% endcomment %}
 <c-vars class />
 <div class="w-full bg-base-100 p-4 {{ class }}" aria-hidden="true">
   {# A scrollable region rather than three stats crushed together at 320px. #}

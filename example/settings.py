@@ -12,20 +12,17 @@ SECRET_KEY = "django-insecure-example-project-only"
 
 DEBUG = True
 
-# The development server is reached over the network by hostname, not only at
-# localhost. DEBUG auto-allows localhost and nothing else, so a bare list here
-# answers any other hostname with 400 Bad Request.
+# The development server is reached by hostname, and DEBUG auto-allows only
+# localhost, so any other hostname would get a 400.
 ALLOWED_HOSTS = ["*"]
 
-# The development server speaks plain HTTP. A cookie marked Secure is discarded
-# by the browser, which leaves GET pages rendering perfectly while every form
-# post comes back 403.
+# The development server speaks plain HTTP, where a Secure cookie is discarded
+# and every form post comes back 403.
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 
-# Order matters twice over. "example" sits above "mvp" so the demo's own
-# templates win against the shell's, and "mvp" sits above "crispy_tailwind" so
-# its help-text override wins against crispy's.
+# "example" sits above "mvp" so the demo's templates win, and "mvp" above
+# "crispy_tailwind" so its help-text override wins.
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -33,20 +30,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Above "example" for the gallery's benefit, not for template resolution.
-    # The gallery scans exactly one cotton/ directory: the first template root
-    # that has one, in this order. Below "example" it would index the demo's
-    # own scaffolding components and never see the package's blocks. Nothing
-    # collides — the two apps share no template path.
+    # The gallery scans only the first template root with a cotton/ directory,
+    # so this must stay above "example" or it would index the demo's scaffolding.
     "daisy_cotton_blocks",
     "example",
     "django_cotton",
-    # Development only, and a dev dependency for that reason: the gallery
-    # serves component source code, so urls.py mounts it under DEBUG alone.
+    # Development only: it serves component source, so urls.py mounts it under DEBUG.
     "django_cotton_gallery",
-    # Reloads the browser on a change to a template, a stylesheet or Python.
-    # It arrives with the shared development bundle rather than a pin of its
-    # own, and its middleware removes itself from the chain unless DEBUG is on.
     "django_browser_reload",
     "easy_icons",
     "flex_menu",
@@ -63,8 +53,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # Last, because it rewrites the response body to insert its script tag and
-    # anything that encodes or compresses the body has to run after it.
+    # Last, because it rewrites the response body and anything that compresses
+    # the body has to run after it.
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
@@ -119,11 +109,8 @@ EASY_ICONS = {
     }
 }
 
-# The theme menu is the point of the demo shell, not decoration. A block is
-# supposed to take its colours from whatever theme the project runs, and the
-# only way to see whether that is true is to change the theme and watch. These
-# are daisyUI's own themes, deliberately spanning light, dark and heavily
-# tinted, because a block that only looks right on two of them is not finished.
+# daisyUI's own themes, spanning light, dark and heavily tinted: a block that
+# only reads on two of them is not finished.
 MVP_CONFIG = {
     "theme": {
         "default": "light",

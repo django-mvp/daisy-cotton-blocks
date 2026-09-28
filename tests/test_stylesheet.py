@@ -34,17 +34,13 @@ HOST_STYLESHEET = "css/django-mvp.css"
 
 CLASS_TOKEN = re.compile(r"\.((?:[A-Za-z0-9_-]|\\.)+)")
 
-# Anchored to the repo root rather than the working directory, so the scan
-# finds the same templates however pytest was invoked.
+# Anchored to the repo root so the scan finds the same templates from any directory.
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PACKAGE_TEMPLATES = REPO_ROOT / "daisy_cotton_blocks" / "templates"
 EXAMPLE_TEMPLATES = REPO_ROOT / "example" / "templates"
 
-# The closing quote is the same character as the opening one, never whichever
-# quote turns up first. A branch comparing against a string literal --
-# `{% if size == 'sm' %}` -- puts single quotes inside a double-quoted
-# attribute, and ending the match at the first of those silently drops every
-# class after it.
+# The closing quote must match the opening one: `{% if size == 'sm' %}` puts single
+# quotes inside a double-quoted attribute and would cut the match short (#20).
 CLASS_ATTRIBUTE = re.compile(
     r"""\bclass\s*=\s*(?P<quote>["'])(?P<value>.*?)(?P=quote)""", re.S
 )
@@ -52,19 +48,13 @@ CLASS_ATTRIBUTE = re.compile(
 TEMPLATE_TAG = re.compile(r"\{%.*?%\}", re.S)
 TEMPLATE_VARIABLE = re.compile(r"\{\{.*?\}\}", re.S)
 
-# Stands in for a value only the renderer knows, and is not a character any
-# class name may contain, so a token that kept one is a token that was still
-# being assembled when the source ran out.
+# Stands in for a value only the renderer knows. No class name contains it, so a
+# token that kept one was still being assembled.
 COMPOSED_AT_RENDER_TIME = "\x00"
 
-# The daisyUI classes a block may use without this package emitting a rule for
-# them. This list is the host contract, written out: a project installing this
-# package is already running daisyUI, and these are the parts of it blocks reach
-# for.
-#
-# It is deliberately explicit rather than inferred. Reaching for a daisyUI class
-# that is not listed here fails the coverage test below, which is the prompt to
-# decide whether the host really should be expected to provide it.
+# The daisyUI classes the host supplies, so this package emits no rule for them.
+# Explicit rather than inferred: an unlisted class fails the coverage test, which
+# prompts a decision on whether the host should provide it (#20).
 HOST_PROVIDED_CLASSES = frozenset(
     {
         "avatar",

@@ -12,24 +12,6 @@
 {# @slot:actions <a class="btn btn-primary btn-lg" href="#">Get started</a> <a class="btn btn-outline btn-lg" href="#">Learn more</a> — The button row. Write real anchor markup, so it can post, submit or carry anything. #}
 {# @slot:footnote — Under the actions #}
 {# @slot:media — The visual. An image, a mockup, a card, an SVG, a form. #}
-{% comment %}
-  ============================================================
-  <c-hero.split> — copy beside a visual
-
-  Two columns on a wide screen, one on a narrow one. The arrangement for a
-  product with something to show: a screenshot, a mockup, an illustration, a
-  short form. The media is a slot, so what goes in it is entirely the
-  project's — this block owns the proportions, the alignment and the stacking.
-
-  Below the `lg` breakpoint the columns become one, copy first, media second,
-  whichever way round they sit at width. That is a reflow, not a second
-  design: the same content in the same reading order.
-
-  The attributes and slots are declared in the annotations above this block.
-  See <c-hero.centred> for the note on how the background layer works, and for
-  why the actions are a slot rather than a pair of label/href attributes.
-  ============================================================
-{% endcomment %}
 <c-vars eyebrow title lead level="1" reverse invert size="md" class />
 <section class="relative isolate overflow-hidden
                 {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}

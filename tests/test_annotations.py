@@ -24,9 +24,8 @@ import daisy_cotton_blocks
 
 COMPONENTS = Path(daisy_cotton_blocks.__file__).parent / "templates" / "cotton"
 
-# `{{ name }}` where the template renders a slot rather than a prop. Cotton
-# fills a named slot whether or not it is declared, so the only way to find one
-# is to read what the template renders and subtract what it declares.
+# Cotton fills a named slot whether or not it is declared, so a slot is found by
+# reading what the template renders and subtracting what it declares.
 RENDERED_VARIABLE = re.compile(r"\{\{\s*([a-z_][a-z0-9_]*)\s*\}\}")
 
 # Rendered by Cotton itself, or by the template's own loop and block syntax.
