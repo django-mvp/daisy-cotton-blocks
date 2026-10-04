@@ -1,13 +1,13 @@
 {
-  "name": "daisy-cotton-blocks",
+  "name": "daisy-cotton-ext",
   "private": true,
-  "description": "Stylesheet build for daisy-cotton-blocks. The built CSS is committed, so installing the Python package needs none of this.",
+  "description": "Stylesheet build for daisy-cotton-ext. The built CSS is committed, so installing the Python package needs none of this.",
   "scripts": {
-    "build:css": "tailwindcss -i assets/daisy-cotton-blocks.css -o daisy_cotton_blocks/static/css/daisy-cotton-blocks.css",
-    "build:css:prod": "tailwindcss -i assets/daisy-cotton-blocks.css -o daisy_cotton_blocks/static/css/daisy-cotton-blocks.css --minify",
-    "watch:css": "tailwindcss -i assets/daisy-cotton-blocks.css -o daisy_cotton_blocks/static/css/daisy-cotton-blocks.css --watch",
+    "build:css": "tailwindcss -i assets/daisy-cotton-ext.css -o daisy_cotton_ext/static/css/daisy-cotton-ext.css",
+    "build:css:prod": "tailwindcss -i assets/daisy-cotton-ext.css -o daisy_cotton_ext/static/css/daisy-cotton-ext.css --minify",
+    "watch:css": "tailwindcss -i assets/daisy-cotton-ext.css -o daisy_cotton_ext/static/css/daisy-cotton-ext.css --watch",
     "build": "npm run build:css",
-    "test": "npm run build:css && git diff --exit-code -- daisy_cotton_blocks/static/css/daisy-cotton-blocks.css"
+    "test": "npm run build:css && git diff --exit-code -- daisy_cotton_ext/static/css/daisy-cotton-ext.css"
   },
   "$comment": "`build` and `test` keep those names so tooling that looks for them finds them. `test` is the check the Stylesheet workflow runs, so a stale committed stylesheet fails locally first.",
   "devDependencies": {

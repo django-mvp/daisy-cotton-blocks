@@ -7,7 +7,7 @@ to django-mvp's.
 
 ## Decision
 
-The package ships one stylesheet, `daisy_cotton_blocks/static/css/daisy-cotton-blocks.css`,
+The package ships one stylesheet, `daisy_cotton_ext/static/css/daisy-cotton-ext.css`,
 containing the plain Tailwind utilities its own templates use and nothing else. It is built by
 scanning those templates, with an inline list covering classes composed at render time. daisyUI,
 its themes and Tailwind's preflight come from the host project. Overlap between this stylesheet and

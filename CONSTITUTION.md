@@ -1,4 +1,4 @@
-# daisy-cotton-blocks Constitution
+# daisy-cotton-ext Constitution
 
 The standards every change to this repository is held to. Read at planning and at review.
 Changes here are rare and deliberate, never made in the middle of a feature.
@@ -101,7 +101,7 @@ reimplemented here.
 
 ### Article XI — The stylesheet carries what a host cannot
 
-`daisy_cotton_blocks/static/css/daisy-cotton-blocks.css` is the one stylesheet this package ships,
+`daisy_cotton_ext/static/css/daisy-cotton-ext.css` is the one stylesheet this package ships,
 and it exists for a single reason: a host's Tailwind build scans the host's own source, so the
 plain utilities used inside this package's templates are absent from it. Four rules govern it, in
 order of how load-bearing they are:
@@ -146,7 +146,7 @@ Colour comes from daisyUI's semantic palette (`primary`, `base-100` and the rest
 value and never a Tailwind palette name. That is what makes a page built from these blocks re-theme
 with the rest of the site instead of drifting away from it.
 
-Reusable markup is expressed as a Cotton component under `daisy_cotton_blocks/templates/cotton/`,
+Reusable markup is expressed as a Cotton component under `daisy_cotton_ext/templates/cotton/`,
 named in lowercase-kebab form, never as an `{% include %}` partial. Blocks sit at the top of that
 directory rather than under a prefix of their own, so a tag reads `<c-hero.centred>`. The cost is
 accepted and real: a project defining its own `cotton/hero/centred.html` shadows this one, or is
@@ -248,7 +248,7 @@ Read at planning and at review; applies to every change.
 - The package builds, its metadata is valid, and the README renders on the package index with
   absolute URLs.
 
-`djlint` is configured in `pyproject.toml` and can be run over `daisy_cotton_blocks/templates`, but it is
+`djlint` is configured in `pyproject.toml` and can be run over `daisy_cotton_ext/templates`, but it is
 deliberately **not** a gate: it misfires against Cotton's `<c-vars>` syntax and needs ignore rules
 first. Do not cite it as an enforced standard until it runs in CI.
 

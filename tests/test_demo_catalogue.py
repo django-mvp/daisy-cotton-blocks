@@ -68,7 +68,7 @@ class TestEveryPageLoadsBothStylesheets:
     @pytest.mark.parametrize("url", PAGES)
     def test_the_page_loads_this_packages_stylesheet(self, client, url: str) -> None:
         response = client.get(url)
-        assert b'href="/static/css/daisy-cotton-blocks.css"' in response.content
+        assert b'href="/static/css/daisy-cotton-ext.css"' in response.content
 
     @pytest.mark.parametrize("url", PAGES)
     def test_the_page_still_loads_its_hosts_stylesheet(self, client, url: str) -> None:
@@ -78,7 +78,7 @@ class TestEveryPageLoadsBothStylesheets:
     def test_this_packages_stylesheet_is_linked_after_its_hosts(self, client) -> None:
         content = client.get(reverse("home")).content
 
-        assert content.index(b"css/daisy-cotton-blocks.css") > content.index(
+        assert content.index(b"css/daisy-cotton-ext.css") > content.index(
             b"css/django-mvp.css"
         )
 

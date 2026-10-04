@@ -1,4 +1,4 @@
-# Roadmap — daisy-cotton-blocks
+# Roadmap — daisy-cotton-ext
 
 **Date:** 2026-09-21
 
@@ -33,7 +33,7 @@ Serves G2 and G3.
 
 ### R2 — Hero blocks
 
-*delivered in [#15](https://github.com/django-mvp/daisy-cotton-blocks/issues/15) · advances G1, G5*
+*delivered in [#15](https://github.com/django-mvp/daisy-cotton-ext/issues/15) · advances G1, G5*
 
 The block at the top of a page, and the first one anybody will reach for. It sets the conventions every later family follows: how content is passed in, how a secondary action is expressed, how a block behaves when an optional piece is left out, and what a block does on a narrow screen. Getting those wrong here means correcting them everywhere later, which is why this comes before anything else.
 
@@ -48,7 +48,7 @@ Serves G1 and G5. Out of scope: any content that would come from a queryset.
 
 ### R12 — Background layers
 
-*delivered in [#16](https://github.com/django-mvp/daisy-cotton-blocks/issues/16) · advances G1, G5, G6*
+*delivered in [#16](https://github.com/django-mvp/daisy-cotton-ext/issues/16) · advances G1, G5, G6*
 
 A backdrop is not part of a layout, so it is not part of a block. Each background is its own block that goes in another block's `background` slot, which means any background composes with any layout and neither has to know about the other. The family came out of designing the heroes, and it sits here because the convention it settles — a decorative layer behind the copy, hidden from assistive technology, positioned against the slot rather than the page — is one every later family inherits rather than reinvents.
 

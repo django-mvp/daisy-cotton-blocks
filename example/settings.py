@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # The gallery scans only the first template root with a cotton/ directory,
     # so this must stay above "example" or it would index the demo's scaffolding.
-    "daisy_cotton_blocks",
+    "daisy_cotton_ext",
     "example",
     "django_cotton",
     # Development only: it serves component source, so urls.py mounts it under DEBUG.
@@ -129,7 +129,7 @@ MVP_CONFIG = {
     },
     "layout": {
         "sidebar": {
-            "title": "daisy-cotton-blocks",
+            "title": "daisy-cotton-ext",
             "breakpoint": "lg",
             "collapse": "icons",
         },

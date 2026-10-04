@@ -1,10 +1,12 @@
-# AGENTS.md — Agent Configuration for daisy-cotton-blocks
+# AGENTS.md — Agent Configuration for daisy-cotton-ext
 
 <!-- Thin index only — bloat here = ignored instructions. Details live in the pointed-to files. -->
 
-daisy-cotton-blocks ships page blocks: configurable regions of a public-facing page, each rendered
-by one Cotton component and styled by daisyUI classes the host project provides, plus the plain
-Tailwind utilities this package ships itself. `CONTEXT.md` defines these terms, including why
+daisy-cotton-ext ships what is built on top of the base daisy-cotton components. Page blocks are
+configurable regions of a public-facing page, and extended components are single components that
+go further than their daisyUI counterpart. Each is rendered by one Cotton component and styled by
+daisyUI classes the host project provides, plus the plain Tailwind utilities this package ships
+itself. Only blocks are built so far. `CONTEXT.md` defines these terms, including why
 *variant* is not one of them. Use them.
 
 Presentation only. No models, no views, no forms, no URLs, no migrations. Anything needing one of
@@ -29,8 +31,8 @@ migrations, and a raw invocation reports findings in paths the gate does not cov
 The division of labour that is easy to break by accident, and the reason the stylesheet tests
 exist.
 
-`daisy_cotton_blocks/static/css/daisy-cotton-blocks.css` is **committed**, so installing the
-package needs no Node toolchain. It is built from `assets/daisy-cotton-blocks.css`, which is
+`daisy_cotton_ext/static/css/daisy-cotton-ext.css` is **committed**, so installing the
+package needs no Node toolchain. It is built from `assets/daisy-cotton-ext.css`, which is
 Tailwind only — no daisyUI plugin, no theme layer, no preflight — and which scans this package's
 templates plus an inline list for classes scanning cannot see.
 
@@ -38,7 +40,7 @@ The host provides daisyUI, its themes and preflight. This package provides the p
 own templates use, because a host's Tailwind build scans the host's source and never reaches
 site-packages.
 
-Three consequences worth knowing before editing `assets/daisy-cotton-blocks.css`:
+Three consequences worth knowing before editing `assets/daisy-cotton-ext.css`:
 
 1. **Overlap with the host is fine.** A project on django-mvp loads two stylesheets that both
    define `py-20`. Do not try to trim it. The case that matters is a host on a different Tailwind

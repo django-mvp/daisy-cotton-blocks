@@ -1,7 +1,7 @@
 [project]
-name = "daisy-cotton-blocks"
+name = "daisy-cotton-ext"
 version = "0.0.1"
-description = "Configurable page blocks for django-cotton and daisyUI: heroes, sections, calls to action"
+description = "Extended components and page blocks for django-cotton and daisyUI, built on daisy-cotton"
 authors = [
     { name = "Samuel Jennings", email = "samuel.scott.jennings@gmail.com" },
 ]
@@ -28,9 +28,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/django-mvp/daisy-cotton-blocks"
-Repository = "https://github.com/django-mvp/daisy-cotton-blocks"
-Issues = "https://github.com/django-mvp/daisy-cotton-blocks/issues"
+Homepage = "https://github.com/django-mvp/daisy-cotton-ext"
+Repository = "https://github.com/django-mvp/daisy-cotton-ext"
+Issues = "https://github.com/django-mvp/daisy-cotton-ext/issues"
 
 [dependency-groups]
 dev = [
@@ -50,10 +50,10 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["daisy_cotton_blocks"]
+packages = ["daisy_cotton_ext"]
 
 [tool.hatch.build.targets.sdist]
-include = ["/daisy_cotton_blocks", "/README.md", "/LICENSE"]
+include = ["/daisy_cotton_ext", "/README.md", "/LICENSE"]
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.settings"
@@ -73,7 +73,7 @@ show_missing = true
 
 [tool.coverage.run]
 branch = true
-source = ["daisy_cotton_blocks"]
+source = ["daisy_cotton_ext"]
 
 [tool.djlint]
 profile = "django"
@@ -100,7 +100,7 @@ extend = "ruff-base.toml"
 "example/*" = ["S101", "S105", "S106"]
 
 [tool.mypy]
-files = ["daisy_cotton_blocks"]
+files = ["daisy_cotton_ext"]
 disallow_untyped_defs = "False"
 disallow_any_unimported = "False"
 ignore_missing_imports = "True"
@@ -110,7 +110,7 @@ warn_return_any = "True"
 warn_unused_ignores = "True"
 show_error_codes = "True"
 exclude = ["docs/", "migrations/", "tests/settings.py"]
-mypy_path = "daisy_cotton_blocks/"
+mypy_path = "daisy_cotton_ext/"
 plugins = ["mypy_django_plugin.main"]
 
 [tool.django-stubs]
