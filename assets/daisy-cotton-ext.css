@@ -6,7 +6,7 @@
 
 /* `source(none)` stops Tailwind scanning the example project and tests, whose
  * classes would be dead weight in every install. */
-@source "../daisy_cotton_blocks/templates";
+@source "../daisy_cotton_ext/templates";
 
 /* `reference` registers daisyUI's colour names without emitting properties. Left
  * out, `from-primary` and `text-primary-content` silently build nothing. */

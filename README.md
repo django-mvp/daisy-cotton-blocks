@@ -1,10 +1,15 @@
-# daisy-cotton-blocks
+# daisy-cotton-ext
 
-[![Tests](https://github.com/django-mvp/daisy-cotton-blocks/actions/workflows/tests.yml/badge.svg)](https://github.com/django-mvp/daisy-cotton-blocks/actions/workflows/tests.yml) [![Coverage](https://codecov.io/gh/django-mvp/daisy-cotton-blocks/branch/main/graph/badge.svg)](https://codecov.io/gh/django-mvp/daisy-cotton-blocks) ![Python 3.12 | 3.13](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue) ![Django 5.2 | 6.0 | 6.1](https://img.shields.io/badge/django-5.2%20%7C%206.0%20%7C%206.1-blue) [![License: MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/LICENSE)
+[![Tests](https://github.com/django-mvp/daisy-cotton-ext/actions/workflows/tests.yml/badge.svg)](https://github.com/django-mvp/daisy-cotton-ext/actions/workflows/tests.yml) [![Coverage](https://codecov.io/gh/django-mvp/daisy-cotton-ext/branch/main/graph/badge.svg)](https://codecov.io/gh/django-mvp/daisy-cotton-ext) ![Python 3.12 | 3.13](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue) ![Django 5.2 | 6.0 | 6.1](https://img.shields.io/badge/django-5.2%20%7C%206.0%20%7C%206.1-blue) [![License: MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/django-mvp/daisy-cotton-ext/blob/main/LICENSE)
 
-Configurable page blocks for django-cotton and daisyUI: heroes, sections, calls to action
+Extended components and page blocks for django-cotton and daisyUI.
 
-Built on [django-cotton](https://django-cotton.com/) and [daisyUI](https://daisyui.com/), for the furniture a public-facing page needs.
+Built on [django-cotton](https://django-cotton.com/) and [daisyUI](https://daisyui.com/). [daisy-cotton](https://github.com/django-mvp/daisy-cotton) holds one Cotton component for each daisyUI component. This package holds what is built on top of those, and it comes in two kinds:
+
+- **Extended components**: single components that go further than their daisyUI counterpart, such as a card with more structure than `card` gives you.
+- **Page blocks**: whole regions of a public-facing page, such as a hero, ready to drop in.
+
+The blocks came first, and they are what is built so far.
 
 Component libraries in this space cover the application: navigation, forms, tables, dialogs. They stop at the pages that sit in front of it — the landing page, the pricing page, the sign-up pitch. Those get assembled by hand out of raw utility classes, in every project, every time.
 
@@ -23,23 +28,24 @@ Blocks are configured through attributes and take their colours from whatever da
 
 ## Status
 
-Version 0.0.1. Two families are built, heroes and backgrounds, and nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/CHANGELOG.md) is how a project finds out.
+Version 0.0.1. Two families are built, heroes and backgrounds, and nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
 
 ## Scope & philosophy
 
-**What this is.** A presentation-only component library. Templates, a stylesheet, and the small amount of JavaScript some blocks need. Blocks are configured through attributes and themed by whatever daisyUI theme the project runs, so a page built from them never pins a literal colour into the markup.
+**What this is.** A presentation-only library of extended components and page blocks. Templates, a stylesheet, and the small amount of JavaScript some blocks need. Blocks are configured through attributes and themed by whatever daisyUI theme the project runs, so a page built from them never pins a literal colour into the markup.
 
 **What this deliberately is not.**
 
 - **Not an application.** No models, no views, no forms, no URLs, no migrations. A block's content comes from the template author, never from a queryset.
 - **Not a CSS framework.** No daisyUI plugin, no theme layer, no preflight. Those come from the project.
-- **Not an application component library.** Navigation, forms, tables and dialogs are somebody else's job. This package owns the marketing surface.
+- **Not the base components.** A component that maps one-to-one onto a daisyUI component belongs in [daisy-cotton](https://github.com/django-mvp/daisy-cotton). What lives here adds to one or combines several.
+- **Not application chrome.** Navigation, forms, tables and CRUD pages take their content from the application, and they are somebody else's job.
 - **Not a fixed catalogue.** The set of blocks grows as new ones are designed. There is no taxonomy to fill in.
 - **Not page templates.** Blocks only. You pick the ones you want and assemble the page yourself. There is no one-tag landing page.
 
 **Tie-breaks.** When two of these pull against each other: theme-driven beats hard-coded, a block that composes existing daisyUI markup beats one that invents its own, and leaving a job to the project beats doing it here.
 
-The directions the package works toward are in [GOALS.md](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/GOALS.md), and the order they are being built in is in the [roadmap](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/docs/ROADMAP.md).
+The directions the package works toward are in [GOALS.md](https://github.com/django-mvp/daisy-cotton-ext/blob/main/GOALS.md), and the order they are being built in is in the [roadmap](https://github.com/django-mvp/daisy-cotton-ext/blob/main/docs/ROADMAP.md).
 
 ## Requirements
 
@@ -53,7 +59,7 @@ daisyUI is a hard requirement and this package does not ship it. Any project alr
 ## Install
 
 ```bash
-pip install daisy-cotton-blocks
+pip install daisy-cotton-ext
 ```
 
 Add it to `INSTALLED_APPS`:
@@ -62,7 +68,7 @@ Add it to `INSTALLED_APPS`:
 INSTALLED_APPS = [
     ...,
     "django_cotton",
-    "daisy_cotton_blocks",
+    "daisy_cotton_ext",
 ]
 ```
 
@@ -70,7 +76,7 @@ Then load its stylesheet alongside the one carrying daisyUI:
 
 ```html
 <link rel="stylesheet" href="{% static 'css/your-daisyui-build.css' %}">
-<link rel="stylesheet" href="{% static 'css/daisy-cotton-blocks.css' %}">
+<link rel="stylesheet" href="{% static 'css/daisy-cotton-ext.css' %}">
 ```
 
 The two stylesheets do different jobs. Yours carries daisyUI, its themes and Tailwind's preflight. This one carries the plain Tailwind utilities the blocks need and which your build has no way to know about, because it scans your source and these templates live in site-packages. Some rules will appear in both, which costs bytes and nothing else.
@@ -149,12 +155,12 @@ Every attribute, its accepted values and its default are listed on each block's 
 
 ## Contributing
 
-Development setup, building the stylesheet and the rules changes are held to are in [CONTRIBUTING.md](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/CONTRIBUTING.md).
+Development setup, building the stylesheet and the rules changes are held to are in [CONTRIBUTING.md](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CONTRIBUTING.md).
 
 ## Changelog
 
-Every release is recorded in [CHANGELOG.md](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/CHANGELOG.md).
+Every release is recorded in [CHANGELOG.md](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md).
 
 ## License
 
-[MIT](https://github.com/django-mvp/daisy-cotton-blocks/blob/main/LICENSE)
+[MIT](https://github.com/django-mvp/daisy-cotton-ext/blob/main/LICENSE)

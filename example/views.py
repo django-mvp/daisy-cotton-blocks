@@ -10,8 +10,8 @@ class HomeView(MVPTemplateView):
     """What this package is, for somebody arriving at the demo cold."""
 
     template_name = "example/home.html"
-    page_title = "daisy-cotton-blocks"
-    page_subtitle = "Page blocks for Django projects running Cotton and daisyUI"
+    page_title = "daisy-cotton-ext"
+    page_subtitle = "Extended components and page blocks for Django projects running Cotton and daisyUI"
 
 
 class ComponentView(MVPTemplateView):

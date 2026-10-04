@@ -1,10 +1,10 @@
-"""Django settings for testing daisy-cotton-blocks."""
+"""Django settings for testing daisy-cotton-ext."""
 
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-test-key-for-daisy-cotton-blocks-tests-only"
+SECRET_KEY = "django-insecure-test-key-for-daisy-cotton-ext-tests-only"
 
 DEBUG = True
 

@@ -1,7 +1,7 @@
 {% load static %}
 {# Rendered into the gallery's own head and into the head each preview iframe copies, so both stylesheets reach the previews. #}
 <link rel="stylesheet" href="{% static 'css/django-mvp.css' %}" />
-<link rel="stylesheet" href="{% static 'css/daisy-cotton-blocks.css' %}" />
+<link rel="stylesheet" href="{% static 'css/daisy-cotton-ext.css' %}" />
 {% comment %}
   The preview iframe inherits neither `data-theme` nor the gallery's light/dark toggle, so mirror the toggle into it.
   Guarded on being framed, because in the gallery's own document the toggle owns the attribute.

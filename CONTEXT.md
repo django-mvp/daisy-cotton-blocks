@@ -1,7 +1,7 @@
-# daisy-cotton-blocks
+# daisy-cotton-ext
 
-Domain model for daisy-cotton-blocks — a library of page blocks for Django projects running Cotton
-and daisyUI.
+Domain model for daisy-cotton-ext — a library of extended components and page blocks for Django
+projects running Cotton and daisyUI.
 
 The terms below are the ones to use in issues, commits, tests and block names. Several of them
 exist to keep two neighbouring ideas apart, because the obvious word covers both and the
@@ -15,6 +15,13 @@ and configured entirely through its attributes. A hero is a block. A pricing tab
 Content comes from the template author, never from a queryset.
 _Avoid_: section (a project's own component library usually has one already, meaning something
 else), widget, module, element, panel.
+
+**Extended component**:
+A single component that goes further than its daisyUI counterpart: more structure, more options,
+or behaviour the base component leaves out. It is still one component doing one job, which is what
+separates it from a block. A component that maps one-to-one onto a daisyUI component is neither,
+and belongs in daisy-cotton.
+_Avoid_: advanced component, pro component, block (a block is a region of a page).
 
 **Block family**:
 All the blocks that do the same job on a page, sharing a tag prefix: `hero` is a family, and
@@ -42,9 +49,9 @@ reads fine to someone assuming the other. Say *layout* when a different block is
 *option* when an attribute is meant.
 
 **Blocks stylesheet**:
-`daisy_cotton_blocks/static/css/daisy-cotton-blocks.css`, the one stylesheet this package ships. It
+`daisy_cotton_ext/static/css/daisy-cotton-ext.css`, the one stylesheet this package ships. It
 carries the plain Tailwind utilities the blocks use and nothing else. It is built from
-`assets/daisy-cotton-blocks.css`, and the built file is committed so installing the package needs
+`assets/daisy-cotton-ext.css`, and the built file is committed so installing the package needs
 no Node toolchain.
 _Avoid_: the theme, the framework, the CSS bundle, the supplement (it no longer supplements
 anything — it stands alone).
@@ -84,7 +91,8 @@ answerable: if it needs a model, a view or a form, it is chrome and it is not ou
 ## Terms deliberately not used
 
 **Component library**: accurate but too broad. It describes django-cotton-ui, django-mvp and this
-package equally, and the distinction between them is the point. Say *page blocks*.
+package equally, and the distinction between them is the point. Say *page blocks* or *extended
+components*.
 
 **Landing page**: the first target, not the scope. A block is useful on any public-facing page.
 Naming the package after one page shape would invite the wrong bug reports.

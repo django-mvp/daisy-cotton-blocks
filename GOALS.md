@@ -1,6 +1,6 @@
 # Goals
 
-These are the standing directions `daisy-cotton-blocks` works toward. Each one is a capability or
+These are the standing directions `daisy-cotton-ext` works toward. Each one is a capability or
 quality to steer by, not a task that gets ticked off. Whether any goal has been served well enough
 is decided in the roadmap, the feature specs, and review, never by the goal itself.
 

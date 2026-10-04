@@ -416,7 +416,7 @@ wheels = [
 ]
 
 [[package]]
-name = "daisy-cotton-blocks"
+name = "daisy-cotton-ext"
 version = "0.0.1"
 source = { editable = "." }
 dependencies = [

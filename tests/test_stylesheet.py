@@ -18,7 +18,7 @@ from a module's ``__file__``, because that is how a project actually reaches the
 -- and because ``mvp`` is a namespace package, whose ``__file__`` is None.
 
 The companion check -- that the committed build still matches
-assets/daisy-cotton-blocks.css -- needs the Node toolchain. It runs in the
+assets/daisy-cotton-ext.css -- needs the Node toolchain. It runs in the
 Stylesheet workflow, and locally via ``npm test``.
 """
 
@@ -29,14 +29,14 @@ import pytest
 from django.contrib.staticfiles import finders
 from django_cotton_gallery.core.annotations import AnnotationParser
 
-BLOCKS_STYLESHEET = "css/daisy-cotton-blocks.css"
+BLOCKS_STYLESHEET = "css/daisy-cotton-ext.css"
 HOST_STYLESHEET = "css/django-mvp.css"
 
 CLASS_TOKEN = re.compile(r"\.((?:[A-Za-z0-9_-]|\\.)+)")
 
 # Anchored to the repo root so the scan finds the same templates from any directory.
 REPO_ROOT = Path(__file__).resolve().parent.parent
-PACKAGE_TEMPLATES = REPO_ROOT / "daisy_cotton_blocks" / "templates"
+PACKAGE_TEMPLATES = REPO_ROOT / "daisy_cotton_ext" / "templates"
 EXAMPLE_TEMPLATES = REPO_ROOT / "example" / "templates"
 
 # The closing quote must match the opening one: `{% if size == 'sm' %}` puts single
@@ -260,7 +260,7 @@ class TestBlocksAreSelfSufficient:
         missing = unresolved_classes(used, blocks_classes | HOST_PROVIDED_CLASSES)
         assert not missing, (
             report_missing(missing)
-            + "\nAdd them to assets/daisy-cotton-blocks.css and rebuild with "
+            + "\nAdd them to assets/daisy-cotton-ext.css and rebuild with "
             "`npm run build:css`, or list them in HOST_PROVIDED_CLASSES if the "
             "host should be providing them."
         )
@@ -339,7 +339,7 @@ class TestClassesComposedAtRenderTime:
         assert not missing, (
             f"{tag} renders {len(missing)} class(es) that resolve to no rule: "
             f"{', '.join(missing)}.\nAdd them to the @source inline(...) list in "
-            "assets/daisy-cotton-blocks.css and rebuild with `npm run build:css`."
+            "assets/daisy-cotton-ext.css and rebuild with `npm run build:css`."
         )
 
     def test_a_palette_colour_with_no_rule_behind_it_is_caught(

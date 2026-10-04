@@ -20,9 +20,9 @@ import pytest
 from django_cotton_gallery.core.annotations import AnnotationParser
 from django_cotton_gallery.core.linter import lint_component
 
-import daisy_cotton_blocks
+import daisy_cotton_ext
 
-COMPONENTS = Path(daisy_cotton_blocks.__file__).parent / "templates" / "cotton"
+COMPONENTS = Path(daisy_cotton_ext.__file__).parent / "templates" / "cotton"
 
 # Cotton fills a named slot whether or not it is declared, so a slot is found by
 # reading what the template renders and subtracting what it declares.
