@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'daisy_cotton_blocks/**'
+      - 'daisy_cotton_ext/**'
       - 'pyproject.toml'
       - 'uv.lock'
       - '.pre-commit-config.yaml'
@@ -21,5 +21,5 @@ jobs:
   call-build:
     uses: django-mvp/shared/.github/workflows/build.yml@v0.6.0
     with:
-      source-dir: daisy_cotton_blocks
+      source-dir: daisy_cotton_ext
     secrets: inherit
