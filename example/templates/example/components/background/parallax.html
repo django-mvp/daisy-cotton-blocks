@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Parallax{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-background.parallax">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      <strong>Scroll the page.</strong> Whatever is wrapped moves more slowly than the block around it, so it reads as further away. It works on a picture, a pattern, or one of each at different depths. The browser does it from the scroll position alone: there is no script, and in a browser without scroll-driven animation the background simply stays put. Anyone who has asked their system to reduce motion gets the same picture, holding still.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.parallax speed="0.95"><c-background.image src="…" dim="0.5" /></c-background.parallax>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" invert class="bg-neutral" title="0.95" lead="Almost with the page. Enough to notice, not enough to name.">
+          <c-slot name="background"><c-background.parallax speed="0.95"><c-background.image src="{% static 'example/ridgeline.svg' %}" dim="0.5" /></c-background.parallax></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.parallax speed="0.8"><c-background.image src="…" dim="0.5" /></c-background.parallax>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" invert class="bg-neutral" title="0.8" lead="The default.">
+          <c-slot name="background"><c-background.parallax speed="0.8"><c-background.image src="{% static 'example/ridgeline.svg' %}" dim="0.5" /></c-background.parallax></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.parallax speed="0.6"><c-background.image src="…" dim="0.5" /></c-background.parallax>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" invert class="bg-neutral" title="0.6" lead="Well behind the page. The picture is cropped harder to leave room to move.">
+          <c-slot name="background"><c-background.parallax speed="0.6"><c-background.image src="{% static 'example/ridgeline.svg' %}" dim="0.5" /></c-background.parallax></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.parallax speed="0.6"><c-background.grid flat /></c-background.parallax>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="A pattern" lead="Any background can go inside. This is the grid.">
+          <c-slot name="background"><c-background.parallax speed="0.6"><c-background.grid flat /></c-background.parallax></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+    </div>
+  </c-container>
+
+  <c-demo.live label="A picture, at full width" anchor="picture">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert size="screen" title="…">
+  <c-slot name="background">
+    <c-background.parallax speed="0.6">
+      <c-background.image src="…" dim="0.5" />
+    </c-background.parallax>
+  </c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2"
+                    invert
+                    size="screen"
+                    eyebrow="Field season 2026"
+                    class="bg-neutral"
+                    title="The ridge stays where it is"
+                    lead="Scroll past and the sky lags behind the page, the way a far hillside does from a train window.">
+      <c-slot name="background">
+        <c-background.parallax speed="0.6"><c-background.image src="{% static 'example/ridgeline.svg' %}" dim="0.5" /></c-background.parallax>
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#picture">Primary action</a>
+        <a class="btn btn-outline btn-lg" href="#picture">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+
+  <c-demo.live label="A pattern, at full width" anchor="pattern">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg" title="…">
+  <c-slot name="background">
+    <c-background.parallax speed="0.6">
+      <c-background.grid size="5" flat />
+    </c-background.parallax>
+  </c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2"
+                    size="lg"
+                    title="Ruled paper, sliding under the type"
+                    lead="A pattern needs a slower speed than a picture before the eye catches it moving.">
+      <c-slot name="background">
+        <c-background.parallax speed="0.6"><c-background.grid size="5" flat /></c-background.parallax>
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#pattern">Primary action</a>
+        <a class="btn btn-outline btn-lg" href="#pattern">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+
+  <c-demo.live label="Two layers at two depths" anchor="layers">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert size="screen" title="…">
+  <c-slot name="background">
+    <c-background.parallax speed="0.95">
+      <c-background.image src="…" />
+    </c-background.parallax>
+    <c-background.parallax speed="0.6">
+      <c-background.grid size="5" flat />
+    </c-background.parallax>
+  </c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2"
+                    invert
+                    size="screen"
+                    class="bg-neutral"
+                    title="Near and far"
+                    lead="The picture nearly keeps up with the page and the grid falls well behind, so the two separate as the page moves.">
+      <c-slot name="background">
+        <c-background.parallax speed="0.95"><c-background.image src="{% static 'example/ridgeline.svg' %}" /></c-background.parallax>
+        <c-background.parallax speed="0.6"><c-background.grid size="5" flat /></c-background.parallax>
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#layers">Primary action</a>
+        <a class="btn btn-outline btn-lg" href="#layers">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

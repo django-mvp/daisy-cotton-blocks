@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Six backgrounds that move: `<c-background.parallax>`, which wraps any other background and
+  scrolls it more slowly than the page, and `<c-background.aurora>`, `<c-background.flow>`,
+  `<c-background.horizon>`, `<c-background.particles>` and `<c-background.hyperspace>`. The
+  movement is CSS only, and each one holds still under `prefers-reduced-motion`.
+
+### Changed
+
+- **Breaking.** Background attributes that set an amount take a number in place of a name:
+  `intensity` on glow and grid, `opacity` on gradient and `dim` on image run from `0` to `1`, and
+  `size` on grid is a length in rem. `intensity="bold"` becomes `intensity="0.3"`,
+  `opacity="full"` becomes `opacity="1"`, `dim="strong"` becomes `dim="0.85"` and `size="lg"`
+  becomes `size="5"`. A name is no longer recognised and renders the default.
+- A background writes those numbers to its `style` attribute, as a custom property or as
+  `opacity`. Under a content security policy that forbids inline styles they are ignored and the
+  defaults apply.
+- The hero blocks clip with `overflow: clip` in place of `overflow: hidden`, so a parallax
+  background inside one can measure the block against the page.
+
 ## [v0.1.0] - 2026-10-05
 
 ### Added

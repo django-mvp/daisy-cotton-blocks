@@ -11,7 +11,38 @@ from django.urls import reverse_lazy
 from flex_menu import MenuItem
 from mvp.menus import AppMenu, MenuCollapse, MenuGroup
 
-from example.blocks import FAMILIES
+from example.blocks import FAMILIES, Component, Family
+
+
+def component_entry(family: Family, component: Component) -> MenuItem:
+    """Return the sidebar link to one component's demo page."""
+    return MenuItem(
+        name=f"{family.slug}-{component.slug}",
+        url=reverse_lazy(
+            "component",
+            kwargs={"family": family.slug, "component": component.slug},
+        ),
+        extra_context={"label": component.label},
+    )
+
+
+def family_entries(family: Family) -> list[MenuItem]:
+    """Return a family's entries, under a heading per group where it has any."""
+    entries: list[MenuItem] = []
+    for heading, components in family.groups():
+        links = [component_entry(family, component) for component in components]
+        if not heading:
+            entries.extend(links)
+            continue
+        entries.append(
+            MenuGroup(
+                name=f"family-{family.slug}-{heading.lower()}",
+                extra_context={"label": heading},
+                children=links,
+            )
+        )
+    return entries
+
 
 # The gallery is routed under DEBUG only, so reversing its URL raises elsewhere.
 # The entry is built on the same condition, or its link would be a 500.
@@ -44,20 +75,7 @@ AppMenu.extend(
                 MenuCollapse(
                     name=f"family-{family.slug}",
                     extra_context={"label": family.label, "icon": "block"},
-                    children=[
-                        MenuItem(
-                            name=f"{family.slug}-{component.slug}",
-                            url=reverse_lazy(
-                                "component",
-                                kwargs={
-                                    "family": family.slug,
-                                    "component": component.slug,
-                                },
-                            ),
-                            extra_context={"label": component.label},
-                        )
-                        for component in family.components
-                    ],
+                    children=family_entries(family),
                 )
                 for family in FAMILIES
             ],

@@ -40,6 +40,14 @@ _Avoid_: variant (see below), style, mode.
 An attribute that changes a block's presentation without touching its layout: background, icon,
 size, alignment, whether a secondary action renders. Options are the whole configuration surface
 of a block.
+
+An option that sets an amount takes a number: speed, intensity, opacity, and a size where fine
+control is the point, such as how far apart a grid's rules sit. An option that picks from a
+designed scale takes a name: a font size, a button size, a block's `size`. A number reaches the
+page as a custom property or a single declaration on the element's `style` attribute, put through
+`floatformat` so that nothing but a number can be written there. That is the only use of `style`:
+anything longer is a class. The reasoning is in
+`docs/adr/0003-amounts-are-numbers-written-to-style.md`.
 _Avoid_: variant (see below), prop, parameter, setting.
 
 **Variant**:

@@ -1,16 +1,16 @@
 {# @description A faint ruled grid, drawn in currentColor so it follows the block's text colour. #}
-{# @prop size:select['sm', 'md', 'lg'] | default:"md" | description:"How far apart the rules sit" #}
-{# @prop intensity:select['faint', 'soft', 'bold'] | default:"soft" | description:"How far the rules come through" #}
+{# @prop size:number | default:"3.5" | description:"How far apart the rules sit, in rem" #}
+{# @prop intensity:number | default:"0.1" | description:"How far the rules come through, from 0 to 1" #}
 {# @prop flat:boolean | default:False | description:"Rule the whole area evenly instead of fading out towards the foot" #}
 {# @prop class:text | description:"Extra classes on the layer" #}
 {% comment %}
-  The pattern is an arbitrary value rather than an inline `style`, so a strict CSP still gets it.
-  `flat` is a bare attribute because the string "False" is truthy in a Django template (#21).
+  The pattern is an arbitrary value, so it needs no `style`. `flat` is a bare attribute
+  because the string "False" is truthy in a Django template (#21).
 {% endcomment %}
-<c-vars size="md" intensity="soft" flat class />
+<c-vars size="3.5" intensity="0.1" flat class />
 <div class="absolute inset-0
             bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)]
-            {% if size == 'sm' %}bg-[size:2rem_2rem]{% elif size == 'lg' %}bg-[size:5rem_5rem]{% else %}bg-[size:3.5rem_3.5rem]{% endif %}
-            {% if intensity == 'faint' %}opacity-5{% elif intensity == 'bold' %}opacity-20{% else %}opacity-10{% endif %}
+            bg-[size:var(--grid-size)_var(--grid-size)]
             {% if not flat %}[mask-image:linear-gradient(to_bottom,black,transparent)]{% endif %}
-            {{ class }}"></div>
+            {{ class }}"
+     style="opacity: {{ intensity|floatformat:'-3u'|default:'0.1' }}; --grid-size: {{ size|floatformat:'-3u'|default:'3.5' }}rem"></div>

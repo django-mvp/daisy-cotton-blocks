@@ -15,10 +15,13 @@ class Component:
         slug: The component's name within its family, as used in its Cotton tag
             and its URL.
         label: The name shown in the sidebar and as the page title.
+        group: The heading the component is listed under within its family's
+            sidebar section, or empty when the family is not divided.
     """
 
     slug: str
     label: str
+    group: str = ""
 
     def tag(self, family_slug: str) -> str:
         """Return the Cotton tag this component is used as, without its brackets.
@@ -60,6 +63,18 @@ class Family:
     label: str
     components: tuple[Component, ...]
 
+    def groups(self) -> list[tuple[str, list[Component]]]:
+        """Return the components under their group headings, in declaration order.
+
+        Returns:
+            One (heading, components) pair per group. A family that is not
+            divided comes back as a single pair with an empty heading.
+        """
+        grouped: dict[str, list[Component]] = {}
+        for component in self.components:
+            grouped.setdefault(component.group, []).append(component)
+        return list(grouped.items())
+
     def find(self, slug: str) -> Component | None:
         """Return the component with the given slug.
 
@@ -92,10 +107,16 @@ FAMILIES: tuple[Family, ...] = (
         slug="background",
         label="Backgrounds",
         components=(
-            Component("glow", "Glow"),
-            Component("gradient", "Gradient"),
-            Component("grid", "Grid"),
-            Component("image", "Image"),
+            Component("glow", "Glow", group="Static"),
+            Component("gradient", "Gradient", group="Static"),
+            Component("grid", "Grid", group="Static"),
+            Component("image", "Image", group="Static"),
+            Component("parallax", "Parallax", group="Dynamic"),
+            Component("aurora", "Aurora", group="Dynamic"),
+            Component("flow", "Flow", group="Dynamic"),
+            Component("horizon", "Horizon", group="Dynamic"),
+            Component("particles", "Particles", group="Dynamic"),
+            Component("hyperspace", "Hyperspace", group="Dynamic"),
         ),
     ),
 )

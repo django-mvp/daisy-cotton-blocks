@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Particles{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-background.particles">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      A handful of dots that rise a little way and fade. There are fourteen and their places are fixed, so the layer weighs the same on a phone as on a desktop. Anyone who has asked their system to reduce motion gets the same picture, holding still.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.particles />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="The default" lead="Primary, soft.">
+          <c-slot name="background"><c-background.particles /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.particles color="accent" intensity="0.7" speed="2" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="Turned up" lead="Brighter and quicker.">
+          <c-slot name="background"><c-background.particles color="accent" intensity="0.7" speed="2" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.particles color="base-100" intensity="0.7" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" invert class="bg-neutral" title="On a dark surface" lead="Dots in the page's own colour, on neutral.">
+          <c-slot name="background"><c-background.particles color="base-100" intensity="0.7" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.particles intensity="0.15" speed="0.5" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="Almost nothing" lead="Barely there, barely moving.">
+          <c-slot name="background"><c-background.particles intensity="0.15" speed="0.5" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+    </div>
+  </c-container>
+
+  <c-demo.live label="At full width" anchor="full">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert size="lg" title="…">
+  <c-slot name="background"><c-background.particles color="base-100" intensity="0.7" /></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2"
+                    invert
+                    size="lg"
+                    class="bg-neutral"
+                    title="Something in the air"
+                    lead="Light enough to sit behind a headline without competing with it.">
+      <c-slot name="background">
+        <c-background.particles color="base-100" intensity="0.7" />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#full">Primary action</a>
+        <a class="btn btn-outline btn-lg" href="#full">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

@@ -148,3 +148,5 @@ Feature work follows a spec-driven process: spec → plan → tasks → implemen
 `docs/brainstorm.md` holds the working notes the package was founded on, chiefly the prior-art
 survey. Those are conclusions, not ratified decisions. Anything that has hardened is in
 `CONSTITUTION.md` or an ADR, and `docs/adr/0002` is the one to read before touching the stylesheet.
+`docs/adr/0003` is the one to read before giving a component a new option, and `docs/adr/0004`
+before touching a background that moves.

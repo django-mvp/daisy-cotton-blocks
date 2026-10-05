@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Hyperspace{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-background.hyperspace">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Streaks leaving the middle of the block and picking up speed on the way out. <code>density</code> sets how many: forty at 1, and any number either side of it. It is the
+      busiest background here, so it suits a short heading on a dark surface far better than a
+      paragraph. Anyone who has asked their system to reduce motion gets the streaks as a still
+      burst.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.hyperspace />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" invert class="bg-neutral" title="The default" lead="Light streaks on the theme's neutral.">
+          <c-slot name="background"><c-background.hyperspace /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.hyperspace density="3" speed="2" intensity="0.9" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" invert class="bg-neutral" title="Punch it" lead="Three times the streaks, twice the speed.">
+          <c-slot name="background"><c-background.hyperspace density="3" speed="2" intensity="0.9" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.hyperspace color="primary" speed="0.5" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" invert class="bg-neutral" title="In a colour" lead="Any name from the palette.">
+          <c-slot name="background"><c-background.hyperspace color="primary" speed="0.5" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.hyperspace density="0.4" intensity="0.3" speed="0.25" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" invert class="bg-neutral" title="Drifting" lead="Sixteen streaks, slow and faint enough to read over.">
+          <c-slot name="background"><c-background.hyperspace density="0.4" intensity="0.3" speed="0.25" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+    </div>
+  </c-container>
+
+  <c-demo.live label="At full width" anchor="full">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert size="screen" class="bg-neutral" title="…">
+  <c-slot name="background"><c-background.hyperspace /></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2"
+                    invert
+                    size="screen"
+                    class="bg-neutral"
+                    title="Faster than the release notes"
+                    lead="A background for the one page that is allowed to show off.">
+      <c-slot name="background">
+        <c-background.hyperspace />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#full">Primary action</a>
+        <a class="btn btn-outline btn-lg" href="#full">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

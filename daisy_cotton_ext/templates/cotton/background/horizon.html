@@ -1,0 +1,22 @@
+{# @description A ruled floor running away to a horizon and rolling towards the reader. Drawn in currentColor. #}
+{# @prop size:number | default:"3.5" | description:"The side of one square, in rem. Below 2.5 the floor shimmers towards the horizon, most of all at speed." #}
+{# @prop intensity:number | default:"0.2" | description:"How far the layer comes through, from 0 to 1." #}
+{# @prop speed:number | default:"1" | description:"How quickly the floor rolls, as a multiple: 2 is twice as fast, 0.5 half" #}
+{# @prop class:text | description:"Extra classes on the layer" #}
+{% comment %}
+  Cross rules are three pixels deep because the tilt squashes them to about one.
+  The shimmer near the vanishing line cannot be styled away (docs/adr/0004-moving-backgrounds-are-css-only.md).
+{% endcomment %}
+<c-vars size="3.5" intensity="0.2" speed="1" class />
+<div class="absolute inset-0 overflow-hidden [container-type:size] [mask-image:linear-gradient(to_top,black,transparent_36%)]
+            {{ class }}"
+     style="opacity: {{ intensity|floatformat:'-3u'|default:'0.2' }}; --horizon-speed: {{ speed|floatformat:'-3u'|default:'1' }}; --horizon-tile: {{ size|floatformat:'-3u'|default:'3.5' }}rem">
+  <div class="absolute inset-0 [perspective:80cqh] [perspective-origin:50%_85%]">
+    <div class="absolute inset-0 origin-bottom [transform:rotateX(70deg)]">
+      <div class="absolute -inset-x-[150%] -top-[400%] bottom-0 will-change-transform
+                  bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_3px,transparent_3px)]
+                  bg-[size:var(--horizon-tile)_var(--horizon-tile)]
+                  motion-safe:animate-[dce-advance_calc(2s/var(--horizon-speed,1))_linear_infinite]"></div>
+    </div>
+  </div>
+</div>
