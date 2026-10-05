@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Cascade{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-reveal.cascade">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      <strong>Scroll the page.</strong> Each direct child of the wrapper arrives a little after the one before. The wrapper is also the layout: put the grid classes on it. The movement is tied to the scroll position, so it needs no script and it runs backwards when you scroll back up. In a browser without scroll-driven animation, and for anyone who has asked their system to reduce motion, the content is simply there.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="One row" anchor="row">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.cascade class="grid gap-6 md:grid-cols-3">…</c-reveal.cascade>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-24">
+      <c-reveal.cascade class="grid gap-6 md:grid-cols-3">
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Preview environments</h3><p>Every pull request gets its own address, torn down on merge.</p></div></div>
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Rollbacks</h3><p>One click, and the previous release is serving again in under a minute.</p></div></div>
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Approvals</h3><p>Name who has to say yes before production, per service.</p></div></div>
+      </c-reveal.cascade>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="Two rows, counted per row" anchor="rows">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.cascade per="3" class="grid gap-6 md:grid-cols-3">…</c-reveal.cascade>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-24">
+      <p class="mb-8 max-w-3xl text-base-content/80">With <code>per="3"</code> the fourth card starts the count again, so each row comes in left to right. Below the <code>md</code> breakpoint the cards stack in one column and <code>per</code> has little left to do.</p>
+      <c-reveal.cascade per="3" class="grid gap-6 md:grid-cols-3">
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Preview environments</h3><p>Every pull request gets its own address, torn down on merge.</p></div></div>
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Rollbacks</h3><p>One click, and the previous release is serving again in under a minute.</p></div></div>
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Approvals</h3><p>Name who has to say yes before production, per service.</p></div></div>
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Audit log</h3><p>Who shipped what, when, and what it replaced.</p></div></div>
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Schedules</h3><p>Hold a release for the quiet hour and let it go without you.</p></div></div>
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Alerts</h3><p>Hear about a failed deploy where your team already talks.</p></div></div>
+      </c-reveal.cascade>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="Two rows, counted straight through" anchor="through">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.cascade class="grid gap-6 md:grid-cols-3">…</c-reveal.cascade>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-24">
+      <p class="mb-8 max-w-3xl text-base-content/80">The same six without <code>per</code>. The second row waits for the whole of the first.</p>
+      <c-reveal.cascade class="grid gap-6 md:grid-cols-3">
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Preview environments</h3><p>Every pull request gets its own address, torn down on merge.</p></div></div>
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Rollbacks</h3><p>One click, and the previous release is serving again in under a minute.</p></div></div>
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Approvals</h3><p>Name who has to say yes before production, per service.</p></div></div>
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Audit log</h3><p>Who shipped what, when, and what it replaced.</p></div></div>
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Schedules</h3><p>Hold a release for the quiet hour and let it go without you.</p></div></div>
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Alerts</h3><p>Hear about a failed deploy where your team already talks.</p></div></div>
+      </c-reveal.cascade>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="Figures, growing, a longer wait between them" anchor="figures">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.cascade effect="zoom" step="0.6" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">…</c-reveal.cascade>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-24">
+      <c-reveal.cascade effect="zoom" step="0.6" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="stat"><div class="stat-title">Deploys a day</div><div class="stat-value">31</div><div class="stat-desc">Across 14 services</div></div>
+        <div class="stat"><div class="stat-title">Median lead time</div><div class="stat-value">18m</div><div class="stat-desc">Down from 44m</div></div>
+        <div class="stat"><div class="stat-title">Rolled back</div><div class="stat-value">2%</div><div class="stat-desc">Each inside a minute</div></div>
+        <div class="stat"><div class="stat-title">Waiting on a person</div><div class="stat-value">4</div><div class="stat-desc">Longest: 20 minutes</div></div>
+      </c-reveal.cascade>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="A list, from the side" anchor="list">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.cascade effect="right" step="0.5" class="space-y-4 overflow-clip">…</c-reveal.cascade>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-24">
+      <c-reveal.cascade effect="right" step="0.5" class="mx-auto max-w-xl space-y-4 overflow-clip">
+        <p class="rounded-box bg-base-200 p-4"><strong>1.</strong> Connect the repository.</p>
+        <p class="rounded-box bg-base-200 p-4"><strong>2.</strong> Name who approves a production release.</p>
+        <p class="rounded-box bg-base-200 p-4"><strong>3.</strong> Merge. The rest happens without you.</p>
+      </c-reveal.cascade>
+    </c-container>
+  </c-demo.live>
+{% endblock content %}

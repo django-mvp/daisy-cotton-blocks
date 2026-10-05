@@ -1,0 +1,33 @@
+{# @description A picture or a card with a caption kept out of sight until it is pointed at or focused. On a touch screen the caption is always there. #}
+{# @prop effect:select['slide', 'cover'] | default:"slide" | description:"How the caption arrives. slide brings a strip up from the bottom edge, cover fades a panel in over the whole thing." #}
+{# @prop zoom:number | default:"1.05" | description:"How far the picture grows while the caption shows, as a multiple of its size. 1 holds it still." #}
+{# @prop label:text | description:"A name for the whole thing, read out when it takes focus" #}
+{# @prop class:text | description:"Extra classes on the frame. Rounded corners and the aspect ratio go here." #}
+{# @slot What is always showing — A picture, usually. #}
+{# @slot:caption — What is revealed. A title and a line, a link, a button. #}
+{% comment %}
+  The frame takes keyboard focus so a caption with no link in it can be reached
+  without a mouse, and the caption always shows where the device has no hover
+  (docs/adr/0006-reveals-follow-the-scroll-position.md).
+{% endcomment %}
+<c-vars effect="slide" zoom="1.05" label class />
+<div tabindex="0"
+     role="group"
+     {% if label %}aria-label="{{ label }}"{% endif %}
+     class="group relative isolate overflow-clip outline-offset-2 outline-primary focus-visible:outline-2
+            {{ class }}"
+     style="--hover-zoom: {{ zoom|floatformat:'-3u'|default:'1.05' }}"
+     {{ attrs }}>
+  <div class="h-full w-full motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out
+              motion-safe:group-hover:scale-[var(--hover-zoom,1.05)]
+              motion-safe:group-focus-within:scale-[var(--hover-zoom,1.05)]">{{ slot }}</div>
+  {% if effect == 'cover' %}
+    <div class="absolute inset-0 flex flex-col justify-end gap-2 bg-neutral/90 p-6 text-neutral-content opacity-0
+                motion-safe:transition-opacity motion-safe:duration-300
+                group-hover:opacity-100 group-focus-within:opacity-100 [@media(hover:none)]:opacity-100">{{ caption }}</div>
+  {% else %}
+    <div class="absolute inset-x-0 bottom-0 flex translate-y-full flex-col gap-1 bg-neutral/90 p-4 text-neutral-content
+                motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out
+                group-hover:translate-y-0 group-focus-within:translate-y-0 [@media(hover:none)]:translate-y-0">{{ caption }}</div>
+  {% endif %}
+</div>

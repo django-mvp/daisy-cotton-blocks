@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Enter{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-reveal.enter">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      <strong>Scroll the page.</strong> Whatever is wrapped arrives as it comes into view. The movement is tied to the scroll position, so it needs no script and it runs backwards when you scroll back up. In a browser without scroll-driven animation, and for anyone who has asked their system to reduce motion, the content is simply there.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="up" anchor="up">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.enter>…</c-reveal.enter>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="overflow-clip py-24">
+      <c-reveal.enter class="mx-auto max-w-xl">
+        <div class="card bg-base-200"><div class="card-body"><span class="badge badge-primary badge-sm">up</span><h3 class="card-title">Rises into place</h3><p>The default. Two rem of travel is enough to notice and not enough to watch.</p></div></div>
+      </c-reveal.enter>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="down" anchor="down">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.enter effect="down">…</c-reveal.enter>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="overflow-clip py-24">
+      <c-reveal.enter effect="down" class="mx-auto max-w-xl">
+        <div class="card bg-base-200"><div class="card-body"><span class="badge badge-primary badge-sm">down</span><h3 class="card-title">Drops into place</h3><p>For something that hangs from above: a banner, a tag on a picture.</p></div></div>
+      </c-reveal.enter>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="left" anchor="left">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.enter effect="left">…</c-reveal.enter>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="overflow-clip py-24">
+      <c-reveal.enter effect="left" class="mx-auto max-w-xl">
+        <div class="card bg-base-200"><div class="card-body"><span class="badge badge-primary badge-sm">left</span><h3 class="card-title">Slides in from the right</h3><p>Travels left. Pair it with its opposite on the other side of a split.</p></div></div>
+      </c-reveal.enter>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="right" anchor="right">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.enter effect="right">…</c-reveal.enter>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="overflow-clip py-24">
+      <c-reveal.enter effect="right" class="mx-auto max-w-xl">
+        <div class="card bg-base-200"><div class="card-body"><span class="badge badge-primary badge-sm">right</span><h3 class="card-title">Slides in from the left</h3><p>Travels right.</p></div></div>
+      </c-reveal.enter>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="zoom" anchor="zoom">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.enter effect="zoom">…</c-reveal.enter>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="overflow-clip py-24">
+      <c-reveal.enter effect="zoom" class="mx-auto max-w-xl">
+        <div class="card bg-base-200"><div class="card-body"><span class="badge badge-primary badge-sm">zoom</span><h3 class="card-title">Grows</h3><p>Starts at nine tenths of its size. Suits a picture or a single figure.</p></div></div>
+      </c-reveal.enter>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="blur" anchor="blur">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.enter effect="blur">…</c-reveal.enter>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="overflow-clip py-24">
+      <c-reveal.enter effect="blur" class="mx-auto max-w-xl">
+        <div class="card bg-base-200"><div class="card-body"><span class="badge badge-primary badge-sm">blur</span><h3 class="card-title">Comes into focus</h3><p>The only one that repaints as it goes, so keep it for one thing on a page.</p></div></div>
+      </c-reveal.enter>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="fade" anchor="fade">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.enter effect="fade">…</c-reveal.enter>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="overflow-clip py-24">
+      <c-reveal.enter effect="fade" class="mx-auto max-w-xl">
+        <div class="card bg-base-200"><div class="card-body"><span class="badge badge-primary badge-sm">fade</span><h3 class="card-title">Fades</h3><p>No travel at all.</p></div></div>
+      </c-reveal.enter>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="Further and slower" anchor="slower">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.enter distance="8" over="2.5">…</c-reveal.enter>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-24">
+      <c-reveal.enter distance="8" over="2.5" class="mx-auto max-w-xl">
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Eight rem, over two and a half heights</h3><p>It is still arriving when it is well up the screen. Further than this and the reader starts waiting for it.</p></div></div>
+      </c-reveal.enter>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="A split, each half from its own side" anchor="split">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<div class="grid gap-10 overflow-clip md:grid-cols-2">
+  <c-reveal.enter effect="right">…</c-reveal.enter>
+  <c-reveal.enter effect="left">…</c-reveal.enter>
+</div>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-24">
+      <div class="grid items-center gap-10 overflow-clip md:grid-cols-2">
+        <c-reveal.enter effect="right" distance="4">
+          <h3 class="text-3xl font-bold tracking-tight text-balance">Every deploy, and who approved it</h3>
+          <p class="mt-4 text-lg text-base-content/80">One table for the whole fleet. Filter it by service, by day or by the person who pressed the button.</p>
+          <p class="mt-6"><a class="btn btn-primary" href="#split">See the audit log</a></p>
+        </c-reveal.enter>
+        <c-reveal.enter effect="left" distance="4">
+          <div class="mockup-window border border-base-300 bg-base-200"><c-demo.screenshot /></div>
+        </c-reveal.enter>
+      </div>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="The last thing on a page" anchor="last">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.enter>…</c-reveal.enter>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-16">
+      <c-reveal.enter class="mx-auto max-w-xl">
+        <div class="card bg-base-200"><div class="card-body"><h3 class="card-title">Nothing below this</h3><p>The arrival is measured against the element's own height, so it finishes even here, where the page has no further to scroll. Raise <code>over</code> above 1 and this one would stop short.</p></div></div>
+      </c-reveal.enter>
+    </c-container>
+  </c-demo.live>
+{% endblock content %}

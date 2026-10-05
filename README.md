@@ -28,7 +28,7 @@ Blocks are configured through attributes and take their colours from whatever da
 
 ## Status
 
-Version 0.0.1. Three families are built: heroes, backgrounds and text effects. Nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
+Version 0.0.1. Four families are built: heroes, backgrounds, text effects and reveals. Nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
 
 ## Scope & philosophy
 
@@ -230,6 +230,63 @@ Things to know before reaching for one:
 - **A screen reader is given the words once**, whichever effect is drawing them and however many copies or letters it draws.
 
 The reasoning is in [ADR 0005](docs/adr/0005-text-effects-are-spans-moved-by-css.md).
+
+### Reveals
+
+A reveal wraps content the page already has and brings it in as the reader scrolls to it or points at it. Nothing moves until it is asked to: a page uses a reveal by wrapping something in one.
+
+| Tag | What it does | Attributes |
+|---|---|---|
+| `<c-reveal.enter>` | Brings in whatever it wraps as it scrolls into view | `effect`, `distance`, `over` |
+| `<c-reveal.cascade>` | Brings in its direct children one after another | `effect`, `distance`, `step`, `per`, `over` |
+| `<c-reveal.wipe>` | Uncovers a picture from one edge while it settles from a slight zoom | `from`, `zoom`, `over` |
+| `<c-reveal.words>` | Lights a paragraph a word at a time as it is scrolled through | `text`, `dim`, `start`, `end` |
+| `<c-reveal.stack>` | Stops each panel at the top of the screen and slides the next one over it | `top`, `step` |
+| `<c-reveal.hover>` | Keeps a caption out of sight until the picture is pointed at or focused | `effect`, `zoom`, `label` |
+
+`effect` on enter and cascade is one of `up`, `down`, `left`, `right`, `zoom`, `blur` and `fade`. A direction is the way the content travels, so `up` rises into place from below. On hover it is `slide` or `cover`. `from` on wipe is `left`, `right`, `top`, `bottom` or `centre`.
+
+The other attributes are numbers:
+
+| Attribute | What the number means |
+|---|---|
+| `distance` | How far the content travels, in rem |
+| `over` | How much scrolling an arrival takes, as a multiple of the element's own height |
+| `step` on cascade | How far each child waits behind the one before, as a share of its height |
+| `per` on cascade | How many children sit in a row, so the count starts again on each row. `0` counts straight through |
+| `zoom` | A multiple of the picture's size. `1` holds it still |
+| `dim` on words | How faint a word is before it is reached, from `0` to `1` |
+| `start`, `end` on words | How far up the screen the paragraph has come when the first and the last word light, from `0` at the bottom edge to `1` once it has left the top |
+| `top`, `step` on stack | How far below the top of the screen a panel stops, and how much lower each one stops than the last, in rem |
+
+```html
+<c-reveal.cascade per="3" class="grid gap-6 md:grid-cols-3">
+  <div class="card bg-base-200">…</div>
+  <div class="card bg-base-200">…</div>
+  <div class="card bg-base-200">…</div>
+</c-reveal.cascade>
+
+<c-reveal.hover class="rounded-box" label="Northern ridge, site 14">
+  <img src="{% static 'img/ridge.jpg' %}" alt="A ridgeline at dusk" />
+  <c-slot name="caption">
+    <strong>Northern ridge, site 14</strong>
+    <a class="link" href="{% url 'site' 14 %}">Open the record</a>
+  </c-slot>
+</c-reveal.hover>
+```
+
+Things to know before using one:
+
+- **The scroll reveals follow the scroll position.** There is no script and no timer, so the movement runs backwards when the page is scrolled back up, and it does not replay.
+- **Without scroll-driven animation the content is simply there.** The same goes for a reader whose system asks for reduced motion. Stack is the exception in the other direction: it is ordinary sticky positioning and works everywhere.
+- **Clip with `overflow: clip`, never `overflow: hidden`,** on anything between a reveal and the page. `overflow: hidden` makes a scroll container, and inside one a scroll reveal never moves and a stacked panel never sticks. `left` and `right` start outside the wrapper's box, so their parent usually wants `overflow-clip`.
+- **`over` above `1` can leave the last thing on a page part-way in,** because the page runs out of scroll before the arrival finishes.
+- **Cascade staggers its first twelve children.** Any after that arrive with the first.
+- **Words takes its text as an attribute, not a slot,** and splits it on spaces, so it carries plain words and no markup. A word is fainter than body text should be until it is reached, which suits one short, large statement and not body copy.
+- **Hover is reachable without a mouse.** The frame takes keyboard focus and the caption stays open while anything inside it has focus. Where the device has no hover, the caption shows all the time.
+- **Give each stacked panel a solid surface,** or the one underneath shows through.
+
+The reasoning is in [ADR 0006](docs/adr/0006-reveals-follow-the-scroll-position.md).
 
 Every attribute, its accepted values and its default are listed on each block's and component's own page in the example project, built from the annotations in the block's template. Run it with `python manage.py runserver` from a checkout.
 

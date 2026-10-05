@@ -111,3 +111,23 @@
   94% { opacity: 1; translate: calc(var(--glitch-shift) * 1.4) 0; clip-path: inset(34% 0 40% 0); }
   97% { opacity: 1; translate: calc(var(--glitch-shift) * -1) 0; clip-path: inset(76% 0 4% 0); }
 }
+
+/* The reveals. Each has only a `from`, so it ends at whatever the element
+ * already is, and each is tied to the scroll position in the template. */
+@keyframes dce-reveal {
+  from {
+    opacity: var(--reveal-opacity, 0);
+    translate: var(--reveal-x, 0) var(--reveal-y, 0);
+    scale: var(--reveal-scale, 1);
+  }
+}
+@keyframes dce-reveal-blur {
+  from { opacity: 0; filter: blur(12px); }
+}
+@keyframes dce-wipe {
+  from { clip-path: inset(var(--wipe-top, 0) var(--wipe-right, 0) var(--wipe-bottom, 0) var(--wipe-left, 0)); }
+  to { clip-path: inset(0); }
+}
+@keyframes dce-words {
+  from { opacity: var(--words-dim, 0.25); }
+}

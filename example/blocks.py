@@ -134,6 +134,18 @@ FAMILIES: tuple[Family, ...] = (
             Component("glitch", "Glitch", group="Dynamic"),
         ),
     ),
+    Family(
+        slug="reveal",
+        label="Reveals",
+        components=(
+            Component("enter", "Enter", group="On scroll"),
+            Component("cascade", "Cascade", group="On scroll"),
+            Component("wipe", "Wipe", group="On scroll"),
+            Component("words", "Words", group="On scroll"),
+            Component("stack", "Stack", group="On scroll"),
+            Component("hover", "Hover", group="On hover"),
+        ),
+    ),
 )
 
 

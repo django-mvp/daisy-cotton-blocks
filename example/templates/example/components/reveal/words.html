@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Words{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-reveal.words">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      <strong>Scroll the page.</strong> The paragraph starts dim and each word lights as the page moves, so the reader is led through it at the pace they scroll. It suits one statement on a page, not body copy. While a word is dim it is fainter than body text should be, which is the effect and the reason to keep it to short, large type. The movement is tied to the scroll position, so it needs no script and it runs backwards when you scroll back up. In a browser without scroll-driven animation, and for anyone who has asked their system to reduce motion, the paragraph is at full strength.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="A statement" anchor="statement">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.words class="text-3xl font-semibold md:text-5xl" text="…" />{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-40">
+      <c-reveal.words class="mx-auto max-w-4xl text-3xl leading-tight font-semibold tracking-tight md:text-5xl" text="Most release tools tell you what happened. This one tells you before it happens, asks the right person, and then gets out of the way." />
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="A longer passage, lit later and over more of the screen" anchor="passage">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.words start="0.2" end="0.7" class="text-xl leading-relaxed md:text-2xl" text="…" />{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-40">
+      <c-reveal.words start="0.2" end="0.7" class="mx-auto max-w-2xl text-xl leading-relaxed md:text-2xl" text="We spent three years watching teams ship on a Friday afternoon and hold their breath until Monday. Nobody should have to choose between moving quickly and sleeping well. So we built the thing we wanted: every change in its own preview, every release behind a named approval, and every mistake one click from undone." />
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="Fainter, in the primary colour, on a dark surface" anchor="dark">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.words dim="0.1" class="text-3xl font-bold text-primary md:text-5xl" text="…" />{% endverbatim %}{% endfilter %}</c-slot>
+    <div class="bg-neutral py-40">
+      <c-container>
+        <c-reveal.words dim="0.1" class="mx-auto max-w-4xl text-center text-3xl leading-tight font-bold tracking-tight text-neutral-content md:text-5xl" text="Ship on a Friday. Sleep on a Friday." />
+      </c-container>
+    </div>
+  </c-demo.live>
+
+  <c-demo.live label="One word" anchor="one">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.words class="text-6xl font-black" text="Shipped." />{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-40">
+      <c-reveal.words class="text-center text-6xl font-black tracking-tight" text="Shipped." />
+    </c-container>
+  </c-demo.live>
+
+  <c-container class="py-40">
+    <p class="mx-auto max-w-2xl text-base-content/80">Room to scroll. A paragraph is lit by the time it reaches the middle of the screen, so one placed at the very foot of a page, which can never get that far, needs a lower <code>end</code>.</p>
+  </c-container>
+{% endblock content %}

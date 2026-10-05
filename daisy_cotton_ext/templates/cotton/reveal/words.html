@@ -1,0 +1,22 @@
+{# @description A paragraph that starts dim and lights up a word at a time as it is scrolled through. Reads at full strength where the browser cannot do it. #}
+{# @prop text:text | required | description:"The paragraph. Plain words: it is split on its spaces." #}
+{# @prop dim:number | default:"0.25" | description:"How faint a word is before it is reached, from 0 to 1" #}
+{# @prop start:number | default:"0.1" | description:"How far up the screen the paragraph has come when the first word lights, from 0 at the bottom edge to 1 once it has left the top" #}
+{# @prop end:number | default:"0.5" | description:"How far up the screen it has come when the last word lights. 0.5 is the middle." #}
+{# @prop class:text | description:"Extra classes on the paragraph. Its size and weight go here." #}
+{% comment %}
+  `firstof` escapes the text once, however it was passed, so each word is written
+  out as it stands. Every word shares the paragraph's timeline and takes its turn
+  from its number (docs/adr/0006-reveals-follow-the-scroll-position.md).
+{% endcomment %}
+<c-vars text dim="0.25" start="0.1" end="0.5" class />
+{% firstof text as escaped %}
+{% with words=escaped.split %}
+<p class="[view-timeline-name:--words] {{ class }}"
+   style="--words-dim: {{ dim|floatformat:'-3u'|default:'0.25' }}; --words-start: {{ start|floatformat:'-3u'|default:'0.1' }}; --words-end: {{ end|floatformat:'-3u'|default:'0.5' }}; --words-n: {{ words|length }}"
+   {{ attrs }}>
+  {# djlint:off #}
+  {% for word in words %}<span class="motion-safe:supports-[animation-timeline:view()]:animate-[dce-words_1ms_linear_both] motion-safe:supports-[animation-timeline:view()]:[animation-timeline:--words] motion-safe:supports-[animation-timeline:view()]:[animation-range:cover_calc((var(--words-start,0.1)_+_(var(--words-end,0.5)_-_var(--words-start,0.1))*var(--i)/var(--words-n))*100%)_cover_calc((var(--words-start,0.1)_+_(var(--words-end,0.5)_-_var(--words-start,0.1))*(var(--i)_+_2)/var(--words-n))*100%)]" style="--i: {{ forloop.counter0 }}">{{ word|safe }}</span>{% if not forloop.last %} {% endif %}{% endfor %}
+  {# djlint:on #}
+</p>
+{% endwith %}
