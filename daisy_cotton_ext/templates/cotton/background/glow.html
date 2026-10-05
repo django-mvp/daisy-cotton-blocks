@@ -1,16 +1,15 @@
 {# @description Two heavily blurred discs of the theme's own colours. No invert needed. #}
 {# @prop from:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The disc at the top" #}
 {# @prop to:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"secondary" | description:"The disc at the foot" #}
-{# @prop intensity:select['faint', 'soft', 'bold'] | default:"soft" | description:"How far the discs come through. Check bold against a dark theme." #}
+{# @prop intensity:number | default:"0.2" | description:"How far the discs come through, from 0 to 1. Check 0.3 and above against a dark theme." #}
 {# @prop class:text | description:"Extra classes on the layer" #}
 {% comment %}
   Roots at `absolute inset-0` so two backgrounds in one slot overlap instead of
   stacking, which is why a background belongs in a `background` slot only (#21).
 {% endcomment %}
-<c-vars from="primary" to="secondary" intensity="soft" class />
-<div class="absolute inset-0 overflow-hidden {{ class }}">
-  <div class="absolute -top-32 -left-24 h-96 w-96 rounded-full blur-3xl bg-{{ from }}
-              {% if intensity == 'faint' %}opacity-10{% elif intensity == 'bold' %}opacity-30{% else %}opacity-20{% endif %}"></div>
-  <div class="absolute -right-24 -bottom-40 h-96 w-96 rounded-full blur-3xl bg-{{ to }}
-              {% if intensity == 'faint' %}opacity-10{% elif intensity == 'bold' %}opacity-30{% else %}opacity-20{% endif %}"></div>
+<c-vars from="primary" to="secondary" intensity="0.2" class />
+<div class="absolute inset-0 overflow-hidden {{ class }}"
+     style="opacity: {{ intensity|floatformat:'-3u'|default:'0.2' }}">
+  <div class="absolute -top-32 -left-24 h-96 w-96 rounded-full blur-3xl bg-{{ from }}"></div>
+  <div class="absolute -right-24 -bottom-40 h-96 w-96 rounded-full blur-3xl bg-{{ to }}"></div>
 </div>

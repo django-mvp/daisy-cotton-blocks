@@ -1,19 +1,18 @@
 {# @description A picture, dimmed by the theme's neutral. Always pair it with invert on the block. #}
 {# @prop src:text | description:"URL of the image. Without one the layer renders only the dim." #}
-{# @prop dim:select['soft', 'medium', 'strong'] | default:"medium" | description:"How far the picture is dimmed. This is what makes the copy readable." #}
+{# @prop dim:number | default:"0.7" | description:"How far the picture is dimmed, from 0 to 1. This is what makes the copy readable." #}
 {# @prop position:select['center', 'top', 'bottom', 'left', 'right'] | default:"center" | description:"Where the picture sits inside its frame" #}
 {# @prop class:text | description:"Extra classes on the layer" #}
 {% comment %}
   An <img> rather than a CSS background: a URL interpolated into `style` is a CSS
   injection surface that HTML escaping does not close (#21).
 {% endcomment %}
-<c-vars src dim="medium" position="center" class />
+<c-vars src dim="0.7" position="center" class />
 <div class="absolute inset-0 {{ class }}">
   {% if src %}
     <img src="{{ src }}"
          alt=""
          class="absolute inset-0 h-full w-full object-cover object-{{ position }}" />
   {% endif %}
-  <div class="absolute inset-0 bg-neutral
-              {% if dim == 'soft' %}opacity-50{% elif dim == 'strong' %}opacity-85{% else %}opacity-70{% endif %}"></div>
+  <div class="absolute inset-0 bg-neutral" style="opacity: {{ dim|floatformat:'-3u'|default:'0.7' }}"></div>
 </div>

@@ -105,6 +105,19 @@ class TestTheBackgroundSlot:
 
         assert "aria-hidden" not in html
 
+    @pytest.mark.parametrize("tag", ARRANGEMENTS)
+    def test_the_block_clips_without_becoming_a_scroll_container(
+        self, render, tag
+    ) -> None:
+        # A parallax background measures its block crossing the screen, and
+        # `overflow: hidden` would make the block the thing it measures against.
+        html = render(f'<{tag} title="T" />')
+        section = re.search(r"<section[^>]*>", html)
+
+        assert section is not None
+        assert "overflow-clip" in section.group(0)
+        assert "overflow-hidden" not in section.group(0)
+
 
 # The subject is a class name because the decision is one: contrast measured across
 # the demo's ten themes, which a small aesthetic edit would quietly undo (#21).

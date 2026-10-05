@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Flow{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-background.flow">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      The gradient, set moving: a wash three times the width of the block, sliding back and forth behind it. At an opacity of <code>1</code> the copy sits on saturated colour that changes under it, so the block needs <code>invert</code> and the pairing is worth checking on every theme the project offers. Anyone who has asked their system to reduce motion gets the same picture, holding still.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.flow />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="The default" lead="Soft, so the block keeps its own surface.">
+          <c-slot name="background"><c-background.flow /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.flow speed="2" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="Quicker" lead="Nine seconds from one side to the other.">
+          <c-slot name="background"><c-background.flow speed="2" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.flow from="neutral" via="primary" to="neutral" opacity="1" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" invert class="bg-neutral" title="Full strength" lead="A band of primary crossing the theme's neutral.">
+          <c-slot name="background"><c-background.flow from="neutral" via="primary" to="neutral" opacity="1" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.flow from="base-100" via="primary" to="base-100" speed="0.5" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="One colour passing" lead="Fades in from the page and back out to it.">
+          <c-slot name="background"><c-background.flow from="base-100" via="primary" to="base-100" speed="0.5" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+    </div>
+  </c-container>
+
+  <c-demo.live label="At full width" anchor="full">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert size="lg" title="…">
+  <c-slot name="background"><c-background.flow from="neutral" via="primary" to="neutral" opacity="1" /></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2"
+                    invert
+                    size="lg"
+                    class="bg-neutral"
+                    title="A slow tide of colour"
+                    lead="At full strength the block inverts its copy, and the wash carries the whole surface.">
+      <c-slot name="background">
+        <c-background.flow from="neutral" via="primary" to="neutral" opacity="1" />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#full">Primary action</a>
+        <a class="btn btn-outline btn-lg" href="#full">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

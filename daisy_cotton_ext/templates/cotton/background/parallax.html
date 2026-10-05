@@ -1,0 +1,17 @@
+{# @description Wraps any background and scrolls it more slowly than the page, so it reads as further away. Stays still where the browser cannot do it. #}
+{# @prop speed:number | default:"0.8" | description:"How fast the layer scrolls against the page. 1 moves with the page, 0.5 at half its speed, 0 not at all." #}
+{# @prop class:text | description:"Extra classes on the layer" #}
+{# @slot One or more backgrounds — What moves. Two of these at different speeds read as two distances. #}
+{% comment %}
+  `overflow-clip`, never `overflow-hidden`: a scroll container between the layer
+  and the page stops it moving (docs/adr/0004-moving-backgrounds-are-css-only.md).
+{% endcomment %}
+<c-vars speed="0.8" class />
+<div class="absolute inset-0 overflow-clip [container-type:size] [view-timeline-name:--parallax] {{ class }}"
+     style="--parallax-speed: {{ speed|floatformat:'-3u'|default:'0.8' }}">
+  <div class="absolute inset-x-0
+              [--parallax-shift:calc(clamp(0,1_-_var(--parallax-speed,0.8),1)_*_(100vh_+_100cqh)_/_2)]
+              -inset-y-[var(--parallax-shift)]
+              motion-safe:supports-[animation-timeline:view()]:animate-[dce-parallax_1ms_linear_both]
+              motion-safe:supports-[animation-timeline:view()]:[animation-timeline:--parallax]">{{ slot }}</div>
+</div>

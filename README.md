@@ -136,6 +136,31 @@ A background is not part of a layout, so it is not part of a block. Each one is 
 | `<c-background.grid>` | A faint ruled grid | `size`, `intensity`, `flat` |
 | `<c-background.image>` | A picture, dimmed by the theme's `neutral` | `src`, `dim`, `position` |
 
+Six more move. Each one holds still for a reader whose system asks for reduced motion.
+
+| Tag | What it does | Attributes |
+|---|---|---|
+| `<c-background.parallax>` | Wraps any other background and scrolls it more slowly than the page | `speed` |
+| `<c-background.aurora>` | Three blurred discs drifting across each other | `from`, `via`, `to`, `intensity`, `speed` |
+| `<c-background.flow>` | A three-colour wash sliding from side to side | `from`, `via`, `to`, `opacity`, `speed` |
+| `<c-background.horizon>` | A ruled floor rolling towards the reader | `size`, `intensity`, `speed` |
+| `<c-background.particles>` | Small dots rising and fading | `color`, `intensity`, `speed` |
+| `<c-background.hyperspace>` | Streaks of light flying out from the centre | `color`, `density`, `intensity`, `speed` |
+
+An attribute that sets an amount takes a number, and any number works:
+
+| Attribute | What the number means |
+|---|---|
+| `intensity`, `opacity`, `dim` | From `0` to `1` |
+| `size` | A length in rem |
+| `speed` | A multiple of the usual pace: `2` is twice as fast, `0.5` half |
+| `speed` on parallax | How fast the layer scrolls against the page: `1` moves with it, `0.5` at half its speed |
+| `density` | A multiple of the usual forty streaks |
+
+The number is written to the layer's `style` attribute, as a custom property or as `opacity`. A page served under a content security policy that forbids inline styles ignores it and gets the defaults.
+
+The movement is CSS only. Parallax relies on scroll-driven animation, so in a browser without it the wrapped background stays where it is. It also needs every element between itself and the page to clip with `overflow: clip` and never `overflow: hidden`, which the hero blocks do.
+
 Two things to know about them. A background belongs in a `background` slot and nowhere else, because it positions itself against that slot's wrapper rather than filling its parent in normal flow. And a dark background needs `invert` on the block, since a background cannot reach up to recolour its sibling. Each block's page says whether it wants one.
 
 ```html
@@ -143,7 +168,7 @@ Two things to know about them. A background belongs in a `background` slot and n
                 lead="Blocks for the pages in front of your app."
                 invert>
   <c-slot name="background">
-    <c-background.image src="{% static 'img/desk.jpg' %}" dim="strong" />
+    <c-background.image src="{% static 'img/desk.jpg' %}" dim="0.85" />
   </c-slot>
   <c-slot name="actions">
     <a class="btn btn-primary btn-lg" href="{% url 'signup' %}">Get started</a>

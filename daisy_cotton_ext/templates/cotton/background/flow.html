@@ -1,0 +1,18 @@
+{# @description A wash of three palette colours that slides slowly from side to side. Needs invert at an opacity of 1. #}
+{# @prop from:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The first stop" #}
+{# @prop via:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"accent" | description:"The middle stop" #}
+{# @prop to:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"secondary" | description:"The last stop" #}
+{# @prop opacity:number | default:"0.2" | description:"How far the layer comes through, from 0 to 1. 1 needs invert." #}
+{# @prop speed:number | default:"1" | description:"How quickly the wash slides, as a multiple: 2 is twice as fast, 0.5 half" #}
+{# @prop class:text | description:"Extra classes on the layer" #}
+{% comment %}
+  Three frames wide and sliding by two of them, back and forth, so there is no
+  seam to hide (docs/adr/0004-moving-backgrounds-are-css-only.md).
+{% endcomment %}
+<c-vars from="primary" via="accent" to="secondary" opacity="0.2" speed="1" class />
+<div class="absolute inset-0 overflow-hidden
+            {{ class }}"
+     style="opacity: {{ opacity|floatformat:'-3u'|default:'0.2' }}; --flow-speed: {{ speed|floatformat:'-3u'|default:'1' }}">
+  <div class="absolute inset-y-0 left-0 w-[300%] bg-gradient-to-r from-{{ from }} via-{{ via }} to-{{ to }}
+              motion-safe:animate-[dce-pan_calc(18s/var(--flow-speed,1))_ease-in-out_infinite_alternate]"></div>
+</div>

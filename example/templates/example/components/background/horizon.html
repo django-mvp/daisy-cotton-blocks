@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Horizon{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-background.horizon">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      The grid, laid flat and rolling towards the reader. It takes the colour of the block's text and fades out below the horizon, so it sits under the foot of the block and leaves the heading clear. <strong>The rules shimmer near the horizon</strong>, more so the closer together they sit and the faster they roll: the browser is squeezing each one into less than a pixel. <code>size="2"</code> at <code>speed="2"</code> is the worst case and is shown below so it can be judged. Anyone who has asked their system to reduce motion gets the same picture, holding still.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.horizon />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="The default" lead="Soft, at walking pace.">
+          <c-slot name="background"><c-background.horizon /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.horizon size="5.5" speed="0.5" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="Wide and slow" lead="Bigger squares, half the speed.">
+          <c-slot name="background"><c-background.horizon size="5.5" speed="0.5" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.horizon size="2" speed="2" intensity="0.4" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" title="Small and quick" lead="The loudest this one gets.">
+          <c-slot name="background"><c-background.horizon size="2" speed="2" intensity="0.4" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.horizon intensity="0.4" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-hero.centred level="2" size="sm" invert class="bg-neutral" title="On a dark surface" lead="Light rules on the theme's neutral.">
+          <c-slot name="background"><c-background.horizon intensity="0.4" /></c-slot>
+        </c-hero.centred>
+      </c-demo.tile>
+    </div>
+  </c-container>
+
+  <c-demo.live label="At full width" anchor="full">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert size="lg" title="…">
+  <c-slot name="background"><c-background.horizon intensity="0.4" /></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2"
+                    invert
+                    size="lg"
+                    class="bg-neutral"
+                    title="Somewhere to be going"
+                    lead="A floor under the page that keeps arriving.">
+      <c-slot name="background">
+        <c-background.horizon intensity="0.4" />
+      </c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#full">Primary action</a>
+        <a class="btn btn-outline btn-lg" href="#full">Secondary</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}
