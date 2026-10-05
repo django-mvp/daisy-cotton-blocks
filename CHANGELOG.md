@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.0] - 2026-10-05
+
 ### Added
 
 - The hero family: `<c-hero.centred>`, `<c-hero.split>` and `<c-hero.showcase>`, which share one
