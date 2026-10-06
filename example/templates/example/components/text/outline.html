@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Outline{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-text.outline">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      The letters drawn as a line, with the page showing through them. Set beside filled words, it makes the filled ones the loud part.
+    </p>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      <strong>Headings only.</strong> A thin line is far less ink than a filled letter. It needs a large, heavy face to stay readable, and it disappears at body size.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.specimen note="The default: the page's own text colour.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.outline>not the CSS</c-text.outline>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.outline>not the CSS</c-text.outline>
+      </c-demo.specimen>
+      <c-demo.specimen note="In primary.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.outline color="primary">not the CSS</c-text.outline>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.outline color="primary">not the CSS</c-text.outline>
+      </c-demo.specimen>
+      <c-demo.specimen note="A heavier line.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.outline color="accent" weight="3">not the CSS</c-text.outline>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.outline color="accent" weight="3">not the CSS</c-text.outline>
+      </c-demo.specimen>
+      <c-demo.specimen note="A hairline. Worth checking on a low-density screen.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.outline weight="0.75">not the CSS</c-text.outline>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.outline weight="0.75">not the CSS</c-text.outline>
+      </c-demo.specimen>
+    </div>
+  </c-container>
+
+  <c-demo.live label="Inside a heading, at size" anchor="in-place">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg">
+  <c-slot name="title"><c-text.outline>Less ink,</c-text.outline> more page</c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2" size="lg">
+      <c-slot name="title"><c-text.outline>Less ink,</c-text.outline> more page</c-slot>
+      <c-slot name="lead">Half the headline hollow, half solid.</c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#in-place">Get started</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

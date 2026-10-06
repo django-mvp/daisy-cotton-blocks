@@ -6,7 +6,8 @@ daisy-cotton-ext ships what is built on top of the base daisy-cotton components.
 configurable regions of a public-facing page, and extended components are single components that
 go further than their daisyUI counterpart. Each is rendered by one Cotton component and styled by
 daisyUI classes the host project provides, plus the plain Tailwind utilities this package ships
-itself. Only blocks are built so far. `CONTEXT.md` defines these terms, including why
+itself. Blocks and one family of extended components, the text effects, are built so far.
+`CONTEXT.md` defines these terms, including why
 *variant* is not one of them. Use them.
 
 Presentation only. No models, no views, no forms, no URLs, no migrations. Anything needing one of

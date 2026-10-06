@@ -36,6 +36,8 @@
 @source inline("{from,via,to}-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
 @source inline("bg-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
 @source inline("text-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
+@source inline("text-base-content");
+@source inline("text-shadow-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
 @source inline("opacity-{5,10,20,30,40,50,60,70,80,85,90,100}");
 @source inline("object-{cover,contain,center,top,bottom,left,right}");
 @source inline("{,hover:}{scale-{95,100,105,110},translate-y-{0,1,2,4,8},-translate-y-{1,2,4,8}}");
@@ -72,4 +74,40 @@
   0% { translate: 0 0; scale: 0.05 1; opacity: 0; }
   12% { opacity: 1; }
   100% { translate: 70cqmax 0; scale: 1 1; opacity: 1; }
+}
+
+/* Motion for the text effects. A fill clipped to its letters cannot be moved by
+ * the compositor, so the gradient, the shimmer and the marker animate a
+ * background and repaint the few words they cover. The rest move by `translate`
+ * and `opacity`. Each is applied behind `motion-safe:` in the template. */
+@keyframes dce-text-slide {
+  to { background-position: 100% 50%; }
+}
+@keyframes dce-text-sweep {
+  from { background-position: 100% 50%; }
+  to { background-position: 0% 50%; }
+}
+@keyframes dce-text-breathe {
+  50% { opacity: calc(var(--glow-intensity, 0.7) * 0.3); }
+}
+@keyframes dce-text-draw {
+  from { background-size: 0% calc(var(--marker-size, 0.25) * 1em); }
+}
+@keyframes dce-text-type {
+  from { opacity: 0; }
+}
+@keyframes dce-text-caret {
+  0%, 55% { box-shadow: 0.08em 0 0 currentColor; }
+  56%, 100% { box-shadow: none; }
+}
+@keyframes dce-text-wave {
+  0%, 40%, 100% { translate: 0 0; }
+  20% { translate: 0 calc(var(--wave-height, 0.2) * -1em); }
+}
+@keyframes dce-text-glitch {
+  0%, 100% { opacity: 0; translate: 0 0; clip-path: inset(0 0 0 0); }
+  88% { opacity: 1; translate: var(--glitch-shift) 0; clip-path: inset(12% 0 62% 0); }
+  91% { opacity: 1; translate: calc(var(--glitch-shift) * -0.6) 0; clip-path: inset(58% 0 14% 0); }
+  94% { opacity: 1; translate: calc(var(--glitch-shift) * 1.4) 0; clip-path: inset(34% 0 40% 0); }
+  97% { opacity: 1; translate: calc(var(--glitch-shift) * -1) 0; clip-path: inset(76% 0 4% 0); }
 }

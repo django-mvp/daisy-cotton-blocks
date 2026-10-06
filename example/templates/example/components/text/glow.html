@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Glow{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-text.glow">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Words lit in a theme colour with a soft halo behind them. It reads best on a dark surface, where the halo has something to shine against. Switch to a dark theme from the bar above to see it at its strongest.
+    </p>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      <strong>A few words, on one line.</strong> The halo is a second copy of the words laid behind the first, so the phrase is a box of its own and does not wrap.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.specimen note="The default: primary, steady.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Built to <c-text.glow>stand out</c-text.glow>{% endverbatim %}{% endfilter %}</c-slot>
+        Built to <c-text.glow>stand out</c-text.glow>
+      </c-demo.specimen>
+      <c-demo.specimen note="A wider halo in the accent colour.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Built to <c-text.glow color="accent" spread="2">stand out</c-text.glow>{% endverbatim %}{% endfilter %}</c-slot>
+        Built to <c-text.glow color="accent" spread="2">stand out</c-text.glow>
+      </c-demo.specimen>
+      <c-demo.specimen note="Breathing, once every three seconds.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Built to <c-text.glow color="secondary" pulse="1">stand out</c-text.glow>{% endverbatim %}{% endfilter %}</c-slot>
+        Built to <c-text.glow color="secondary" pulse="1">stand out</c-text.glow>
+      </c-demo.specimen>
+      <c-demo.specimen note="Turned right down: a hint of warmth round the letters.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Built to <c-text.glow intensity="0.3" spread="0.5">stand out</c-text.glow>{% endverbatim %}{% endfilter %}</c-slot>
+        Built to <c-text.glow intensity="0.3" spread="0.5">stand out</c-text.glow>
+      </c-demo.specimen>
+    </div>
+  </c-container>
+
+  <c-demo.live label="Inside a heading, at size" anchor="in-place">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg">
+  <c-slot name="title">Pages that <c-text.glow pulse="0.5">glow</c-text.glow> after dark</c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2" size="lg" invert class="bg-neutral">
+      <c-slot name="title">Pages that <c-text.glow pulse="0.5">glow</c-text.glow> after dark</c-slot>
+      <c-slot name="lead">A slow breath on one word of the headline. More than a word or two and it stops reading as emphasis.</c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#in-place">Get started</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}
