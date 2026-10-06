@@ -1,7 +1,8 @@
 """The demo's sidebar.
 
-Home, the component gallery, then one collapsible section per block family with
-a page per component inside it. The family and component entries are built from
+Home, the component gallery, then a "Components" and a "Sections" section, each
+holding one collapsible entry per family with a page per component inside it.
+A family with both kinds is listed in both sections, each with its own half. The family and component entries are built from
 the same declaration the pages are routed from, so a component is named in
 exactly one place.
 """
@@ -11,7 +12,7 @@ from django.urls import reverse_lazy
 from flex_menu import MenuItem
 from mvp.menus import AppMenu, MenuCollapse, MenuGroup
 
-from example.blocks import FAMILIES, Component, Family
+from example.blocks import FAMILIES, SECTIONS, Component, Family
 
 
 def component_entry(family: Family, component: Component) -> MenuItem:
@@ -26,17 +27,30 @@ def component_entry(family: Family, component: Component) -> MenuItem:
     )
 
 
-def family_entries(family: Family) -> list[MenuItem]:
-    """Return a family's entries, under a heading per group where it has any."""
+def family_entries(family: Family, kind: str, section: str) -> list[MenuItem]:
+    """Return a family's entries for one sidebar section.
+
+    Entries sit under a heading per group, unless the section holds only one
+    group of the family or the heading would repeat the section's own name.
+
+    Args:
+        family: The family whose components are listed.
+        kind: The kind of component the section holds.
+        section: The section's label, as shown in the sidebar.
+
+    Returns:
+        The links, and the headed groups of links, in declaration order.
+    """
+    groups = family.groups(kind)
     entries: list[MenuItem] = []
-    for heading, components in family.groups():
+    for heading, components in groups:
         links = [component_entry(family, component) for component in components]
-        if not heading:
+        if not heading or heading == section or len(groups) == 1:
             entries.extend(links)
             continue
         entries.append(
             MenuGroup(
-                name=f"family-{family.slug}-{heading.lower().replace(' ', '-')}",
+                name=f"family-{family.slug}-{kind}-{heading.lower()}",
                 extra_context={"label": heading},
                 children=links,
             )
@@ -66,19 +80,23 @@ AppMenu.extend(
             extra_context={"label": "Home", "icon": "home"},
         ),
         *gallery_entries,
-        MenuGroup(
-            name="content",
-            extra_context={"label": "Content"},
-            children=[
-                # MenuCollapse rather than a nested MenuGroup: it sets the
-                # `collapsible` flag the sidebar reads, so no JavaScript is needed.
-                MenuCollapse(
-                    name=f"family-{family.slug}",
-                    extra_context={"label": family.label, "icon": "block"},
-                    children=family_entries(family),
-                )
-                for family in FAMILIES
-            ],
-        ),
+        *[
+            MenuGroup(
+                name=f"section-{kind}",
+                extra_context={"label": label},
+                children=[
+                    # MenuCollapse rather than a nested MenuGroup: it sets the
+                    # `collapsible` flag the sidebar reads, so no JavaScript is needed.
+                    MenuCollapse(
+                        name=f"family-{family.slug}-{kind}",
+                        extra_context={"label": family.label, "icon": kind},
+                        children=family_entries(family, kind, label),
+                    )
+                    for family in FAMILIES
+                    if family.groups(kind)
+                ],
+            )
+            for kind, label in SECTIONS
+        ],
     ]
 )

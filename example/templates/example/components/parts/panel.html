@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load component_docs %}
+
+{% block title %}Sign-in panel{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-auth.panel">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Seven of the sign-in and sign-up blocks draw their form through this, so a page of your own that none of them covers can use it directly and still match. The buttons are daisy-cotton's, and the form in the default slot is the application's.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="In a card" anchor="card">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-auth.panel card align="center" title="Sign in to Meridian" class="mx-auto max-w-md">
+  <c-slot name="providers">
+    <c-button href="#card" outline class="btn-block" text="Continue with Google" />
+    <c-button href="#card" outline class="btn-block" text="Continue with a passkey" />
+  </c-slot>
+  <c-button href="#card" variant="primary" class="btn-block" text="Your form goes here" />
+  <c-slot name="footer">New to Meridian? <a class="link" href="#card">Create an account</a></c-slot>
+</c-auth.panel>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <div class="bg-base-200 px-4 py-10">
+      <c-auth.panel card align="center" title="Sign in to Meridian" class="mx-auto max-w-md">
+        <c-slot name="providers">
+          <c-button href="#card" outline class="btn-block" text="Continue with Google" />
+          <c-button href="#card" outline class="btn-block" text="Continue with a passkey" />
+        </c-slot>
+        <c-button href="#card" variant="primary" class="btn-block" text="Your form goes here" />
+        <c-slot name="footer">New to Meridian? <a class="link" href="#card">Create an account</a></c-slot>
+      </c-auth.panel>
+    </div>
+  </c-demo.live>
+
+  <c-demo.live label="Bare, with a larger heading" anchor="bare">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-auth.panel size="lg" level="2" title="Welcome back" lead="Sign in to see what shipped while you were away." class="mx-auto max-w-sm">
+  <c-button href="#bare" variant="primary" class="btn-block" text="Your form goes here" />
+</c-auth.panel>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <div class="bg-base-200 px-4 py-10">
+      <c-auth.panel size="lg" level="2" title="Welcome back" lead="Sign in to see what shipped while you were away." class="mx-auto max-w-sm">
+        <c-button href="#bare" variant="primary" class="btn-block" text="Your form goes here" />
+      </c-auth.panel>
+    </div>
+  </c-demo.live>
+{% endblock content %}

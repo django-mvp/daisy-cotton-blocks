@@ -1,0 +1,43 @@
+{# @description One background across the whole screen, a line of copy on it, and the form in a translucent card floating at the trailing edge. #}
+{# @prop title:text | default:"Sign in" | description:"The card's heading. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The sentence under the card's heading" #}
+{# @prop headline:text | description:"The large line written on the background. Shown from the lg breakpoint up." #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"1" | description:"Level of the card's heading. The headline on the background is a paragraph, so the page keeps one heading." #}
+{# @prop divider:text | description:"The word between the provider buttons and the form. Left empty, it is a translated or." #}
+{# @prop invert:boolean | default:False | description:"Light copy on the background, for a dark surface. The card keeps the theme's own colours." #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-neutral." #}
+{# @slot:background — A background block, rendered into a layer behind everything #}
+{# @slot:logo — The application's logo, written on the background at the top. With invert it needs to read on a dark surface. #}
+{# @slot:aside — Under the headline. A release note, a rating, a line of small print. Shown from the lg breakpoint up. #}
+{# @slot:providers — Buttons that skip the form, one full-width button each: third-party providers, a passkey, an emailed code #}
+{# @slot:footer — The foot of the card. The link to the sign-up page, usually. #}
+{# @slot The form — The application's own sign-in form, with its fields, its errors and its submit button. #}
+<c-vars title lead headline level="1" divider invert class />
+<section class="relative isolate flex min-h-dvh flex-col overflow-clip
+                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+  <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-8 sm:px-6 lg:flex-row lg:gap-16 lg:px-8 lg:py-12">
+    <div class="flex flex-col lg:flex-1 lg:justify-between">
+      {% if logo %}<div class="flex items-center">{{ logo }}</div>{% endif %}
+      {% if headline or aside %}
+        <div class="hidden max-w-xl flex-col gap-6 lg:flex">
+          {% if headline %}
+            <p class="text-5xl font-bold tracking-tight text-balance xl:text-6xl">{{ headline }}</p>
+          {% endif %}
+          {{ aside }}
+        </div>
+      {% endif %}
+    </div>
+    <div class="flex flex-1 items-center justify-center lg:w-[28rem] lg:flex-none">
+      <c-auth.panel :title="title" :lead="lead" :level="level" :divider="divider" card surface="bg-base-100/90 text-base-content shadow-2xl backdrop-blur-md" class="w-full max-w-md" only>
+        <c-slot name="providers">{{ providers }}</c-slot>
+        {{ slot }}
+        <c-slot name="footer">{{ footer }}</c-slot>
+      </c-auth.panel>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,5 @@
+{# @description A short list of reasons, for the side of a sign-up page. Fill it with points.point components. #}
+{# @prop class:text | description:"Extra classes on the list" #}
+{# @slot The points — One points.point for each reason. #}
+<c-vars class />
+<ul class="flex flex-col gap-4 {{ class }}" {{ attrs }}>{{ slot }}</ul>

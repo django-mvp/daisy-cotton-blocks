@@ -1,0 +1,19 @@
+{# @description The logo of Meridian, the made-up application these demos are written for. A stand-in for the application's own. #}
+{# @prop class:text | description:"Extra classes on the link. A text colour goes here when the surface is not the theme's base." #}
+{# @prop mark-class:text | default:"text-primary" | description:"Colour of the mark. Empty to take the wordmark's colour." #}
+<c-vars class mark-class="text-primary" />
+<a href="#" class="inline-flex items-center gap-2 text-xl font-bold tracking-tight {{ class }}">
+  <svg class="{{ mark_class }}"
+       width="32"
+       height="32"
+       viewBox="0 0 32 32"
+       fill="none"
+       stroke="currentColor"
+       stroke-width="2.5"
+       aria-hidden="true">
+    <circle cx="16" cy="16" r="13" />
+    <ellipse cx="16" cy="16" rx="5.5" ry="13" />
+    <path d="M3 16h26" />
+  </svg>
+  Meridian
+</a>

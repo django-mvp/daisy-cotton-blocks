@@ -1,0 +1,29 @@
+{# @description The inside of every sign-in and sign-up page: a heading, the buttons that skip the form, a divider, the form, and a foot. With or without a card around it. #}
+{# @prop title:text | default:"Sign in" | description:"The heading. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The sentence under the heading" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"1" | description:"Heading level" #}
+{# @prop size:select['md', 'lg'] | default:"md" | description:"How large the heading is set" #}
+{# @prop align:select['start', 'center'] | default:"start" | description:"Where the heading and the foot sit" #}
+{# @prop divider:text | description:"The word between the provider buttons and the form. Left empty, it is a translated or." #}
+{# @prop card:boolean | default:False | description:"Draw a card around the panel" #}
+{# @prop surface:text | default:"bg-base-100 shadow-xl" | description:"Surface classes of the card. No effect without card." #}
+{# @prop class:text | description:"Extra classes on the panel's outer element" #}
+{# @slot:providers — Buttons that skip the form, one full-width button each: third-party providers, a passkey, an emailed code #}
+{# @slot:footer — The foot of the panel. The link across to the other page, or the terms. #}
+{# @slot The form — The application's own form, with its fields, its errors and its submit button. #}
+{% load i18n %}
+<c-vars title lead level="1" size="md" align="start" divider card surface="bg-base-100 shadow-xl" class />
+{# djlint:off #}
+{% if card %}<div class="card {{ surface }} {{ class }}" {{ attrs }}><div class="card-body gap-6 p-6 sm:p-8">{% else %}<div class="flex flex-col gap-6 {{ class }}" {{ attrs }}>{% endif %}
+  <div {% if align == 'center' %}class="text-center"{% endif %}>
+    {% if title %}<h{{ level }} class="font-bold tracking-tight text-balance {% if size == 'lg' %}text-3xl{% else %}text-2xl{% endif %}">{{ title }}</h{{ level }}>{% endif %}
+    {% if lead %}<p class="mt-2 text-base-content/80 text-pretty">{{ lead }}</p>{% endif %}
+  </div>
+  {% if providers.strip %}
+    <div class="flex flex-col gap-3">{{ providers }}</div>
+    {% if slot.strip %}<c-divider class="my-0 text-sm text-base-content/80" only>{% if divider %}{{ divider }}{% else %}{% translate "or" %}{% endif %}</c-divider>{% endif %}
+  {% endif %}
+  {{ slot }}
+  {% if footer.strip %}<div class="text-sm {% if align == 'center' %}text-center{% endif %}">{{ footer }}</div>{% endif %}
+{% if card %}</div></div>{% else %}</div>{% endif %}
+{# djlint:on #}

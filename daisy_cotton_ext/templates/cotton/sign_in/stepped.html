@@ -1,0 +1,43 @@
+{# @description One question to a screen, in large type, with the logo in a bar across the top. For asking who somebody is before asking how they want to prove it. #}
+{# @prop eyebrow:text | description:"Short line above the question. Where the reader is: Step 1 of 2." #}
+{# @prop title:text | default:"What is your email address?" | description:"The question. Use the title slot when it contains markup, which it does when it is the label of the field below it." #}
+{# @prop lead:text | description:"The sentence under the question" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"1" | description:"Heading level. 1 is right when this is the whole page." #}
+{# @prop divider:text | description:"The word between the answer and the provider buttons. Left empty, it is a translated or." #}
+{# @prop class:text | description:"Extra classes on the outer section" #}
+{# @slot:background — A background block, rendered into a layer behind the page #}
+{# @slot:logo — The application's logo, at the leading end of the top bar #}
+{# @slot:nav — The trailing end of the top bar. The link to the sign-up page, or the way back a step. #}
+{# @slot:providers — Buttons that skip the question: third-party providers, a passkey. Drawn under the answer. #}
+{# @slot:footer — Small print under everything #}
+{# @slot The answer — One field and its button, or the list of ways to continue. #}
+{% load i18n %}
+<c-vars eyebrow title lead level="1" divider class />
+<section class="relative isolate flex min-h-dvh flex-col overflow-clip bg-base-100 text-base-content
+                {{ class }}"
+         {{ attrs }}>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+  <div class="flex items-center justify-between gap-4 px-6 py-5 sm:px-10">
+    <div class="flex items-center">{{ logo }}</div>
+    {% if nav %}<div class="text-sm">{{ nav }}</div>{% endif %}
+  </div>
+  <div class="mx-auto flex w-full max-w-xl flex-1 flex-col justify-center gap-8 px-6 pt-8 pb-24">
+    <div class="flex flex-col gap-4">
+      {% if eyebrow %}
+        <p class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">{{ eyebrow }}</p>
+      {% endif %}
+      {# djlint:off #}
+      {% if title %}<h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl">{{ title }}</h{{ level }}>{% endif %}
+      {# djlint:on #}
+      {% if lead %}<p class="text-lg text-base-content/80 text-pretty">{{ lead }}</p>{% endif %}
+    </div>
+    {{ slot }}
+    {% if providers %}
+      <c-divider class="my-0 text-sm text-base-content/80" only>{% if divider %}{{ divider }}{% else %}{% translate "or" %}{% endif %}</c-divider>
+      <div class="flex flex-col gap-3 sm:flex-row">{{ providers }}</div>
+    {% endif %}
+    {% if footer %}<div class="text-sm text-base-content/80">{{ footer }}</div>{% endif %}
+  </div>
+</section>

@@ -1,0 +1,11 @@
+{% extends "example/preview_base.html" %}
+
+{% block preview %}
+  <c-sign-in.centred class="bg-base-200" title="Sign in to Meridian">
+    <c-slot name="background"><c-background.aurora /></c-slot>
+    <c-slot name="logo"><c-demo.logo /></c-slot>
+    <c-slot name="providers"><c-demo.auth.providers /></c-slot>
+    <c-demo.auth.sign-in-form :state="state" />
+    <c-slot name="footer">New to Meridian? <a class="link" href="#">Create an account</a></c-slot>
+  </c-sign-in.centred>
+{% endblock preview %}

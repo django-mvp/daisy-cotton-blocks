@@ -1,0 +1,27 @@
+{# @description A card in the middle of the screen with the logo above it. The quiet default, over any background. #}
+{# @prop title:text | default:"Sign in" | description:"The heading. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The sentence under the heading" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"1" | description:"Heading level. 1 is right when this is the whole page." #}
+{# @prop divider:text | description:"The word between the provider buttons and the form. Left empty, it is a translated or." #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
+{# @slot:background — A background block, rendered into a layer behind the card #}
+{# @slot:logo — The application's logo, above the card. An image or inline SVG, usually inside a link home. #}
+{# @slot:providers — Buttons that skip the form, one full-width button each: third-party providers, a passkey, an emailed code #}
+{# @slot:footer — The foot of the card. The link to the sign-up page, usually. #}
+{# @slot The form — The application's own sign-in form, with its fields, its errors and its submit button. #}
+<c-vars title lead level="1" divider class />
+<section class="relative isolate flex min-h-dvh flex-col items-center justify-center overflow-clip px-4 py-12 text-base-content
+                {{ class }}"
+         {{ attrs }}>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+  <div class="w-full max-w-md">
+    {% if logo %}<div class="mb-8 flex justify-center">{{ logo }}</div>{% endif %}
+    <c-auth.panel :title="title" :lead="lead" :level="level" :divider="divider" card align="center" only>
+      <c-slot name="providers">{{ providers }}</c-slot>
+      {{ slot }}
+      <c-slot name="footer">{{ footer }}</c-slot>
+    </c-auth.panel>
+  </div>
+</section>

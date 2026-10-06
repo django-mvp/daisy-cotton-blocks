@@ -1,0 +1,31 @@
+{# @description The provider buttons the demos share, each one a button component. In a project the loop over allauth's providers writes them. #}
+{# @prop verb:text | default:"Continue with" | description:"The words before each provider's name" #}
+{# @prop size:select['md', 'lg'] | default:"md" | description:"Button size, handed to each button" #}
+{# @prop microsoft:boolean | default:False | description:"Add a third provider" #}
+{# @prop passkey:boolean | default:False | description:"Add the passkey button" #}
+{# @prop code:boolean | default:False | description:"Add the emailed sign-in code button" #}
+{# @prop only:select['all', 'alternatives'] | default:"all" | description:"alternatives leaves the third-party providers out" #}
+<c-vars verb="Continue with" size="md" microsoft passkey code only="all" />
+{% if only == "all" %}
+  <c-button href="#" outline :size="size" class="btn-block">
+    <c-icon name="google" /> {{ verb }} Google
+  </c-button>
+  <c-button href="#" outline :size="size" class="btn-block">
+    <c-icon name="github" /> {{ verb }} GitHub
+  </c-button>
+  {% if microsoft %}
+    <c-button href="#" outline :size="size" class="btn-block">
+      <c-icon name="microsoft" /> {{ verb }} Microsoft
+    </c-button>
+  {% endif %}
+{% endif %}
+{% if passkey %}
+  <c-button href="#" outline :size="size" class="btn-block">
+    <c-icon name="passkey" /> {{ verb }} a passkey
+  </c-button>
+{% endif %}
+{% if code %}
+  <c-button href="#" outline :size="size" class="btn-block">
+    <c-icon name="mail" /> Email me a sign-in code
+  </c-button>
+{% endif %}

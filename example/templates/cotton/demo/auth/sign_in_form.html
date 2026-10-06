@@ -1,0 +1,21 @@
+{# @description A stand-in for allauth's sign-in form, built from the base field, alert and button components. Posting it shows the error state. #}
+{# @prop state:text | description:"errors draws the form as it comes back from a failed attempt" #}
+{# @prop submit:text | default:"Sign in" | description:"The button's words" #}
+<c-vars state submit="Sign in" />
+<form method="post" action="?state=errors" class="flex flex-col gap-3">
+  {% csrf_token %}
+  {% if state == "errors" %}
+    <c-alert variant="error" soft only>
+      <span>The email address and/or password you specified are not correct.</span>
+    </c-alert>
+    <c-form.field type="email" label="Email" id="id_login" name="login" autocomplete="email" value="dana@northwind.example" only />
+  {% else %}
+    <c-form.field type="email" label="Email" id="id_login" name="login" autocomplete="email" only />
+  {% endif %}
+  <c-form.field type="password" label="Password" id="id_password" name="password" autocomplete="current-password" only />
+  <div class="flex flex-wrap items-center justify-between gap-2 text-sm">
+    <c-form.field type="checkbox" label="Remember me" name="remember" class="checkbox-sm" only />
+    <a class="link" href="#">Forgot your password?</a>
+  </div>
+  <c-button type="submit" variant="primary" class="btn-block" :text="submit" only />
+</form>
