@@ -264,7 +264,7 @@ class TestGlow:
 
     @pytest.mark.parametrize("colour", PALETTE)
     def test_each_palette_colour_lights_the_words(self, render, colour) -> None:
-        html = render(f'<c-text.glow color="{colour}">Ship it</c-text.glow>')
+        html = render(f'<c-text.glow variant="{colour}">Ship it</c-text.glow>')
 
         assert f"text-{colour}" in html
 
@@ -285,7 +285,7 @@ class TestOutline:
 
     @pytest.mark.parametrize("colour", ["primary", "secondary", "accent", "neutral"])
     def test_each_colour_draws_the_line(self, render, colour) -> None:
-        html = render(f'<c-text.outline color="{colour}">Ship it</c-text.outline>')
+        html = render(f'<c-text.outline variant="{colour}">Ship it</c-text.outline>')
 
         assert f"text-{colour}" in html
 
@@ -293,7 +293,7 @@ class TestOutline:
 class TestDepth:
     @pytest.mark.parametrize("colour", PALETTE)
     def test_each_palette_colour_colours_the_edge(self, render, colour) -> None:
-        html = render(f'<c-text.depth color="{colour}">Ship it</c-text.depth>')
+        html = render(f'<c-text.depth variant="{colour}">Ship it</c-text.depth>')
 
         assert f"text-shadow-{colour}" in html
 
@@ -321,7 +321,7 @@ class TestShimmer:
 
     @pytest.mark.parametrize("colour", PALETTE)
     def test_each_palette_colour_colours_the_band(self, render, colour) -> None:
-        html = render(f'<c-text.shimmer color="{colour}">Ship it</c-text.shimmer>')
+        html = render(f'<c-text.shimmer variant="{colour}">Ship it</c-text.shimmer>')
 
         assert f"via-{colour}" in html
 
@@ -344,7 +344,7 @@ class TestShimmer:
 class TestMarker:
     @pytest.mark.parametrize("colour", PALETTE)
     def test_each_palette_colour_draws_the_stroke(self, render, colour) -> None:
-        html = render(f'<c-text.marker color="{colour}">Ship it</c-text.marker>')
+        html = render(f'<c-text.marker variant="{colour}">Ship it</c-text.marker>')
 
         assert f"from-{colour}" in html
         assert f"to-{colour}" in html

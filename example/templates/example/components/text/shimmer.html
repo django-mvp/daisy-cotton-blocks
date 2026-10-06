@@ -34,8 +34,8 @@
         <c-text.shimmer frequency="2.5">Now in public beta</c-text.shimmer>
       </c-demo.specimen>
       <c-demo.specimen note="Quick and rare, in the accent colour: once every nine seconds or so.">
-        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.shimmer color="accent" speed="2" frequency="0.4">Now in public beta</c-text.shimmer>{% endverbatim %}{% endfilter %}</c-slot>
-        <c-text.shimmer color="accent" speed="2" frequency="0.4">Now in public beta</c-text.shimmer>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.shimmer variant="accent" speed="2" frequency="0.4">Now in public beta</c-text.shimmer>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.shimmer variant="accent" speed="2" frequency="0.4">Now in public beta</c-text.shimmer>
       </c-demo.specimen>
       <c-demo.specimen note="Once, as the page loads, and never again.">
         <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.shimmer repeat="1">Now in public beta</c-text.shimmer>{% endverbatim %}{% endfilter %}</c-slot>

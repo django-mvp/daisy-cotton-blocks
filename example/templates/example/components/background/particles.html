@@ -18,15 +18,15 @@
         </c-hero.centred>
       </c-demo.tile>
       <c-demo.tile>
-        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.particles color="accent" intensity="0.7" speed="2" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.particles variant="accent" intensity="0.7" speed="2" />{% endverbatim %}{% endfilter %}</c-slot>
         <c-hero.centred level="2" size="sm" title="Turned up" lead="Brighter and quicker.">
-          <c-slot name="background"><c-background.particles color="accent" intensity="0.7" speed="2" /></c-slot>
+          <c-slot name="background"><c-background.particles variant="accent" intensity="0.7" speed="2" /></c-slot>
         </c-hero.centred>
       </c-demo.tile>
       <c-demo.tile>
-        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.particles color="base-100" intensity="0.7" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-background.particles variant="base-100" intensity="0.7" />{% endverbatim %}{% endfilter %}</c-slot>
         <c-hero.centred level="2" size="sm" invert class="bg-neutral" title="On a dark surface" lead="Dots in the page's own colour, on neutral.">
-          <c-slot name="background"><c-background.particles color="base-100" intensity="0.7" /></c-slot>
+          <c-slot name="background"><c-background.particles variant="base-100" intensity="0.7" /></c-slot>
         </c-hero.centred>
       </c-demo.tile>
       <c-demo.tile>
@@ -40,7 +40,7 @@
 
   <c-demo.live label="At full width" anchor="full">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred invert size="lg" title="…">
-  <c-slot name="background"><c-background.particles color="base-100" intensity="0.7" /></c-slot>
+  <c-slot name="background"><c-background.particles variant="base-100" intensity="0.7" /></c-slot>
 </c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
 
     <c-hero.centred level="2"
@@ -50,7 +50,7 @@
                     title="Something in the air"
                     lead="Light enough to sit behind a headline without competing with it.">
       <c-slot name="background">
-        <c-background.particles color="base-100" intensity="0.7" />
+        <c-background.particles variant="base-100" intensity="0.7" />
       </c-slot>
       <c-slot name="actions">
         <a class="btn btn-primary btn-lg" href="#full">Primary action</a>

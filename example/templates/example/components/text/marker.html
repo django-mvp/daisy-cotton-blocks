@@ -19,12 +19,12 @@
         Ship the page, <c-text.marker>not the CSS</c-text.marker>
       </c-demo.specimen>
       <c-demo.specimen note="A fine rule in the accent colour.">
-        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.marker color="accent" size="0.12">not the CSS</c-text.marker>{% endverbatim %}{% endfilter %}</c-slot>
-        Ship the page, <c-text.marker color="accent" size="0.12">not the CSS</c-text.marker>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.marker variant="accent" size="0.12">not the CSS</c-text.marker>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.marker variant="accent" size="0.12">not the CSS</c-text.marker>
       </c-demo.specimen>
       <c-demo.specimen note="Thick, slow, and a second late.">
-        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.marker color="secondary" size="0.35" speed="0.4" delay="1">not the CSS</c-text.marker>{% endverbatim %}{% endfilter %}</c-slot>
-        Ship the page, <c-text.marker color="secondary" size="0.35" speed="0.4" delay="1">not the CSS</c-text.marker>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.marker variant="secondary" size="0.35" speed="0.4" delay="1">not the CSS</c-text.marker>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.marker variant="secondary" size="0.35" speed="0.4" delay="1">not the CSS</c-text.marker>
       </c-demo.specimen>
       <c-demo.specimen note="A whole line that wraps.">
         <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.marker>Ship the page, not the CSS</c-text.marker>{% endverbatim %}{% endfilter %}</c-slot>

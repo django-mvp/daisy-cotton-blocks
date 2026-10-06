@@ -19,16 +19,16 @@
         <c-text.depth>Stand out</c-text.depth>
       </c-demo.specimen>
       <c-demo.specimen note="Twice as deep, in the accent colour.">
-        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.depth color="accent" depth="2">Stand out</c-text.depth>{% endverbatim %}{% endfilter %}</c-slot>
-        <c-text.depth color="accent" depth="2">Stand out</c-text.depth>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.depth variant="accent" depth="2">Stand out</c-text.depth>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.depth variant="accent" depth="2">Stand out</c-text.depth>
       </c-demo.specimen>
       <c-demo.specimen note="Shallow and neutral: closer to a hard shadow.">
-        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.depth color="neutral" depth="0.5">Stand out</c-text.depth>{% endverbatim %}{% endfilter %}</c-slot>
-        <c-text.depth color="neutral" depth="0.5">Stand out</c-text.depth>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.depth variant="neutral" depth="0.5">Stand out</c-text.depth>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.depth variant="neutral" depth="0.5">Stand out</c-text.depth>
       </c-demo.specimen>
       <c-demo.specimen note="Coloured letters over a quiet edge.">
-        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.depth color="base-300" depth="1.5" class="text-primary">Stand out</c-text.depth>{% endverbatim %}{% endfilter %}</c-slot>
-        <c-text.depth color="base-300" depth="1.5" class="text-primary">Stand out</c-text.depth>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.depth variant="base-300" depth="1.5" class="text-primary">Stand out</c-text.depth>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.depth variant="base-300" depth="1.5" class="text-primary">Stand out</c-text.depth>
       </c-demo.specimen>
     </div>
   </c-container>
