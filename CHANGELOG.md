@@ -22,6 +22,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   movement is CSS only. Under `prefers-reduced-motion`, and in a browser without scroll-driven
   animation, the content is simply there.
 
+### Changed
+
+- **Breaking.** The attribute that picks a theme colour is `variant`, the name daisy-cotton gives
+  it, in place of `color`. It changes on `<c-hero.highlight>`, `<c-background.particles>` and
+  `<c-background.hyperspace>`: `color="accent"` becomes `variant="accent"`. `color` is no longer
+  recognised and renders the default. The text effects that take a theme colour, `<c-text.glow>`,
+  `<c-text.outline>`, `<c-text.depth>`, `<c-text.shimmer>` and `<c-text.marker>`, use `variant` as
+  well.
+
 ## [v0.2.0] - 2026-10-05
 
 ### Added

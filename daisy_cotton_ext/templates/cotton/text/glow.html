@@ -1,5 +1,5 @@
 {# @description Lights the words it wraps in one of the theme's colours, with a soft halo of the same colour behind them. A few words, on one line. #}
-{# @prop color:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The colour of the words and their halo" #}
+{# @prop variant:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The colour of the words and their halo" #}
 {# @prop intensity:number | default:"0.7" | description:"How strong the halo is, from 0 to 1" #}
 {# @prop spread:number | default:"1" | description:"How far the halo reaches, as a multiple: 2 is twice as far" #}
 {# @prop pulse:number | default:"0" | description:"How quickly the halo breathes, as a multiple: 1 is once every three seconds, and 0 holds it steady" #}
@@ -11,9 +11,9 @@
   repaints nothing. A box of its own, so it does not wrap
   (docs/adr/0005-text-effects-are-spans-moved-by-css.md).
 {% endcomment %}
-<c-vars color="primary" intensity="0.7" spread="1" pulse="0" repeat class />
+<c-vars variant="primary" intensity="0.7" spread="1" pulse="0" repeat class />
 {% with pulsing=pulse|floatformat:'-3u'|default:'0' %}
-<span class="relative isolate inline-block text-{{ color }} {{ class }}"
+<span class="relative isolate inline-block text-{{ variant }} {{ class }}"
       style="--glow-intensity: {{ intensity|floatformat:'-3u'|default:'0.7' }}; --glow-spread: {{ spread|floatformat:'-3u'|default:'1' }}; --glow-pulse: {{ pulsing|default:'0' }}; --glow-repeat: {{ repeat|floatformat:'-3u'|default:'infinite' }}"
       {{ attrs }}>
   <span aria-hidden="true"

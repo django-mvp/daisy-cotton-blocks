@@ -1,5 +1,5 @@
 {# @description Draws the words it wraps as an outline in one of the theme's colours, with nothing inside the letters. Headings only. #}
-{# @prop color:select['primary', 'secondary', 'accent', 'neutral', 'base-content'] | default:"base-content" | description:"The colour of the line" #}
+{# @prop variant:select['primary', 'secondary', 'accent', 'neutral', 'base-content'] | default:"base-content" | description:"The colour of the line" #}
 {# @prop weight:number | default:"1.5" | description:"How thick the line is, in pixels" #}
 {# @prop class:text | description:"Extra classes on the span" #}
 {# @slot not the CSS — The words to outline #}
@@ -7,8 +7,8 @@
   Only the fill is made transparent, so the stroke can take `currentColor` and
   follow the theme.
 {% endcomment %}
-<c-vars color="base-content" weight="1.5" class />
-<span class="text-{{ color }} [-webkit-text-fill-color:transparent] [-webkit-text-stroke-color:currentColor]
+<c-vars variant="base-content" weight="1.5" class />
+<span class="text-{{ variant }} [-webkit-text-fill-color:transparent] [-webkit-text-stroke-color:currentColor]
              [-webkit-text-stroke-width:calc(var(--outline-weight,1.5)*1px)]
              {{ class }}"
       style="--outline-weight: {{ weight|floatformat:'-3u'|default:'1.5' }}"

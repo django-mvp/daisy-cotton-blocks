@@ -1,15 +1,15 @@
 {# @description Fills the words it wraps with one of the theme's colour pairs. Headings only. #}
-{# @prop color:select['primary', 'secondary', 'accent'] | default:"primary" | description:"Which colour pair fills the swash" #}
+{# @prop variant:select['primary', 'secondary', 'accent'] | default:"primary" | description:"Which colour pair fills the swash" #}
 {# @prop class:text | description:"Extra classes on the span" #}
 {# @slot not the CSS — The words to mark #}
 {% comment %}
   The colour-and-content pairs are built for large text and can clear 3:1 without
   4.5:1, so this belongs in a heading and nowhere else (#21).
 {% endcomment %}
-<c-vars color="primary" class />
-{% if color == 'secondary' %}
+<c-vars variant="primary" class />
+{% if variant == 'secondary' %}
   <span class="rounded-lg bg-secondary px-2 text-secondary-content {{ class }}" {{ attrs }}>{{ slot }}</span>
-{% elif color == 'accent' %}
+{% elif variant == 'accent' %}
   <span class="rounded-lg bg-accent px-2 text-accent-content {{ class }}" {{ attrs }}>{{ slot }}</span>
 {% else %}
   <span class="rounded-lg bg-primary px-2 text-primary-content {{ class }}" {{ attrs }}>{{ slot }}</span>

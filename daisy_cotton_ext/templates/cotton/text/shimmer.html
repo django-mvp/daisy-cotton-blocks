@@ -1,5 +1,5 @@
 {# @description Sweeps a band of one of the theme's colours across the words it wraps, like light catching them. The words keep their own colour. #}
-{# @prop color:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The colour of the band" #}
+{# @prop variant:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The colour of the band" #}
 {# @prop speed:number | default:"1" | description:"How fast the band travels across the words, as a multiple: 2 is twice as fast, 0.5 half. It never takes longer to cross than the wait between crossings." #}
 {# @prop frequency:number | default:"1" | description:"How often the band crosses, as a multiple: 1 is once every three and a half seconds, 2 twice as often, and 0 never" #}
 {# @prop repeat:number | description:"How many times the band crosses before it stops. Left out, it never stops." #}
@@ -10,9 +10,9 @@
   wide the background is. The band is in ems so it keeps its width whatever that
   comes to (docs/adr/0005-text-effects-are-spans-moved-by-css.md).
 {% endcomment %}
-<c-vars color="primary" speed="1" frequency="1" repeat class />
+<c-vars variant="primary" speed="1" frequency="1" repeat class />
 {% with often=frequency|floatformat:'-3u'|default:'1' %}
-<span class="bg-linear-[110deg] from-current via-{{ color }} to-current bg-clip-text
+<span class="bg-linear-[110deg] from-current via-{{ variant }} to-current bg-clip-text
              [--tw-gradient-from-position:calc(50%_-_1.2em)] [--tw-gradient-via-position:50%] [--tw-gradient-to-position:calc(50%_+_1.2em)]
              [-webkit-text-fill-color:transparent] [background-position:0%_50%]
              [background-size:calc(max(2.6,1_+_2.9*var(--shimmer-speed,1)/var(--shimmer-frequency,1))*100%)_100%]

@@ -1,5 +1,5 @@
 {# @description Gives the words it wraps a solid edge in one of the theme's colours, stepping down and to the right, so they stand off the page. Headings only. #}
-{# @prop color:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The colour of the edge" #}
+{# @prop variant:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The colour of the edge" #}
 {# @prop depth:number | default:"1" | description:"How far the words stand off, as a multiple: 2 is twice as deep, and 0 lies flat" #}
 {# @prop class:text | description:"Extra classes on the span" #}
 {# @slot not the CSS — The words to raise #}
@@ -7,8 +7,8 @@
   Six hard shadows a step apart read as one solid edge. They are in ems so the
   edge keeps its proportion at any size.
 {% endcomment %}
-<c-vars color="primary" depth="1" class />
-<span class="text-shadow-{{ color }}
+<c-vars variant="primary" depth="1" class />
+<span class="text-shadow-{{ variant }}
              [text-shadow:calc(var(--depth,1)*0.012em)_calc(var(--depth,1)*0.012em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.024em)_calc(var(--depth,1)*0.024em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.036em)_calc(var(--depth,1)*0.036em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.048em)_calc(var(--depth,1)*0.048em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.06em)_calc(var(--depth,1)*0.06em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.072em)_calc(var(--depth,1)*0.072em)_0_var(--tw-text-shadow-color)]
              {{ class }}"
       style="--depth: {{ depth|floatformat:'-3u'|default:'1' }}"
