@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Glitch{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-text.glitch">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Every few seconds the words break into slices that jump sideways in two of the theme's colours, then snap back. It runs for as long as the page is open unless <code>repeat</code> says how many times. Anyone who has asked their system to reduce motion gets the words holding still.
+    </p>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      <strong>A few words, on one line.</strong> The slices are two more copies of the words laid over the first, so the phrase is a box of its own and does not wrap. The words themselves never move, so they stay readable through a break.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.specimen note="The default: every four seconds.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.glitch>Signal lost</c-text.glitch>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.glitch>Signal lost</c-text.glitch>
+      </c-demo.specimen>
+      <c-demo.specimen note="Often, and far.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.glitch frequency="3" intensity="2">Signal lost</c-text.glitch>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.glitch frequency="3" intensity="2">Signal lost</c-text.glitch>
+      </c-demo.specimen>
+      <c-demo.specimen note="A small twitch in another pair.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.glitch from="accent" to="neutral" intensity="0.5">Signal lost</c-text.glitch>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.glitch from="accent" to="neutral" intensity="0.5">Signal lost</c-text.glitch>
+      </c-demo.specimen>
+      <c-demo.specimen note="Twice, and then steady.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.glitch repeat="2">Signal lost</c-text.glitch>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.glitch repeat="2">Signal lost</c-text.glitch>
+      </c-demo.specimen>
+    </div>
+  </c-container>
+
+  <c-demo.live label="Inside a heading, at size" anchor="in-place">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg">
+  <c-slot name="title">Nothing here is <c-text.glitch>broken</c-text.glitch></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2" size="lg">
+      <c-slot name="title">Nothing here is <c-text.glitch>broken</c-text.glitch></c-slot>
+      <c-slot name="lead">One word of the headline.</c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#in-place">Get started</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

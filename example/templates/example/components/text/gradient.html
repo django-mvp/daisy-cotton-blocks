@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Gradient{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-text.gradient">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Three of the theme's colours run through the letters and slide slowly from one end to the other and back. It runs for as long as the page is open unless <code>repeat</code> says how many times. Anyone who has asked their system to reduce motion gets the words holding still.
+    </p>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      <strong>Headings only.</strong> A palette colour makes no promise of contrast against the page, and on some themes one of the three will be faint. Large type survives that. A sentence does not.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.specimen note="The default: primary, accent, secondary.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.gradient>not the CSS</c-text.gradient>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.gradient>not the CSS</c-text.gradient>
+      </c-demo.specimen>
+      <c-demo.specimen note="Held still.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.gradient speed="0">not the CSS</c-text.gradient>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.gradient speed="0">not the CSS</c-text.gradient>
+      </c-demo.specimen>
+      <c-demo.specimen note="Another three, three times as fast.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.gradient from="secondary" via="primary" to="accent" speed="3">not the CSS</c-text.gradient>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.gradient from="secondary" via="primary" to="accent" speed="3">not the CSS</c-text.gradient>
+      </c-demo.specimen>
+      <c-demo.specimen note="A whole line that wraps, sliding there and back once and then stopping.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.gradient repeat="2">Ship the page, not the CSS</c-text.gradient>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.gradient repeat="2">Ship the page, not the CSS</c-text.gradient>
+      </c-demo.specimen>
+    </div>
+  </c-container>
+
+  <c-demo.live label="Inside a heading, at size" anchor="in-place">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg">
+  <c-slot name="title">Ship the page, <c-text.gradient>not the CSS</c-text.gradient></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2" size="lg">
+      <c-slot name="title">Ship the page, <c-text.gradient>not the CSS</c-text.gradient></c-slot>
+      <c-slot name="lead">The marked words are the ones the headline turns on.</c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#in-place">Get started</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

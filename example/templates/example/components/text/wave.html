@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Wave{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-text.wave">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      A ripple runs along the line: each letter rises and settles a moment after the one before it. It runs for as long as the page is open unless <code>repeat</code> says how many times. Anyone who has asked their system to reduce motion gets the words holding still.
+    </p>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Playful, and loud for its size. A short line, and one per page. A screen reader is given the line once, whole.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.specimen note="The default.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.wave text="Good things ahead" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.wave text="Good things ahead" />
+      </c-demo.specimen>
+      <c-demo.specimen note="Higher and quicker.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.wave text="Good things ahead" height="0.45" speed="1.5" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.wave text="Good things ahead" height="0.45" speed="1.5" />
+      </c-demo.specimen>
+      <c-demo.specimen note="Barely there.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.wave text="Good things ahead" height="0.08" speed="0.6" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.wave text="Good things ahead" height="0.08" speed="0.6" />
+      </c-demo.specimen>
+      <c-demo.specimen note="Twice, and then still.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.wave text="Good things ahead" repeat="2" class="text-primary" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.wave text="Good things ahead" repeat="2" class="text-primary" />
+      </c-demo.specimen>
+    </div>
+  </c-container>
+
+  <c-demo.live label="Inside a heading, at size" anchor="in-place">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg">
+  <c-slot name="title"><c-text.wave text="Welcome aboard" /></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2" size="lg">
+      <c-slot name="title"><c-text.wave text="Welcome aboard" /></c-slot>
+      <c-slot name="lead">The whole headline. Any longer and the ripple takes too long to come round.</c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#in-place">Get started</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

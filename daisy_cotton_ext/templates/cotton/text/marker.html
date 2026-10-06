@@ -1,0 +1,21 @@
+{# @description Draws a stroke of one of the theme's colours under the words it wraps, from left to right, once, as the page loads. #}
+{# @prop color:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"primary" | description:"The colour of the stroke" #}
+{# @prop size:number | default:"0.25" | description:"How thick the stroke is, as a share of the height of the letters. Keep it under 0.4, or it runs behind the words." #}
+{# @prop speed:number | default:"1" | description:"How quickly it is drawn, as a multiple: 2 is twice as fast, 0.5 half, and 0 leaves it drawn from the start" #}
+{# @prop delay:number | default:"0.3" | description:"How many seconds pass before it starts" #}
+{# @prop class:text | description:"Extra classes on the span" #}
+{# @slot not the CSS — The words to underline #}
+{% comment %}
+  A background, not a box, so a phrase that wraps is underlined on every line.
+  The keyframes have a start and no end: at rest the stroke is simply there
+  (docs/adr/0005-text-effects-are-spans-moved-by-css.md).
+{% endcomment %}
+<c-vars color="primary" size="0.25" speed="1" delay="0.3" class />
+{% with pace=speed|floatformat:'-3u'|default:'1' %}
+<span class="bg-linear-to-r from-{{ color }} to-{{ color }} bg-no-repeat
+             [background-position:0_100%] [background-size:100%_calc(var(--marker-size,0.25)*1em)]
+             {% if pace != '0' %}motion-safe:animate-[dce-text-draw_calc(0.9s/var(--marker-speed,1))_ease-out_calc(var(--marker-delay,0.3)*1s)_backwards]{% endif %}
+             {{ class }}"
+      style="--marker-size: {{ size|floatformat:'-3u'|default:'0.25' }}; --marker-speed: {{ pace|default:'1' }}; --marker-delay: {{ delay|floatformat:'-3u'|default:'0.3' }}"
+      {{ attrs }}>{{ slot }}</span>
+{% endwith %}

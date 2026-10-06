@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Marker{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-text.marker">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      A stroke drawn under the words from left to right, once, as the page loads. After that it stays put.
+    </p>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      The stroke is part of the words' own background, so a phrase that wraps is underlined on every line and drawn in reading order. Kept thin, it sits under the letters and takes nothing from their contrast.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.specimen note="The default.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.marker>not the CSS</c-text.marker>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.marker>not the CSS</c-text.marker>
+      </c-demo.specimen>
+      <c-demo.specimen note="A fine rule in the accent colour.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.marker color="accent" size="0.12">not the CSS</c-text.marker>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.marker color="accent" size="0.12">not the CSS</c-text.marker>
+      </c-demo.specimen>
+      <c-demo.specimen note="Thick, slow, and a second late.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.marker color="secondary" size="0.35" speed="0.4" delay="1">not the CSS</c-text.marker>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.marker color="secondary" size="0.35" speed="0.4" delay="1">not the CSS</c-text.marker>
+      </c-demo.specimen>
+      <c-demo.specimen note="A whole line that wraps.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.marker>Ship the page, not the CSS</c-text.marker>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.marker>Ship the page, not the CSS</c-text.marker>
+      </c-demo.specimen>
+    </div>
+  </c-container>
+
+  <c-demo.live label="Inside a heading, at size" anchor="in-place">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg">
+  <c-slot name="title">One page, <c-text.marker delay="0.6">finished today</c-text.marker></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2" size="lg">
+      <c-slot name="title">One page, <c-text.marker delay="0.6">finished today</c-text.marker></c-slot>
+      <c-slot name="lead">Reload the page to watch it draw again.</c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#in-place">Get started</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

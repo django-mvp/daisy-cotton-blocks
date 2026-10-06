@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Typewriter{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-text.typewriter">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      A line typed out a letter at a time, once, with a caret that follows the last letter and blinks three times when it is done.
+    </p>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      The whole line is on the page from the start and each letter only becomes visible on its turn, so nothing below it moves while it types. A screen reader is given the line once, whole.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <c-demo.specimen note="The default.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.typewriter text="Ship the page, not the CSS" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.typewriter text="Ship the page, not the CSS" />
+      </c-demo.specimen>
+      <c-demo.specimen note="A fast typist.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.typewriter text="Ship the page, not the CSS" speed="2.5" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.typewriter text="Ship the page, not the CSS" speed="2.5" />
+      </c-demo.specimen>
+      <c-demo.specimen note="Slow, after a pause.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.typewriter text="Ship the page, not the CSS" speed="0.5" delay="1.5" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.typewriter text="Ship the page, not the CSS" speed="0.5" delay="1.5" />
+      </c-demo.specimen>
+      <c-demo.specimen note="In a monospaced face, where it looks most at home.">
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-text.typewriter text="pip install daisy-cotton-ext" class="font-mono text-primary" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-text.typewriter text="pip install daisy-cotton-ext" class="font-mono text-primary" />
+      </c-demo.specimen>
+    </div>
+  </c-container>
+
+  <c-demo.live label="Inside a heading, at size" anchor="in-place">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-hero.centred size="lg">
+  <c-slot name="title"><c-text.typewriter text="Hello. This page built itself." delay="0.8" /></c-slot>
+</c-hero.centred>{% endverbatim %}{% endfilter %}</c-slot>
+
+    <c-hero.centred level="2" size="lg">
+      <c-slot name="title"><c-text.typewriter text="Hello. This page built itself." delay="0.8" /></c-slot>
+      <c-slot name="lead">Reload the page to watch it type again.</c-slot>
+      <c-slot name="actions">
+        <a class="btn btn-primary btn-lg" href="#in-place">Get started</a>
+      </c-slot>
+    </c-hero.centred>
+  </c-demo.live>
+{% endblock content %}

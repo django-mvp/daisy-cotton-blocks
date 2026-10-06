@@ -1,0 +1,23 @@
+{# @description Sends a ripple along a line, each letter rising and settling a moment after the one before it. #}
+{# @prop text:text | required | description:"The line to set moving. Plain words: it is split into its letters." #}
+{# @prop height:number | default:"0.2" | description:"How far a letter rises, as a share of its own height" #}
+{# @prop speed:number | default:"1" | description:"How quickly the ripple travels, as a multiple: 2 is twice as fast, 0.5 half, and 0 holds the line still" #}
+{# @prop repeat:number | description:"How many times each letter rises before it stops. Left out, it never stops." #}
+{# @prop class:text | description:"Extra classes on the span" #}
+{% comment %}
+  A line can break between any two inline boxes, so each word is wrapped to keep
+  it whole. A letter takes its turn from its word and its place in it
+  (docs/adr/0005-text-effects-are-spans-moved-by-css.md).
+{% endcomment %}
+{% load text_effects %}
+<c-vars text height="0.2" speed="1" repeat class />
+{% with line=text|plain pace=speed|floatformat:'-3u'|default:'1' %}
+<span class="{{ class }}"
+      style="--wave-height: {{ height|floatformat:'-3u'|default:'0.2' }}; --wave-speed: {{ pace|default:'1' }}; --wave-repeat: {{ repeat|floatformat:'-3u'|default:'infinite' }}"
+      {{ attrs }}>
+  <span class="sr-only">{{ line|escape }}</span>
+  {# djlint:off #}
+  <span aria-hidden="true">{% for word in line.split %}<span class="inline-block whitespace-nowrap" style="--w: {{ forloop.counter0 }}">{% for letter in word %}<span class="inline-block {% if pace != '0' %}motion-safe:animate-[dce-text-wave_calc(2s/var(--wave-speed,1))_ease-in-out_calc((var(--w)*5_+_var(--i))*0.09s/var(--wave-speed,1))_var(--wave-repeat,infinite)]{% endif %}" style="--i: {{ forloop.counter0 }}">{{ letter|escape }}</span>{% endfor %}</span>{% if not forloop.last %} {% endif %}{% endfor %}</span>
+  {# djlint:on #}
+</span>
+{% endwith %}

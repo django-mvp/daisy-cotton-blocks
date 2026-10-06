@@ -119,6 +119,21 @@ FAMILIES: tuple[Family, ...] = (
             Component("hyperspace", "Hyperspace", group="Dynamic"),
         ),
     ),
+    Family(
+        slug="text",
+        label="Text effects",
+        components=(
+            Component("glow", "Glow", group="Static"),
+            Component("outline", "Outline", group="Static"),
+            Component("depth", "Depth", group="Static"),
+            Component("gradient", "Gradient", group="Dynamic"),
+            Component("shimmer", "Shimmer", group="Dynamic"),
+            Component("marker", "Marker", group="Dynamic"),
+            Component("typewriter", "Typewriter", group="Dynamic"),
+            Component("wave", "Wave", group="Dynamic"),
+            Component("glitch", "Glitch", group="Dynamic"),
+        ),
+    ),
 )
 
 

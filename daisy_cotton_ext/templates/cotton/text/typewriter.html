@@ -1,0 +1,22 @@
+{# @description Types a line out a letter at a time, once, with a caret that follows the last letter and blinks three times when it is done. #}
+{# @prop text:text | required | description:"The line to type. Plain words: it is split into its letters." #}
+{# @prop speed:number | default:"1" | description:"How quickly it types, as a multiple: 2 is twice as fast, 0.5 half, and 0 leaves the line typed from the start" #}
+{# @prop delay:number | default:"0.3" | description:"How many seconds pass before the first letter" #}
+{# @prop class:text | description:"Extra classes on the span" #}
+{% comment %}
+  A template can split a string and cannot split markup, so the line is an
+  attribute. Every letter is on the page from the start, so nothing below moves
+  (docs/adr/0005-text-effects-are-spans-moved-by-css.md).
+{% endcomment %}
+{% load text_effects %}
+<c-vars text speed="1" delay="0.3" class />
+{% with line=text|plain pace=speed|floatformat:'-3u'|default:'1' %}
+<span class="{{ class }}"
+      style="--type-speed: {{ pace|default:'1' }}; --type-delay: {{ delay|floatformat:'-3u'|default:'0.3' }}"
+      {{ attrs }}>
+  <span class="sr-only">{{ line|escape }}</span>
+  {# djlint:off #}
+  <span aria-hidden="true">{% for letter in line %}<span class="{% if pace == '0' %}{% elif forloop.last %}motion-safe:animate-[dce-text-type_1ms_linear_calc(var(--type-delay,0.3)*1s_+_var(--i)*0.07s/var(--type-speed,1))_backwards,dce-text-caret_0.9s_linear_calc(var(--type-delay,0.3)*1s_+_var(--i)*0.07s/var(--type-speed,1))_3]{% else %}motion-safe:animate-[dce-text-type_1ms_linear_calc(var(--type-delay,0.3)*1s_+_var(--i)*0.07s/var(--type-speed,1))_backwards,dce-text-caret_calc(0.14s/var(--type-speed,1))_linear_calc(var(--type-delay,0.3)*1s_+_var(--i)*0.07s/var(--type-speed,1))]{% endif %}" style="--i: {{ forloop.counter0 }}">{{ letter|escape }}</span>{% endfor %}</span>
+  {# djlint:on #}
+</span>
+{% endwith %}

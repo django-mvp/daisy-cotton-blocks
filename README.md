@@ -28,7 +28,7 @@ Blocks are configured through attributes and take their colours from whatever da
 
 ## Status
 
-Version 0.0.1. Two families are built, heroes and backgrounds, and nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
+Version 0.0.1. Three families are built: heroes, backgrounds and text effects. Nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
 
 ## Scope & philosophy
 
@@ -176,7 +176,62 @@ Two things to know about them. A background belongs in a `background` slot and n
 </c-hero.centred>
 ```
 
-Every attribute, its accepted values and its default are listed on each block's own page in the example project, built from the annotations in the block's template. Run it with `python manage.py runserver` from a checkout.
+### Text effects
+
+A text effect is an inline span around a few words. It goes anywhere words go and takes its size and weight from whatever it sits in, so the heading stays the page's own.
+
+```html
+<h1 class="text-5xl font-bold">
+  Ship the page, <c-text.gradient>not the CSS</c-text.gradient>
+</h1>
+```
+
+Three hold still:
+
+| Tag | What it does | Attributes |
+|---|---|---|
+| `<c-text.glow>` | Lights the words in a theme colour with a soft halo behind them | `color`, `intensity`, `spread`, `pulse`, `repeat` |
+| `<c-text.outline>` | Draws the letters as a line with nothing inside them | `color`, `weight` |
+| `<c-text.depth>` | Gives the words a solid edge, so they stand off the page | `color`, `depth` |
+
+Six move. Each one renders the finished words, holding still, for a reader whose system asks for reduced motion.
+
+| Tag | What it does | Attributes |
+|---|---|---|
+| `<c-text.gradient>` | Three theme colours sliding through the letters | `from`, `via`, `to`, `speed`, `repeat` |
+| `<c-text.shimmer>` | A band of colour crossing words that keep their own colour | `color`, `speed`, `frequency`, `repeat` |
+| `<c-text.marker>` | A stroke drawn under the words, once, as the page loads | `color`, `size`, `speed`, `delay` |
+| `<c-text.typewriter>` | A line typed out a letter at a time, once | `text`, `speed`, `delay` |
+| `<c-text.wave>` | A ripple running along a line, letter by letter | `text`, `height`, `speed`, `repeat` |
+| `<c-text.glitch>` | Slices of the words jumping sideways for a moment, every few seconds | `from`, `to`, `intensity`, `frequency`, `repeat` |
+
+The numbers mean the same thing throughout:
+
+| Attribute | What the number means |
+|---|---|
+| `speed` | A multiple of the usual pace: `2` is twice as fast, `0.5` half, and `0` leaves the words at rest |
+| `frequency` | A multiple of how often it happens: `2` is twice as often, and `0` never |
+| `pulse` | How quickly a glow breathes, as a multiple. `0`, the default, holds it steady |
+| `repeat` | How many times it runs before it stops. Left out, it never stops |
+| `intensity` on glow | From `0` to `1` |
+| `intensity` on glitch, `spread`, `depth` | A multiple of the usual amount |
+| `size`, `height` | A share of the height of the letters |
+| `weight` | A thickness in pixels |
+| `delay` | Seconds before it starts |
+
+On a shimmer, `speed` is how fast the band travels across the words and `frequency` is how often it comes round. A crossing never takes longer than the wait between crossings.
+
+Things to know before reaching for one:
+
+- **Typewriter and wave take their line as a `text` attribute**, because a template can split a string into letters and cannot split markup. `text="{{ title }}"` and `:text="title"` both work.
+- **Glow and glitch are for a few words on one line.** They lay copies of the words over the original, so the phrase does not wrap, and their content should be plain words.
+- **Gradient, outline and depth are for headings.** A palette colour makes no promise of contrast against the page, and large type survives that where a sentence does not.
+- **Nothing pauses a looping effect.** A page that has to meet WCAG 2.2.2 sets `repeat` on each one, or supplies its own control.
+- **A screen reader is given the words once**, whichever effect is drawing them and however many copies or letters it draws.
+
+The reasoning is in [ADR 0005](docs/adr/0005-text-effects-are-spans-moved-by-css.md).
+
+Every attribute, its accepted values and its default are listed on each block's and component's own page in the example project, built from the annotations in the block's template. Run it with `python manage.py runserver` from a checkout.
 
 ## Contributing
 

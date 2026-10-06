@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Nine text effects, each an inline span around a few words: `<c-text.glow>`, `<c-text.outline>`
+  and `<c-text.depth>`, which hold still, and `<c-text.gradient>`, `<c-text.shimmer>`,
+  `<c-text.marker>`, `<c-text.typewriter>`, `<c-text.wave>` and `<c-text.glitch>`, which move. The
+  movement is CSS only, each one renders the finished words under `prefers-reduced-motion`, and a
+  looping effect takes `repeat` to stop it after a set number of runs.
+
 ## [v0.2.0] - 2026-10-05
 
 ### Added
