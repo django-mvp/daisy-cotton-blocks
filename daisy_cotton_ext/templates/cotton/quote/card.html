@@ -18,7 +18,7 @@
 <figure class="card gap-4 bg-base-100 p-6 ring-1 ring-base-300 {{ class }}" {{ attrs }}>
   {% with stars=rating|stringformat:"s" %}
     {% if stars|length == 1 and stars in "12345" %}
-      <div role="img" aria-label="{{ stars }} out of 5" class="flex gap-0.5 text-lg leading-none">
+      <div role="img" aria-label="{{ rating }} out of 5" class="flex gap-0.5 text-lg leading-none">
         {% for star in "12345" %}<span aria-hidden="true" class="{% if star <= stars %}text-{{ variant }}{% else %}text-base-content/20{% endif %}">&#9733;</span>{% endfor %}
       </div>
     {% endif %}
