@@ -25,7 +25,7 @@
          class="relative isolate overflow-clip
                 {% if invert %}text-neutral-content{% else %}text-base-content in-data-section-body:text-inherit{% endif %}
                 {% if height == 'screen' %}flex min-h-screen items-center{% endif %}
-                {% if flush %}py-0{% else %}py-16 md:py-24 in-data-section-body:py-0 in-data-section-body:md:py-0{% endif %}
+                {% if not flush %}py-16 md:py-24 in-data-section-body:py-0 in-data-section-body:md:py-0{% endif %}
                 {{ class }}"
          {{ attrs }}>
   {% if background %}
