@@ -21,12 +21,12 @@
   section around it unless it inverts for itself.
 {% endcomment %}
 <c-vars height="content" flush container="default" gap="md" align="stretch" reverse invert class />
-<section data-section
-         class="relative isolate overflow-clip
+<section class="relative isolate overflow-clip
                 {% if invert %}text-neutral-content{% else %}text-base-content in-data-section-body:text-inherit{% endif %}
                 {% if height == 'screen' %}flex min-h-screen items-center{% endif %}
                 {% if not flush %}py-16 md:py-24 in-data-section-body:py-0 in-data-section-body:md:py-0{% endif %}
                 {{ class }}"
+         data-section
          {{ attrs }}>
   {% if background %}
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
@@ -38,8 +38,8 @@
     {% if header %}<div class="mb-10 md:mb-14">{{ header }}</div>{% endif %}
     <div class="auto-cols-fr has-[>[data-section-col]]:grid lg:grid-flow-col
                 {% if reverse %}lg:*:nth-2:order-[-1] lg:*:nth-3:order-[-2] lg:*:nth-4:order-[-3] lg:*:nth-5:order-[-4] lg:*:nth-6:order-[-5]{% endif %}
-                {% if gap == 'none' %}gap-0{% elif gap == 'sm' %}gap-6 lg:gap-8{% elif gap == 'lg' %}gap-14 lg:gap-24{% else %}gap-10 lg:gap-16{% endif %}
-                {% if align == 'start' %}lg:items-start{% elif align == 'center' %}lg:items-center{% elif align == 'end' %}lg:items-end{% else %}lg:items-stretch{% endif %}">
+                {% if gap == 'sm' %}gap-6 lg:gap-8{% elif gap == 'lg' %}gap-14 lg:gap-24{% elif gap != 'none' %}gap-10 lg:gap-16{% endif %}
+                {% if align == 'start' %}lg:items-start{% elif align == 'center' %}lg:items-center{% elif align == 'end' %}lg:items-end{% endif %}">
       {{ slot }}
     </div>
   </div>

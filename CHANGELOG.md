@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `<c-section>` and `<c-section.col>`. A section is the outer shell of a region of a page: it
+  spans the page, takes a `background` slot and a `header` slot, and holds its content to the
+  width `container` names. Each `<c-section.col>` inside it becomes a column, sharing the width by
+  `span`, and they stack in the order written below the `lg` breakpoint. `reverse` runs them the
+  other way at `lg` and above. A column takes a `background` slot of its own, and a section can
+  sit inside another.
+- `<c-heading>`, the short line, heading and supporting sentence that open a section or a hero,
+  with `level`, `size` and `align`.
 - Nine text effects, each an inline span around a few words: `<c-text.glow>`, `<c-text.outline>`
   and `<c-text.depth>`, which hold still, and `<c-text.gradient>`, `<c-text.shimmer>`,
   `<c-text.marker>`, `<c-text.typewriter>`, `<c-text.wave>` and `<c-text.glitch>`, which move. The
@@ -47,6 +55,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   sign-in page puts between its provider buttons and its form.
 
 ### Changed
+
+- `<c-hero.split>`, `<c-quote.split>` and `<c-stats.split>` are built from `<c-section>` and
+  `<c-section.col>`, and the first and last take their heading from `<c-heading>`. Their
+  attributes and slots are unchanged. The markup inside the section element is not: the columns
+  are `div` elements carrying `data-section-col`, and a reversed block no longer uses the
+  `lg:order-1` and `lg:order-2` classes.
 
 - The daisyUI classes a host is expected to provide now include `badge-soft`, `badge-sm`, the
   success, error and neutral badge colours, `progress` and its colours, `stat-figure` and
