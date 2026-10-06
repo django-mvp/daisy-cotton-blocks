@@ -18,7 +18,7 @@
   because a caption has to be the first or last thing in its figure.
 {% endcomment %}
 <c-vars name role source href src alt reverse invert size="md" class />
-<c-section size="{{ size }}" align="center" :invert="invert" class="{{ class }}" :attrs="attrs" only>
+<c-section height="{{ size }}" align="center" :invert="invert" class="{{ class }}" :attrs="attrs" only>
   {% if background %}<c-slot name="background">{{ background }}</c-slot>{% endif %}
   <c-section.col span="2" class="mx-auto w-full max-w-sm" order="{% if reverse %}last{% endif %}" only>
     {% if media %}

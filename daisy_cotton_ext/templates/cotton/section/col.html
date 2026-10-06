@@ -3,6 +3,7 @@
 {# @prop order:select['', 'first', 'last'] | description:"Move the column to the leading or trailing edge at wide widths. No effect once the columns have stacked, so the reading order on a phone stays the order written." #}
 {# @prop align:select['', 'start', 'center', 'end'] | description:"Where this column sits against taller neighbours, when it should differ from the section's align" #}
 {# @prop class:text | description:"Extra classes on the column" #}
+{# @slot:background — A background block, rendered into a layer behind this column alone. A plain surface colour goes in class instead. #}
 {# @slot <h2 class="text-3xl font-bold">Copy</h2> — What the column holds. Anything, including another section. #}
 {% comment %}
   The span is a number on `style`, read by the stylesheet at the lg breakpoint
@@ -11,11 +12,15 @@
 {% endcomment %}
 <c-vars span="1" order align class />
 <div data-section-col
-     class="min-w-0 lg:[grid-column:span_var(--section-span,1)]
+     class="min-w-0 {% if background %}relative isolate overflow-clip{% endif %}
+            lg:[grid-column:span_var(--section-span,1)]
             {% if order == 'first' %}lg:order-first{% elif order == 'last' %}lg:order-last{% endif %}
             {% if align == 'start' %}self-start{% elif align == 'center' %}self-center{% elif align == 'end' %}self-end{% endif %}
             {{ class }}"
      style="--section-span: {{ span|floatformat:'0u'|default:'1' }}"
      {{ attrs }}>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
   {{ slot }}
 </div>
