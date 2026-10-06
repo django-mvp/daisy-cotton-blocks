@@ -12,47 +12,23 @@
 {# @slot:footnote — Under the actions, above the visual #}
 {# @slot:media — The visual. This block frames and lifts it, so pass the bare thing. #}
 <c-vars eyebrow title lead level="1" invert size="md" class />
-<section class="relative isolate overflow-clip
-                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
-                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
-                {{ class }}"
-         {{ attrs }}>
-  {% if background %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
-  {% endif %}
-  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
-      {{ announcement }}
-      {% if eyebrow %}
-        <p class="text-sm font-semibold tracking-widest uppercase
-                  {% if not invert %}text-base-content/80{% endif %}">
-          {{ eyebrow }}
-        </p>
-      {% endif %}
-      {# djlint:off #}
-      <h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">{{ title }}</h{{ level }}>
-      {# djlint:on #}
-      {% if lead %}
-        <p class="max-w-2xl text-lg leading-relaxed text-pretty sm:text-xl
-                  {% if not invert %}text-base-content/80{% endif %}">
-          {{ lead }}
-        </p>
-      {% endif %}
-      {% if actions %}
-        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>
-      {% endif %}
-      {% if footnote %}
-        <div class="pt-2 text-sm {% if not invert %}text-base-content/80{% endif %}">{{ footnote }}</div>
-      {% endif %}
-    </div>
+<c-section flush :invert="invert" class="{% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
+  {% if background %}<c-slot name="background">{{ background }}</c-slot>{% endif %}
+  <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+    {{ announcement }}
+    <c-heading :eyebrow="eyebrow" :title="title" :lead="lead" level="{{ level }}" size="xl" :invert="invert" only />
+    {% if actions %}
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>
+    {% endif %}
+    {% if footnote %}
+      <div class="pt-2 text-sm {% if not invert %}text-base-content/80{% endif %}">{{ footnote }}</div>
+    {% endif %}
   </div>
   {% if media %}
     {# A ring as well as a shadow: a shadow alone reads flat on a dark theme (#21). #}
-    <div class="mx-auto mt-14 w-full max-w-5xl px-4 sm:px-6 lg:px-8">
-      <div class="overflow-hidden rounded-2xl shadow-2xl ring-1
-                  {% if invert %}ring-neutral-content/20{% else %}ring-base-300{% endif %}">
-        {{ media }}
-      </div>
+    <div class="mx-auto mt-14 max-w-240 overflow-hidden rounded-2xl shadow-2xl ring-1
+                {% if invert %}ring-neutral-content/20{% else %}ring-base-300{% endif %}">
+      {{ media }}
     </div>
   {% endif %}
-</section>
+</c-section>

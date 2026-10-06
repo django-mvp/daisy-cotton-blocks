@@ -11,46 +11,16 @@
 {# @slot:actions <a class="btn btn-primary btn-lg" href="#">Get started</a> <a class="btn btn-outline btn-lg" href="#">Learn more</a> — The button row. Write real anchor markup, so it can post, submit or carry anything. #}
 {# @slot:footnote — Under the actions. A trust line, a rating, a row of logos. #}
 <c-vars eyebrow title lead level="1" invert size="md" class />
-<section class="relative isolate overflow-clip
-                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
-                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% elif size == 'screen' %}flex min-h-screen items-center py-24{% else %}py-16 md:py-24{% endif %}
-                {{ class }}"
-         {{ attrs }}>
-  {% if background %}
-    {% comment %}
-      `-z-10` in an isolated section puts the layer above the surface colour and below the copy.
-      It is hidden from assistive technology, so a meaningful image belongs in a `media` slot (#21).
-    {% endcomment %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
-  {% endif %}
-  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
-      {{ announcement }}
-      {% if eyebrow %}
-        <p class="text-sm font-semibold tracking-widest uppercase
-                  {% if not invert %}text-base-content/80{% endif %}">
-          {{ eyebrow }}
-        </p>
-      {% endif %}
-      {# djlint:off #}
-      <h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">{{ title }}</h{{ level }}>
-      {# djlint:on #}
-      {% if lead %}
-        {% comment %}
-          `/80` and never lower: 70% drops to 3.86:1 on winter against the 4.5:1 needed (#21).
-          Under `invert` the copy stays full strength, since 80% gives 4.09:1 on synthwave.
-        {% endcomment %}
-        <p class="max-w-2xl text-lg leading-relaxed text-pretty sm:text-xl
-                  {% if not invert %}text-base-content/80{% endif %}">
-          {{ lead }}
-        </p>
-      {% endif %}
-      {% if actions %}
-        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>
-      {% endif %}
-      {% if footnote %}
-        <div class="pt-2 text-sm {% if not invert %}text-base-content/80{% endif %}">{{ footnote }}</div>
-      {% endif %}
-    </div>
+<c-section flush height="{% if size == 'screen' %}screen{% else %}content{% endif %}" :invert="invert" class="{% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% elif size == 'screen' %}py-24{% else %}py-16 md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
+  {% if background %}<c-slot name="background">{{ background }}</c-slot>{% endif %}
+  <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+    {{ announcement }}
+    <c-heading :eyebrow="eyebrow" :title="title" :lead="lead" level="{{ level }}" size="xl" :invert="invert" only />
+    {% if actions %}
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>
+    {% endif %}
+    {% if footnote %}
+      <div class="pt-2 text-sm {% if not invert %}text-base-content/80{% endif %}">{{ footnote }}</div>
+    {% endif %}
   </div>
-</section>
+</c-section>

@@ -11,32 +11,21 @@
 {# @slot:background — A background block, rendered into a layer behind the figures #}
 {% comment %}
   One row on a wide screen however many figures there are, two columns on a
-  tablet, one on a phone. The background layer is the heroes' own, and
-  `cascade` hands the row to the cascade reveal.
+  tablet, one on a phone. The row is not made of section columns, because
+  `cascade` hands it to the cascade reveal and a column has to be a direct
+  child of the section body (docs/adr/0011).
 {% endcomment %}
 <c-vars eyebrow title lead level="2" cascade invert size="md" class />
-<section class="relative isolate overflow-clip
-                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
-                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
-                {{ class }}"
-         {{ attrs }}>
-  {% if background %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+<c-section flush :invert="invert" class="{% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
+  {% if background %}<c-slot name="background">{{ background }}</c-slot>{% endif %}
+  {% if eyebrow or title or lead %}
+    <c-slot name="header">
+      <c-heading :eyebrow="eyebrow" :title="title" :lead="lead" level="{{ level }}" :invert="invert" only />
+    </c-slot>
   {% endif %}
-  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-    {% if eyebrow or title or lead %}
-      <div class="mx-auto mb-10 flex max-w-3xl flex-col items-center gap-4 text-center md:mb-14">
-        {% if eyebrow %}<p class="text-sm font-semibold tracking-widest uppercase {% if not invert %}text-base-content/80{% endif %}">{{ eyebrow }}</p>{% endif %}
-        {# djlint:off #}
-        {% if title %}<h{{ level }} class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">{{ title }}</h{{ level }}>{% endif %}
-        {# djlint:on #}
-        {% if lead %}<p class="max-w-2xl text-lg leading-relaxed text-pretty {% if not invert %}text-base-content/80{% endif %}">{{ lead }}</p>{% endif %}
-      </div>
-    {% endif %}
-    {% if cascade %}
-      <c-reveal.cascade class="grid justify-items-center gap-y-4 text-center sm:grid-cols-2 lg:auto-cols-fr lg:grid-flow-col lg:grid-cols-none lg:divide-x *:justify-items-center {% if invert %}divide-neutral-content/20{% else %}divide-base-300{% endif %}" only>{{ slot }}</c-reveal.cascade>
-    {% else %}
-      <div class="grid justify-items-center gap-y-4 text-center sm:grid-cols-2 lg:auto-cols-fr lg:grid-flow-col lg:grid-cols-none lg:divide-x *:justify-items-center {% if invert %}divide-neutral-content/20{% else %}divide-base-300{% endif %}">{{ slot }}</div>
-    {% endif %}
-  </div>
-</section>
+  {% if cascade %}
+    <c-reveal.cascade class="grid justify-items-center gap-y-4 text-center sm:grid-cols-2 lg:auto-cols-fr lg:grid-flow-col lg:grid-cols-none lg:divide-x *:justify-items-center {% if invert %}divide-neutral-content/20{% else %}divide-base-300{% endif %}" only>{{ slot }}</c-reveal.cascade>
+  {% else %}
+    <div class="grid justify-items-center gap-y-4 text-center sm:grid-cols-2 lg:auto-cols-fr lg:grid-flow-col lg:grid-cols-none lg:divide-x *:justify-items-center {% if invert %}divide-neutral-content/20{% else %}divide-base-300{% endif %}">{{ slot }}</div>
+  {% endif %}
+</c-section>
