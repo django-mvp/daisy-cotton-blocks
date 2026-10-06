@@ -79,7 +79,9 @@
         <p class="mt-2 text-base-content/80">Put the last good version back from the same screen, without finding the person who knows the pipeline.</p>
       </c-section.col>
     </c-section>
-  </c-demo.liv  <c-demo.live label="Two columns, each on a surface of its own, edge to edge" anchor="surfaces">
+  </c-demo.live>
+
+  <c-demo.live label="Two columns, each on a surface of its own, edge to edge" anchor="surfaces">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section container="full" height="none" gap="none">
   <c-section.col class="bg-primary p-10 text-primary-content lg:p-20">…</c-section.col>
   <c-section.col class="p-10 lg:p-20">
@@ -160,8 +162,6 @@
     </c-section>
   </c-demo.live>
 
-e>
-
   <c-demo.live label="How wide the content may grow" anchor="container">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section container="narrow">…</c-section>
 <c-section>…</c-section>
@@ -173,7 +173,7 @@ e>
     <c-section container="full" height="sm"><c-demo.box class="rounded-none"><code>container="full"</code> runs to the edges of the page, with no gutter</c-demo.box></c-section>
   </c-demo.live>
 
-  <c-demo.live label="How much vertical room it takes" anchor="size">
+  <c-demo.live label="How much vertical room it takes" anchor="height">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section height="sm" class="bg-base-200">…</c-section>
 <c-section>…</c-section>
 <c-section height="lg" class="bg-base-200">…</c-section>{% endverbatim %}{% endfilter %}</c-slot>
