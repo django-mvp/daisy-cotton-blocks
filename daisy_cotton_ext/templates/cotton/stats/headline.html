@@ -14,11 +14,8 @@
   set. The figure is read out with its title: together they are the heading.
 {% endcomment %}
 <c-vars value title lead level="2" icon speed="0" size="md" class />
-<section class="text-base-content
-                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
-                {{ class }}"
-         {{ attrs }}>
-  <div class="mx-auto flex w-full max-w-3xl flex-col items-center gap-4 px-4 text-center sm:px-6 lg:px-8">
+<c-section flush class="{% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
+  <div class="mx-auto flex max-w-3xl flex-col items-center gap-4 text-center">
     {% if figure %}
       <div>{{ figure }}</div>
     {% elif icon %}
@@ -33,4 +30,4 @@
     {% if lead %}<p class="max-w-2xl text-lg leading-relaxed text-pretty text-base-content/80">{{ lead }}</p>{% endif %}
     {% if actions %}<div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>{% endif %}
   </div>
-</section>
+</c-section>

@@ -56,11 +56,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `<c-hero.split>`, `<c-quote.split>` and `<c-stats.split>` are built from `<c-section>` and
-  `<c-section.col>`, and the first and last take their heading from `<c-heading>`. Their
-  attributes and slots are unchanged. The markup inside the section element is not: the columns
-  are `div` elements carrying `data-section-col`, and a reversed block no longer uses the
-  `lg:order-1` and `lg:order-2` classes.
+- Every hero, quote and stats page block is built from `<c-section>`, and takes its eyebrow, title
+  and lead from `<c-heading>` where it has them. `<c-stats.headline>` keeps its own heading, which
+  joins the figure and its title. Attributes and slots are unchanged. The markup inside the
+  section element is not: the content sits in a `div` carrying `data-section-body`, the columns of
+  `<c-hero.split>`, `<c-quote.split>` and `<c-stats.split>` are `div` elements carrying
+  `data-section-col`, and a reversed block no longer uses the `lg:order-1` and `lg:order-2`
+  classes. Two things render differently. A hero given an empty `title` leaves the heading
+  element out. `<c-stats.headline>` lets a figure run up to 64px wider before it wraps.
 
 - The daisyUI classes a host is expected to provide now include `badge-soft`, `badge-sm`, the
   success, error and neutral badge colours, `progress` and its colours, `stat-figure` and
