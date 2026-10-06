@@ -1,5 +1,6 @@
 {# @description The outer shell of a region of a page: full width, with a background layer behind it and its content held to a chosen width. Put section.col components in it and they sit side by side. #}
-{# @prop height:select['none', 'sm', 'md', 'lg', 'screen'] | default:"md" | description:"How much vertical room the section takes. screen fills the window and centres the content. A section inside another takes none unless it says otherwise." #}
+{# @prop height:select['content', 'screen'] | default:"content" | description:"content is as tall as what the section holds. screen is at least as tall as the window, with the content centred in it." #}
+{# @prop flush:boolean | default:False | description:"Drop the room above and below the content, for columns that carry surfaces of their own and should meet the sections around them" #}
 {# @prop container:select['narrow', 'default', 'wide', 'full'] | default:"default" | description:"How wide the content may grow. The section itself, and its background, always span the page. narrow is a comfortable line of text. full runs to the edges of the page with no gutter, for columns that carry surfaces of their own." #}
 {# @prop gap:select['none', 'sm', 'md', 'lg'] | default:"md" | description:"The room between columns, and between them once they have stacked" #}
 {# @prop align:select['stretch', 'start', 'center', 'end'] | default:"stretch" | description:"Where columns of different heights sit against each other" #}
@@ -16,14 +17,15 @@
   written, and `reverse` does nothing there. `reverse` reaches six columns.
 
   A section inside another drops its gutters, so the two do not add up, and
-  its vertical padding unless `height` is given. It keeps the copy colour of the
+  its vertical padding. It keeps the copy colour of the
   section around it unless it inverts for itself.
 {% endcomment %}
-<c-vars height container="default" gap="md" align="stretch" reverse invert class />
+<c-vars height="content" flush container="default" gap="md" align="stretch" reverse invert class />
 <section data-section
          class="relative isolate overflow-clip
                 {% if invert %}text-neutral-content{% else %}text-base-content in-data-section-body:text-inherit{% endif %}
-                {% if height == 'none' %}py-0{% elif height == 'sm' %}py-12 md:py-16{% elif height == 'lg' %}py-24 md:py-32{% elif height == 'screen' %}flex min-h-screen items-center py-24{% elif height == 'md' %}py-16 md:py-24{% else %}py-16 md:py-24 in-data-section-body:py-0 in-data-section-body:md:py-0{% endif %}
+                {% if height == 'screen' %}flex min-h-screen items-center{% endif %}
+                {% if flush %}py-0{% else %}py-16 md:py-24 in-data-section-body:py-0 in-data-section-body:md:py-0{% endif %}
                 {{ class }}"
          {{ attrs }}>
   {% if background %}

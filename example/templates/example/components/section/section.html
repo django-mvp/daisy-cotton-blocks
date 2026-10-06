@@ -11,12 +11,12 @@
   </c-demo.head>
 
   <c-demo.live label="A background across the page, text held to a readable width" anchor="background">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section container="narrow" height="lg">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section container="narrow">
   <c-slot name="background"><c-background.gradient /></c-slot>
   <h2 class="text-3xl font-bold">Why we stopped doing release days</h2>
   <p>…</p>
 </c-section>{% endverbatim %}{% endfilter %}</c-slot>
-    <c-section container="narrow" height="lg">
+    <c-section container="narrow">
       <c-slot name="background"><c-background.gradient /></c-slot>
       <h2 class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">Why we stopped doing release days</h2>
       <p class="mt-6 text-lg leading-relaxed text-base-content/80">
@@ -102,14 +102,14 @@
   </c-demo.live>
 
   <c-demo.live label="Two columns, each on a surface of its own, edge to edge" anchor="surfaces">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section container="full" height="none" gap="none">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section container="full" flush gap="none">
   <c-section.col class="bg-primary p-10 text-primary-content lg:p-20">…</c-section.col>
   <c-section.col class="p-10 lg:p-20">
     <c-slot name="background"><c-background.grid /></c-slot>
     …
   </c-section.col>
 </c-section>{% endverbatim %}{% endfilter %}</c-slot>
-    <c-section container="full" height="none" gap="none">
+    <c-section container="full" flush gap="none">
       <c-section.col class="bg-primary p-10 text-primary-content lg:p-20">
         <p class="text-sm font-semibold tracking-widest uppercase">For the people shipping</p>
         <h2 class="mt-4 text-3xl font-bold tracking-tight text-balance sm:text-4xl">Push when the work is ready</h2>
@@ -154,7 +154,7 @@
   </c-demo.live>
 
   <c-demo.live label="Three columns: a solid, a pattern and a second solid" anchor="three-surfaces">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section container="full" height="none" gap="none">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section container="full" flush gap="none">
   <c-section.col class="bg-base-200 p-10 lg:p-14">…</c-section.col>
   <c-section.col class="p-10 lg:p-14">
     <c-slot name="background"><c-background.grid /></c-slot>
@@ -162,7 +162,7 @@
   </c-section.col>
   <c-section.col class="bg-secondary p-10 text-secondary-content lg:p-14">…</c-section.col>
 </c-section>{% endverbatim %}{% endfilter %}</c-slot>
-    <c-section container="full" height="none" gap="none">
+    <c-section container="full" flush gap="none">
       <c-section.col class="bg-base-200 p-10 lg:p-14">
         <p class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">Step one</p>
         <h3 class="mt-3 text-2xl font-bold tracking-tight">Connect a pipeline</h3>
@@ -187,19 +187,10 @@
 <c-section>…</c-section>
 <c-section container="wide">…</c-section>
 <c-section container="full">…</c-section>{% endverbatim %}{% endfilter %}</c-slot>
-    <c-section container="narrow" height="sm"><c-demo.box><code>container="narrow"</code> for a page of text</c-demo.box></c-section>
-    <c-section height="sm"><c-demo.box>The default, when <code>container</code> is left out</c-demo.box></c-section>
-    <c-section container="wide" height="sm"><c-demo.box><code>container="wide"</code> for a section led by a large picture</c-demo.box></c-section>
-    <c-section container="full" height="sm"><c-demo.box class="rounded-none"><code>container="full"</code> runs to the edges of the page, with no gutter</c-demo.box></c-section>
-  </c-demo.live>
-
-  <c-demo.live label="How much vertical room it takes" anchor="height">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section height="sm" class="bg-base-200">…</c-section>
-<c-section>…</c-section>
-<c-section height="lg" class="bg-base-200">…</c-section>{% endverbatim %}{% endfilter %}</c-slot>
-    <c-section height="sm" class="bg-base-200"><p class="text-center font-semibold"><code>height="sm"</code></p></c-section>
-    <c-section><p class="text-center font-semibold">The default, <code>height="md"</code></p></c-section>
-    <c-section height="lg" class="bg-base-200"><p class="text-center font-semibold"><code>height="lg"</code></p></c-section>
+    <c-section container="narrow"><c-demo.box><code>container="narrow"</code> for a page of text</c-demo.box></c-section>
+    <c-section><c-demo.box>The default, when <code>container</code> is left out</c-demo.box></c-section>
+    <c-section container="wide"><c-demo.box><code>container="wide"</code> for a section led by a large picture</c-demo.box></c-section>
+    <c-section container="full"><c-demo.box class="rounded-none"><code>container="full"</code> runs to the edges of the page, with no gutter</c-demo.box></c-section>
   </c-demo.live>
 
   <c-demo.live label="A section inside a section" anchor="nested">
@@ -249,10 +240,10 @@
   <c-section.col>…a long address…</c-section.col>
   <c-section.col></c-section.col>
 </c-section>{% endverbatim %}{% endfilter %}</c-slot>
-    <c-section height="sm">
+    <c-section>
       <c-section.col><c-demo.box>One column on its own takes the whole width.</c-demo.box></c-section.col>
     </c-section>
-    <c-section height="sm" gap="sm" class="bg-base-200">
+    <c-section gap="sm" class="bg-base-200">
       <c-section.col>
         <div class="overflow-x-auto">
           <table class="table">
@@ -280,7 +271,7 @@
     <c-section height="screen" container="narrow" invert class="bg-neutral">
       <c-slot name="background"><c-background.aurora /></c-slot>
       <h2 class="text-center text-4xl font-bold tracking-tight text-balance sm:text-5xl">Ship when the work is ready</h2>
-      <p class="mt-6 text-center text-lg leading-relaxed">A section at <code>height="screen"</code> is as tall as the window and centres what it holds.</p>
+      <p class="mt-6 text-center text-lg leading-relaxed">A section at <code>height="screen"</code> is at least as tall as the window and centres what it holds. Left out, a section is as tall as its content.</p>
     </c-section>
   </c-demo.live>
 {% endblock content %}
