@@ -1,0 +1,30 @@
+{# @description A trend stat with the change ruled off into a footer along the bottom, apart from the figure it comments on. #}
+{# @prop title:text | description:"What the figure counts" #}
+{# @prop value:text | description:"The figure itself, already formatted" #}
+{# @prop change:text | description:"The size of the move, already formatted: 12%, 4, €1.2k. Left out, no arrow is drawn." #}
+{# @prop direction:select['up', 'down', 'flat'] | default:"up" | description:"Which way the figure moved" #}
+{# @prop inverse:boolean | default:False | description:"Set where a fall is the good news: lead time, failures, cost. It swaps which direction is coloured as good." #}
+{# @prop desc:text | description:"What the change is measured against: since last month" #}
+{# @prop icon:text | description:"An icon, by the name the project's icon component knows it by. Left out, there is no icon." #}
+{# @prop class:text | description:"Extra classes on the stat" #}
+{# @slot Under the figures — Room for a small chart of the run behind the number, from django-mvp-charts or anywhere else. This package draws none of its own. #}
+{# @slot:figure <img class="size-12 rounded-full" src="…" alt="" /> — In place of the icon, for anything that is not one: a picture, a logo, an avatar. #}
+{% comment %}
+  Built on daisy-cotton's stat, with the footer in its actions row. The footer
+  runs the full width, under the icon as well.
+{% endcomment %}
+<c-vars title value change direction="up" inverse desc icon class />
+<c-stat class="{% if icon or figure %}*:last:col-span-2{% endif %} {{ class }}" :attrs="attrs" only>
+  {% if icon or figure %}<c-slot name="figure">{% if figure %}{{ figure }}{% else %}<c-icon name="{{ icon }}" class="text-3xl opacity-60" aria-hidden="true" only />{% endif %}</c-slot>{% endif %}
+  {% if title %}<c-slot name="title"><span class="whitespace-normal">{{ title }}</span></c-slot>{% endif %}
+  <c-slot name="value"><span class="tabular-nums">{{ value }}</span></c-slot>
+  {% if slot.strip %}<c-slot name="desc"><div class="whitespace-normal">{{ slot }}</div></c-slot>{% endif %}
+  {% if change or desc %}
+    <c-slot name="actions">
+      <div class="flex flex-wrap items-center gap-2 border-t border-base-300 pt-3 text-xs whitespace-normal">
+        {% if change %}<c-stats.change :change="change" :direction="direction" :inverse="inverse" only />{% endif %}
+        {% if desc %}<span class="opacity-60">{{ desc }}</span>{% endif %}
+      </div>
+    </c-slot>
+  {% endif %}
+</c-stat>

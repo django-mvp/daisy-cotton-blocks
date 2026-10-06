@@ -1,0 +1,29 @@
+{# @description A trend stat laid on its side: what it counts on the left, the figure and its change on the right. For a short list of figures stacked one above another. #}
+{# @prop title:text | description:"What the figure counts" #}
+{# @prop value:text | description:"The figure itself, already formatted" #}
+{# @prop change:text | description:"The size of the move, already formatted: 12%, 4, €1.2k. Left out, no arrow is drawn." #}
+{# @prop direction:select['up', 'down', 'flat'] | default:"up" | description:"Which way the figure moved" #}
+{# @prop inverse:boolean | default:False | description:"Set where a fall is the good news: lead time, failures, cost. It swaps which direction is coloured as good." #}
+{# @prop desc:text | description:"What the change is measured against: since last month" #}
+{# @prop icon:text | description:"An icon, by the name the project's icon component knows it by. Left out, there is no icon." #}
+{# @prop class:text | description:"Extra classes on the stat" #}
+{% comment %}
+  Built on daisy-cotton's stat, with its three rows turned into two columns.
+  The icon is small and leads the title.
+{% endcomment %}
+<c-vars title value change direction="up" inverse desc icon class />
+<c-stat class="grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 *:nth-2:col-start-2 *:nth-2:row-span-2 *:nth-2:row-start-1 *:nth-3:row-start-2 {{ class }}" :attrs="attrs" only>
+  <c-slot name="title">
+    <span class="flex items-center gap-2 whitespace-normal">
+      {% if icon %}<c-icon name="{{ icon }}" class="opacity-60" aria-hidden="true" only />{% endif %}
+      <span>{{ title }}</span>
+    </span>
+  </c-slot>
+  <c-slot name="value">
+    <span class="flex flex-col items-end gap-1">
+      <span class="tabular-nums">{{ value }}</span>
+      {% if change %}<c-stats.change :change="change" :direction="direction" :inverse="inverse" only />{% endif %}
+    </span>
+  </c-slot>
+  <c-slot name="desc"><span class="whitespace-normal">{{ desc }}</span></c-slot>
+</c-stat>

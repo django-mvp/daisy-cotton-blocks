@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Headline{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-stats.headline">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      One number, as large as the page will take it, filled with the package's own gradient text effect. For the figure a page is built round. More than one of these on a page and none of them is the headline.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="The figure, a title and a line" anchor="default">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.headline value="99.98%" title="Uptime, measured from outside" lead="…" />{% endverbatim %}{% endfilter %}</c-slot>
+    <c-stats.headline value="99.98%" title="Uptime, measured from outside" lead="Checked every thirty seconds from six regions over the last twelve months. The two outages are written up in full." />
+  </c-demo.live>
+
+  <c-demo.live label="With an icon, an action and the colours moving" anchor="icon">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.headline icon="deploys" value="7,440" title="Releases last year" speed="1" class="bg-base-200">
+  <c-slot name="actions"><a class="btn btn-primary" href="#">See how it is counted</a></c-slot>
+</c-stats.headline>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-stats.headline icon="deploys" value="7,440" title="Releases last year" speed="1" class="bg-base-200">
+      <c-slot name="actions"><a class="btn btn-primary" href="#icon">See how it is counted</a></c-slot>
+    </c-stats.headline>
+  </c-demo.live>
+
+  <c-demo.live label="A picture in place of the icon" anchor="figure">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.headline value="41" title="Teams ship through it">
+  <c-slot name="figure"><img … /></c-slot>
+</c-stats.headline>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-stats.headline size="sm" value="41" title="Teams ship through it">
+      <c-slot name="figure"><img class="size-12 rounded-full object-cover" src="{% static 'example/ridgeline.svg' %}" alt="" /></c-slot>
+    </c-stats.headline>
+  </c-demo.live>
+
+  <c-demo.live label="The figure alone, and a figure too long for the line" anchor="edges">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.headline size="sm" value="0" />
+<c-stats.headline size="sm" value="€1,284,900.00" title="…" />{% endverbatim %}{% endfilter %}</c-slot>
+    <c-stats.headline size="sm" value="0" />
+    <c-stats.headline size="sm" value="€1,284,900.00" title="Recurring revenue across every region, after refunds and credits, for the financial year just closed" />
+  </c-demo.live>
+{% endblock content %}

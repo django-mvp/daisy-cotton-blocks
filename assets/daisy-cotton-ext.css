@@ -134,3 +134,16 @@
 @keyframes dce-words {
   from { opacity: var(--words-dim, 0.25); }
 }
+
+/* The counting stat. `--dce-count` is registered as a whole number so it can be
+ * moved between two values, and `dce-seen` is the switch the scroll position
+ * throws: the count itself is a transition, which runs on the clock. */
+@property --dce-count {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+@keyframes dce-seen {
+  from { --dce-seen: 0; }
+  to { --dce-seen: 1; }
+}

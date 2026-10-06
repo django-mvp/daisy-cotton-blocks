@@ -1,0 +1,42 @@
+{# @description A band of headline figures across the page, under an optional heading. For the few numbers a visitor should leave with. #}
+{# @prop eyebrow:text | description:"Short line above the heading" #}
+{# @prop title:text | description:"The heading. Use the title slot instead when it contains markup. Left out, the band is the figures alone." #}
+{# @prop lead:text | description:"The supporting sentence under the heading" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"2" | description:"Heading level" #}
+{# @prop cascade:boolean | default:False | description:"Bring the figures in one after another as the band scrolls into view" #}
+{# @prop invert:boolean | default:False | description:"Light copy, for a dark background. Each background says whether it wants this." #}
+{# @prop size:select['sm', 'md', 'lg'] | default:"md" | description:"How much vertical room the block takes" #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
+{# @slot <c-stats.count title="Deploys a day" to="31" icon="…" /><c-stats.count title="Rolled back" to="2" suffix="%" /><c-stats.count title="Services" to="14" /> — The figures: any of the stats components, or daisy-cotton's own stat. Three or four read best. #}
+{# @slot:background — A background block, rendered into a layer behind the figures #}
+{% comment %}
+  One row on a wide screen however many figures there are, two columns on a
+  tablet, one on a phone. The background layer is the heroes' own, and
+  `cascade` hands the row to the cascade reveal.
+{% endcomment %}
+<c-vars eyebrow title lead level="2" cascade invert size="md" class />
+<section class="relative isolate overflow-clip
+                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
+                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    {% if eyebrow or title or lead %}
+      <div class="mx-auto mb-10 flex max-w-3xl flex-col items-center gap-4 text-center md:mb-14">
+        {% if eyebrow %}<p class="text-sm font-semibold tracking-widest uppercase {% if not invert %}text-base-content/80{% endif %}">{{ eyebrow }}</p>{% endif %}
+        {# djlint:off #}
+        {% if title %}<h{{ level }} class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">{{ title }}</h{{ level }}>{% endif %}
+        {# djlint:on #}
+        {% if lead %}<p class="max-w-2xl text-lg leading-relaxed text-pretty {% if not invert %}text-base-content/80{% endif %}">{{ lead }}</p>{% endif %}
+      </div>
+    {% endif %}
+    {% if cascade %}
+      <c-reveal.cascade class="grid justify-items-center gap-y-4 text-center sm:grid-cols-2 lg:auto-cols-fr lg:grid-flow-col lg:grid-cols-none lg:divide-x *:justify-items-center {% if invert %}divide-neutral-content/20{% else %}divide-base-300{% endif %}" only>{{ slot }}</c-reveal.cascade>
+    {% else %}
+      <div class="grid justify-items-center gap-y-4 text-center sm:grid-cols-2 lg:auto-cols-fr lg:grid-flow-col lg:grid-cols-none lg:divide-x *:justify-items-center {% if invert %}divide-neutral-content/20{% else %}divide-base-300{% endif %}">{{ slot }}</div>
+    {% endif %}
+  </div>
+</section>

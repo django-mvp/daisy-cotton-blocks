@@ -160,6 +160,24 @@ FAMILIES: tuple[Family, ...] = (
             Component("byline", "Byline", group="Parts"),
         ),
     ),
+    Family(
+        slug="stats",
+        label="Stats",
+        components=(
+            Component("trend", "Stacked", group="Trend layouts"),
+            Component("trend-inline", "Inline", group="Trend layouts"),
+            Component("trend-corner", "Corner", group="Trend layouts"),
+            Component("trend-centred", "Centred", group="Trend layouts"),
+            Component("trend-footer", "Footer", group="Trend layouts"),
+            Component("trend-row", "Row", group="Trend layouts"),
+            Component("progress", "Progress", group="Other figures"),
+            Component("count", "Count up", group="Other figures"),
+            Component("change", "Change", group="Parts"),
+            Component("band", "Band", group="Sections"),
+            Component("split", "Split", group="Sections"),
+            Component("headline", "Headline", group="Sections"),
+        ),
+    ),
 )
 
 

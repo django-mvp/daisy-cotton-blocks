@@ -1,0 +1,31 @@
+{# @description The case in words on one side and the figures that back it on the other, each figure on a panel of its own. #}
+{# @prop eyebrow:text | description:"Short line above the heading" #}
+{# @prop title:text | description:"The heading. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The supporting sentence under the heading" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"2" | description:"Heading level" #}
+{# @prop size:select['sm', 'md', 'lg'] | default:"md" | description:"How much vertical room the block takes" #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
+{# @slot <c-stats.trend title="Deploys a day" value="31" change="12%" desc="since last month" /><c-stats.trend title="Lead time" value="18m" change="26m" direction="down" inverse /><c-stats.progress title="Services moved over" value="14" percent="70" desc="of 20" /><c-stats.count title="Rolled back" to="2" suffix="%" /> — The figures: any of the stats components, or daisy-cotton's own stat. Four fill the grid. #}
+{# @slot:actions <a class="btn btn-primary" href="#">Read the report</a> — Under the copy. Write real anchor markup. #}
+{% comment %}
+  The copy comes first in the markup and on a narrow screen, so the figures are
+  read as evidence for a claim already made. An odd figure out takes a whole row.
+{% endcomment %}
+<c-vars eyebrow title lead level="2" size="md" class />
+<section class="text-base-content
+                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  <div class="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+    <div class="flex flex-col items-start gap-4">
+      {% if eyebrow %}<p class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">{{ eyebrow }}</p>{% endif %}
+      {# djlint:off #}
+      {% if title %}<h{{ level }} class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">{{ title }}</h{{ level }}>{% endif %}
+      {# djlint:on #}
+      {% if lead %}<p class="text-lg leading-relaxed text-pretty text-base-content/80">{{ lead }}</p>{% endif %}
+      {% if actions %}<div class="flex flex-wrap items-center gap-3 pt-2">{{ actions }}</div>{% endif %}
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2
+                *:rounded-[var(--radius-box)] *:bg-base-200 sm:*:last:odd:col-span-2">{{ slot }}</div>
+  </div>
+</section>

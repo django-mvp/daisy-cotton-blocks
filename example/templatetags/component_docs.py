@@ -50,7 +50,8 @@ def template_name(tag: str) -> str:
         The template path Cotton would load for the tag.
     """
     name = tag.strip().removeprefix("<").removesuffix(">").removeprefix("c-")
-    return f"cotton/{name.replace('.', '/')}.html"
+    # Cotton reads a hyphen in a tag as the underscore in the file's name.
+    return f"cotton/{name.replace('.', '/').replace('-', '_')}.html"
 
 
 def parse(tag: str) -> ParsedComponent | None:

@@ -28,7 +28,7 @@ Blocks are configured through attributes and take their colours from whatever da
 
 ## Status
 
-Version 0.0.1. Five families are built: heroes, backgrounds, text effects, reveals and quotes. Nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
+Version 0.0.1. Six families are built: heroes, backgrounds, text effects, reveals, quotes and stats. Nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
 
 ## Scope & philosophy
 
@@ -337,6 +337,56 @@ Things to know before using one:
 - **Centred and split take a `background` slot,** like the heroes, and `invert` for a dark one.
 
 The reasoning for building on daisy-cotton's components is in [ADR 0007](docs/adr/0007-built-from-daisy-cotton-components.md).
+
+### Stats
+
+A stat is a figure and what it counts. daisy-cotton's `<c-stat>` shows a title, a number and a line of description. These add what usually comes next: how the number has moved, how far it is towards a target, an icon beside it, a count up as the visitor reaches it. Eight are stats that go wherever a stat goes, one is the badge they share, and three are blocks that set figures out across a page.
+
+| Component | What it is | Options of its own |
+|---|---|---|
+| `<c-stats.trend>` | A figure with how it has moved underneath it | `change`, `direction`, `inverse` |
+| `<c-stats.trend-inline>` | The same, with the change beside the figure | `change`, `direction`, `inverse` |
+| `<c-stats.trend-corner>` | The same, with the change in the top corner | `change`, `direction`, `inverse` |
+| `<c-stats.trend-centred>` | The same, on the centre line, figure first | `change`, `direction`, `inverse` |
+| `<c-stats.trend-footer>` | The same, with the change ruled off along the bottom | `change`, `direction`, `inverse` |
+| `<c-stats.trend-row>` | The same, laid on its side for a stacked list | `change`, `direction`, `inverse` |
+| `<c-stats.progress>` | A figure with a bar towards a target or a limit | `percent`, `variant` |
+| `<c-stats.count>` | A figure that counts up as it scrolls into view | `to`, `prefix`, `suffix`, `time` |
+| `<c-stats.change>` | The arrow badge the trend stats carry, by itself | `change`, `direction`, `inverse` |
+| `<c-stats.band>` | Figures in one row across the page, under an optional heading | `eyebrow`, `title`, `lead`, `level`, `cascade`, `invert`, `size` |
+| `<c-stats.split>` | The case in words on one side, the figures on panels on the other | `eyebrow`, `title`, `lead`, `level`, `size` |
+| `<c-stats.headline>` | One very large figure, filled with a gradient | `value`, `title`, `lead`, `level`, `icon`, `speed`, `size` |
+
+Every single-figure stat also takes `title`, `value` and `desc`, the names `<c-stat>` uses, and an optional `icon`.
+
+```html
+<c-stat.group>
+  <c-stats.trend icon="deploys" title="Deploys a day" value="31" change="12%" desc="since last month" />
+  <c-stats.trend title="Median lead time" value="18m" change="26m" direction="down" inverse desc="since the spring" />
+  <c-stats.progress title="Raised this quarter" value="€42k" percent="70" desc="of a €60k target" />
+</c-stat.group>
+
+<c-stats.band title="A year in numbers" cascade>
+  <c-stats.count title="Releases" to="7440" />
+  <c-stats.count title="Teams" to="41" />
+  <c-stats.count title="Saved a year" to="48" prefix="€" suffix="k" />
+</c-stats.band>
+```
+
+Things to know before using one:
+
+- **Each single-figure stat is daisy-cotton's `<c-stat>` with something added,** so it goes in a `<c-stat.group>` beside plain stats.
+- **The six trend stats take the same attributes.** Changing layout is changing the tag.
+- **`direction` says which way the figure moved and `inverse` says a fall is the good news,** as it is for a lead time or a failure count. The arrow and a direction read out to a screen reader carry the move. The colour only repeats it.
+- **`icon` is a name handed to your project's own `<c-icon>`,** so it draws whichever icon set you already use. Leave it out and there is no icon. Fill the `figure` slot for a picture or a logo. Corner and row take a small icon only.
+- **No stat draws a chart.** Trend, inline, corner and footer place whatever you put between their tags under the figures, which is where a chart from a charting package goes.
+- **You format the figures and work out the percentage.** `value` arrives as words. `percent` is a number from 0 to 100.
+- **`<c-stats.count>` counts whole numbers, written without separators.** For a large figure, count the leading part and put the rest in `suffix`: `to="12" suffix="k"`. A screen reader is given the finished number. Under `prefers-reduced-motion`, and in a browser without scroll-driven animation, so is everyone else.
+- **Inside a `<c-stat.group>`, a count runs once as the page loads.** A stat group is a scrolling box of its own, and "in view" is measured against the nearest one. Put counting stats in `<c-stats.band>` or a plain grid for a count that waits.
+- **Nothing else here moves unless asked.** `cascade` on a band and `speed` on a headline are both off by default.
+- **The band takes a `background` slot,** like the heroes, and `invert` for a dark one.
+
+The reasoning is in [ADR 0008](docs/adr/0008-stats-draw-no-charts.md) and [ADR 0009](docs/adr/0009-a-count-is-started-by-scroll-and-timed-by-the-clock.md).
 
 Every attribute, its accepted values and its default are listed on each block's and component's own page in the example project, built from the annotations in the block's template. Run it with `python manage.py runserver` from a checkout.
 
