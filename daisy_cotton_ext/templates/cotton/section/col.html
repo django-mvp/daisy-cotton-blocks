@@ -1,6 +1,5 @@
 {# @description One column of a section. Two of them make two columns, three make three. Below the lg breakpoint they stack in the order they are written. #}
 {# @prop span:number | default:"1" | description:"How many shares of the width the column takes against its neighbours. A 2 beside a 3 is two fifths beside three fifths." #}
-{# @prop order:select['', 'first', 'last'] | description:"Move the column to the leading or trailing edge at wide widths. No effect once the columns have stacked, so the reading order on a phone stays the order written." #}
 {# @prop align:select['', 'start', 'center', 'end'] | description:"Where this column sits against taller neighbours, when it should differ from the section's align" #}
 {# @prop class:text | description:"Extra classes on the column" #}
 {# @slot:background — A background block, rendered into a layer behind this column alone. A plain surface colour goes in class instead. #}
@@ -10,12 +9,11 @@
   only (docs/adr/0003-amounts-are-numbers-written-to-style.md). `min-w-0` lets
   a table or a code sample scroll inside the column instead of widening it.
 {% endcomment %}
-<c-vars span="1" order align class />
+<c-vars span="1" align class />
 <div data-section-col
      class="min-w-0 {% if background %}relative isolate overflow-clip{% endif %}
             lg:[grid-column:span_var(--section-span,1)]
-            {% if order == 'first' %}lg:order-first{% elif order == 'last' %}lg:order-last{% endif %}
-            {% if align == 'start' %}self-start{% elif align == 'center' %}self-center{% elif align == 'end' %}self-end{% endif %}
+            {% if align == 'start' %}lg:self-start{% elif align == 'center' %}lg:self-center{% elif align == 'end' %}lg:self-end{% endif %}
             {{ class }}"
      style="--section-span: {{ span|floatformat:'0u'|default:'1' }}"
      {{ attrs }}>

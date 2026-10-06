@@ -3,6 +3,7 @@
 {# @prop container:select['narrow', 'default', 'wide', 'full'] | default:"default" | description:"How wide the content may grow. The section itself, and its background, always span the page. narrow is a comfortable line of text. full runs to the edges of the page with no gutter, for columns that carry surfaces of their own." #}
 {# @prop gap:select['none', 'sm', 'md', 'lg'] | default:"md" | description:"The room between columns, and between them once they have stacked" #}
 {# @prop align:select['stretch', 'start', 'center', 'end'] | default:"stretch" | description:"Where columns of different heights sit against each other" #}
+{# @prop reverse:boolean | default:False | description:"Run the columns the other way at wide widths, so the last one written comes first. No effect once they have stacked: on a phone the columns always read in the order written." #}
 {# @prop invert:boolean | default:False | description:"Light copy, for a dark background. Each background says whether it wants this." #}
 {# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
 {# @slot <c-section.col><h2 class="text-3xl font-bold">Copy</h2></c-section.col><c-section.col><div class="rounded-2xl bg-base-200 p-10">Media</div></c-section.col> — The content. Anything at all, or one section.col for each column. #}
@@ -11,13 +12,14 @@
 {% comment %}
   The columns are counted by the stylesheet, not here: the body turns into a
   grid only when a section.col is its direct child, and each one opens a
-  column of its own. Below the lg breakpoint they are one column, in source order.
+  column of its own. Below the lg breakpoint they are one column, in the order
+  written, and `reverse` does nothing there. `reverse` reaches six columns.
 
   A section inside another drops its gutters, so the two do not add up, and
   its vertical padding unless `height` is given. It keeps the copy colour of the
   section around it unless it inverts for itself.
 {% endcomment %}
-<c-vars height container="default" gap="md" align="stretch" invert class />
+<c-vars height container="default" gap="md" align="stretch" reverse invert class />
 <section data-section
          class="relative isolate overflow-clip
                 {% if invert %}text-neutral-content{% else %}text-base-content in-data-section-body:text-inherit{% endif %}
@@ -33,8 +35,9 @@
               {% if container == 'narrow' %}max-w-2xl{% elif container == 'wide' %}max-w-7xl{% elif container != 'full' %}max-w-6xl{% endif %}">
     {% if header %}<div class="mb-10 md:mb-14">{{ header }}</div>{% endif %}
     <div class="auto-cols-fr has-[>[data-section-col]]:grid lg:grid-flow-col
+                {% if reverse %}lg:*:nth-2:order-[-1] lg:*:nth-3:order-[-2] lg:*:nth-4:order-[-3] lg:*:nth-5:order-[-4] lg:*:nth-6:order-[-5]{% endif %}
                 {% if gap == 'none' %}gap-0{% elif gap == 'sm' %}gap-6 lg:gap-8{% elif gap == 'lg' %}gap-14 lg:gap-24{% else %}gap-10 lg:gap-16{% endif %}
-                {% if align == 'start' %}items-start{% elif align == 'center' %}items-center{% elif align == 'end' %}items-end{% else %}items-stretch{% endif %}">
+                {% if align == 'start' %}lg:items-start{% elif align == 'center' %}lg:items-center{% elif align == 'end' %}lg:items-end{% else %}lg:items-stretch{% endif %}">
       {{ slot }}
     </div>
   </div>

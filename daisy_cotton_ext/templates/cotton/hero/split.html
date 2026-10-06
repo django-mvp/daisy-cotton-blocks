@@ -13,9 +13,9 @@
 {# @slot:footnote — Under the actions #}
 {# @slot:media — The visual. An image, a mockup, a card, an SVG, a form. #}
 <c-vars eyebrow title lead level="1" reverse invert size="md" class />
-<c-section height="{{ size }}" container="wide" align="center" :invert="invert" class="{{ class }}" :attrs="attrs" only>
+<c-section height="{{ size }}" container="wide" align="center" reverse="{{ reverse }}" :invert="invert" class="{{ class }}" :attrs="attrs" only>
   {% if background %}<c-slot name="background">{{ background }}</c-slot>{% endif %}
-  <c-section.col class="flex flex-col gap-6 text-center lg:text-left" order="{% if reverse %}last{% endif %}" only>
+  <c-section.col class="flex flex-col gap-6 text-center lg:text-left" only>
     {{ announcement }}
     {% if eyebrow %}
       <p class="text-sm font-semibold tracking-widest uppercase

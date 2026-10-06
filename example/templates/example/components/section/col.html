@@ -34,26 +34,6 @@
     </c-section>
   </c-demo.live>
 
-  <c-demo.live label="Written first, shown last" anchor="order">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section align="center" class="bg-base-200">
-  <c-section.col order="last">…copy, written first so a phone reads it first…</c-section.col>
-  <c-section.col>…media…</c-section.col>
-</c-section>{% endverbatim %}{% endfilter %}</c-slot>
-    <c-section align="center" class="bg-base-200">
-      <c-section.col order="last">
-        <h2 class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">The picture leads on a wide screen</h2>
-        <p class="mt-4 text-lg leading-relaxed text-base-content/80">
-          This copy is written first and carries <code>order="last"</code>. On a phone it is read first, because the order written is the order stacked.
-        </p>
-      </c-section.col>
-      <c-section.col>
-        <c-mockup.browser url="app.example.com/overview" class="shadow-2xl">
-          <c-demo.screenshot />
-        </c-mockup.browser>
-      </c-section.col>
-    </c-section>
-  </c-demo.live>
-
   <c-demo.live label="Columns of different heights" anchor="align">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section>
   <c-section.col>…tall…</c-section.col>

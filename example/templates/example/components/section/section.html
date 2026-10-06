@@ -50,6 +50,26 @@
     </c-section>
   </c-demo.live>
 
+  <c-demo.live label="Reversed on a wide screen" anchor="reverse">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section reverse align="center">
+  <c-section.col>…copy, written first so a phone reads it first…</c-section.col>
+  <c-section.col>…media…</c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section reverse align="center">
+      <c-section.col>
+        <h2 class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">The picture leads on a wide screen</h2>
+        <p class="mt-4 text-lg leading-relaxed text-base-content/80">
+          This copy is written first, and the section carries <code>reverse</code>. On a phone it is still read first, because stacked columns always follow the order written.
+        </p>
+      </c-section.col>
+      <c-section.col>
+        <c-mockup.browser url="app.example.com/overview" class="shadow-2xl">
+          <c-demo.screenshot />
+        </c-mockup.browser>
+      </c-section.col>
+    </c-section>
+  </c-demo.live>
+
   <c-demo.live label="A heading over three columns" anchor="header">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section>
   <c-slot name="header">
