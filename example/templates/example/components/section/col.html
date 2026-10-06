@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Column{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-section.col">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Nothing says how many columns a section has. Each <code>&lt;c-section.col&gt;</code> opens one, and they share the width equally unless <code>span</code> says otherwise.
+      Narrow the window past the <code>lg</code> breakpoint and every example below becomes one column, in the order it is written.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="Sharing the width unequally" anchor="span">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section>
+  <c-section.col span="2">…</c-section.col>
+  <c-section.col span="3">…</c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section size="sm" gap="sm">
+      <c-section.col><c-demo.box>No <code>span</code></c-demo.box></c-section.col>
+      <c-section.col><c-demo.box>No <code>span</code></c-demo.box></c-section.col>
+    </c-section>
+    <c-section size="sm" gap="sm">
+      <c-section.col span="2"><c-demo.box><code>span="2"</code>, two fifths</c-demo.box></c-section.col>
+      <c-section.col span="3"><c-demo.box><code>span="3"</code>, three fifths</c-demo.box></c-section.col>
+    </c-section>
+    <c-section size="sm" gap="sm">
+      <c-section.col><c-demo.box>A quarter</c-demo.box></c-section.col>
+      <c-section.col><c-demo.box>A quarter</c-demo.box></c-section.col>
+      <c-section.col span="2"><c-demo.box><code>span="2"</code>, a half</c-demo.box></c-section.col>
+    </c-section>
+    <c-section size="sm" gap="sm">
+      <c-section.col><c-demo.box>A sidebar</c-demo.box></c-section.col>
+      <c-section.col span="3"><c-demo.box><code>span="3"</code>, the main column</c-demo.box></c-section.col>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="Written first, shown last" anchor="order">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section align="center" class="bg-base-200">
+  <c-section.col order="last">…copy, written first so a phone reads it first…</c-section.col>
+  <c-section.col>…media…</c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section align="center" class="bg-base-200">
+      <c-section.col order="last">
+        <h2 class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">The picture leads on a wide screen</h2>
+        <p class="mt-4 text-lg leading-relaxed text-base-content/80">
+          This copy is written first and carries <code>order="last"</code>. On a phone it is read first, because the order written is the order stacked.
+        </p>
+      </c-section.col>
+      <c-section.col>
+        <c-mockup.browser url="app.example.com/overview" class="shadow-2xl">
+          <c-demo.screenshot />
+        </c-mockup.browser>
+      </c-section.col>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="Columns of different heights" anchor="align">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section>
+  <c-section.col>…tall…</c-section.col>
+  <c-section.col>…stretches to match, the default…</c-section.col>
+  <c-section.col align="start">…</c-section.col>
+  <c-section.col align="center">…</c-section.col>
+  <c-section.col align="end">…</c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section size="sm" gap="sm">
+      <c-section.col>
+        <c-demo.box>
+          The tallest column sets the height of the row. This one runs to several lines so that the others have something to line up against, and it keeps going a little longer than it needs to for that reason alone.
+        </c-demo.box>
+      </c-section.col>
+      <c-section.col class="rounded-2xl bg-base-200 p-6 text-sm">No <code>align</code>: the column is as tall as the row</c-section.col>
+      <c-section.col align="start"><c-demo.box><code>align="start"</code></c-demo.box></c-section.col>
+      <c-section.col align="center"><c-demo.box><code>align="center"</code></c-demo.box></c-section.col>
+      <c-section.col align="end"><c-demo.box><code>align="end"</code></c-demo.box></c-section.col>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="A column with a surface of its own" anchor="surface">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section>
+  <c-section.col>…</c-section.col>
+  <c-section.col class="rounded-2xl bg-primary p-10 text-primary-content">…</c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section>
+      <c-section.col align="center">
+        <h2 class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">Start with one service</h2>
+        <p class="mt-4 text-lg leading-relaxed text-base-content/80">Connect a single pipeline and leave the rest where they are. Most teams move the second one inside a week.</p>
+      </c-section.col>
+      <c-section.col class="rounded-2xl bg-primary p-10 text-primary-content">
+        <p class="text-sm font-semibold tracking-widest uppercase">Free for 30 days</p>
+        <p class="mt-4 text-2xl font-bold">No card, no sales call, and your data leaves with you.</p>
+        <p class="mt-6"><a class="btn" href="#surface">Start a free trial</a></p>
+      </c-section.col>
+    </c-section>
+  </c-demo.live>
+{% endblock content %}

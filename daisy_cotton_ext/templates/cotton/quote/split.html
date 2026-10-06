@@ -18,33 +18,25 @@
   because a caption has to be the first or last thing in its figure.
 {% endcomment %}
 <c-vars name role source href src alt reverse invert size="md" class />
-<section class="relative isolate overflow-clip
-                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
-                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
-                {{ class }}"
-         {{ attrs }}>
-  {% if background %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
-  {% endif %}
-  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-5 lg:gap-16">
-      <div class="mx-auto w-full max-w-sm lg:col-span-2 {% if reverse %}lg:order-2{% endif %}">
-        {% if media %}
-          {{ media }}
-        {% elif src %}
-          <img src="{{ src }}" alt="{{ alt }}" class="aspect-[4/5] w-full rounded-2xl object-cover" />
-        {% endif %}
-      </div>
-      <figure class="flex flex-col gap-6 lg:col-span-3 {% if reverse %}lg:order-1{% endif %}">
-        {% if logo %}<div>{{ logo }}</div>{% endif %}
-        <blockquote {% if href %}cite="{{ href }}"{% endif %}
-                    class="text-2xl leading-snug font-medium text-balance sm:text-3xl">
-          {{ slot }}
-        </blockquote>
-        {% if name or role or source %}
-          <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" size="lg" :invert="invert" only />
-        {% endif %}
-      </figure>
-    </div>
-  </div>
-</section>
+<c-section size="{{ size }}" align="center" :invert="invert" class="{{ class }}" :attrs="attrs" only>
+  {% if background %}<c-slot name="background">{{ background }}</c-slot>{% endif %}
+  <c-section.col span="2" class="mx-auto w-full max-w-sm" order="{% if reverse %}last{% endif %}" only>
+    {% if media %}
+      {{ media }}
+    {% elif src %}
+      <img src="{{ src }}" alt="{{ alt }}" class="aspect-[4/5] w-full rounded-2xl object-cover" />
+    {% endif %}
+  </c-section.col>
+  <c-section.col span="3" only>
+    <figure class="flex flex-col gap-6">
+      {% if logo %}<div>{{ logo }}</div>{% endif %}
+      <blockquote {% if href %}cite="{{ href }}"{% endif %}
+                  class="text-2xl leading-snug font-medium text-balance sm:text-3xl">
+        {{ slot }}
+      </blockquote>
+      {% if name or role or source %}
+        <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" size="lg" :invert="invert" only />
+      {% endif %}
+    </figure>
+  </c-section.col>
+</c-section>

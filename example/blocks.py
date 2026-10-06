@@ -143,6 +143,15 @@ class Family:
 # when it has something to show, not as a placeholder page.
 FAMILIES: tuple[Family, ...] = (
     Family(
+        slug="section",
+        label="Section",
+        kind="block",
+        components=(
+            Component("section", "Section", tag_name="c-section"),
+            Component("col", "Column", tag_name="c-section.col"),
+        ),
+    ),
+    Family(
         slug="hero",
         label="Heroes",
         kind="block",
