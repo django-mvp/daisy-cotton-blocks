@@ -22,6 +22,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   movement is CSS only. Under `prefers-reduced-motion`, and in a browser without scroll-driven
   animation, the content is simply there.
 
+- The quote family. `<c-quote.pull>`, `<c-quote.mark>`, `<c-quote.card>` and `<c-quote.bubble>` sit
+  inside a page's own layout. `<c-quote.centred>`, `<c-quote.split>` and `<c-quote.wall>` are blocks
+  that take the full width. `<c-quote.byline>` is the caption they share: a portrait, a name, and a
+  role or a cited source. Each quote is a `figure` holding a `blockquote`.
+
+### Changed
+
+- daisy-cotton is now a dependency, and `daisy_cotton` goes in `INSTALLED_APPS`. The quote family
+  shows a portrait with its `<c-avatar>`.
+
 ## [v0.2.0] - 2026-10-05
 
 ### Added

@@ -6,9 +6,9 @@ daisy-cotton-ext ships what is built on top of the base daisy-cotton components.
 configurable regions of a public-facing page, and extended components are single components that
 go further than their daisyUI counterpart. Each is rendered by one Cotton component and styled by
 daisyUI classes the host project provides, plus the plain Tailwind utilities this package ships
-itself. Blocks and two families of extended components, the text effects and the reveals, are
-built so far. `CONTEXT.md` defines these terms, including why
-*variant* is not one of them. Use them.
+itself. Blocks and three families of extended components, the text effects, the reveals and the
+quotes, are built so far. `CONTEXT.md` defines these terms, including the one narrow meaning
+*variant* has here. Use them.
 
 Presentation only. No models, no views, no forms, no URLs, no migrations. Anything needing one of
 those belongs to the project, not here.
@@ -150,4 +150,5 @@ Feature work follows a spec-driven process: spec → plan → tasks → implemen
 survey. Those are conclusions, not ratified decisions. Anything that has hardened is in
 `CONSTITUTION.md` or an ADR, and `docs/adr/0002` is the one to read before touching the stylesheet.
 `docs/adr/0003` is the one to read before giving a component a new option, `docs/adr/0004`
-before touching a background that moves, and `docs/adr/0006` before touching a reveal.
+before touching a background that moves, `docs/adr/0006` before touching a reveal, and `docs/adr/0007` before writing markup a
+daisy-cotton component already renders.

@@ -4,7 +4,7 @@
 {# @prop source:text | description:"The work it comes from" #}
 {# @prop href:text | description:"Where the source can be read" #}
 {# @prop src:text | description:"A portrait of the person" #}
-{# @prop rating:select['', '1', '2', '3', '4', '5'] | description:"How many stars out of five. Left empty, there is no row of stars." #}
+{# @prop rating:select['', '1', '2', '3', '4', '5'] | description:"How many stars out of five. Left empty, or given anything but a whole number from 1 to 5, there is no row of stars." #}
 {# @prop variant:select['primary', 'secondary', 'accent', 'neutral'] | default:"accent" | description:"The colour of the filled stars" #}
 {# @prop class:text | description:"Extra classes on the card. A surface colour goes here: bg-base-200." #}
 {# @slot Good tools get out of the way. — What was said. Write the quotation marks if you want them. #}
@@ -16,11 +16,13 @@
 {% endcomment %}
 <c-vars name role source href src rating variant="accent" class />
 <figure class="card gap-4 bg-base-100 p-6 ring-1 ring-base-300 {{ class }}" {{ attrs }}>
-  {% if rating %}
-    <div role="img" aria-label="{{ rating }} out of 5" class="flex gap-0.5 text-lg leading-none">
-      {% for star in "12345" %}<span aria-hidden="true" class="{% if star <= rating %}text-{{ variant }}{% else %}text-base-content/20{% endif %}">&#9733;</span>{% endfor %}
-    </div>
-  {% endif %}
+  {% with stars=rating|stringformat:"s" %}
+    {% if stars|length == 1 and stars in "12345" %}
+      <div role="img" aria-label="{{ stars }} out of 5" class="flex gap-0.5 text-lg leading-none">
+        {% for star in "12345" %}<span aria-hidden="true" class="{% if star <= stars %}text-{{ variant }}{% else %}text-base-content/20{% endif %}">&#9733;</span>{% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
   <blockquote {% if href %}cite="{{ href }}"{% endif %} class="flex-1 leading-relaxed text-pretty">{{ slot }}</blockquote>
   {% if name or role or source %}
     <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" src="{{ src }}" only />
