@@ -88,9 +88,7 @@ class TestCatalogue:
         assert all(family.components for family in blocks.FAMILIES)
 
     def test_every_component_names_its_cotton_tag(self) -> None:
-        family, component = blocks.find("hero", "centred")
-
-        assert component.tag(family.slug) == "c-hero.centred"
+        assert blocks.FAMILIES[0].components[0].tag("hero") == "c-hero.centred"
 
     def test_an_unknown_slug_resolves_to_nothing(self) -> None:
         assert blocks.find("hero", "nonexistent") is None
