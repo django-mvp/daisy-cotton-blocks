@@ -1,0 +1,36 @@
+{# @description One figure, set very large and filled with a gradient of the theme's colours, over a line saying what it is. For the single number a page is built round. #}
+{# @prop value:text | description:"The figure itself, already formatted. Keep it short: it is set very large." #}
+{# @prop title:text | description:"What the figure is. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The supporting sentence under the title" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"2" | description:"Heading level of the title" #}
+{# @prop icon:text | description:"An icon above the figure, by the name the project's icon component knows it by. Left out, there is no icon." #}
+{# @prop speed:number | default:"0" | description:"How quickly the colours slide across the figure, as a multiple. 0 holds them still." #}
+{# @prop size:select['sm', 'md', 'lg'] | default:"md" | description:"How much vertical room the block takes" #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
+{# @slot:figure — Above the figure in place of the icon, for anything that is not one: a logo, a picture. #}
+{# @slot:actions <a class="btn btn-primary" href="#">See how it is measured</a> — Under the copy. Write real anchor markup. #}
+{% comment %}
+  The fill is this package's gradient text effect, held still unless `speed` is
+  set. The figure is read out with its title: together they are the heading.
+{% endcomment %}
+<c-vars value title lead level="2" icon speed="0" size="md" class />
+<section class="text-base-content
+                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  <div class="mx-auto flex w-full max-w-3xl flex-col items-center gap-4 px-4 text-center sm:px-6 lg:px-8">
+    {% if figure %}
+      <div>{{ figure }}</div>
+    {% elif icon %}
+      <c-icon name="{{ icon }}" class="text-4xl opacity-60" aria-hidden="true" only />
+    {% endif %}
+    {# djlint:off #}
+    <h{{ level }} class="flex w-full flex-col items-center gap-3">
+      <span class="max-w-full text-7xl leading-none font-extrabold tracking-tight wrap-anywhere tabular-nums sm:text-8xl lg:text-9xl"><c-text.gradient speed="{{ speed }}" only>{{ value }}</c-text.gradient></span>
+      {% if title %}<span class="text-2xl font-bold tracking-tight text-balance sm:text-3xl">{{ title }}</span>{% endif %}
+    </h{{ level }}>
+    {# djlint:on #}
+    {% if lead %}<p class="max-w-2xl text-lg leading-relaxed text-pretty text-base-content/80">{{ lead }}</p>{% endif %}
+    {% if actions %}<div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>{% endif %}
+  </div>
+</section>

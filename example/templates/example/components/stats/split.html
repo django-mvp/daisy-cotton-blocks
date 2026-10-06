@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Split{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-stats.split">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      The claim on one side, the figures that back it on the other. Each figure gets a panel of its own, two to a row. On a narrow screen the copy comes first and the figures follow in one column.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="Four figures, with icons" anchor="four">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.split eyebrow="After six months" title="Releases stopped being an event" lead="…">
+  <c-slot name="actions"><a class="btn btn-primary" href="#">Read the write-up</a></c-slot>
+  <c-stats.trend title="Deploys a day" value="31" change="12%" desc="since last month" />
+  <c-stats.trend title="Median lead time" value="18m" change="26m" direction="down" inverse desc="since the spring" />
+  <c-stats.progress title="Services moved over" value="14" percent="70" desc="of 20" />
+  <c-stats.count title="Rolled back" to="2" suffix="%" />
+</c-stats.split>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-stats.split eyebrow="After six months" title="Releases stopped being an event" lead="The team went from one nervous release a week to shipping whenever the work is ready. Nobody stays late for one any more.">
+      <c-slot name="actions"><a class="btn btn-primary" href="#four">Read the write-up</a></c-slot>
+      <c-stats.trend icon="deploys" title="Deploys a day" value="31" change="12%" desc="since last month" />
+      <c-stats.trend icon="time" title="Median lead time" value="18m" change="26m" direction="down" inverse desc="since the spring" />
+      <c-stats.progress icon="services" title="Services moved over" value="14" percent="70" desc="of 20" />
+      <c-stats.count icon="failed" title="Rolled back" to="2" suffix="%" desc="Each inside a minute" />
+    </c-stats.split>
+  </c-demo.live>
+
+  <c-demo.live label="Three figures: the odd one takes the row" anchor="three">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.split title="…" class="bg-base-100">…three figures…</c-stats.split>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-stats.split title="Three numbers we report every month">
+      <c-stats.count title="Deploys a day" to="31" />
+      <c-stats.count title="Services" to="14" />
+      <c-stats.trend title="Median lead time" value="18m" change="26m" direction="down" inverse desc="since the spring" />
+    </c-stats.split>
+  </c-demo.live>
+
+  <c-demo.live label="One figure, no lead, a long heading" anchor="one">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.split title="…"><c-stats.progress … /></c-stats.split>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-stats.split size="sm" title="Two thirds of the way to moving every service off the old pipeline, with the hardest ones already done">
+      <c-stats.progress title="Services moved over" value="14" percent="70" variant="success" desc="of 20" />
+    </c-stats.split>
+  </c-demo.live>
+{% endblock content %}

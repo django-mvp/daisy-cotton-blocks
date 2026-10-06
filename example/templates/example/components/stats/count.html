@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Count up{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-stats.count">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      <strong>Scroll the page.</strong> Each figure counts up from nothing as it comes into view, and counts back down when it is scrolled away. Scrolling only starts the count. From there it runs on the clock, so the number never rests on a figure that is not true.
+    </p>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      It needs no script. In a browser without scroll-driven animation, and for anyone who has asked their system to reduce motion, the finished number is simply there. A screen reader is always given the finished number.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="A row of figures" anchor="row">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<div class="grid gap-6 sm:grid-cols-3">
+  <c-stats.count title="Deploys a day" to="31" desc="Across 14 services" />
+  <c-stats.count title="Rolled back" to="2" suffix="%" desc="Each inside a minute" />
+  <c-stats.count title="Saved a year" to="48" prefix="€" suffix="k" desc="Against the old pipeline" />
+</c-stat.group>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-24">
+      <div class="grid gap-6 sm:grid-cols-3">
+        <c-stats.count title="Deploys a day" to="31" desc="Across 14 services" />
+        <c-stats.count title="Rolled back" to="2" suffix="%" desc="Each inside a minute" />
+        <c-stats.count title="Saved a year" to="48" prefix="€" suffix="k" desc="Against the old pipeline" />
+      </div>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="Large numbers, and how long the count takes" anchor="time">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.count title="Requests served" to="1284900" time="4" />
+<c-stats.count title="Requests served" to="1.3" suffix="M" />
+<c-stats.count title="Uptime" to="99" suffix=".98%" time="0.6" />{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-24">
+      <p class="mb-8 max-w-3xl text-base-content/80">The number is written without separators, which is plain to see in the first of these. The second is the way round it: count the leading part and put the rest in <code>suffix</code>. Only whole numbers count, so <code>1.3</code> is rounded to 1, and the third keeps its decimals in the suffix.</p>
+      <div class="grid gap-6 sm:grid-cols-3">
+        <c-stats.count title="Requests served" to="1284900" time="4" desc="Four seconds" />
+        <c-stats.count title="Requests served" to="1.3" suffix="M" desc="Rounded to a whole number" />
+        <c-stats.count title="Uptime" to="99" suffix=".98%" time="0.6" desc="Just over half a second" />
+      </div>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="Nothing to count, and too much to say" anchor="edges">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.count title="Open incidents" to="0" />
+<c-stats.count to="7" />
+<c-stats.count title="…" to="212" suffix=" ms" desc="…" />{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-24">
+      <div class="grid gap-6 md:grid-cols-3">
+        <c-stats.count title="Open incidents" to="0" desc="Zero stays at zero" />
+        <c-stats.count to="7" />
+        <c-stats.count title="Median response time across every region we serve from" to="212" suffix=" ms" desc="Measured at the edge over the last thirty days, including the two regions added in September" />
+      </div>
+    </c-container>
+  </c-demo.live>
+  <c-demo.live label="Inside a daisyUI stats row" anchor="stats-row">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stat.group class="w-full">
+  <c-stats.count title="Deploys a day" to="31" />
+  …
+</c-stat.group>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-24">
+      <p class="mb-8 max-w-3xl text-base-content/80">A <code>stats</code> row is a scrolling box of its own, and the browser measures "in view" against the nearest one. In there the figures are always in view, so they count once as the page loads and not as you reach them. Reload the page with this row on screen to see it. For a count that waits, put the figures in a plain grid, or in <code>c-stats.band</code>.</p>
+      <div class="overflow-x-auto">
+        <c-stat.group class="w-full">
+          <c-stats.count title="Deploys a day" to="31" desc="Across 14 services" />
+          <c-stats.count title="Rolled back" to="2" suffix="%" desc="Each inside a minute" />
+          <c-stats.count title="Saved a year" to="48" prefix="€" suffix="k" desc="Against the old pipeline" />
+        </c-stat.group>
+      </div>
+    </c-container>
+  </c-demo.live>
+  <c-demo.live label="With an icon" anchor="icon">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.count icon="deploys" title="Deploys a day" to="31" />{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-24">
+      <p class="mb-8 max-w-3xl text-base-content/80">The icon is optional on every one of these. <code>icon</code> takes a name and hands it to the project's own <code>c-icon</code>, so it draws whatever icon set the project already uses. For anything that is not an icon, fill the <code>figure</code> slot.</p>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <c-stats.count icon="deploys" title="Deploys a day" to="31" desc="Across 14 services" />
+        <c-stats.count icon="failed" title="Rolled back" to="2" suffix="%" desc="Each inside a minute" />
+        <c-stats.count icon="money" title="Saved a year" to="48" prefix="€" suffix="k" desc="Against the old pipeline" />
+        <c-stats.count title="Northern region" to="41" desc="Teams"><c-slot name="figure"><img class="size-12 rounded-full object-cover" src="{% static 'example/ridgeline.svg' %}" alt="" /></c-slot></c-stats.count>
+      </div>
+    </c-container>
+  </c-demo.live>
+{% endblock content %}

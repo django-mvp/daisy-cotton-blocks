@@ -1,0 +1,32 @@
+{# @description A trend stat set on the centre line: the icon on top, the figure, what it counts beneath it, then the change. For a band of figures or a panel that stands alone. #}
+{# @prop title:text | description:"What the figure counts" #}
+{# @prop value:text | description:"The figure itself, already formatted" #}
+{# @prop change:text | description:"The size of the move, already formatted: 12%, 4, €1.2k. Left out, no arrow is drawn." #}
+{# @prop direction:select['up', 'down', 'flat'] | default:"up" | description:"Which way the figure moved" #}
+{# @prop inverse:boolean | default:False | description:"Set where a fall is the good news: lead time, failures, cost. It swaps which direction is coloured as good." #}
+{# @prop desc:text | description:"What the change is measured against: since last month" #}
+{# @prop icon:text | description:"An icon, by the name the project's icon component knows it by. Left out, there is no icon." #}
+{# @prop class:text | description:"Extra classes on the stat" #}
+{# @slot:figure <img class="size-12 rounded-full" src="…" alt="" /> — In place of the icon, for anything that is not one: a picture, a logo, an avatar. #}
+{% comment %}
+  Built on daisy-cotton's stat. The title comes after the figure here, so the
+  number is what is met first.
+{% endcomment %}
+<c-vars title value change direction="up" inverse desc icon class />
+<c-stat class="justify-items-center text-center {{ class }}" :attrs="attrs" only>
+  {% if icon or figure %}<c-slot name="title">{% if figure %}{{ figure }}{% else %}<c-icon name="{{ icon }}" class="text-3xl" aria-hidden="true" only />{% endif %}</c-slot>{% endif %}
+  <c-slot name="value"><span class="tabular-nums">{{ value }}</span></c-slot>
+  {% if title or change or desc %}
+    <c-slot name="desc">
+      <div class="flex flex-col items-center gap-2 whitespace-normal">
+        {% if title %}<span class="text-sm font-semibold">{{ title }}</span>{% endif %}
+        {% if change or desc %}
+          <span class="flex flex-wrap items-center justify-center gap-2">
+            {% if change %}<c-stats.change :change="change" :direction="direction" :inverse="inverse" only />{% endif %}
+            {% if desc %}<span>{{ desc }}</span>{% endif %}
+          </span>
+        {% endif %}
+      </div>
+    </c-slot>
+  {% endif %}
+</c-stat>

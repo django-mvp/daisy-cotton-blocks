@@ -25,8 +25,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   inside a page's own layout. `<c-quote.centred>`, `<c-quote.split>` and `<c-quote.wall>` are blocks
   that take the full width. `<c-quote.byline>` is the caption they share: a portrait, a name, and a
   role or a cited source. Each quote is a `figure` holding a `blockquote`.
+- The stats family, built on daisy-cotton's `<c-stat>`. `<c-stats.trend>` shows how a figure has
+  moved and comes in five more layouts that take the same attributes: `<c-stats.trend-inline>`,
+  `<c-stats.trend-corner>`, `<c-stats.trend-centred>`, `<c-stats.trend-footer>` and
+  `<c-stats.trend-row>`. `<c-stats.progress>` adds a bar towards a target, `<c-stats.count>` counts
+  up as it scrolls into view, and `<c-stats.change>` is the arrow badge by itself.
+  `<c-stats.band>`, `<c-stats.split>` and `<c-stats.headline>` are blocks that set figures out
+  across a page. Every stat takes an optional `icon`. None draws a chart.
+- A translation catalogue, `locale/en`, for the few words the package supplies itself: the
+  direction a trend stat reads out to a screen reader, and a quote card's rating.
 
 ### Changed
+
+- The daisyUI classes a host is expected to provide now include `badge-soft`, `badge-sm`, the
+  success, error and neutral badge colours, `progress` and its colours, `stat-figure` and
+  `stat-actions`. All are in daisyUI 5.
 
 - **Breaking.** The attribute that picks a theme colour is `variant`, the name daisy-cotton gives
   it, in place of `color`. It changes on `<c-hero.highlight>`, `<c-background.particles>` and

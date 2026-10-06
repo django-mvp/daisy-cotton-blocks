@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Change{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-stats.change">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      The badge every trend stat carries, by itself. Use it wherever a figure of your own needs to say how it has moved: in a table cell, beside a heading, in a list row.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.change change="12%" />{% endverbatim %}{% endfilter %}</c-slot>
+        <div class="p-6"><c-stats.change change="12%" /></div>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.change change="8%" direction="down" />{% endverbatim %}{% endfilter %}</c-slot>
+        <div class="p-6"><c-stats.change change="8%" direction="down" /></div>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.change change="26m" direction="down" inverse />{% endverbatim %}{% endfilter %}</c-slot>
+        <div class="p-6"><c-stats.change change="26m" direction="down" inverse /></div>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.change change="3" inverse />{% endverbatim %}{% endfilter %}</c-slot>
+        <div class="p-6"><c-stats.change change="3" inverse /></div>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.change change="0" direction="flat" />{% endverbatim %}{% endfilter %}</c-slot>
+        <div class="p-6"><c-stats.change change="0" direction="flat" /></div>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.change change="€212,400.50" />{% endverbatim %}{% endfilter %}</c-slot>
+        <div class="p-6"><c-stats.change change="€212,400.50" /></div>
+      </c-demo.tile>
+    </div>
+  </c-container>
+
+  <c-demo.live label="In a table" anchor="table">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<td>checkout-api</td><td>31</td><td><c-stats.change change="12%" /></td>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-16">
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead><tr><th>Service</th><th>Deploys this month</th><th>Against last month</th></tr></thead>
+          <tbody>
+            <tr><td>checkout-api</td><td>31</td><td><c-stats.change change="12%" /></td></tr>
+            <tr><td>ledger</td><td>18</td><td><c-stats.change change="4%" direction="down" /></td></tr>
+            <tr><td>notifications</td><td>22</td><td><c-stats.change change="0" direction="flat" /></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </c-container>
+  </c-demo.live>
+{% endblock content %}

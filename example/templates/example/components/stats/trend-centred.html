@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Centred{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-stats.trend-centred">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Everything on the centre line, and the figure before its title: icon, number, what it counts, then the change. It suits a band of figures, or a panel standing alone.
+    </p>
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      One of six arrangements of the same parts. They take the same attributes, so changing layout is changing the tag. All six are side by side on the <a class="link" href="{% url 'component' family='stats' component='trend' %}#layouts">stacked layout's page</a>.
+    </p>
+  </c-demo.head>
+
+  <c-container class="pb-10">
+    <div class="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.trend-centred title="Deploys a day" value="31" change="12%" desc="since last month" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-stat.group class="w-full"><c-stats.trend-centred title="Deploys a day" value="31" change="12%" desc="since last month" /></c-stat.group>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.trend-centred icon="time" title="Median lead time" value="18m" change="26m" direction="down" inverse desc="since the spring" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-stat.group class="w-full"><c-stats.trend-centred icon="time" title="Median lead time" value="18m" change="26m" direction="down" inverse desc="since the spring" /></c-stat.group>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.trend-centred icon="failed" title="Failed deploys" value="7" change="3" inverse desc="since last week" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-stat.group class="w-full"><c-stats.trend-centred icon="failed" title="Failed deploys" value="7" change="3" inverse desc="since last week" /></c-stat.group>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.trend-centred title="Services" value="14" change="0" direction="flat" desc="since last month" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-stat.group class="w-full"><c-stats.trend-centred title="Services" value="14" change="0" direction="flat" desc="since last month" /></c-stat.group>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.trend-centred title="Waiting on a person" value="0" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-stat.group class="w-full"><c-stats.trend-centred title="Waiting on a person" value="0" /></c-stat.group>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.trend-centred icon="services" title="Open incidents" value="2" desc="Both acknowledged" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-stat.group class="w-full"><c-stats.trend-centred icon="services" title="Open incidents" value="2" desc="Both acknowledged" /></c-stat.group>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.trend-centred icon="money" title="…" value="€1,284,900.00" change="€212,400.50" desc="…" />{% endverbatim %}{% endfilter %}</c-slot>
+        <c-stat.group class="w-full"><c-stats.trend-centred icon="money" title="Recurring revenue across every region, after refunds and credits" value="€1,284,900.00" change="€212,400.50" desc="against the same quarter of the year before, which was itself the best on record" /></c-stat.group>
+      </c-demo.tile>
+      <c-demo.tile>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.trend-centred title="Northern region" value="€84k" change="6%" desc="since last quarter"><c-slot name="figure"><img … /></c-slot></c-stats.trend-centred>{% endverbatim %}{% endfilter %}</c-slot>
+        <c-stat.group class="w-full"><c-stats.trend-centred title="Northern region" value="€84k" change="6%" desc="since last quarter"><c-slot name="figure"><img class="size-12 rounded-full object-cover" src="{% static 'example/ridgeline.svg' %}" alt="" /></c-slot></c-stats.trend-centred></c-stat.group>
+      </c-demo.tile>
+    </div>
+  </c-container>
+
+  <c-demo.live label="Three in a group" anchor="row">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stat.group class="w-full">
+  <c-stats.trend-centred icon="deploys" title="Deploys a day" value="31" change="12%" desc="since last month" />
+  …
+</c-stat.group>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-16">
+      <div class="overflow-x-auto">
+        <c-stat.group class="w-full">
+          <c-stats.trend-centred icon="deploys" title="Deploys a day" value="31" change="12%" desc="since last month" />
+          <c-stats.trend-centred icon="time" title="Median lead time" value="18m" change="26m" direction="down" inverse desc="since the spring" />
+          <c-stats.trend-centred icon="failed" title="Failed deploys" value="7" change="3" inverse desc="since last week" />
+        </c-stat.group>
+      </div>
+    </c-container>
+  </c-demo.live>
+{% endblock content %}

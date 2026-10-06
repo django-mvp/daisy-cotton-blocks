@@ -108,6 +108,13 @@ EASY_ICONS = {
             "home": "bi bi-house",
             "block": "bi bi-square",
             "gallery": "bi bi-grid-3x3-gap",
+            # The figures on the stats pages.
+            "deploys": "bi bi-rocket-takeoff",
+            "time": "bi bi-stopwatch",
+            "failed": "bi bi-bug",
+            "services": "bi bi-boxes",
+            "money": "bi bi-cash-coin",
+            "storage": "bi bi-hdd",
         },
     }
 }

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Band{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-stats.band">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      The numbers a visitor should leave with, in one band across the page. The figures go in the slot: any of the stats components, or daisy-cotton's own <code>c-stat</code>. One row on a wide screen however many there are, two columns on a tablet, one on a phone. It takes a background the way the heroes do, and <code>cascade</code> brings the figures in with the package's own cascade reveal.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="With a heading, counting up" anchor="heading">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.band eyebrow="In production" title="Trusted with the releases that matter" lead="…">
+  <c-stats.count title="Deploys a day" to="31" />
+  <c-stats.count title="Services" to="14" />
+  <c-stats.count title="Rolled back" to="2" suffix="%" />
+  <c-stats.count title="Saved a year" to="48" prefix="€" suffix="k" />
+</c-stats.band>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-stats.band eyebrow="In production" title="Trusted with the releases that matter" lead="Fourteen services ship through it every working day. These are last month's figures.">
+      <c-stats.count title="Deploys a day" to="31" />
+      <c-stats.count title="Services" to="14" />
+      <c-stats.count title="Rolled back" to="2" suffix="%" />
+      <c-stats.count title="Saved a year" to="48" prefix="€" suffix="k" />
+    </c-stats.band>
+  </c-demo.live>
+
+  <c-demo.live label="With icons, over a background, arriving one after another" anchor="cascade">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.band cascade size="lg" eyebrow="In production" title="Trusted with the releases that matter">
+  <c-slot name="background"><c-background.grid /></c-slot>
+  <c-stats.count icon="deploys" title="Deploys a day" to="31" />
+  …
+</c-stats.band>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-stats.band cascade size="lg" eyebrow="In production" title="Trusted with the releases that matter">
+      <c-slot name="background"><c-background.grid /></c-slot>
+      <c-stats.count icon="deploys" title="Deploys a day" to="31" />
+      <c-stats.count icon="services" title="Services" to="14" />
+      <c-stats.count icon="failed" title="Rolled back" to="2" suffix="%" />
+      <c-stats.count icon="money" title="Saved a year" to="48" prefix="€" suffix="k" />
+    </c-stats.band>
+  </c-demo.live>
+
+  <c-demo.live label="The figures alone, on a surface colour" anchor="bare">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.band size="sm" class="bg-base-200">
+  <c-stats.trend title="Deploys a day" value="31" change="12%" desc="since last month" />
+  …
+</c-stats.band>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-stats.band size="sm" class="bg-base-200">
+      <c-stats.trend title="Deploys a day" value="31" change="12%" desc="since last month" />
+      <c-stats.trend title="Median lead time" value="18m" change="26m" direction="down" inverse desc="since the spring" />
+      <c-stats.trend title="Failed deploys" value="7" change="3" inverse desc="since last week" />
+    </c-stats.band>
+  </c-demo.live>
+
+  <c-demo.live label="daisy-cotton's own stat, inverted on a dark surface" anchor="plain">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.band title="A year in numbers" invert class="bg-neutral">
+  <c-stat value="7,440" desc="Releases" />
+  …
+</c-stats.band>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-stats.band title="A year in numbers" invert class="bg-neutral">
+      <c-stat value="7,440" desc="Releases" />
+      <c-stat value="99.98%" desc="Uptime" />
+      <c-stat value="41" desc="Teams" />
+    </c-stats.band>
+  </c-demo.live>
+
+  <c-demo.live label="One figure, then six" anchor="counts">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.band size="sm">…</c-stats.band>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-stats.band size="sm">
+      <c-stats.count title="Deploys a day" to="31" desc="A band can hold a single figure" />
+    </c-stats.band>
+    <c-stats.band size="sm" title="Six is more than a row wants" lead="They still fit on a wide screen, but each has little room. Three or four read best.">
+      <c-stats.count title="Deploys a day" to="31" />
+      <c-stats.count title="Services" to="14" />
+      <c-stats.count title="Rolled back" to="2" suffix="%" />
+      <c-stats.count title="Teams" to="41" />
+      <c-stats.count title="Regions" to="6" />
+      <c-stats.count title="Median response time at the edge" to="212" suffix=" ms" />
+    </c-stats.band>
+  </c-demo.live>
+{% endblock content %}
