@@ -17,7 +17,7 @@
   {% if background %}<c-slot name="background">{{ background }}</c-slot>{% endif %}
   <c-section.col class="flex flex-col gap-6 text-center lg:text-left" only>
     {{ announcement }}
-    <c-heading :eyebrow="eyebrow" :title="title" :lead="lead" level="{{ level }}" size="lg" :invert="invert" only />
+    <c-heading :eyebrow="eyebrow" :title="title" :lead="lead" level="{{ level }}" size="lg" align="none" :invert="invert" only />
     {% if actions %}
       <div class="flex flex-wrap items-center justify-center gap-3 pt-2 lg:justify-start">{{ actions }}</div>
     {% endif %}

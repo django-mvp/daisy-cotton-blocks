@@ -1256,6 +1256,12 @@
   .text-center {
     text-align: center;
   }
+  .text-end {
+    text-align: end;
+  }
+  .text-start {
+    text-align: start;
+  }
   .font-serif {
     font-family: var(--font-serif, ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif);
   }

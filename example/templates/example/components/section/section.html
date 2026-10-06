@@ -73,7 +73,7 @@
   <c-demo.live label="A heading over three columns" anchor="header">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section>
   <c-slot name="header">
-    <c-heading centred eyebrow="Included in every plan" title="What you get on day one" lead="…" />
+    <c-heading eyebrow="Included in every plan" title="What you get on day one" lead="…" />
   </c-slot>
   <c-section.col>…</c-section.col>
   <c-section.col>…</c-section.col>
@@ -81,7 +81,7 @@
 </c-section>{% endverbatim %}{% endfilter %}</c-slot>
     <c-section>
       <c-slot name="header">
-        <c-heading centred eyebrow="Included in every plan" title="What you get on day one" lead="Nothing here is held back for a larger plan." />
+        <c-heading eyebrow="Included in every plan" title="What you get on day one" lead="Nothing here is held back for a larger plan." />
       </c-slot>
       <c-section.col>
         <h3 class="text-xl font-semibold">A timeline of every deploy</h3>
@@ -207,7 +207,7 @@
     <c-section invert class="bg-neutral">
       <c-slot name="background"><c-background.glow /></c-slot>
       <c-section container="narrow">
-        <c-heading centred invert title="One background, two widths" lead="The outer section carries the background. This introduction sits in a narrow section inside it, and the columns below in a second one at the default width." />
+        <c-heading invert title="One background, two widths" lead="The outer section carries the background. This introduction sits in a narrow section inside it, and the columns below in a second one at the default width." />
       </c-section>
       <c-section class="mt-12">
         <c-section.col>
