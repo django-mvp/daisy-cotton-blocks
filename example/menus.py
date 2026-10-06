@@ -36,7 +36,7 @@ def family_entries(family: Family) -> list[MenuItem]:
             continue
         entries.append(
             MenuGroup(
-                name=f"family-{family.slug}-{heading.lower()}",
+                name=f"family-{family.slug}-{heading.lower().replace(' ', '-')}",
                 extra_context={"label": heading},
                 children=links,
             )

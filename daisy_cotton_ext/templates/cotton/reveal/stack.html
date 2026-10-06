@@ -1,0 +1,15 @@
+{# @description Wraps a run of panels so each one stops at the top of the screen and the next slides up over it. #}
+{# @prop top:number | default:"0" | description:"How far below the top of the screen a panel stops, in rem. The height of a fixed navbar, usually." #}
+{# @prop step:number | default:"0" | description:"How much lower each panel stops than the one before, in rem, so the edges of the covered ones stay showing like a deck of cards" #}
+{# @prop class:text | description:"Extra classes on the wrapper. A gap between panels goes here: space-y-6." #}
+{# @slot The panels — Each direct child is one panel. Give each a solid surface, or the one underneath shows through. #}
+{% comment %}
+  Plain `position: sticky`. An `overflow-hidden` on anything between a panel and
+  the page stops it sticking (docs/adr/0006-reveals-follow-the-scroll-position.md).
+{% endcomment %}
+<c-vars top="0" step="0" class />
+<div class="*:nth-2:[--stack-i:1] *:nth-3:[--stack-i:2] *:nth-4:[--stack-i:3] *:nth-5:[--stack-i:4] *:nth-6:[--stack-i:5] *:nth-7:[--stack-i:6] *:nth-8:[--stack-i:7] *:nth-9:[--stack-i:8] *:nth-10:[--stack-i:9] *:nth-11:[--stack-i:10] *:nth-12:[--stack-i:11]
+            *:sticky *:top-[calc((var(--stack-top,0)_+_var(--stack-i,0)*var(--stack-step,0))*1rem)]
+            {{ class }}"
+     style="--stack-top: {{ top|floatformat:'-3u'|default:'0' }}; --stack-step: {{ step|floatformat:'-3u'|default:'0' }}"
+     {{ attrs }}>{{ slot }}</div>

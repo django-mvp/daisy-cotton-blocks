@@ -14,6 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `<c-text.marker>`, `<c-text.typewriter>`, `<c-text.wave>` and `<c-text.glitch>`, which move. The
   movement is CSS only, each one renders the finished words under `prefers-reduced-motion`, and a
   looping effect takes `repeat` to stop it after a set number of runs.
+- The reveal family. Five follow the scroll position:
+  `<c-reveal.enter>` brings in whatever it wraps, `<c-reveal.cascade>` brings in its children one
+  after another, `<c-reveal.wipe>` uncovers a picture from one edge, `<c-reveal.words>` lights a
+  paragraph a word at a time and `<c-reveal.stack>` slides each panel over the one before.
+  `<c-reveal.hover>` keeps a caption out of sight until its picture is pointed at or focused. The
+  movement is CSS only. Under `prefers-reduced-motion`, and in a browser without scroll-driven
+  animation, the content is simply there.
 
 ## [v0.2.0] - 2026-10-05
 

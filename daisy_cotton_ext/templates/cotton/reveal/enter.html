@@ -1,0 +1,19 @@
+{# @description Wraps anything and brings it in as it scrolls into view: fading, rising, sliding, growing or coming into focus. Simply there where the browser cannot do it. #}
+{# @prop effect:select['up', 'down', 'left', 'right', 'zoom', 'blur', 'fade'] | default:"up" | description:"How it arrives. A direction is the way it travels, so up rises into place from below." #}
+{# @prop distance:number | default:"2" | description:"How far it travels, in rem. Used by up, down, left and right." #}
+{# @prop over:number | default:"1" | description:"How much scrolling the arrival takes, as a multiple of the element's own height: 1 finishes as its bottom edge comes into view, 2 takes twice as long." #}
+{# @prop class:text | description:"Extra classes on the wrapper" #}
+{# @slot What arrives — Anything: a heading, a card, a picture, a whole row. #}
+{% comment %}
+  The movement follows the scroll position, so it runs backwards when the page
+  is scrolled back up (docs/adr/0006-reveals-follow-the-scroll-position.md).
+  `left` and `right` start outside the box: a parent clips them with `overflow-clip`.
+{% endcomment %}
+<c-vars effect="up" distance="2" over="1" class />
+<div class="{% if effect == 'blur' %}motion-safe:supports-[animation-timeline:view()]:animate-[dce-reveal-blur_1ms_linear_both]{% else %}motion-safe:supports-[animation-timeline:view()]:animate-[dce-reveal_1ms_linear_both]{% endif %}
+            motion-safe:supports-[animation-timeline:view()]:[animation-timeline:view()]
+            motion-safe:supports-[animation-timeline:view()]:[animation-range:entry_0%_entry_calc(var(--reveal-over,1)*100%)]
+            {% if effect == 'down' %}[--reveal-y:calc(var(--reveal-distance,2rem)*-1)]{% elif effect == 'left' %}[--reveal-x:var(--reveal-distance,2rem)]{% elif effect == 'right' %}[--reveal-x:calc(var(--reveal-distance,2rem)*-1)]{% elif effect == 'zoom' %}[--reveal-scale:0.9]{% elif effect == 'blur' or effect == 'fade' %}{% else %}[--reveal-y:var(--reveal-distance,2rem)]{% endif %}
+            {{ class }}"
+     style="--reveal-distance: {{ distance|floatformat:'-3u'|default:'2' }}rem; --reveal-over: {{ over|floatformat:'-3u'|default:'1' }}"
+     {{ attrs }}>{{ slot }}</div>

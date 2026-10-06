@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Stack{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-reveal.stack">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      <strong>Scroll the page.</strong> Each panel stops at the top of the screen and the next one slides up over it. This is ordinary sticky positioning, so it works in every browser, and nothing moves that the reader did not move.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="Full-width panels" anchor="panels">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.stack>
+  <section class="bg-base-200">…</section>
+  <section class="bg-primary text-primary-content">…</section>
+  <section class="bg-neutral text-neutral-content">…</section>
+</c-reveal.stack>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-reveal.stack>
+        <section class="bg-base-200 text-base-content ">
+          <div class="mx-auto flex min-h-screen max-w-4xl flex-col justify-center px-6 py-16">
+            <p class="text-sm font-semibold tracking-widest uppercase opacity-80">Step one</p>
+            <h3 class="mt-3 text-4xl font-bold tracking-tight text-balance md:text-5xl">Connect the repository</h3>
+            <p class="mt-4 max-w-2xl text-lg">Point it at the main branch. It reads the build you already have and changes nothing.</p>
+          </div>
+        </section>
+        <section class="bg-primary text-primary-content ">
+          <div class="mx-auto flex min-h-screen max-w-4xl flex-col justify-center px-6 py-16">
+            <p class="text-sm font-semibold tracking-widest uppercase opacity-80">Step two</p>
+            <h3 class="mt-3 text-4xl font-bold tracking-tight text-balance md:text-5xl">Name who approves</h3>
+            <p class="mt-4 max-w-2xl text-lg">One person, a team, or anyone but the author. Set it per service.</p>
+          </div>
+        </section>
+        <section class="bg-neutral text-neutral-content ">
+          <div class="mx-auto flex min-h-screen max-w-4xl flex-col justify-center px-6 py-16">
+            <p class="text-sm font-semibold tracking-widest uppercase opacity-80">Step three</p>
+            <h3 class="mt-3 text-4xl font-bold tracking-tight text-balance md:text-5xl">Merge</h3>
+            <p class="mt-4 max-w-2xl text-lg">A preview on every pull request, a release on every merge, and a way back from each.</p>
+          </div>
+        </section>
+    </c-reveal.stack>
+  </c-demo.live>
+
+  <c-demo.live label="A deck of cards, each edge left showing" anchor="deck">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.stack top="5" step="1.5" class="space-y-10">
+  <section class="rounded-box bg-base-100 shadow-xl">…</section>
+  …
+</c-reveal.stack>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-container class="py-16">
+      <p class="mb-8 max-w-3xl text-base-content/80"><code>top="5"</code> stops each card five rem down, clear of the bar above. <code>step="1.5"</code> stops each one a little lower than the last.</p>
+      <c-reveal.stack top="5" step="1.5" class="mx-auto max-w-3xl space-y-10">
+        <section class="bg-base-100 text-base-content rounded-box shadow-xl ring-1 ring-base-300">
+          <div class="mx-auto flex max-w-4xl flex-col justify-center px-6 py-24">
+            <p class="text-sm font-semibold tracking-widest uppercase opacity-80">Step one</p>
+            <h3 class="mt-3 text-4xl font-bold tracking-tight text-balance md:text-5xl">Connect the repository</h3>
+            <p class="mt-4 max-w-2xl text-lg">Point it at the main branch. It reads the build you already have and changes nothing.</p>
+          </div>
+        </section>
+        <section class="bg-base-200 text-base-content rounded-box shadow-xl ring-1 ring-base-300">
+          <div class="mx-auto flex max-w-4xl flex-col justify-center px-6 py-24">
+            <p class="text-sm font-semibold tracking-widest uppercase opacity-80">Step two</p>
+            <h3 class="mt-3 text-4xl font-bold tracking-tight text-balance md:text-5xl">Name who approves</h3>
+            <p class="mt-4 max-w-2xl text-lg">One person, a team, or anyone but the author. Set it per service.</p>
+          </div>
+        </section>
+        <section class="bg-base-300 text-base-content rounded-box shadow-xl ring-1 ring-base-300">
+          <div class="mx-auto flex max-w-4xl flex-col justify-center px-6 py-24">
+            <p class="text-sm font-semibold tracking-widest uppercase opacity-80">Step three</p>
+            <h3 class="mt-3 text-4xl font-bold tracking-tight text-balance md:text-5xl">Merge</h3>
+            <p class="mt-4 max-w-2xl text-lg">A preview on every pull request, a release on every merge, and a way back from each.</p>
+          </div>
+        </section>
+      </c-reveal.stack>
+    </c-container>
+  </c-demo.live>
+
+  <c-demo.live label="One panel" anchor="one">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-reveal.stack><section>…</section></c-reveal.stack>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-reveal.stack>
+        <section class="bg-base-200 text-base-content ">
+          <div class="mx-auto flex max-w-4xl flex-col justify-center px-6 py-24">
+            <p class="text-sm font-semibold tracking-widest uppercase opacity-80">Only one</p>
+            <h3 class="mt-3 text-4xl font-bold tracking-tight text-balance md:text-5xl">A single panel</h3>
+            <p class="mt-4 max-w-2xl text-lg">With nothing to slide over it, it scrolls like anything else.</p>
+          </div>
+        </section>
+    </c-reveal.stack>
+  </c-demo.live>
+
+  <c-container class="py-24">
+    <p class="mx-auto max-w-2xl text-base-content/80">Whatever follows the stack scrolls over its last panel in the same way.</p>
+  </c-container>
+{% endblock content %}
