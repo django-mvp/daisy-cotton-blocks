@@ -1,4 +1,4 @@
-"""The demo shell: a home page, and a page per component the package ships.
+"""The demo: a front page, and a page per component the package ships.
 
 The catalogue in ``example.blocks`` is the single declaration the sidebar, the
 URLconf and these tests all read, so the failure worth guarding against is a
@@ -200,6 +200,13 @@ class TestPreviews:
         assert b"&lt;c-sign-in.centred" in html
 
 
+def component_url(family: blocks.Family, component: blocks.Component) -> str:
+    """Return the address of a component's demo page."""
+    return reverse(
+        "component", kwargs={"family": family.slug, "component": component.slug}
+    )
+
+
 def preview_url(family: blocks.Family, component: blocks.Component) -> str:
     """Return the address of a whole-page block's bare preview."""
     return reverse(
@@ -250,9 +257,10 @@ class TestSidebarSections:
 
     @pytest.mark.parametrize(("kind", "label"), blocks.SECTIONS)
     def test_the_sidebar_names_each_section(self, client, kind, label) -> None:
-        html = client.get(reverse("home")).content.decode()
+        html = client.get(component_url(*blocks.every_component()[0])).content.decode()
+        sidebar = html[html.index("<aside") : html.index("</aside>")]
 
-        assert re.search(rf">\s*{label}\s*<", html) is not None
+        assert re.search(rf">\s*{label}\s*<", sidebar) is not None
 
     def test_a_component_with_a_tag_of_its_own_is_documented_under_it(self) -> None:
         family, component = blocks.find("parts", "panel")
@@ -260,7 +268,47 @@ class TestSidebarSections:
         assert component.tag(family.slug) == "c-auth.panel"
 
 
-class TestHomePage:
-    def test_home_renders(self, client) -> None:
+class TestFrontPage:
+    def test_it_renders(self, client) -> None:
         response = client.get(reverse("home"))
+
         assert response.status_code == 200
+
+    def test_it_has_no_demo_shell_around_it(self, client) -> None:
+        html = client.get(reverse("home")).content
+
+        assert b"<aside" not in html
+
+    def test_it_has_one_first_level_heading(self, client) -> None:
+        html = client.get(reverse("home")).content
+
+        assert len(re.findall(rb"<h1\b", html)) == 1
+
+    @pytest.mark.parametrize(("kind", "label"), blocks.SECTIONS)
+    def test_it_links_to_every_family_of_each_kind(self, client, kind, label) -> None:
+        html = client.get(reverse("home")).content.decode()
+
+        for family in blocks.FAMILIES:
+            groups = family.groups(kind)
+            if groups:
+                assert f'href="{component_url(family, groups[0][1][0])}"' in html
+
+    def test_it_counts_the_components_the_catalogue_declares(self, client) -> None:
+        html = client.get(reverse("home")).content.decode()
+
+        assert f"--count-to: {len(blocks.every_component())}" in html
+        assert f"--count-to: {len(blocks.FAMILIES)}" in html
+
+    def test_it_links_to_the_gallery_in_development(self, client, settings) -> None:
+        settings.DEBUG = True
+
+        html = client.get(reverse("home")).content.decode()
+
+        assert f'href="{reverse("django_cotton_gallery:index")}"' in html
+
+    def test_it_leaves_the_gallery_out_elsewhere(self, client, settings) -> None:
+        settings.DEBUG = False
+
+        html = client.get(reverse("home")).content.decode()
+
+        assert f'href="{reverse("django_cotton_gallery:index")}"' not in html
