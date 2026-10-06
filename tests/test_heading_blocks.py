@@ -51,7 +51,9 @@ class TestHeading:
     def test_extra_classes_and_attributes_reach_the_wrapper(self, render) -> None:
         html = render('<c-heading title="T" id="intro" class="mb-8" />')
 
-        assert re.match(r'\s*<div[^>]*class="[^"]*\bmb-8\b[^>]*\bid="intro"', html, re.S)
+        assert re.match(
+            r'\s*<div[^>]*class="[^"]*\bmb-8\b[^>]*\bid="intro"', html, re.S
+        )
 
     def test_text_passed_as_data_is_escaped(self, render) -> None:
         html = render('<c-heading :title="title" />', title="<script>x</script>")
