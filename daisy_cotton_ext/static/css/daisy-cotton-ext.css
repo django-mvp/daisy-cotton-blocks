@@ -415,12 +415,6 @@
   .w-0 {
     width: 0px;
   }
-  .w-11 {
-    width: calc(var(--spacing, 0.25rem) * 11);
-  }
-  .w-14 {
-    width: calc(var(--spacing, 0.25rem) * 14);
-  }
   .w-80 {
     width: calc(var(--spacing, 0.25rem) * 80);
   }

@@ -3,9 +3,9 @@
 {# @prop role:text | description:"What they do and where, under the name" #}
 {# @prop source:text | description:"The work it comes from: a book, a paper, a publication. Marked up as a citation." #}
 {# @prop href:text | description:"Where the source can be read. Turns the source into a link." #}
-{# @prop src:text | description:"A portrait of the person. Square works best. It is cropped to a circle." #}
+{# @prop src:text | description:"A portrait of the person, shown in daisy-cotton's avatar. Square works best." #}
 {# @prop align:select['start', 'centre'] | default:"start" | description:"Portrait beside the name, or stacked above it and centred" #}
-{# @prop size:select['md', 'lg'] | default:"md" | description:"How large the portrait and the name are set" #}
+{# @prop size:select['md', 'lg'] | default:"md" | description:"How large the name and the line under it are set" #}
 {# @prop invert:boolean | default:False | description:"Leave the second line at the surrounding colour, for a dark or coloured surface" #}
 {# @prop class:text | description:"Extra classes on the caption" #}
 {% comment %}
@@ -17,11 +17,7 @@
 <figcaption class="flex items-center gap-3 {% if align == 'centre' %}flex-col text-center{% endif %} {{ class }}"
             {{ attrs }}>
   {% if src %}
-    <div class="avatar">
-      <div class="rounded-full {% if size == 'lg' %}w-14{% else %}w-11{% endif %}">
-        <img src="{{ src }}" alt="" />
-      </div>
-    </div>
+    <c-avatar src="{{ src }}" alt="" only />
   {% endif %}
   <div class="min-w-0 {% if size == 'lg' %}text-base{% else %}text-sm{% endif %}">
     {% if name %}<div class="font-semibold">{{ name }}</div>{% endif %}
