@@ -2,8 +2,10 @@
 
 from pathlib import Path
 
+from django.conf import settings
 from django.http import Http404
 from django.template.loader import get_template
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.generic import TemplateView
@@ -11,13 +13,108 @@ from mvp.views import MVPTemplateView
 
 from example import blocks
 
+# What each family is for, in the words of the front page. Keyed by the family's
+# slug, then by the sidebar section the sentence is shown under.
+SUMMARIES: dict[str, dict[str, str]] = {
+    "hero": {
+        "block": "The opening of a page: centred, split beside a visual, or over a product panel."
+    },
+    "section": {
+        "block": "The shell the others are built in: a background, a width and columns that stack."
+    },
+    "quote": {
+        "component": "A quotation as a card, a bubble, a pull quote or under one oversized mark.",
+        "block": "One quotation across the page, beside a portrait, or a wall of many.",
+    },
+    "stats": {
+        "component": "A figure with its trend, its progress towards a target, or counting up.",
+        "block": "A band of figures, figures beside the case they back, or one headline number.",
+    },
+    "sign-in": {
+        "block": "Five frames for a sign-in form. The form stays your application's."
+    },
+    "sign-up": {"block": "Four sign-up pages that put the pitch beside the form."},
+    "background": {
+        "component": "Glows, gradients, grids and moving layers, in the theme's own colours."
+    },
+    "text": {
+        "component": "Gradient, glow, marker, typewriter and other treatments for a few words."
+    },
+    "reveal": {
+        "component": "Content that arrives, cascades or lights up as it scrolls into view."
+    },
+    "parts": {
+        "component": "The heading, the list of points and the sign-in panel the blocks share."
+    },
+}
 
-class HomeView(MVPTemplateView):
-    """What this package is, for somebody arriving at the demo cold."""
+
+class HomeView(TemplateView):
+    """The project's front page, built from the package's own components.
+
+    A page with no demo shell around it, as a project's own landing page would
+    be. Its figures and its index of families are read from the catalogue, so
+    neither can fall behind what the demo actually shows.
+    """
 
     template_name = "example/home.html"
-    page_title = "daisy-cotton-ext"
-    page_subtitle = "Extended components and page blocks for Django projects running Cotton and daisyUI"
+
+    def get_context_data(self, **kwargs):
+        """Add the catalogue's counts and its families under each kind."""
+        context = super().get_context_data(**kwargs)
+        every = blocks.every_component()
+        context["component_count"] = len(every)
+        context["family_count"] = len(blocks.FAMILIES)
+        context["background_count"] = sum(f.slug == "background" for f, c in every)
+        context["text_count"] = sum(f.slug == "text" for f, c in every)
+        context["catalogue"] = [
+            {"label": label, "lead": lead, "families": self.families(kind)}
+            for kind, label, lead in (
+                ("block", "Sections", "Whole regions of a page, ready to drop in."),
+                (
+                    "component",
+                    "Components",
+                    "Single pieces, for a page you lay out yourself.",
+                ),
+            )
+        ]
+        first_family, first_component = every[0]
+        context["catalogue_url"] = reverse(
+            "component",
+            kwargs={"family": first_family.slug, "component": first_component.slug},
+        )
+        context["gallery_url"] = (
+            reverse("django_cotton_gallery:index") if settings.DEBUG else ""
+        )
+        return context
+
+    def families(self, kind: str) -> list[dict[str, str]]:
+        """Return the families with a component of this kind, and where each starts.
+
+        Args:
+            kind: The sidebar section, ``component`` or ``block``.
+
+        Returns:
+            One entry per family: its label, its summary and the URL of its
+            first component of that kind.
+        """
+        entries = []
+        for family in blocks.FAMILIES:
+            groups = family.groups(kind)
+            if not groups:
+                continue
+            first = groups[0][1][0]
+            entries.append(
+                {
+                    "label": family.label,
+                    "summary": SUMMARIES.get(family.slug, {}).get(kind, ""),
+                    "url": reverse(
+                        "component",
+                        kwargs={"family": family.slug, "component": first.slug},
+                    ),
+                }
+            )
+        return entries
 
 
 class ComponentView(MVPTemplateView):

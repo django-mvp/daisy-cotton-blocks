@@ -1,58 +1,202 @@
-{% extends "base.html" %}
+{% extends "example/preview_base.html" %}
 
-{% block content %}
-  <c-container>
-    <c-section title="What this is">
-      <p>
-        A library of page blocks for Django projects running
-        <a class="link" href="https://django-cotton.com/">django-cotton</a> and
-        <a class="link" href="https://daisyui.com/">daisyUI</a>. Heroes, section layouts, calls to
-        action and the rest of the furniture a public-facing page needs.
-      </p>
-      <p>
-        Component libraries in this space cover the application: navigation, forms, tables,
-        dialogs. They stop at the pages that sit in front of it, which get assembled by hand out
-        of raw utility classes in every project, every time.
-      </p>
-      <p>
-        Blocks are configured through their attributes and take their colours from whatever
-        daisyUI theme the project already runs. Change the theme from the bar above and everything
-        on this page follows it, which is the behaviour every block is held to.
-      </p>
+{% comment %}
+  The project's front page. Every element on it is a component: this package's own, or one of daisy-cotton's.
+  There is no markup of its own here. The only classes are a surface colour on a section, a margin, and the size of the scrolled paragraph.
+{% endcomment %}
+
+{% block title %}Page blocks for Cotton and daisyUI{% endblock title %}
+
+{% block preview %}
+  <c-navbar class="bg-base-100" aria-label="Site">
+    <c-slot name="start">
+      <c-button ghost size="lg" href="{% url 'home' %}" text="daisy-cotton-ext" />
+    </c-slot>
+    <c-slot name="end">
+      <c-button ghost href="#catalogue" text="Catalogue" />
+      <c-button ghost href="#install" text="Install" />
+      <c-button ghost icon="github" href="https://github.com/django-mvp/daisy-cotton-ext" text="GitHub" />
+    </c-slot>
+  </c-navbar>
+
+  <main>
+    <c-hero.centred size="lg"
+                    eyebrow="For django-cotton and daisyUI"
+                    lead="Heroes, quotes, stats, sign-in pages and the effects that go behind them. Each one is a Cotton tag you configure through its attributes, in the colours of the daisyUI theme you already run.">
+      <c-slot name="background">
+        <c-background.aurora />
+        <c-background.grid />
+      </c-slot>
+      <c-slot name="announcement">
+        <c-badge variant="primary" size="lg" text="{{ component_count }} components in {{ family_count }} families" />
+      </c-slot>
+      <c-slot name="title">
+        Ship the page,
+        <c-text.gradient>not the CSS</c-text.gradient>
+      </c-slot>
+      <c-slot name="actions">
+        <c-button variant="primary" size="lg" href="{{ catalogue_url }}" text="Browse the catalogue" />
+        <c-button outline size="lg" href="#install" text="Install it" />
+      </c-slot>
+      <c-slot name="footnote">MIT licensed · no build step · follows any daisyUI theme</c-slot>
+    </c-hero.centred>
+
+    <c-stats.band class="bg-base-200" size="sm" cascade>
+      <c-stats.count title="Components and blocks" :to="component_count" icon="component" />
+      <c-stats.count title="Families" :to="family_count" icon="block" />
+      <c-stats.count title="Backgrounds" :to="background_count" />
+      <c-stats.count title="Text effects" :to="text_count" />
+    </c-stats.band>
+
+    <c-section align="center" reverse>
+      <c-section.col>
+        <c-heading align="start"
+                   eyebrow="How it reads"
+                   title="A block is one tag and its attributes"
+                   lead="The hero at the top of this page is the markup beside this. Nothing on the page is written any other way." />
+        <c-points class="mt-8">
+          <c-points.point title="Configured through attributes.">
+            Words, size, alignment and background are options on the tag. A different layout is a different block.
+          </c-points.point>
+          <c-points.point title="Coloured by your theme.">
+            Blocks use daisyUI's named colours and never a literal one, so they follow the theme the rest of your site runs.
+          </c-points.point>
+          <c-points.point title="Built from daisy-cotton.">
+            A button here is the same button your application uses. If your project has its own, the blocks use that.
+          </c-points.point>
+        </c-points>
+      </c-section.col>
+      <c-section.col>
+        <c-reveal.enter effect="left">
+          <c-mockup.code>
+            <c-mockup.code.line prefix="1">&lt;c-hero.centred eyebrow="For django-cotton and daisyUI"</c-mockup.code.line>
+            <c-mockup.code.line prefix="2">                lead="Heroes, quotes, stats and more."&gt;</c-mockup.code.line>
+            <c-mockup.code.line prefix="3">  &lt;c-slot name="background"&gt;&lt;c-background.aurora /&gt;&lt;/c-slot&gt;</c-mockup.code.line>
+            <c-mockup.code.line prefix="4">  &lt;c-slot name="title"&gt;</c-mockup.code.line>
+            <c-mockup.code.line prefix="5">    Ship the page, &lt;c-text.gradient&gt;not the CSS&lt;/c-text.gradient&gt;</c-mockup.code.line>
+            <c-mockup.code.line prefix="6">  &lt;/c-slot&gt;</c-mockup.code.line>
+            <c-mockup.code.line prefix="7">  &lt;c-slot name="actions"&gt;</c-mockup.code.line>
+            <c-mockup.code.line prefix="8">    &lt;c-button variant="primary" href="/start/" text="Get started" /&gt;</c-mockup.code.line>
+            <c-mockup.code.line prefix="9">  &lt;/c-slot&gt;</c-mockup.code.line>
+            <c-mockup.code.line prefix="10">&lt;/c-hero.centred&gt;</c-mockup.code.line>
+          </c-mockup.code>
+        </c-reveal.enter>
+      </c-section.col>
     </c-section>
 
-    <c-section title="What it deliberately is not">
-      <ul class="list-disc ps-6 space-y-2">
-        <li>
-          <strong>Not an application.</strong> No models, views, forms, URLs or migrations. A
-          block's content comes from the template author, never from a queryset.
-        </li>
-        <li>
-          <strong>Not a CSS framework.</strong> daisyUI, its themes and the page reset all come
-          from the project. This package ships only the plain utilities its own blocks need.
-        </li>
-        <li>
-          <strong>Not page templates.</strong> Blocks only. You pick the ones you want and
-          assemble the page yourself.
-        </li>
-      </ul>
+    <c-section container="narrow" class="bg-base-200">
+      <c-reveal.words class="text-2xl font-semibold"
+                      text="Component libraries cover the application: navigation, forms, tables, dialogs. They stop at the pages that sit in front of it. The landing page, the pricing page and the sign-up pitch get assembled by hand out of utility classes, in every project, every time. These are the blocks for those pages." />
     </c-section>
 
-    <c-section title="Where this demo is up to">
-      <p>
-        Nine families so far, listed in the sidebar in two sections. Under
-        <strong>Components</strong> are the single pieces: backgrounds, text effects, reveals,
-        quotes, stat figures and a few page parts. Under <strong>Sections</strong> are the regions
-        of a page built from them: hero sections, quote and stat sections, sign-in pages and
-        sign-up pages. Each one has a page of its own, showing it live with the markup that
-        produced it. The roadmap plans more families, and each one appears there
-        when it has something to show.
-      </p>
-      <p>
-        The <strong>Component gallery</strong> is the reference alongside those pages: every
-        component with its props as live controls, a lint report and an insights dashboard. It runs
-        only in development, because it serves component source.
-      </p>
+    <c-section id="catalogue" align="start">
+      <c-slot name="header">
+        <c-heading eyebrow="The catalogue"
+                   title="{{ family_count }} families so far"
+                   lead="Every component has a page of its own, showing it live beside the markup that produced it." />
+      </c-slot>
+      {% for kind in catalogue %}
+        <c-section.col>
+          <c-card title="{{ kind.label }}">
+            <p>{{ kind.lead }}</p>
+            <c-points class="mt-6">
+              {% for family in kind.families %}
+                <c-points.point>
+                  <c-link href="{{ family.url }}" text="{{ family.label }}" />
+                  {{ family.summary }}
+                </c-points.point>
+              {% endfor %}
+            </c-points>
+          </c-card>
+        </c-section.col>
+      {% endfor %}
     </c-section>
-  </c-container>
-{% endblock content %}
+
+    <c-section class="bg-base-200">
+      <c-slot name="header">
+        <c-heading eyebrow="Scope"
+                   title="What it deliberately is not"
+                   lead="The package stays small by leaving three jobs to your project." />
+      </c-slot>
+      <c-section.col>
+        <c-reveal.enter>
+          <c-card title="Not an application">
+            No models, views, forms, URLs or migrations. What a block says comes from the template author, never from a queryset.
+          </c-card>
+        </c-reveal.enter>
+      </c-section.col>
+      <c-section.col>
+        <c-reveal.enter>
+          <c-card title="Not a CSS framework">
+            daisyUI, its themes and the page reset come from your project. The stylesheet here carries only the utilities its own blocks need.
+          </c-card>
+        </c-reveal.enter>
+      </c-section.col>
+      <c-section.col>
+        <c-reveal.enter>
+          <c-card title="Not page templates">
+            Blocks only. You pick the ones you want and put the page together yourself. There is no one-tag landing page.
+          </c-card>
+        </c-reveal.enter>
+      </c-section.col>
+    </c-section>
+
+    <c-section id="install" align="center">
+      <c-section.col>
+        <c-heading align="start"
+                   eyebrow="Install"
+                   title="Three steps to the first block"
+                   lead="You need Django 5.2 or later, django-cotton, and daisyUI 5 already loaded by your project." />
+        <c-steps vertical class="mt-8">
+          <c-steps.step variant="primary" text="Install the package" />
+          <c-steps.step variant="primary" text="Add the two apps to INSTALLED_APPS" />
+          <c-steps.step variant="primary" text="Link the stylesheet after your own" />
+        </c-steps>
+      </c-section.col>
+      <c-section.col>
+        <c-mockup.code>
+          <c-mockup.code.line prefix="$" text="pip install daisy-cotton-ext" />
+          <c-mockup.code.line prefix="" text="" />
+          <c-mockup.code.line prefix="#" text="settings.py" />
+          <c-mockup.code.line prefix="" text="INSTALLED_APPS = [" />
+          <c-mockup.code.line prefix="" text='    ...,' />
+          <c-mockup.code.line prefix="" text='    "django_cotton",' />
+          <c-mockup.code.line prefix="" text='    "daisy_cotton",' />
+          <c-mockup.code.line prefix="" text='    "daisy_cotton_ext",' />
+          <c-mockup.code.line prefix="" text="]" />
+          <c-mockup.code.line prefix="" text="" />
+          <c-mockup.code.line prefix="#" text="your base template" />
+          <c-mockup.code.line prefix="">&lt;link rel="stylesheet" href="{% templatetag openblock %} static 'css/daisy-cotton-ext.css' {% templatetag closeblock %}"&gt;</c-mockup.code.line>
+        </c-mockup.code>
+      </c-section.col>
+    </c-section>
+
+    <c-hero.centred level="2" invert title="See every block running" lead="The catalogue shows each one live, with its options and the markup that drew it.">
+      <c-slot name="background">
+        <c-background.gradient opacity="1" />
+      </c-slot>
+      <c-slot name="actions">
+        <c-button variant="neutral" size="lg" href="{{ catalogue_url }}" text="Browse the catalogue" />
+        {% if gallery_url %}<c-button outline size="lg" href="{{ gallery_url }}" text="Open the gallery" />{% endif %}
+      </c-slot>
+    </c-hero.centred>
+  </main>
+
+  <c-footer horizontal="sm" class="bg-neutral p-10 text-neutral-content">
+    <c-footer.nav title="Project">
+      <c-link hover href="https://github.com/django-mvp/daisy-cotton-ext" text="Source on GitHub" />
+      <c-link hover href="https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md" text="Changelog" />
+      <c-link hover href="https://github.com/django-mvp/daisy-cotton-ext/blob/main/docs/ROADMAP.md" text="Roadmap" />
+      <c-link hover href="https://github.com/django-mvp/daisy-cotton-ext/issues" text="Issues" />
+    </c-footer.nav>
+    <c-footer.nav title="Built on">
+      <c-link hover href="https://github.com/django-mvp/daisy-cotton" text="daisy-cotton" />
+      <c-link hover href="https://django-cotton.com/" text="django-cotton" />
+      <c-link hover href="https://daisyui.com/" text="daisyUI" />
+    </c-footer.nav>
+    <c-footer.nav title="This demo">
+      <c-link hover href="{{ catalogue_url }}" text="Catalogue" />
+      {% if gallery_url %}<c-link hover href="{{ gallery_url }}" text="Component gallery" />{% endif %}
+    </c-footer.nav>
+  </c-footer>
+{% endblock preview %}
