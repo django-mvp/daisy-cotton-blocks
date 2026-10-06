@@ -23,13 +23,13 @@
   </c-demo.live>
 
   <c-demo.live label="Large and centred" anchor="centred">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.mark size="lg" align="centre" color="secondary"
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.mark size="lg" align="centre" variant="secondary"
               name="Amara Okafor" role="Head of Platform, Northwind"
               src="{% static 'example/people/amara.svg' %}">
   We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.
 </c-quote.mark>{% endverbatim %}{% endfilter %}</c-slot>
 <c-container class="py-16">
-<c-quote.mark size="lg" align="centre" color="secondary"
+<c-quote.mark size="lg" align="centre" variant="secondary"
               name="Amara Okafor" role="Head of Platform, Northwind"
               src="{% static 'example/people/amara.svg' %}">
   We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.
@@ -39,19 +39,19 @@
 
   <c-demo.live label="Side by side" anchor="pair">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<div class="grid gap-12 md:grid-cols-2">
-  <c-quote.mark color="accent" name="Inês Carvalho" role="Design Lead, Papaya">
+  <c-quote.mark variant="accent" name="Inês Carvalho" role="Design Lead, Papaya">
     Every pull request gets its own address. Our designers review the real thing now, not a screenshot of it.
   </c-quote.mark>
-  <c-quote.mark color="accent" name="Jonas Lindqvist">
+  <c-quote.mark variant="accent" name="Jonas Lindqvist">
     Rolling back used to be a meeting. Now it is a button, and nobody remembers the last time we pressed it.
   </c-quote.mark>
 </div>{% endverbatim %}{% endfilter %}</c-slot>
 <c-container class="py-12">
 <div class="grid gap-12 md:grid-cols-2">
-  <c-quote.mark color="accent" name="Inês Carvalho" role="Design Lead, Papaya">
+  <c-quote.mark variant="accent" name="Inês Carvalho" role="Design Lead, Papaya">
     Every pull request gets its own address. Our designers review the real thing now, not a screenshot of it.
   </c-quote.mark>
-  <c-quote.mark color="accent" name="Jonas Lindqvist">
+  <c-quote.mark variant="accent" name="Jonas Lindqvist">
     Rolling back used to be a meeting. Now it is a button, and nobody remembers the last time we pressed it.
   </c-quote.mark>
 </div>

@@ -4,7 +4,7 @@
 {# @prop source:text | description:"The work it comes from" #}
 {# @prop href:text | description:"Where the source can be read" #}
 {# @prop src:text | description:"A portrait of the person" #}
-{# @prop color:select['primary', 'secondary', 'accent', 'neutral', 'base-300'] | default:"primary" | description:"The colour of the mark" #}
+{# @prop variant:select['primary', 'secondary', 'accent', 'neutral', 'base-300'] | default:"primary" | description:"The colour of the mark" #}
 {# @prop align:select['start', 'centre'] | default:"start" | description:"Set from the leading edge, or centred" #}
 {# @prop size:select['md', 'lg'] | default:"md" | description:"How large the words are set" #}
 {# @prop class:text | description:"Extra classes on the figure" #}
@@ -14,14 +14,14 @@
   "quote" ahead of a quotation the markup already announces. Its box is half
   its own height, because the glyph sits in the top half of the line.
 {% endcomment %}
-<c-vars name role source href src color="primary" align="start" size="md" class />
+<c-vars name role source href src variant="primary" align="start" size="md" class />
 <figure class="flex flex-col gap-4
                {% if align == 'centre' %}mx-auto items-center text-center{% endif %}
                {% if size == 'lg' %}max-w-3xl{% else %}max-w-2xl{% endif %}
                {{ class }}"
         {{ attrs }}>
   <span aria-hidden="true"
-        class="h-[0.5em] font-serif leading-none select-none text-{{ color }}
+        class="h-[0.5em] font-serif leading-none select-none text-{{ variant }}
                {% if size == 'lg' %}text-8xl{% else %}text-7xl{% endif %}">&ldquo;</span>
   <blockquote {% if href %}cite="{{ href }}"{% endif %}
               class="font-medium text-balance

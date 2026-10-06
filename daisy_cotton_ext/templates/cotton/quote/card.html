@@ -5,7 +5,7 @@
 {# @prop href:text | description:"Where the source can be read" #}
 {# @prop src:text | description:"A portrait of the person" #}
 {# @prop rating:select['', '1', '2', '3', '4', '5'] | description:"How many stars out of five. Left empty, there is no row of stars." #}
-{# @prop color:select['primary', 'secondary', 'accent', 'neutral'] | default:"accent" | description:"The colour of the filled stars" #}
+{# @prop variant:select['primary', 'secondary', 'accent', 'neutral'] | default:"accent" | description:"The colour of the filled stars" #}
 {# @prop class:text | description:"Extra classes on the card. A surface colour goes here: bg-base-200." #}
 {# @slot Good tools get out of the way. — What was said. Write the quotation marks if you want them. #}
 {% comment %}
@@ -14,11 +14,11 @@
   stars are one image with a label, so they are read as "4 out of 5" and not as
   five glyphs. The caption is pushed to the foot, so cards in a row line up.
 {% endcomment %}
-<c-vars name role source href src rating color="accent" class />
+<c-vars name role source href src rating variant="accent" class />
 <figure class="card gap-4 bg-base-100 p-6 ring-1 ring-base-300 {{ class }}" {{ attrs }}>
   {% if rating %}
     <div role="img" aria-label="{{ rating }} out of 5" class="flex gap-0.5 text-lg leading-none">
-      {% for star in "12345" %}<span aria-hidden="true" class="{% if star <= rating %}text-{{ color }}{% else %}text-base-content/20{% endif %}">&#9733;</span>{% endfor %}
+      {% for star in "12345" %}<span aria-hidden="true" class="{% if star <= rating %}text-{{ variant }}{% else %}text-base-content/20{% endif %}">&#9733;</span>{% endfor %}
     </div>
   {% endif %}
   <blockquote {% if href %}cite="{{ href }}"{% endif %} class="flex-1 leading-relaxed text-pretty">{{ slot }}</blockquote>
