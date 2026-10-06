@@ -1,0 +1,29 @@
+{# @description A quotation in a speech bubble, with its tail pointing at the person who said it. #}
+{# @prop name:text | description:"Who said it" #}
+{# @prop role:text | description:"What they do and where" #}
+{# @prop source:text | description:"The work it comes from" #}
+{# @prop href:text | description:"Where the source can be read" #}
+{# @prop src:text | description:"A portrait of the person" #}
+{# @prop variant:select['base-100', 'base-200', 'base-300', 'primary', 'secondary', 'accent', 'neutral'] | default:"base-200" | description:"The colour of the bubble. The words take the colour the theme pairs with it." #}
+{# @prop align:select['start', 'centre'] | default:"start" | description:"Tail and person at the leading edge, or centred" #}
+{# @prop class:text | description:"Extra classes on the figure" #}
+{# @slot Good tools get out of the way. — What was said. Write the quotation marks if you want them. #}
+{% comment %}
+  The tail is a square turned 45 degrees, half out of the bubble's lower edge.
+  Not daisyUI's chat bubble, which is a turn in a conversation and has a side.
+{% endcomment %}
+<c-vars name role source href src variant="base-200" align="start" class />
+<figure class="flex max-w-prose flex-col gap-5 {% if align == 'centre' %}mx-auto{% endif %} {{ class }}"
+        {{ attrs }}>
+  <blockquote {% if href %}cite="{{ href }}"{% endif %}
+              class="relative rounded-2xl p-6 text-lg leading-relaxed text-pretty bg-{{ variant }}
+                     {% if 'base-' in variant %}text-base-content{% else %}text-{{ variant }}-content{% endif %}">
+    {{ slot }}
+    <span aria-hidden="true"
+          class="absolute -bottom-2 size-4 rotate-45 bg-{{ variant }}
+                 {% if align == 'centre' %}start-1/2 -translate-x-1/2 rtl:translate-x-1/2{% else %}start-8{% endif %}"></span>
+  </blockquote>
+  {% if name or role or source %}
+    <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" src="{{ src }}" align="{{ align }}" class="{% if align != 'centre' %}ps-4{% endif %}" only />
+  {% endif %}
+</figure>

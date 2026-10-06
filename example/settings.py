@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     "easy_icons",
     "flex_menu",
     "mvp",
+    # The base components this package builds on. Below "mvp", so the shell
+    # keeps its own copies of the components both packages carry.
+    "daisy_cotton",
     "crispy_forms",
     "crispy_tailwind",
 ]

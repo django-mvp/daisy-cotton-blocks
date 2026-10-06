@@ -1,0 +1,50 @@
+{# @description A picture of the person beside what they said, stacking to one column below the lg breakpoint. #}
+{# @prop name:text | description:"Who said it" #}
+{# @prop role:text | description:"What they do and where" #}
+{# @prop source:text | description:"The work it comes from" #}
+{# @prop href:text | description:"Where the source can be read" #}
+{# @prop src:text | description:"The picture. It is cropped to a portrait, four wide by five tall." #}
+{# @prop alt:text | description:"What the picture shows, for somebody who cannot see it. Leave empty when it adds nothing to the name." #}
+{# @prop reverse:boolean | default:False | description:"Swap the columns at wide widths. No effect once the block has stacked." #}
+{# @prop invert:boolean | default:False | description:"Light copy, for a dark background" #}
+{# @prop size:select['sm', 'md', 'lg'] | default:"md" | description:"How much vertical room the block takes" #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here." #}
+{# @slot Good tools get out of the way. — What was said. Write the quotation marks if you want them. #}
+{# @slot:background — A background block, rendered into a layer behind the words #}
+{# @slot:media — In place of the picture, when it is not a plain image: a video, a mockup, a card. #}
+{# @slot:logo — Above the words. The mark of the company the person speaks for. #}
+{% comment %}
+  The figure is the words and their caption only. The picture sits beside it,
+  because a caption has to be the first or last thing in its figure.
+{% endcomment %}
+<c-vars name role source href src alt reverse invert size="md" class />
+<section class="relative isolate overflow-clip
+                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
+                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-5 lg:gap-16">
+      <div class="mx-auto w-full max-w-sm lg:col-span-2 {% if reverse %}lg:order-2{% endif %}">
+        {% if media %}
+          {{ media }}
+        {% elif src %}
+          <img src="{{ src }}" alt="{{ alt }}" class="aspect-[4/5] w-full rounded-2xl object-cover" />
+        {% endif %}
+      </div>
+      <figure class="flex flex-col gap-6 lg:col-span-3 {% if reverse %}lg:order-1{% endif %}">
+        {% if logo %}<div>{{ logo }}</div>{% endif %}
+        <blockquote {% if href %}cite="{{ href }}"{% endif %}
+                    class="text-2xl leading-snug font-medium text-balance sm:text-3xl">
+          {{ slot }}
+        </blockquote>
+        {% if name or role or source %}
+          <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" size="lg" :invert="invert" only />
+        {% endif %}
+      </figure>
+    </div>
+  </div>
+</section>

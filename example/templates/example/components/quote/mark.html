@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Mark{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-quote.mark">
+    <p class="mt-4 max-w-3xl text-base-content/80">One oversized quotation mark above the words, in a colour of the theme. The mark announces the quotation, so the words are written without marks of their own.</p>
+    <p class="mt-4 max-w-3xl text-base-content/80">It is decoration, and is hidden from screen readers. The markup already says this is a quotation.</p>
+  </c-demo.head>
+
+  <c-demo.live label="The default" anchor="default">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.mark name="Mei Tanaka" role="Compliance Lead, Harbour Bank"
+              src="{% static 'example/people/mei.svg' %}">
+  The audit log answered the question before the auditor had finished asking it.
+</c-quote.mark>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-12">
+<c-quote.mark name="Mei Tanaka" role="Compliance Lead, Harbour Bank"
+              src="{% static 'example/people/mei.svg' %}">
+  The audit log answered the question before the auditor had finished asking it.
+</c-quote.mark>
+</c-container>
+  </c-demo.live>
+
+  <c-demo.live label="Large and centred" anchor="centred">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.mark size="lg" align="centre" variant="secondary"
+              name="Amara Okafor" role="Head of Platform, Northwind"
+              src="{% static 'example/people/amara.svg' %}">
+  We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.
+</c-quote.mark>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-16">
+<c-quote.mark size="lg" align="centre" variant="secondary"
+              name="Amara Okafor" role="Head of Platform, Northwind"
+              src="{% static 'example/people/amara.svg' %}">
+  We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.
+</c-quote.mark>
+</c-container>
+  </c-demo.live>
+
+  <c-demo.live label="Side by side" anchor="pair">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<div class="grid gap-12 md:grid-cols-2">
+  <c-quote.mark variant="accent" name="Inês Carvalho" role="Design Lead, Papaya">
+    Every pull request gets its own address. Our designers review the real thing now, not a screenshot of it.
+  </c-quote.mark>
+  <c-quote.mark variant="accent" name="Jonas Lindqvist">
+    Rolling back used to be a meeting. Now it is a button, and nobody remembers the last time we pressed it.
+  </c-quote.mark>
+</div>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-12">
+<div class="grid gap-12 md:grid-cols-2">
+  <c-quote.mark variant="accent" name="Inês Carvalho" role="Design Lead, Papaya">
+    Every pull request gets its own address. Our designers review the real thing now, not a screenshot of it.
+  </c-quote.mark>
+  <c-quote.mark variant="accent" name="Jonas Lindqvist">
+    Rolling back used to be a meeting. Now it is a button, and nobody remembers the last time we pressed it.
+  </c-quote.mark>
+</div>
+</c-container>
+  </c-demo.live>
+
+  <c-demo.live label="A long one" anchor="long">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.mark name="Tomás Rivera" role="Engineering Manager, Alder & Pine">
+  I was sceptical. We had tried two other tools and both wanted the pipeline rebuilt around them. This one took the pipeline we had. In the first week we shipped eleven times, which was more than the whole month before, and the on-call phone stayed quiet. I still don't fully trust that, but it has been six months.
+</c-quote.mark>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-12">
+<c-quote.mark name="Tomás Rivera" role="Engineering Manager, Alder & Pine">
+  I was sceptical. We had tried two other tools and both wanted the pipeline rebuilt around them. This one took the pipeline we had. In the first week we shipped eleven times, which was more than the whole month before, and the on-call phone stayed quiet. I still don't fully trust that, but it has been six months.
+</c-quote.mark>
+</c-container>
+  </c-demo.live>
+
+  <c-demo.live label="The minimum" anchor="minimum">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.mark>Set it up on a Tuesday. Forgot about it by Thursday. That is the review.</c-quote.mark>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-12">
+<c-quote.mark>Set it up on a Tuesday. Forgot about it by Thursday. That is the review.</c-quote.mark>
+</c-container>
+  </c-demo.live>
+{% endblock content %}

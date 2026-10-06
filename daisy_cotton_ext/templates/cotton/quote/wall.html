@@ -1,0 +1,32 @@
+{# @description Many quotations at once, packed into columns so that long and short ones sit together without gaps. #}
+{# @prop eyebrow:text | description:"Short line above the heading" #}
+{# @prop title:text | description:"The heading. Left empty, the wall has no header." #}
+{# @prop lead:text | description:"The supporting sentence under the heading" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"2" | description:"Heading level" #}
+{# @prop columns:select['2', '3', '4'] | default:"3" | description:"How many columns at wide widths. One on a phone, two on a tablet." #}
+{# @prop size:select['sm', 'md', 'lg'] | default:"md" | description:"How much vertical room the block takes" #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
+{# @slot The quotations — One card after another. Each is kept whole and never split across two columns. #}
+{% comment %}
+  Columns, not a grid: a grid row is as tall as its longest quotation and leaves
+  a hole under every shorter one. The cost is reading order, which runs down
+  each column in turn and not across.
+{% endcomment %}
+<c-vars eyebrow title lead level="2" columns="3" size="md" class />
+<section class="text-base-content
+                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    {% if title %}
+      <div class="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center">
+        {% if eyebrow %}<p class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">{{ eyebrow }}</p>{% endif %}
+        {# djlint:off #}
+        <h{{ level }} class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">{{ title }}</h{{ level }}>
+        {# djlint:on #}
+        {% if lead %}<p class="max-w-2xl text-lg leading-relaxed text-pretty text-base-content/80">{{ lead }}</p>{% endif %}
+      </div>
+    {% endif %}
+    <div class="columns-1 gap-6 *:mb-6 *:break-inside-avoid md:columns-2 lg:columns-{{ columns }}">{{ slot }}</div>
+  </div>
+</section>

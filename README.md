@@ -28,7 +28,7 @@ Blocks are configured through attributes and take their colours from whatever da
 
 ## Status
 
-Version 0.0.1. Four families are built: heroes, backgrounds, text effects and reveals. Nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
+Version 0.0.1. Five families are built: heroes, backgrounds, text effects, reveals and quotes. Nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
 
 ## Scope & philosophy
 
@@ -52,6 +52,7 @@ The directions the package works toward are in [GOALS.md](https://github.com/dja
 - Python 3.12+
 - Django 5.2, 6.0 or 6.1
 - django-cotton 2.6+
+- [daisy-cotton](https://github.com/django-mvp/daisy-cotton) 0.1.3+, installed with this package
 - daisyUI 5, loaded by the project
 
 daisyUI is a hard requirement and this package does not ship it. Any project already running daisyUI satisfies it, whether through its own Tailwind build or through a package that provides one, such as [django-mvp](https://github.com/django-mvp/django-mvp).
@@ -68,9 +69,12 @@ Add it to `INSTALLED_APPS`:
 INSTALLED_APPS = [
     ...,
     "django_cotton",
+    "daisy_cotton",
     "daisy_cotton_ext",
 ]
 ```
+
+`daisy_cotton` holds the base components some of these are built from, such as the avatar beside a quotation's name. A project that already has a component of the same name, its own or another package's, keeps it: Django uses the first one it finds in `INSTALLED_APPS` order.
 
 Then load its stylesheet alongside the one carrying daisyUI:
 
@@ -287,6 +291,52 @@ Things to know before using one:
 - **Give each stacked panel a solid surface,** or the one underneath shows through.
 
 The reasoning is in [ADR 0006](docs/adr/0006-reveals-follow-the-scroll-position.md).
+
+### Quotes
+
+A quote is what somebody said and who said it. Four are components that sit inside a page's own layout, three are blocks that take the full width, and one is the caption the others share.
+
+| Tag | What it does | Attributes |
+|---|---|---|
+| `<c-quote.pull>` | Sets a quotation off from an article with a rule down its leading edge | `variant`, `size` |
+| `<c-quote.mark>` | Puts one oversized quotation mark above the words | `variant`, `align`, `size` |
+| `<c-quote.card>` | A card with the person at the foot and an optional row of stars | `rating`, `variant` |
+| `<c-quote.bubble>` | A speech bubble with its tail pointing at the person | `variant`, `align` |
+| `<c-quote.centred>` | One quotation, large and centred, across the page | `invert`, `size` |
+| `<c-quote.split>` | A picture of the person beside what they said | `src`, `alt`, `reverse`, `invert`, `size` |
+| `<c-quote.wall>` | Many quotations packed into columns | `eyebrow`, `title`, `lead`, `level`, `columns`, `size` |
+| `<c-quote.byline>` | The portrait, name and role under a quotation | `align`, `size`, `invert` |
+
+Every quote but the wall also takes the person: `name`, `role`, `source`, `href` and `src`. `source` is the work the words come from, and `href` is where it can be read. `src` is a small portrait, except on split, where it is the picture beside the words.
+
+`variant` is a colour of the theme: `primary`, `secondary`, `accent` or `neutral`. It colours the rule on pull, the mark on mark, the filled stars on card and the whole bubble on bubble, which also takes `base-100`, `base-200` and `base-300`.
+
+```html
+<c-quote.pull name="Amara Okafor" role="Head of Platform, Northwind" src="{% static 'img/amara.jpg' %}">
+  “Friday afternoon stopped being frightening.”
+</c-quote.pull>
+
+<c-quote.wall title="What people say" columns="3">
+  <c-quote.card rating="5" name="Mei Tanaka" role="Compliance Lead, Harbour Bank">
+    “The audit log answered the question before the auditor had finished asking it.”
+  </c-quote.card>
+  <c-quote.card rating="4" variant="primary" name="Jonas Lindqvist" source="Fjordline engineering blog" href="https://example.com/blog">
+    “Rolling back used to be a meeting. Now it is a button.”
+  </c-quote.card>
+</c-quote.wall>
+```
+
+Things to know before using one:
+
+- **Every quote is a `figure` holding a `blockquote`,** with a `figcaption` when there is anybody to name. A quote given no `name`, `role` or `source` has no caption at all.
+- **Write the quotation marks yourself,** except in mark, where the oversized one does that job.
+- **`source` is marked up as a citation and the person is not.** `cite` names a work. Given an `href`, the source becomes a link and the address is recorded on the `blockquote`.
+- **The portrait is daisy-cotton's `<c-avatar>`,** at its stock size, with an empty `alt` because the name sits beside it. The picture on split is different: give it an `alt` when it shows more than the name says.
+- **`rating` is a whole number from 1 to 5.** The stars are read out as one thing, “4 out of 5”. Anything else, and there is no row of stars.
+- **A wall reads down each column, not across.** That is what lets long and short quotations sit together without gaps. Put them in a grid when the order across matters.
+- **Centred and split take a `background` slot,** like the heroes, and `invert` for a dark one.
+
+The reasoning for building on daisy-cotton's components is in [ADR 0007](docs/adr/0007-built-from-daisy-cotton-components.md).
 
 Every attribute, its accepted values and its default are listed on each block's and component's own page in the example project, built from the annotations in the block's template. Run it with `python manage.py runserver` from a checkout.
 

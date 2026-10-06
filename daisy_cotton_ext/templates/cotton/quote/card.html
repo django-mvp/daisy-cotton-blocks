@@ -1,0 +1,31 @@
+{# @description A quotation in a card, with the person at the foot and an optional row of stars. Made to sit in a grid or a wall with others. #}
+{# @prop name:text | description:"Who said it" #}
+{# @prop role:text | description:"What they do and where" #}
+{# @prop source:text | description:"The work it comes from" #}
+{# @prop href:text | description:"Where the source can be read" #}
+{# @prop src:text | description:"A portrait of the person" #}
+{# @prop rating:select['', '1', '2', '3', '4', '5'] | description:"How many stars out of five. Left empty, or given anything but a whole number from 1 to 5, there is no row of stars." #}
+{# @prop variant:select['primary', 'secondary', 'accent', 'neutral'] | default:"accent" | description:"The colour of the filled stars" #}
+{# @prop class:text | description:"Extra classes on the card. A surface colour goes here: bg-base-200." #}
+{# @slot Good tools get out of the way. — What was said. Write the quotation marks if you want them. #}
+{% comment %}
+  The figure is the card itself, with its own padding where `card-body` would
+  be: daisyUI centres any figure inside a card, taking it for a picture. The
+  stars are one image with a label, so they are read as "4 out of 5" and not as
+  five glyphs. The caption is pushed to the foot, so cards in a row line up.
+{% endcomment %}
+{% load i18n %}
+<c-vars name role source href src rating variant="accent" class />
+<figure class="card gap-4 bg-base-100 p-6 ring-1 ring-base-300 {{ class }}" {{ attrs }}>
+  {% with stars=rating|stringformat:"s" %}
+    {% if stars|length == 1 and stars in "12345" %}
+      <div role="img" aria-label="{% blocktranslate %}{{ rating }} out of 5{% endblocktranslate %}" class="flex gap-0.5 text-lg leading-none">
+        {% for star in "12345" %}<span aria-hidden="true" class="{% if star <= stars %}text-{{ variant }}{% else %}text-base-content/20{% endif %}">&#9733;</span>{% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  <blockquote {% if href %}cite="{{ href }}"{% endif %} class="flex-1 leading-relaxed text-pretty">{{ slot }}</blockquote>
+  {% if name or role or source %}
+    <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" src="{{ src }}" only />
+  {% endif %}
+</figure>

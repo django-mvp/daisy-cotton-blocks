@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Split{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-quote.split">
+    <p class="mt-4 max-w-3xl text-base-content/80">The person on one side and what they said on the other. Below the <code>lg</code> breakpoint the picture goes on top.</p>
+    <p class="mt-4 max-w-3xl text-base-content/80">The picture is the portrait here, so the caption carries the name and no small portrait of its own.</p>
+  </c-demo.head>
+
+  <c-demo.live label="The default" anchor="default">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.split name="Jonas Lindqvist" role="Staff Engineer, Fjordline"
+               src="{% static 'example/people/jonas-tall.svg' %}" alt="">
+  “Rolling back used to be a meeting. Now it is a button, and nobody remembers the last time we pressed it.”
+</c-quote.split>{% endverbatim %}{% endfilter %}</c-slot>
+<c-quote.split name="Jonas Lindqvist" role="Staff Engineer, Fjordline"
+               src="{% static 'example/people/jonas-tall.svg' %}" alt="">
+  “Rolling back used to be a meeting. Now it is a button, and nobody remembers the last time we pressed it.”
+</c-quote.split>
+  </c-demo.live>
+
+  <c-demo.live label="Reversed, on a tinted surface, with a logo" anchor="reversed">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.split reverse class="bg-base-200"
+               name="Inês Carvalho" role="Design Lead, Papaya"
+               src="{% static 'example/people/ines-tall.svg' %}" alt="">
+  <c-slot name="logo"><span class="text-xl font-black tracking-tight">Papaya</span></c-slot>
+  “Every pull request gets its own address. Our designers review the real thing now, not a screenshot of it.”
+</c-quote.split>{% endverbatim %}{% endfilter %}</c-slot>
+<c-quote.split reverse class="bg-base-200"
+               name="Inês Carvalho" role="Design Lead, Papaya"
+               src="{% static 'example/people/ines-tall.svg' %}" alt="">
+  <c-slot name="logo"><span class="text-xl font-black tracking-tight">Papaya</span></c-slot>
+  “Every pull request gets its own address. Our designers review the real thing now, not a screenshot of it.”
+</c-quote.split>
+  </c-demo.live>
+
+  <c-demo.live label="With something other than a picture" anchor="media">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.split name="Mei Tanaka" role="Compliance Lead, Harbour Bank">
+  <c-slot name="media">
+    <div class="stats stats-vertical w-full bg-base-200">
+      <div class="stat">
+        <div class="stat-title">Audit requests answered</div>
+        <div class="stat-value">214</div>
+        <div class="stat-desc">in the last quarter</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Median time to answer</div>
+        <div class="stat-value">40 s</div>
+        <div class="stat-desc">down from two days</div>
+      </div>
+    </div>
+  </c-slot>
+  “The audit log answered the question before the auditor had finished asking it.”
+</c-quote.split>{% endverbatim %}{% endfilter %}</c-slot>
+<c-quote.split name="Mei Tanaka" role="Compliance Lead, Harbour Bank">
+  <c-slot name="media">
+    <div class="stats stats-vertical w-full bg-base-200">
+      <div class="stat">
+        <div class="stat-title">Audit requests answered</div>
+        <div class="stat-value">214</div>
+        <div class="stat-desc">in the last quarter</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Median time to answer</div>
+        <div class="stat-value">40 s</div>
+        <div class="stat-desc">down from two days</div>
+      </div>
+    </div>
+  </c-slot>
+  “The audit log answered the question before the auditor had finished asking it.”
+</c-quote.split>
+  </c-demo.live>
+
+  <c-demo.live label="A long one" anchor="long">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.split size="sm" name="Tomás Rivera" role="Engineering Manager, Alder & Pine"
+               src="{% static 'example/people/tomas-tall.svg' %}" alt="">
+  “I was sceptical. We had tried two other tools and both wanted the pipeline rebuilt around them. This one took the pipeline we had. In the first week we shipped eleven times, which was more than the whole month before, and the on-call phone stayed quiet. I still don't fully trust that, but it has been six months.”
+</c-quote.split>{% endverbatim %}{% endfilter %}</c-slot>
+<c-quote.split size="sm" name="Tomás Rivera" role="Engineering Manager, Alder & Pine"
+               src="{% static 'example/people/tomas-tall.svg' %}" alt="">
+  “I was sceptical. We had tried two other tools and both wanted the pipeline rebuilt around them. This one took the pipeline we had. In the first week we shipped eleven times, which was more than the whole month before, and the on-call phone stayed quiet. I still don't fully trust that, but it has been six months.”
+</c-quote.split>
+  </c-demo.live>
+{% endblock content %}

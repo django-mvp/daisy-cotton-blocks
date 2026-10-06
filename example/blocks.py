@@ -146,6 +146,20 @@ FAMILIES: tuple[Family, ...] = (
             Component("hover", "Hover", group="On hover"),
         ),
     ),
+    Family(
+        slug="quote",
+        label="Quotes",
+        components=(
+            Component("pull", "Pull", group="Components"),
+            Component("mark", "Mark", group="Components"),
+            Component("card", "Card", group="Components"),
+            Component("bubble", "Bubble", group="Components"),
+            Component("centred", "Centred", group="Blocks"),
+            Component("split", "Split", group="Blocks"),
+            Component("wall", "Wall", group="Blocks"),
+            Component("byline", "Byline", group="Parts"),
+        ),
+    ),
 )
 
 
