@@ -56,13 +56,19 @@
 <c-heading eyebrow="…" title="…" lead="…" />
 <c-heading align="end" eyebrow="…" title="…" lead="…" />{% endverbatim %}{% endfilter %}</c-slot>
     <c-section>
-      <c-heading align="start" eyebrow="align=&quot;start&quot;" title="Know what went out" lead="The words sit against the leading edge, which is the left in English." />
+      <c-heading align="start" title="Know what went out" lead="The words sit against the leading edge, which is the left in English.">
+        <c-slot name="eyebrow">align="start"</c-slot>
+      </c-heading>
     </c-section>
     <c-section class="bg-base-200">
-      <c-heading eyebrow="align=&quot;center&quot;, the default" title="Know what went out" lead="Centred, and held to a readable width." />
+      <c-heading title="Know what went out" lead="Centred, and held to a readable width.">
+        <c-slot name="eyebrow">align="center", the default</c-slot>
+      </c-heading>
     </c-section>
     <c-section>
-      <c-heading align="end" eyebrow="align=&quot;end&quot;" title="Know what went out" lead="Against the trailing edge." />
+      <c-heading align="end" title="Know what went out" lead="Against the trailing edge.">
+        <c-slot name="eyebrow">align="end"</c-slot>
+      </c-heading>
     </c-section>
   </c-demo.live>
 
@@ -71,13 +77,19 @@
 <c-heading align="start" size="lg" title="…" lead="…" />
 <c-heading align="start" size="xl" level="1" title="…" lead="…" />{% endverbatim %}{% endfilter %}</c-slot>
     <c-section>
-      <c-heading align="start" eyebrow="size=&quot;md&quot;, the default" title="Ship when the work is ready" lead="The size that opens a section part-way down a page." />
+      <c-heading align="start" title="Ship when the work is ready" lead="The size that opens a section part-way down a page.">
+        <c-slot name="eyebrow">size="md", the default</c-slot>
+      </c-heading>
     </c-section>
     <c-section class="bg-base-200">
-      <c-heading align="start" size="lg" eyebrow="size=&quot;lg&quot;" title="Ship when the work is ready" lead="For a hero that shares its width with a picture." />
+      <c-heading align="start" size="lg" title="Ship when the work is ready" lead="For a hero that shares its width with a picture.">
+        <c-slot name="eyebrow">size="lg"</c-slot>
+      </c-heading>
     </c-section>
     <c-section>
-      <c-heading align="start" size="xl" eyebrow="size=&quot;xl&quot;" title="Ship when the work is ready" lead="For a hero where the words are the whole of it." />
+      <c-heading align="start" size="xl" title="Ship when the work is ready" lead="For a hero where the words are the whole of it.">
+        <c-slot name="eyebrow">size="xl"</c-slot>
+      </c-heading>
     </c-section>
   </c-demo.live>
 
