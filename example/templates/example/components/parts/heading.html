@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Heading{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-heading">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      Most sections and heroes open with the same three lines. This is those lines on their own, so a section's <code>header</code> slot or a column can take them without the markup being written out again.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="All three lines, over columns" anchor="centred">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section>
+  <c-slot name="header">
+    <c-heading centred
+               eyebrow="Included in every plan"
+               title="What you get on day one"
+               lead="Nothing here is held back for a larger plan." />
+  </c-slot>
+  <c-section.col>…</c-section.col>
+  <c-section.col>…</c-section.col>
+  <c-section.col>…</c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section>
+      <c-slot name="header">
+        <c-heading centred eyebrow="Included in every plan" title="What you get on day one" lead="Nothing here is held back for a larger plan." />
+      </c-slot>
+      <c-section.col><c-demo.box>A timeline of every deploy</c-demo.box></c-section.col>
+      <c-section.col><c-demo.box>Alerts that name the change</c-demo.box></c-section.col>
+      <c-section.col><c-demo.box>One-click rollback</c-demo.box></c-section.col>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="In a column, following the text around it" anchor="column">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section align="center" class="bg-base-200">
+  <c-section.col>
+    <c-heading eyebrow="Deploy tracking" title="See which change broke the graph" lead="…" />
+    <p class="mt-6"><a class="btn btn-primary" href="#">Take the tour</a></p>
+  </c-section.col>
+  <c-section.col>…media…</c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section align="center" class="bg-base-200">
+      <c-section.col>
+        <c-heading eyebrow="Deploy tracking" title="See which change broke the graph" lead="Every deploy is drawn on the same timeline as your error rate, so the one that caused the spike is the one sitting under it." />
+        <p class="mt-6"><a class="btn btn-primary" href="#column">Take the tour</a></p>
+      </c-section.col>
+      <c-section.col>
+        <c-mockup.browser url="app.example.com/overview" class="shadow-2xl">
+          <c-demo.screenshot />
+        </c-mockup.browser>
+      </c-section.col>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="Three sizes" anchor="size">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-heading title="…" lead="…" />
+<c-heading size="lg" title="…" lead="…" />
+<c-heading size="xl" level="1" title="…" lead="…" />{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section>
+      <c-heading eyebrow="size=&quot;md&quot;, the default" title="Ship when the work is ready" lead="The size that opens a section part-way down a page." />
+    </c-section>
+    <c-section class="bg-base-200">
+      <c-heading size="lg" eyebrow="size=&quot;lg&quot;" title="Ship when the work is ready" lead="For a hero that shares its width with a picture." />
+    </c-section>
+    <c-section>
+      <c-heading size="xl" eyebrow="size=&quot;xl&quot;" title="Ship when the work is ready" lead="For a hero where the words are the whole of it." />
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="On a dark background" anchor="invert">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section invert class="bg-neutral">
+  <c-slot name="background"><c-background.glow /></c-slot>
+  <c-heading centred invert eyebrow="…" title="…" lead="…" />
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section invert class="bg-neutral">
+      <c-slot name="background"><c-background.glow /></c-slot>
+      <c-heading centred invert eyebrow="After six months" title="Releases stopped being an event" lead="The team went from one nervous release a week to shipping whenever the work is ready." />
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="A heading with markup in it" anchor="markup">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-heading centred size="xl" lead="…">
+  <c-slot name="title">Ship the page, <c-text.gradient>not the CSS</c-text.gradient></c-slot>
+</c-heading>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section>
+      <c-heading centred size="xl" lead="When part of the heading carries an effect or a link, write it in the title slot.">
+        <c-slot name="title">Ship the page, <c-text.gradient>not the CSS</c-text.gradient></c-slot>
+      </c-heading>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="One line at a time, and a long one" anchor="parts">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-heading title="…" />
+<c-heading eyebrow="…" title="…" />
+<c-heading centred title="…a very long heading…" lead="…" />{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section>
+      <c-heading title="The heading alone" />
+    </c-section>
+    <c-section class="bg-base-200">
+      <c-heading eyebrow="No sentence under it" title="An eyebrow and the heading" />
+    </c-section>
+    <c-section>
+      <c-heading centred title="Two thirds of the way to moving every service off the old pipeline, with the hardest ones already done and the rest booked in before the end of the quarter" lead="A long heading wraps into balanced lines and stays inside its width." />
+    </c-section>
+  </c-demo.live>
+{% endblock content %}

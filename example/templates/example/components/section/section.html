@@ -73,7 +73,7 @@
   <c-demo.live label="A heading over three columns" anchor="header">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section>
   <c-slot name="header">
-    <h2 class="text-3xl font-bold">What you get on day one</h2>
+    <c-heading centred eyebrow="Included in every plan" title="What you get on day one" lead="…" />
   </c-slot>
   <c-section.col>…</c-section.col>
   <c-section.col>…</c-section.col>
@@ -81,10 +81,7 @@
 </c-section>{% endverbatim %}{% endfilter %}</c-slot>
     <c-section>
       <c-slot name="header">
-        <div class="mx-auto max-w-3xl text-center">
-          <p class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">Included in every plan</p>
-          <h2 class="mt-4 text-3xl font-bold tracking-tight text-balance sm:text-4xl">What you get on day one</h2>
-        </div>
+        <c-heading centred eyebrow="Included in every plan" title="What you get on day one" lead="Nothing here is held back for a larger plan." />
       </c-slot>
       <c-section.col>
         <h3 class="text-xl font-semibold">A timeline of every deploy</h3>
@@ -210,10 +207,7 @@
     <c-section invert class="bg-neutral">
       <c-slot name="background"><c-background.glow /></c-slot>
       <c-section container="narrow">
-        <h2 class="text-center text-3xl font-bold tracking-tight text-balance sm:text-4xl">One background, two widths</h2>
-        <p class="mt-4 text-center text-lg leading-relaxed">
-          The outer section carries the background. This introduction sits in a narrow section inside it, and the columns below in a second one at the default width.
-        </p>
+        <c-heading centred invert title="One background, two widths" lead="The outer section carries the background. This introduction sits in a narrow section inside it, and the columns below in a second one at the default width." />
       </c-section>
       <c-section class="mt-12">
         <c-section.col>

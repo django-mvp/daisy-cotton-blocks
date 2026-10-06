@@ -17,21 +17,7 @@
   {% if background %}<c-slot name="background">{{ background }}</c-slot>{% endif %}
   <c-section.col class="flex flex-col gap-6 text-center lg:text-left" only>
     {{ announcement }}
-    {% if eyebrow %}
-      <p class="text-sm font-semibold tracking-widest uppercase
-                {% if not invert %}text-base-content/80{% endif %}">
-        {{ eyebrow }}
-      </p>
-    {% endif %}
-    {# djlint:off #}
-    <h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl">{{ title }}</h{{ level }}>
-    {# djlint:on #}
-    {% if lead %}
-      <p class="max-w-xl text-lg leading-relaxed text-pretty sm:text-xl
-                {% if not invert %}text-base-content/80{% endif %}">
-        {{ lead }}
-      </p>
-    {% endif %}
+    <c-heading :eyebrow="eyebrow" :title="title" :lead="lead" level="{{ level }}" size="lg" :invert="invert" only />
     {% if actions %}
       <div class="flex flex-wrap items-center justify-center gap-3 pt-2 lg:justify-start">{{ actions }}</div>
     {% endif %}

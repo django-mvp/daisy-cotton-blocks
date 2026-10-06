@@ -242,6 +242,7 @@ FAMILIES: tuple[Family, ...] = (
         label="Page parts",
         kind="component",
         components=(
+            Component("heading", "Heading", tag_name="c-heading"),
             Component("points", "Points", tag_name="c-points"),
             Component("panel", "Sign-in panel", tag_name="c-auth.panel"),
         ),
