@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Centred{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-quote.centred">
+    <p class="mt-4 max-w-3xl text-base-content/80">A whole band of the page given to one quotation. It takes a background the same way the hero blocks do.</p>
+  </c-demo.head>
+
+  <c-demo.live label="With a glow behind it" anchor="glow">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.centred size="lg"
+                 name="Amara Okafor" role="Head of Platform, Northwind"
+                 src="{% static 'example/people/amara.svg' %}">
+  <c-slot name="background"><c-background.glow /></c-slot>
+  <c-slot name="logo"><span class="text-xl font-black tracking-tight">Northwind</span></c-slot>
+  “We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.”
+</c-quote.centred>{% endverbatim %}{% endfilter %}</c-slot>
+<c-quote.centred size="lg"
+                 name="Amara Okafor" role="Head of Platform, Northwind"
+                 src="{% static 'example/people/amara.svg' %}">
+  <c-slot name="background"><c-background.glow /></c-slot>
+  <c-slot name="logo"><span class="text-xl font-black tracking-tight">Northwind</span></c-slot>
+  “We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.”
+</c-quote.centred>
+  </c-demo.live>
+
+  <c-demo.live label="Over a picture, inverted" anchor="inverted">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.centred invert size="lg"
+                 name="Mei Tanaka" role="Compliance Lead, Harbour Bank"
+                 src="{% static 'example/people/mei.svg' %}">
+  <c-slot name="background">
+    <c-background.image src="{% static 'example/spotlight.svg' %}" dim="0.85" />
+  </c-slot>
+  “The audit log answered the question before the auditor had finished asking it.”
+</c-quote.centred>{% endverbatim %}{% endfilter %}</c-slot>
+<c-quote.centred invert size="lg"
+                 name="Mei Tanaka" role="Compliance Lead, Harbour Bank"
+                 src="{% static 'example/people/mei.svg' %}">
+  <c-slot name="background">
+    <c-background.image src="{% static 'example/spotlight.svg' %}" dim="0.85" />
+  </c-slot>
+  “The audit log answered the question before the auditor had finished asking it.”
+</c-quote.centred>
+  </c-demo.live>
+
+  <c-demo.live label="On a plain surface, from a published work" anchor="surface">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.centred class="bg-base-200"
+                 name="Harold Abelson"
+                 source="Structure and Interpretation of Computer Programs"
+                 href="https://mitpress.mit.edu/9780262510875/">
+  “Programs must be written for people to read, and only incidentally for machines to execute.”
+</c-quote.centred>{% endverbatim %}{% endfilter %}</c-slot>
+<c-quote.centred class="bg-base-200"
+                 name="Harold Abelson"
+                 source="Structure and Interpretation of Computer Programs"
+                 href="https://mitpress.mit.edu/9780262510875/">
+  “Programs must be written for people to read, and only incidentally for machines to execute.”
+</c-quote.centred>
+  </c-demo.live>
+
+  <c-demo.live label="A long one" anchor="long">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.centred name="Tomás Rivera" role="Engineering Manager, Alder &amp; Pine" src="{% static 'example/people/tomas.svg' %}">
+  “I was sceptical. We had tried two other tools and both wanted the pipeline rebuilt around them. This one took the pipeline we had. In the first week we shipped eleven times, which was more than the whole month before, and the on-call phone stayed quiet. I still don't fully trust that, but it has been six months.”
+</c-quote.centred>{% endverbatim %}{% endfilter %}</c-slot>
+<c-quote.centred name="Tomás Rivera" role="Engineering Manager, Alder &amp; Pine" src="{% static 'example/people/tomas.svg' %}">
+  “I was sceptical. We had tried two other tools and both wanted the pipeline rebuilt around them. This one took the pipeline we had. In the first week we shipped eleven times, which was more than the whole month before, and the on-call phone stayed quiet. I still don't fully trust that, but it has been six months.”
+</c-quote.centred>
+  </c-demo.live>
+
+  <c-demo.live label="The minimum" anchor="minimum">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.centred size="sm">“Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”</c-quote.centred>{% endverbatim %}{% endfilter %}</c-slot>
+<c-quote.centred size="sm">“Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”</c-quote.centred>
+  </c-demo.live>
+{% endblock content %}

@@ -1,0 +1,34 @@
+{# @description One quotation, large and centred, across the full width of the page. For the one thing somebody said that you want read. #}
+{# @prop name:text | description:"Who said it" #}
+{# @prop role:text | description:"What they do and where" #}
+{# @prop source:text | description:"The work it comes from" #}
+{# @prop href:text | description:"Where the source can be read" #}
+{# @prop src:text | description:"A portrait of the person" #}
+{# @prop invert:boolean | default:False | description:"Light copy, for a dark background. Each background says whether it wants this." #}
+{# @prop size:select['sm', 'md', 'lg'] | default:"md" | description:"How much vertical room the block takes" #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
+{# @slot Good tools get out of the way. — What was said. Write the quotation marks if you want them. #}
+{# @slot:background — A background block, rendered into a layer behind the words #}
+{# @slot:logo — Above the words. The mark of the company the person speaks for. #}
+<c-vars name role source href src invert size="md" class />
+<section class="relative isolate overflow-clip
+                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
+                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
+                {{ class }}"
+         {{ attrs }}>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+  <div class="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    <figure class="mx-auto flex max-w-4xl flex-col items-center gap-8 text-center">
+      {% if logo %}<div>{{ logo }}</div>{% endif %}
+      <blockquote {% if href %}cite="{{ href }}"{% endif %}
+                  class="text-2xl leading-snug font-semibold tracking-tight text-balance sm:text-3xl lg:text-4xl">
+        {{ slot }}
+      </blockquote>
+      {% if name or role or source %}
+        <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" src="{{ src }}" align="centre" size="lg" :invert="invert" only />
+      {% endif %}
+    </figure>
+  </div>
+</section>

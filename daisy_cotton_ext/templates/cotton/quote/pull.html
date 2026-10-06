@@ -1,0 +1,28 @@
+{# @description A quotation set off from the text around it by a rule down its leading edge. For the middle of an article. #}
+{# @prop name:text | description:"Who said it" #}
+{# @prop role:text | description:"What they do and where" #}
+{# @prop source:text | description:"The work it comes from" #}
+{# @prop href:text | description:"Where the source can be read" #}
+{# @prop src:text | description:"A portrait of the person" #}
+{# @prop color:select['primary', 'secondary', 'accent', 'neutral', 'base-300'] | default:"primary" | description:"The colour of the rule" #}
+{# @prop size:select['md', 'lg'] | default:"md" | description:"How large the words are set" #}
+{# @prop class:text | description:"Extra classes on the figure" #}
+{# @slot Good tools get out of the way. — What was said. Write the quotation marks if you want them. #}
+{% comment %}
+  The rule is on the inline-start edge, so it moves to the right in a
+  right-to-left page. It is decoration: the words keep the page's own colour.
+{% endcomment %}
+<c-vars name role source href src color="primary" size="md" class />
+<figure class="border-s-4 border-{{ color }} ps-6
+               {% if size == 'lg' %}max-w-3xl{% else %}max-w-prose{% endif %}
+               {{ class }}"
+        {{ attrs }}>
+  <blockquote {% if href %}cite="{{ href }}"{% endif %}
+              class="font-medium text-pretty
+                     {% if size == 'lg' %}text-2xl leading-snug sm:text-3xl{% else %}text-xl leading-relaxed{% endif %}">
+    {{ slot }}
+  </blockquote>
+  {% if name or role or source %}
+    <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" src="{{ src }}" class="mt-4" only />
+  {% endif %}
+</figure>

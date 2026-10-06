@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Byline{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-quote.byline">
+    <p class="mt-4 max-w-3xl text-base-content/80">The caption every quote in this family ends with. Each of them builds it for you from <code>name</code>, <code>role</code>, <code>source</code>, <code>href</code> and <code>src</code>. Reach for it directly only when you are writing a figure of your own.</p>
+    <p class="mt-4 max-w-3xl text-base-content/80">It is a <code>figcaption</code>, so it belongs as the last thing inside a <code>figure</code>.</p>
+  </c-demo.head>
+
+  <c-demo.live label="Portrait, name and role" anchor="full">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<figure class="space-y-4">
+  <blockquote class="text-lg">“Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”</blockquote>
+  <c-quote.byline name="Amara Okafor" role="Head of Platform, Northwind" src="{% static 'example/people/amara.svg' %}" />
+</figure>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-12">
+<figure class="space-y-4">
+  <blockquote class="text-lg">“Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”</blockquote>
+  <c-quote.byline name="Amara Okafor" role="Head of Platform, Northwind" src="{% static 'example/people/amara.svg' %}" />
+</figure>
+</c-container>
+  </c-demo.live>
+
+  <c-demo.live label="Large and centred" anchor="centred">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<figure class="space-y-4 text-center">
+  <blockquote class="text-lg">“Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”</blockquote>
+  <c-quote.byline size="lg" align="centre" name="Mei Tanaka" role="Compliance Lead, Harbour Bank" src="{% static 'example/people/mei.svg' %}" />
+</figure>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-12">
+<figure class="space-y-4 text-center">
+  <blockquote class="text-lg">“Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”</blockquote>
+  <c-quote.byline size="lg" align="centre" name="Mei Tanaka" role="Compliance Lead, Harbour Bank" src="{% static 'example/people/mei.svg' %}" />
+</figure>
+</c-container>
+  </c-demo.live>
+
+  <c-demo.live label="A role and a linked source" anchor="source">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<figure class="space-y-4">
+  <blockquote class="text-lg">“Programs must be written for people to read, and only incidentally for machines to execute.”</blockquote>
+  <c-quote.byline name="Harold Abelson" role="Preface"
+                  source="Structure and Interpretation of Computer Programs"
+                  href="https://mitpress.mit.edu/9780262510875/" />
+</figure>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-12">
+<figure class="space-y-4">
+  <blockquote class="text-lg">“Programs must be written for people to read, and only incidentally for machines to execute.”</blockquote>
+  <c-quote.byline name="Harold Abelson" role="Preface"
+                  source="Structure and Interpretation of Computer Programs"
+                  href="https://mitpress.mit.edu/9780262510875/" />
+</figure>
+</c-container>
+  </c-demo.live>
+
+  <c-demo.live label="A name and nothing else" anchor="name">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<figure class="space-y-4">
+  <blockquote class="text-lg">“Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”</blockquote>
+  <c-quote.byline name="A customer, by email" />
+</figure>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-12">
+<figure class="space-y-4">
+  <blockquote class="text-lg">“Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”</blockquote>
+  <c-quote.byline name="A customer, by email" />
+</figure>
+</c-container>
+  </c-demo.live>
+{% endblock content %}

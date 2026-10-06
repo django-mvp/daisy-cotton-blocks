@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Card{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-quote.card">
+    <p class="mt-4 max-w-3xl text-base-content/80">A quotation in a card, with the person at the foot. Put several in a grid and the people line up along the bottom however long each quotation runs.</p>
+    <p class="mt-4 max-w-3xl text-base-content/80">The row of stars is optional and is read out as one thing, “4 out of 5”.</p>
+  </c-demo.head>
+
+  <c-demo.live label="Three in a row" anchor="row">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<div class="grid gap-6 md:grid-cols-3">
+  <c-quote.card rating="5" name="Amara Okafor" role="Head of Platform, Northwind" src="{% static 'example/people/amara.svg' %}">
+    “We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.”
+  </c-quote.card>
+  <c-quote.card rating="4" name="Tomás Rivera" role="Engineering Manager, Alder &amp; Pine" src="{% static 'example/people/tomas.svg' %}">
+    “I was sceptical. We had tried two other tools and both wanted the pipeline rebuilt around them. This one took the pipeline we had. In the first week we shipped eleven times, which was more than the whole month before, and the on-call phone stayed quiet. I still don't fully trust that, but it has been six months.”
+  </c-quote.card>
+  <c-quote.card rating="5" name="Mei Tanaka" role="Compliance Lead, Harbour Bank" src="{% static 'example/people/mei.svg' %}">
+    “The audit log answered the question before the auditor had finished asking it.”
+  </c-quote.card>
+</div>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-12">
+<div class="grid gap-6 md:grid-cols-3">
+  <c-quote.card rating="5" name="Amara Okafor" role="Head of Platform, Northwind" src="{% static 'example/people/amara.svg' %}">
+    “We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.”
+  </c-quote.card>
+  <c-quote.card rating="4" name="Tomás Rivera" role="Engineering Manager, Alder &amp; Pine" src="{% static 'example/people/tomas.svg' %}">
+    “I was sceptical. We had tried two other tools and both wanted the pipeline rebuilt around them. This one took the pipeline we had. In the first week we shipped eleven times, which was more than the whole month before, and the on-call phone stayed quiet. I still don't fully trust that, but it has been six months.”
+  </c-quote.card>
+  <c-quote.card rating="5" name="Mei Tanaka" role="Compliance Lead, Harbour Bank" src="{% static 'example/people/mei.svg' %}">
+    “The audit log answered the question before the auditor had finished asking it.”
+  </c-quote.card>
+</div>
+</c-container>
+  </c-demo.live>
+
+  <c-demo.live label="Without stars, on a tinted card" anchor="plain">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<div class="grid gap-6 md:grid-cols-2">
+  <c-quote.card class="bg-base-200" name="Inês Carvalho" role="Design Lead, Papaya" src="{% static 'example/people/ines.svg' %}">
+    “Every pull request gets its own address. Our designers review the real thing now, not a screenshot of it.”
+  </c-quote.card>
+  <c-quote.card class="bg-base-200" name="Jonas Lindqvist" role="Staff Engineer, Fjordline" src="{% static 'example/people/jonas.svg' %}">
+    “Approvals per service meant we could finally let the data team deploy on their own.”
+  </c-quote.card>
+</div>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-12">
+<div class="grid gap-6 md:grid-cols-2">
+  <c-quote.card class="bg-base-200" name="Inês Carvalho" role="Design Lead, Papaya" src="{% static 'example/people/ines.svg' %}">
+    “Every pull request gets its own address. Our designers review the real thing now, not a screenshot of it.”
+  </c-quote.card>
+  <c-quote.card class="bg-base-200" name="Jonas Lindqvist" role="Staff Engineer, Fjordline" src="{% static 'example/people/jonas.svg' %}">
+    “Approvals per service meant we could finally let the data team deploy on their own.”
+  </c-quote.card>
+</div>
+</c-container>
+  </c-demo.live>
+
+  <c-demo.live label="Stars in another colour, and no portrait" anchor="stars">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<div class="grid gap-6 md:grid-cols-3">
+  <c-quote.card rating="5" color="primary" name="Jonas Lindqvist" role="Staff Engineer, Fjordline">
+    “Rolling back used to be a meeting. Now it is a button, and nobody remembers the last time we pressed it.”
+  </c-quote.card>
+  <c-quote.card rating="3" color="primary" name="A customer, by email">
+    “Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”
+  </c-quote.card>
+  <c-quote.card rating="1" color="primary">
+    “It did what it said. I had hoped for more.”
+  </c-quote.card>
+</div>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-12">
+<div class="grid gap-6 md:grid-cols-3">
+  <c-quote.card rating="5" color="primary" name="Jonas Lindqvist" role="Staff Engineer, Fjordline">
+    “Rolling back used to be a meeting. Now it is a button, and nobody remembers the last time we pressed it.”
+  </c-quote.card>
+  <c-quote.card rating="3" color="primary" name="A customer, by email">
+    “Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”
+  </c-quote.card>
+  <c-quote.card rating="1" color="primary">
+    “It did what it said. I had hoped for more.”
+  </c-quote.card>
+</div>
+</c-container>
+  </c-demo.live>
+
+  <c-demo.live label="The minimum" anchor="minimum">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.card class="max-w-md">“Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”</c-quote.card>{% endverbatim %}{% endfilter %}</c-slot>
+<c-container class="py-12">
+<c-quote.card class="max-w-md">“Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”</c-quote.card>
+</c-container>
+  </c-demo.live>
+{% endblock content %}

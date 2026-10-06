@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Wall{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-quote.wall">
+    <p class="mt-4 max-w-3xl text-base-content/80">For when there are many. The quotations are packed into columns, so a long one and a short one sit together without a hole under the short one.</p>
+    <p class="mt-4 max-w-3xl text-base-content/80">They read down each column in turn, not across. Put the ones that matter most first.</p>
+  </c-demo.head>
+
+  <c-demo.live label="Seven cards in three columns" anchor="three">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.wall eyebrow="What people say"
+              title="Teams that ship on Fridays"
+              lead="Unedited, from people who run it in production.">
+  <c-quote.card rating="5" name="Amara Okafor" role="Head of Platform, Northwind" src="{% static 'example/people/amara.svg' %}">
+    “We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.”
+  </c-quote.card>
+  <c-quote.card rating="4" name="Tomás Rivera" role="Engineering Manager, Alder &amp; Pine" src="{% static 'example/people/tomas.svg' %}">
+    “I was sceptical. We had tried two other tools and both wanted the pipeline rebuilt around them. This one took the pipeline we had. In the first week we shipped eleven times, which was more than the whole month before, and the on-call phone stayed quiet. I still don't fully trust that, but it has been six months.”
+  </c-quote.card>
+  <c-quote.card rating="5" name="Mei Tanaka" role="Compliance Lead, Harbour Bank" src="{% static 'example/people/mei.svg' %}">
+    “The audit log answered the question before the auditor had finished asking it.”
+  </c-quote.card>
+  <c-quote.card rating="5" name="Inês Carvalho" role="Design Lead, Papaya" src="{% static 'example/people/ines.svg' %}">
+    “Every pull request gets its own address. Our designers review the real thing now, not a screenshot of it.”
+  </c-quote.card>
+  <c-quote.card rating="5" name="Jonas Lindqvist" role="Staff Engineer, Fjordline" src="{% static 'example/people/jonas.svg' %}">
+    “Rolling back used to be a meeting. Now it is a button, and nobody remembers the last time we pressed it.”
+  </c-quote.card>
+  <c-quote.card rating="4" name="A customer, by email">
+    “Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”
+  </c-quote.card>
+  <c-quote.card rating="5" name="Jonas Lindqvist" role="Staff Engineer, Fjordline" src="{% static 'example/people/jonas.svg' %}">
+    “Approvals per service meant we could finally let the data team deploy on their own.”
+  </c-quote.card>
+</c-quote.wall>{% endverbatim %}{% endfilter %}</c-slot>
+<c-quote.wall eyebrow="What people say"
+              title="Teams that ship on Fridays"
+              lead="Unedited, from people who run it in production.">
+  <c-quote.card rating="5" name="Amara Okafor" role="Head of Platform, Northwind" src="{% static 'example/people/amara.svg' %}">
+    “We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.”
+  </c-quote.card>
+  <c-quote.card rating="4" name="Tomás Rivera" role="Engineering Manager, Alder &amp; Pine" src="{% static 'example/people/tomas.svg' %}">
+    “I was sceptical. We had tried two other tools and both wanted the pipeline rebuilt around them. This one took the pipeline we had. In the first week we shipped eleven times, which was more than the whole month before, and the on-call phone stayed quiet. I still don't fully trust that, but it has been six months.”
+  </c-quote.card>
+  <c-quote.card rating="5" name="Mei Tanaka" role="Compliance Lead, Harbour Bank" src="{% static 'example/people/mei.svg' %}">
+    “The audit log answered the question before the auditor had finished asking it.”
+  </c-quote.card>
+  <c-quote.card rating="5" name="Inês Carvalho" role="Design Lead, Papaya" src="{% static 'example/people/ines.svg' %}">
+    “Every pull request gets its own address. Our designers review the real thing now, not a screenshot of it.”
+  </c-quote.card>
+  <c-quote.card rating="5" name="Jonas Lindqvist" role="Staff Engineer, Fjordline" src="{% static 'example/people/jonas.svg' %}">
+    “Rolling back used to be a meeting. Now it is a button, and nobody remembers the last time we pressed it.”
+  </c-quote.card>
+  <c-quote.card rating="4" name="A customer, by email">
+    “Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”
+  </c-quote.card>
+  <c-quote.card rating="5" name="Jonas Lindqvist" role="Staff Engineer, Fjordline" src="{% static 'example/people/jonas.svg' %}">
+    “Approvals per service meant we could finally let the data team deploy on their own.”
+  </c-quote.card>
+</c-quote.wall>
+  </c-demo.live>
+
+  <c-demo.live label="Two columns of bubbles, no header, on a tinted surface" anchor="two">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.wall columns="2" size="sm" class="bg-base-200">
+  <c-quote.bubble color="base-100" name="Amara Okafor" role="Northwind" src="{% static 'example/people/amara.svg' %}">
+    “We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.”
+  </c-quote.bubble>
+  <c-quote.bubble color="base-100" name="Mei Tanaka" role="Harbour Bank" src="{% static 'example/people/mei.svg' %}">
+    “The audit log answered the question before the auditor had finished asking it.”
+  </c-quote.bubble>
+  <c-quote.bubble color="base-100" name="Tomás Rivera" role="Alder &amp; Pine" src="{% static 'example/people/tomas.svg' %}">
+    “I was sceptical. We had tried two other tools and both wanted the pipeline rebuilt around them. This one took the pipeline we had. In the first week we shipped eleven times, which was more than the whole month before, and the on-call phone stayed quiet. I still don't fully trust that, but it has been six months.”
+  </c-quote.bubble>
+  <c-quote.bubble color="base-100" name="Inês Carvalho" role="Papaya" src="{% static 'example/people/ines.svg' %}">
+    “Every pull request gets its own address. Our designers review the real thing now, not a screenshot of it.”
+  </c-quote.bubble>
+</c-quote.wall>{% endverbatim %}{% endfilter %}</c-slot>
+<c-quote.wall columns="2" size="sm" class="bg-base-200">
+  <c-quote.bubble color="base-100" name="Amara Okafor" role="Northwind" src="{% static 'example/people/amara.svg' %}">
+    “We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.”
+  </c-quote.bubble>
+  <c-quote.bubble color="base-100" name="Mei Tanaka" role="Harbour Bank" src="{% static 'example/people/mei.svg' %}">
+    “The audit log answered the question before the auditor had finished asking it.”
+  </c-quote.bubble>
+  <c-quote.bubble color="base-100" name="Tomás Rivera" role="Alder &amp; Pine" src="{% static 'example/people/tomas.svg' %}">
+    “I was sceptical. We had tried two other tools and both wanted the pipeline rebuilt around them. This one took the pipeline we had. In the first week we shipped eleven times, which was more than the whole month before, and the on-call phone stayed quiet. I still don't fully trust that, but it has been six months.”
+  </c-quote.bubble>
+  <c-quote.bubble color="base-100" name="Inês Carvalho" role="Papaya" src="{% static 'example/people/ines.svg' %}">
+    “Every pull request gets its own address. Our designers review the real thing now, not a screenshot of it.”
+  </c-quote.bubble>
+</c-quote.wall>
+  </c-demo.live>
+
+  <c-demo.live label="One quotation" anchor="one">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-quote.wall title="Just the one, so far">
+  <c-quote.card name="A customer, by email">“Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”</c-quote.card>
+</c-quote.wall>{% endverbatim %}{% endfilter %}</c-slot>
+<c-quote.wall title="Just the one, so far">
+  <c-quote.card name="A customer, by email">“Set it up on a Tuesday. Forgot about it by Thursday. That is the review.”</c-quote.card>
+</c-quote.wall>
+  </c-demo.live>
+{% endblock content %}
