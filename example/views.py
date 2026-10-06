@@ -49,6 +49,13 @@ SUMMARIES: dict[str, dict[str, str]] = {
 }
 
 
+# The sentence under each kind's heading on the front page.
+LEADS: dict[str, str] = {
+    "component": "Single pieces, for a page you lay out yourself.",
+    "block": "Whole regions of a page, ready to drop in.",
+}
+
+
 class HomeView(TemplateView):
     """The project's front page, built from the package's own components.
 
@@ -68,15 +75,8 @@ class HomeView(TemplateView):
         context["background_count"] = sum(f.slug == "background" for f, c in every)
         context["text_count"] = sum(f.slug == "text" for f, c in every)
         context["catalogue"] = [
-            {"label": label, "lead": lead, "families": self.families(kind)}
-            for kind, label, lead in (
-                ("block", "Sections", "Whole regions of a page, ready to drop in."),
-                (
-                    "component",
-                    "Components",
-                    "Single pieces, for a page you lay out yourself.",
-                ),
-            )
+            {"label": label, "lead": LEADS[kind], "families": self.families(kind)}
+            for kind, label in blocks.SECTIONS
         ]
         first_family, first_component = every[0]
         context["catalogue_url"] = reverse(
