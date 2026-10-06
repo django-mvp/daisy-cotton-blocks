@@ -162,9 +162,9 @@ class TestSplitHero:
     ) -> None:
         html = render(f'<c-hero.split title="T" reverse>{self.MEDIA}</c-hero.split>')
 
-        assert "lg:order-1" in html
-        assert "lg:order-2" in html
-        assert re.search(r"(?<!lg:)\border-[12]\b", html) is None
+        moved = re.findall(r"[^\s\"]*order-\[[^\s\"]*", html)
+        assert moved
+        assert all(name.startswith("lg:") for name in moved)
 
     def test_the_media_slot_renders_the_authors_own_markup(self, render) -> None:
         html = render(f'<c-hero.split title="T">{self.MEDIA}</c-hero.split>')

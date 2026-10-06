@@ -28,7 +28,7 @@ Blocks are configured through attributes and take their colours from whatever da
 
 ## Status
 
-Version 0.0.1. Nine families are built: heroes, backgrounds, text effects, reveals, quotes, stats, points, sign-in pages and sign-up pages. Nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
+Version 0.0.1. Eleven families are built: the section and its columns, the heading, heroes, backgrounds, text effects, reveals, quotes, stats, points, sign-in pages and sign-up pages. Nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
 
 ## Scope & philosophy
 
@@ -74,7 +74,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-`daisy_cotton` holds the base components some of these are built from, such as the avatar beside a quotation's name. A project that already has a component of the same name, its own or another package's, keeps it: Django uses the first one it finds in `INSTALLED_APPS` order.
+`daisy_cotton` holds the base components some of these are built from, such as the avatar beside a quotation's name. A project that already has a component of the same name, its own or another package's, keeps it: Django uses the first one it finds in `INSTALLED_APPS` order. django-mvp ships a `<c-section>` of its own, a titled section with a toolbar, so a project that uses both packages gets whichever is listed first.
 
 Then load its stylesheet alongside the one carrying daisyUI:
 
@@ -94,6 +94,84 @@ Blocks are then available as Cotton tags:
 ```
 
 ## Blocks
+
+### Section and columns
+
+The outer shell of a region of a page, and the columns inside it. A section always spans the page, and so does its background. `container` decides how wide the content inside may grow.
+
+| Tag | What it is |
+|---|---|
+| `<c-section>` | The shell: a `section` element with a background layer, a header and a body held to a chosen width |
+| `<c-section.col>` | One column of a section |
+
+Nothing says how many columns a section has. Each `<c-section.col>` opens one, and they share the width equally unless `span` says otherwise. Below the `lg` breakpoint they become one column, in the order written.
+
+```html
+<c-section container="wide" reverse class="bg-base-200">
+  <c-slot name="background"><c-background.grid /></c-slot>
+  <c-slot name="header">
+    <c-heading eyebrow="Deploy tracking" title="See which change broke the graph" />
+  </c-slot>
+  <c-section.col span="2">
+    <p>Every deploy is drawn on the same timeline as your error rate.</p>
+  </c-section.col>
+  <c-section.col span="3">
+    <img src="{% static 'img/timeline.png' %}" alt="A deploy marked on an error-rate graph">
+  </c-section.col>
+</c-section>
+```
+
+`<c-section>` takes:
+
+| Attribute | Default | What it does |
+|---|---|---|
+| `height` | `content` | `content` is as tall as what the section holds. `screen` is at least as tall as the window, with the content centred in it |
+| `flush` | off | Drops the room above and below the content, for columns that carry surfaces of their own |
+| `container` | `default` | How wide the content may grow: `narrow` for a page of text, `default`, `wide`, or `full` to run to the edges of the page with no gutter |
+| `gap` | `md` | The room between columns, and between them once stacked: `none`, `sm`, `md` or `lg` |
+| `align` | `stretch` | Where columns of different heights sit against each other: `stretch`, `start`, `center` or `end` |
+| `reverse` | off | Runs the columns the other way at `lg` and above, for up to six columns. Stacked columns always read in the order written |
+| `invert` | off | Light copy, for a dark background |
+| `class` | — | Extra classes on the section element. A plain surface colour goes here: `bg-base-200` |
+
+| Slot | What goes in it |
+|---|---|
+| default | Anything, or one `<c-section.col>` for each column |
+| `background` | A background block, rendered into a layer behind the content |
+| `header` | Above the columns, across the whole width |
+
+`<c-section.col>` takes:
+
+| Attribute | Default | What it does |
+|---|---|---|
+| `span` | `1` | How many shares of the width the column takes. A `2` beside a `3` is two fifths beside three fifths |
+| `align` | — | Where this column sits against taller neighbours, when it should differ from the section: `start`, `center` or `end` |
+| `class` | — | Extra classes on the column. A surface colour and padding go here |
+
+It has a `background` slot of its own, which puts a background block behind that column alone.
+
+A section can sit inside another, or inside a column. The inner one adds no gutters and no room above or below, and keeps the copy colour of the section around it, so an outer section can carry a background across the page while an inner one holds the text to `narrow`.
+
+Columns are for a small, fixed number of parts that stack at one breakpoint. A row of many cards that should go from four across to two to one is a grid, and is not what this is for. The reasoning is in [ADR 0011](docs/adr/0011-a-sections-columns-are-counted-by-the-stylesheet.md).
+
+### Heading
+
+`<c-heading>` is the three lines that open most sections and heroes: a short line above, the heading, and a sentence under it. Any of them can be left out, and with none it renders nothing.
+
+```html
+<c-heading eyebrow="Included in every plan" title="What you get on day one" lead="Nothing here is held back for a larger plan." />
+```
+
+| Attribute | Default | What it does |
+|---|---|---|
+| `eyebrow` | — | A short line above the heading |
+| `title` | — | The heading. Use a `title` slot instead when it contains markup |
+| `lead` | — | The supporting sentence under it |
+| `level` | `2` | Heading level. It never changes how large the heading looks |
+| `size` | `md` | How large the heading is set: `md` opens a section, `lg` and `xl` open a page |
+| `align` | `center` | Which edge the words sit against: `start`, `center` or `end`. `none` sets nothing, so they follow the text alignment around them |
+| `invert` | off | Light copy, for a dark background |
+| `class` | — | Extra classes on the wrapper |
 
 ### Heroes
 

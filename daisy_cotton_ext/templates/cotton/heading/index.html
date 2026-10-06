@@ -1,0 +1,34 @@
+{# @description The words that open a section or a hero: a short line above, the heading itself, and a sentence under it. Any of the three can be left out. #}
+{# @prop eyebrow:text | description:"Short line above the heading: a category, a release name" #}
+{# @prop title:text | description:"The heading. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The supporting sentence under the heading" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"2" | description:"Heading level. It changes what the heading is, never how large it looks." #}
+{# @prop size:select['md', 'lg', 'xl'] | default:"md" | description:"How large the heading is set. md opens a section, lg and xl open a page." #}
+{# @prop align:select['start', 'center', 'end', 'none'] | default:"center" | description:"Which edge the words sit against. none sets nothing, so they follow the text alignment around them." #}
+{# @prop invert:boolean | default:False | description:"Light copy, for a dark background" #}
+{# @prop class:text | description:"Extra classes on the wrapper" #}
+{% comment %}
+  `/80` and never lower on the eyebrow and lead: 70% drops to 3.86:1 on winter
+  against the 4.5:1 needed (#21). Under `invert` the copy stays full strength.
+{% endcomment %}
+<c-vars eyebrow title lead level="2" size="md" align="center" invert class />
+{% if eyebrow or title or lead %}
+  <div class="flex flex-col
+              {% if size == 'md' %}gap-4{% else %}gap-6{% endif %}
+              {% if align == 'center' %}mx-auto max-w-3xl items-center text-center{% elif align == 'start' %}items-start text-start{% elif align == 'end' %}items-end text-end{% endif %}
+              {{ class }}"
+       {{ attrs }}>
+    {% if eyebrow %}
+      <p class="text-sm font-semibold tracking-widest uppercase
+                {% if not invert %}text-base-content/80{% endif %}">{{ eyebrow }}</p>
+    {% endif %}
+    {# djlint:off #}
+    {% if title %}<h{{ level }} class="font-bold tracking-tight text-balance {% if size == 'xl' %}text-4xl sm:text-5xl lg:text-6xl{% elif size == 'lg' %}text-4xl sm:text-5xl{% else %}text-3xl sm:text-4xl{% endif %}">{{ title }}</h{{ level }}>{% endif %}
+    {# djlint:on #}
+    {% if lead %}
+      <p class="max-w-2xl leading-relaxed text-pretty
+                {% if size == 'md' %}text-lg{% else %}text-lg sm:text-xl{% endif %}
+                {% if not invert %}text-base-content/80{% endif %}">{{ lead }}</p>
+    {% endif %}
+  </div>
+{% endif %}

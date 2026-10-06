@@ -328,11 +328,14 @@ def classes_reaching_the_dom(render, tag: str) -> set[str]:
         for option in prop.options
     ]
 
+    # Each variant is rendered bare and again with copy, because a component
+    # may render nothing, or less, until it has words to show.
     found: set[str] = set()
     for variant in variants:
-        html = render(f"<{tag} {variant} />")
-        for attribute in CLASS_ATTRIBUTE.finditer(html):
-            found |= set(attribute.group("value").split())
+        for copy in ("", 'eyebrow="E" title="T" lead="L"'):
+            html = render(f"<{tag} {copy} {variant} />")
+            for attribute in CLASS_ATTRIBUTE.finditer(html):
+                found |= set(attribute.group("value").split())
     return found
 
 

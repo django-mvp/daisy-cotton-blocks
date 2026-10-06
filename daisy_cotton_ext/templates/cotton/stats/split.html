@@ -12,20 +12,10 @@
   read as evidence for a claim already made. An odd figure out takes a whole row.
 {% endcomment %}
 <c-vars eyebrow title lead level="2" size="md" class />
-<section class="text-base-content
-                {% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %}
-                {{ class }}"
-         {{ attrs }}>
-  <div class="mx-auto grid w-full max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
-    <div class="flex flex-col items-start gap-4">
-      {% if eyebrow %}<p class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">{{ eyebrow }}</p>{% endif %}
-      {# djlint:off #}
-      {% if title %}<h{{ level }} class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">{{ title }}</h{{ level }}>{% endif %}
-      {# djlint:on #}
-      {% if lead %}<p class="text-lg leading-relaxed text-pretty text-base-content/80">{{ lead }}</p>{% endif %}
-      {% if actions %}<div class="flex flex-wrap items-center gap-3 pt-2">{{ actions }}</div>{% endif %}
-    </div>
-    <div class="grid gap-4 sm:grid-cols-2
-                *:rounded-[var(--radius-box)] *:bg-base-200 sm:*:last:odd:col-span-2">{{ slot }}</div>
-  </div>
-</section>
+<c-section flush align="center" class="{% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
+  <c-section.col class="flex flex-col items-start gap-4" only>
+    <c-heading :eyebrow="eyebrow" :title="title" :lead="lead" level="{{ level }}" align="start" only />
+    {% if actions %}<div class="flex flex-wrap items-center gap-3 pt-2">{{ actions }}</div>{% endif %}
+  </c-section.col>
+  <c-section.col class="grid gap-4 sm:grid-cols-2 *:rounded-[var(--radius-box)] *:bg-base-200 sm:*:last:odd:col-span-2" only>{{ slot }}</c-section.col>
+</c-section>

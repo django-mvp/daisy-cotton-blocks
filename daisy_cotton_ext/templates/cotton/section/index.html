@@ -1,0 +1,46 @@
+{# @description The outer shell of a region of a page: full width, with a background layer behind it and its content held to a chosen width. Put section.col components in it and they sit side by side. #}
+{# @prop height:select['content', 'screen'] | default:"content" | description:"content is as tall as what the section holds. screen is at least as tall as the window, with the content centred in it." #}
+{# @prop flush:boolean | default:False | description:"Drop the room above and below the content, for columns that carry surfaces of their own and should meet the sections around them" #}
+{# @prop container:select['narrow', 'default', 'wide', 'full'] | default:"default" | description:"How wide the content may grow. The section itself, and its background, always span the page. narrow is a comfortable line of text. full runs to the edges of the page with no gutter, for columns that carry surfaces of their own." #}
+{# @prop gap:select['none', 'sm', 'md', 'lg'] | default:"md" | description:"The room between columns, and between them once they have stacked" #}
+{# @prop align:select['stretch', 'start', 'center', 'end'] | default:"stretch" | description:"Where columns of different heights sit against each other" #}
+{# @prop reverse:boolean | default:False | description:"Run the columns the other way at wide widths, so the last one written comes first. No effect once they have stacked: on a phone the columns always read in the order written." #}
+{# @prop invert:boolean | default:False | description:"Light copy, for a dark background. Each background says whether it wants this." #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
+{# @slot <c-section.col><h2 class="text-3xl font-bold">Copy</h2></c-section.col><c-section.col><div class="rounded-2xl bg-base-200 p-10">Media</div></c-section.col> — The content. Anything at all, or one section.col for each column. #}
+{# @slot:background — A background block, rendered into a layer behind the content #}
+{# @slot:header — Above the columns, across the whole width. A heading for the section, usually. #}
+{% comment %}
+  The columns are counted by the stylesheet, not here: the body turns into a
+  grid only when a section.col is its direct child, and each one opens a
+  column of its own. Below the lg breakpoint they are one column, in the order
+  written, and `reverse` does nothing there. `reverse` reaches six columns.
+
+  A section inside another drops its gutters, so the two do not add up, and
+  its vertical padding. It keeps the copy colour of the
+  section around it unless it inverts for itself.
+{% endcomment %}
+<c-vars height="content" flush container="default" gap="md" align="stretch" reverse invert class />
+<section class="relative isolate overflow-clip
+                {% if invert %}text-neutral-content{% else %}text-base-content in-data-section-body:text-inherit{% endif %}
+                {% if height == 'screen' %}flex min-h-screen items-center{% endif %}
+                {% if not flush %}py-16 md:py-24 in-data-section-body:py-0 in-data-section-body:md:py-0{% endif %}
+                {{ class }}"
+         data-section
+         {{ attrs }}>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+  <div data-section-body
+       class="mx-auto w-full
+              {% if container == 'full' %}max-w-none{% else %}px-4 sm:px-6 lg:px-8 in-data-section-body:px-0 in-data-section-body:sm:px-0 in-data-section-body:lg:px-0{% endif %}
+              {% if container == 'narrow' %}max-w-2xl{% elif container == 'wide' %}max-w-7xl{% elif container != 'full' %}max-w-6xl{% endif %}">
+    {% if header %}<div class="mb-10 md:mb-14">{{ header }}</div>{% endif %}
+    <div class="auto-cols-fr has-[>[data-section-col]]:grid lg:grid-flow-col
+                {% if reverse %}lg:*:nth-2:order-[-1] lg:*:nth-3:order-[-2] lg:*:nth-4:order-[-3] lg:*:nth-5:order-[-4] lg:*:nth-6:order-[-5]{% endif %}
+                {% if gap == 'sm' %}gap-6 lg:gap-8{% elif gap == 'lg' %}gap-14 lg:gap-24{% elif gap != 'none' %}gap-10 lg:gap-16{% endif %}
+                {% if align == 'start' %}lg:items-start{% elif align == 'center' %}lg:items-center{% elif align == 'end' %}lg:items-end{% endif %}">
+      {{ slot }}
+    </div>
+  </div>
+</section>

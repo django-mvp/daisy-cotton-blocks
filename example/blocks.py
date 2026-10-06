@@ -154,6 +154,15 @@ FAMILIES: tuple[Family, ...] = (
         ),
     ),
     Family(
+        slug="section",
+        label="Section",
+        kind="block",
+        components=(
+            Component("section", "Section", tag_name="c-section"),
+            Component("col", "Column", tag_name="c-section.col"),
+        ),
+    ),
+    Family(
         slug="background",
         label="Backgrounds",
         components=(
@@ -233,6 +242,7 @@ FAMILIES: tuple[Family, ...] = (
         label="Page parts",
         kind="component",
         components=(
+            Component("heading", "Heading", tag_name="c-heading"),
             Component("points", "Points", tag_name="c-points"),
             Component("panel", "Sign-in panel", tag_name="c-auth.panel"),
         ),

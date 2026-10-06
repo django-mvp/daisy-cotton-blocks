@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+{% block title %}Section{% endblock title %}
+
+{% block content %}
+  <c-demo.head tag="c-section">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      The section always spans the page, and so does its background. <code>container</code> sets how wide the content inside may grow.
+      Put <code>&lt;c-section.col&gt;</code> components in it and each one becomes a column. Below the <code>lg</code> breakpoint they stack in the order written.
+    </p>
+  </c-demo.head>
+
+  <c-demo.live label="A background across the page, text held to a readable width" anchor="background">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section container="narrow">
+  <c-slot name="background"><c-background.gradient /></c-slot>
+  <h2 class="text-3xl font-bold">Why we stopped doing release days</h2>
+  <p>…</p>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section container="narrow">
+      <c-slot name="background"><c-background.gradient /></c-slot>
+      <h2 class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">Why we stopped doing release days</h2>
+      <p class="mt-6 text-lg leading-relaxed text-base-content/80">
+        For three years every release went out on a Thursday afternoon. Everybody kept the evening free, somebody ordered food, and the rollback plan was printed out. It worked, in the sense that nothing was ever lost.
+      </p>
+      <p class="mt-4 text-lg leading-relaxed text-base-content/80">
+        It also meant a fix written on a Friday morning reached nobody for six days. This is how we got from one release a week to thirty a day, and what we would do differently.
+      </p>
+      <p class="mt-8"><a class="btn btn-primary" href="#background">Read the write-up</a></p>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="Two columns" anchor="two">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section align="center" class="bg-base-200">
+  <c-section.col>…copy…</c-section.col>
+  <c-section.col>…media…</c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section align="center" class="bg-base-200">
+      <c-section.col>
+        <h2 class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">See which change broke the graph</h2>
+        <p class="mt-4 text-lg leading-relaxed text-base-content/80">
+          Every deploy is drawn on the same timeline as your error rate, so the one that caused the spike is the one sitting under it.
+        </p>
+        <p class="mt-6"><a class="btn btn-primary" href="#two">Take the tour</a></p>
+      </c-section.col>
+      <c-section.col>
+        <c-mockup.browser url="app.example.com/overview" class="shadow-2xl">
+          <c-demo.screenshot />
+        </c-mockup.browser>
+      </c-section.col>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="Reversed on a wide screen" anchor="reverse">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section reverse align="center">
+  <c-section.col>…copy, written first so a phone reads it first…</c-section.col>
+  <c-section.col>…media…</c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section reverse align="center">
+      <c-section.col>
+        <h2 class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">The picture leads on a wide screen</h2>
+        <p class="mt-4 text-lg leading-relaxed text-base-content/80">
+          This copy is written first, and the section carries <code>reverse</code>. On a phone it is still read first, because stacked columns always follow the order written.
+        </p>
+      </c-section.col>
+      <c-section.col>
+        <c-mockup.browser url="app.example.com/overview" class="shadow-2xl">
+          <c-demo.screenshot />
+        </c-mockup.browser>
+      </c-section.col>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="A heading over three columns" anchor="header">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section>
+  <c-slot name="header">
+    <c-heading eyebrow="Included in every plan" title="What you get on day one" lead="…" />
+  </c-slot>
+  <c-section.col>…</c-section.col>
+  <c-section.col>…</c-section.col>
+  <c-section.col>…</c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section>
+      <c-slot name="header">
+        <c-heading eyebrow="Included in every plan" title="What you get on day one" lead="Nothing here is held back for a larger plan." />
+      </c-slot>
+      <c-section.col>
+        <h3 class="text-xl font-semibold">A timeline of every deploy</h3>
+        <p class="mt-2 text-base-content/80">Who shipped it, what was in it, and how long it took to get from merge to production.</p>
+      </c-section.col>
+      <c-section.col>
+        <h3 class="text-xl font-semibold">Alerts that name the change</h3>
+        <p class="mt-2 text-base-content/80">When the error rate moves, the message carries the deploy that went out just before it.</p>
+      </c-section.col>
+      <c-section.col>
+        <h3 class="text-xl font-semibold">One-click rollback</h3>
+        <p class="mt-2 text-base-content/80">Put the last good version back from the same screen, without finding the person who knows the pipeline.</p>
+      </c-section.col>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="Two columns, each on a surface of its own, edge to edge" anchor="surfaces">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section container="full" flush gap="none">
+  <c-section.col class="bg-primary p-10 text-primary-content lg:p-20">…</c-section.col>
+  <c-section.col class="p-10 lg:p-20">
+    <c-slot name="background"><c-background.grid /></c-slot>
+    …
+  </c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section container="full" flush gap="none">
+      <c-section.col class="bg-primary p-10 text-primary-content lg:p-20">
+        <p class="text-sm font-semibold tracking-widest uppercase">For the people shipping</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-balance sm:text-4xl">Push when the work is ready</h2>
+        <p class="mt-4 text-lg leading-relaxed">No release window to wait for and no checklist to walk through. A change that passes goes out, and you can see that it did.</p>
+        <p class="mt-8"><a class="btn" href="#surfaces">See a deploy</a></p>
+      </c-section.col>
+      <c-section.col class="p-10 lg:p-20">
+        <c-slot name="background"><c-background.grid /></c-slot>
+        <p class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">For the people on call</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight text-balance sm:text-4xl">Know what went out before the pager does</h2>
+        <p class="mt-4 text-lg leading-relaxed text-base-content/80">Every alert names the deploy that came before it, and the last good version is one click away.</p>
+        <p class="mt-8"><a class="btn btn-primary" href="#surfaces">See an alert</a></p>
+      </c-section.col>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="Two columns on different backgrounds, as panels" anchor="panels">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section gap="sm">
+  <c-section.col class="rounded-2xl bg-neutral p-10 text-neutral-content">
+    <c-slot name="background"><c-background.glow /></c-slot>
+    …
+  </c-section.col>
+  <c-section.col class="rounded-2xl bg-base-200 p-10">
+    <c-slot name="background"><c-background.gradient /></c-slot>
+    …
+  </c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section gap="sm">
+      <c-section.col class="rounded-2xl bg-neutral p-10 text-neutral-content">
+        <c-slot name="background"><c-background.glow /></c-slot>
+        <h3 class="text-2xl font-bold tracking-tight">Hosted</h3>
+        <p class="mt-3 leading-relaxed">We run it. Connect a repository and the first deploy shows up within the hour.</p>
+        <p class="mt-6"><a class="btn btn-primary" href="#panels">Start a free trial</a></p>
+      </c-section.col>
+      <c-section.col class="rounded-2xl bg-base-200 p-10">
+        <c-slot name="background"><c-background.gradient /></c-slot>
+        <h3 class="text-2xl font-bold tracking-tight">On your own servers</h3>
+        <p class="mt-3 leading-relaxed text-base-content/80">One container and a database. Nothing leaves your network, and upgrades are yours to schedule.</p>
+        <p class="mt-6"><a class="btn btn-outline" href="#panels">Read the install guide</a></p>
+      </c-section.col>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="Three columns: a solid, a pattern and a second solid" anchor="three-surfaces">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section container="full" flush gap="none">
+  <c-section.col class="bg-base-200 p-10 lg:p-14">…</c-section.col>
+  <c-section.col class="p-10 lg:p-14">
+    <c-slot name="background"><c-background.grid /></c-slot>
+    …
+  </c-section.col>
+  <c-section.col class="bg-secondary p-10 text-secondary-content lg:p-14">…</c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section container="full" flush gap="none">
+      <c-section.col class="bg-base-200 p-10 lg:p-14">
+        <p class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">Step one</p>
+        <h3 class="mt-3 text-2xl font-bold tracking-tight">Connect a pipeline</h3>
+        <p class="mt-3 leading-relaxed text-base-content/80">GitHub, GitLab or Bitbucket. It takes a token and about two minutes.</p>
+      </c-section.col>
+      <c-section.col class="p-10 lg:p-14">
+        <c-slot name="background"><c-background.grid /></c-slot>
+        <p class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">Step two</p>
+        <h3 class="mt-3 text-2xl font-bold tracking-tight">Ship something</h3>
+        <p class="mt-3 leading-relaxed text-base-content/80">The next deploy appears on the timeline with its author, its changes and how long it took.</p>
+      </c-section.col>
+      <c-section.col class="bg-secondary p-10 text-secondary-content lg:p-14">
+        <p class="text-sm font-semibold tracking-widest uppercase">Step three</p>
+        <h3 class="mt-3 text-2xl font-bold tracking-tight">Stop watching the graph</h3>
+        <p class="mt-3 leading-relaxed">If the error rate moves, you are told which deploy did it. Until then there is nothing to look at.</p>
+      </c-section.col>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="How wide the content may grow" anchor="container">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section container="narrow">…</c-section>
+<c-section>…</c-section>
+<c-section container="wide">…</c-section>
+<c-section container="full">…</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section container="narrow"><c-demo.box><code>container="narrow"</code> for a page of text</c-demo.box></c-section>
+    <c-section><c-demo.box>The default, when <code>container</code> is left out</c-demo.box></c-section>
+    <c-section container="wide"><c-demo.box><code>container="wide"</code> for a section led by a large picture</c-demo.box></c-section>
+    <c-section container="full"><c-demo.box class="rounded-none"><code>container="full"</code> runs to the edges of the page, with no gutter</c-demo.box></c-section>
+  </c-demo.live>
+
+  <c-demo.live label="A section inside a section" anchor="nested">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section invert class="bg-neutral">
+  <c-slot name="background"><c-background.glow /></c-slot>
+  <c-section container="narrow">…the introduction…</c-section>
+  <c-section class="mt-12">
+    <c-section.col>…</c-section.col>
+    <c-section.col>
+      <c-section gap="sm">
+        <c-section.col>…</c-section.col>
+        <c-section.col>…</c-section.col>
+      </c-section>
+    </c-section.col>
+  </c-section>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section invert class="bg-neutral">
+      <c-slot name="background"><c-background.glow /></c-slot>
+      <c-section container="narrow">
+        <c-heading invert title="One background, two widths" lead="The outer section carries the background. This introduction sits in a narrow section inside it, and the columns below in a second one at the default width." />
+      </c-section>
+      <c-section class="mt-12">
+        <c-section.col>
+          <h3 class="text-xl font-semibold">A column of the inner section</h3>
+          <p class="mt-2">An inner section adds no gutters and no vertical padding of its own, so nesting never pushes content inwards.</p>
+        </c-section.col>
+        <c-section.col>
+          <c-section gap="sm">
+            <c-section.col class="rounded-2xl p-6 ring-1 ring-neutral-content/20">Left half</c-section.col>
+            <c-section.col class="rounded-2xl p-6 ring-1 ring-neutral-content/20">Right half</c-section.col>
+          </c-section>
+          <p class="mt-4">This column holds a third section, which splits it in two again.</p>
+        </c-section.col>
+      </c-section>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="Awkward content" anchor="awkward">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section>
+  <c-section.col>…one column on its own…</c-section.col>
+</c-section>
+<c-section>
+  <c-section.col>…a wide table…</c-section.col>
+  <c-section.col>…a long address…</c-section.col>
+  <c-section.col></c-section.col>
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section>
+      <c-section.col><c-demo.box>One column on its own takes the whole width.</c-demo.box></c-section.col>
+    </c-section>
+    <c-section gap="sm" class="bg-base-200">
+      <c-section.col>
+        <div class="overflow-x-auto">
+          <table class="table">
+            <thead><tr><th>Service</th><th>Version</th><th>Shipped</th><th>Shipped by</th><th>State</th></tr></thead>
+            <tbody>
+              <tr><td>checkout-api</td><td>4.12.0</td><td>12 minutes ago</td><td>Oluwaseun Adebayo-Williams</td><td>Live</td></tr>
+              <tr><td>search-indexer</td><td>0.9.7</td><td>yesterday</td><td>Ana</td><td>Rolled back</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </c-section.col>
+      <c-section.col>
+        <p class="font-semibold">A long address</p>
+        <p class="mt-2 break-words text-base-content/80">https://app.example.com/organisations/meridian/pipelines/checkout-api/deploys/4.12.0/changes?since=2026-09-01</p>
+      </c-section.col>
+      <c-section.col></c-section.col>
+    </c-section>
+  </c-demo.live>
+
+  <c-demo.live label="Filling the window" anchor="screen">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-section height="screen" container="narrow" invert class="bg-neutral">
+  <c-slot name="background"><c-background.aurora /></c-slot>
+  …
+</c-section>{% endverbatim %}{% endfilter %}</c-slot>
+    <c-section height="screen" container="narrow" invert class="bg-neutral">
+      <c-slot name="background"><c-background.aurora /></c-slot>
+      <h2 class="text-center text-4xl font-bold tracking-tight text-balance sm:text-5xl">Ship when the work is ready</h2>
+      <p class="mt-6 text-center text-lg leading-relaxed">A section at <code>height="screen"</code> is at least as tall as the window and centres what it holds. Left out, a section is as tall as its content.</p>
+    </c-section>
+  </c-demo.live>
+{% endblock content %}

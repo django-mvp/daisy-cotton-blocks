@@ -13,8 +13,18 @@ distinction is the one people get wrong.
 The unit this package ships: a self-contained region of a page, rendered by one Cotton component
 and configured entirely through its attributes. A hero is a block. A pricing table is a block.
 Content comes from the template author, never from a queryset.
-_Avoid_: section (a project's own component library usually has one already, meaning something
-else), widget, module, element, panel.
+_Avoid_: widget, module, element, panel.
+
+**Section**:
+The shell most blocks are built in, `<c-section>`: a `section` element that spans the page, a
+background layer behind it, and a body held to a chosen width. A section is a component a block
+is made from, and a page author can use it directly. Say *block* for the finished region of a
+page and *section* only for this component.
+
+**Column**:
+One `<c-section.col>` inside a section. Columns sit side by side at wide widths and stack in the
+order written below the `lg` breakpoint.
+_Avoid_: grid, cell (a grid wraps and has rows, which columns do not).
 
 **Extended component**:
 A single component that goes further than its daisyUI counterpart: more structure, more options,
