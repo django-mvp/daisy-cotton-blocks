@@ -1,5 +1,5 @@
 {# @description Streaks of light flying out from the centre, as if the page were travelling. Best on a dark surface, with invert. #}
-{# @prop color:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"base-100" | description:"The colour of the streaks" #}
+{# @prop variant:select['primary', 'secondary', 'accent', 'neutral', 'base-100', 'base-200', 'base-300'] | default:"base-100" | description:"The colour of the streaks" #}
 {# @prop density:number | default:"1" | description:"How many streaks, as a multiple of the usual forty: 2 is eighty, 0.5 twenty. Stops at three hundred." #}
 {# @prop intensity:number | default:"0.6" | description:"How far the streaks come through, from 0 to 1" #}
 {# @prop speed:number | default:"1" | description:"How quickly the streaks fly, as a multiple: 2 is twice as fast, 0.5 half" #}
@@ -8,9 +8,9 @@
   The outer element sets a streak's bearing and the inner one flies along it.
   Everything about a streak is worked out from its number, `--i` (docs/adr/0004-moving-backgrounds-are-css-only.md).
 {% endcomment %}
-<c-vars color="base-100" density="1" intensity="0.6" speed="1" class />
+<c-vars variant="base-100" density="1" intensity="0.6" speed="1" class />
 {% widthratio density|floatformat:'-3u'|default:'1' 1 40 as count %}
-<div class="absolute inset-0 overflow-hidden [container-type:size] text-{{ color }}
+<div class="absolute inset-0 overflow-hidden [container-type:size] text-{{ variant }}
             {{ class }}"
      style="opacity: {{ intensity|floatformat:'-3u'|default:'0.6' }}; --hyperspace-speed: {{ speed|floatformat:'-3u'|default:'1' }}">
   {% if count|add:0 > 0 %}

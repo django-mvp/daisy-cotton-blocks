@@ -148,8 +148,8 @@ Six more move. Each one holds still for a reader whose system asks for reduced m
 | `<c-background.aurora>` | Three blurred discs drifting across each other | `from`, `via`, `to`, `intensity`, `speed` |
 | `<c-background.flow>` | A three-colour wash sliding from side to side | `from`, `via`, `to`, `opacity`, `speed` |
 | `<c-background.horizon>` | A ruled floor rolling towards the reader | `size`, `intensity`, `speed` |
-| `<c-background.particles>` | Small dots rising and fading | `color`, `intensity`, `speed` |
-| `<c-background.hyperspace>` | Streaks of light flying out from the centre | `color`, `density`, `intensity`, `speed` |
+| `<c-background.particles>` | Small dots rising and fading | `variant`, `intensity`, `speed` |
+| `<c-background.hyperspace>` | Streaks of light flying out from the centre | `variant`, `density`, `intensity`, `speed` |
 
 An attribute that sets an amount takes a number, and any number works:
 
@@ -194,17 +194,17 @@ Three hold still:
 
 | Tag | What it does | Attributes |
 |---|---|---|
-| `<c-text.glow>` | Lights the words in a theme colour with a soft halo behind them | `color`, `intensity`, `spread`, `pulse`, `repeat` |
-| `<c-text.outline>` | Draws the letters as a line with nothing inside them | `color`, `weight` |
-| `<c-text.depth>` | Gives the words a solid edge, so they stand off the page | `color`, `depth` |
+| `<c-text.glow>` | Lights the words in a theme colour with a soft halo behind them | `variant`, `intensity`, `spread`, `pulse`, `repeat` |
+| `<c-text.outline>` | Draws the letters as a line with nothing inside them | `variant`, `weight` |
+| `<c-text.depth>` | Gives the words a solid edge, so they stand off the page | `variant`, `depth` |
 
 Six move. Each one renders the finished words, holding still, for a reader whose system asks for reduced motion.
 
 | Tag | What it does | Attributes |
 |---|---|---|
 | `<c-text.gradient>` | Three theme colours sliding through the letters | `from`, `via`, `to`, `speed`, `repeat` |
-| `<c-text.shimmer>` | A band of colour crossing words that keep their own colour | `color`, `speed`, `frequency`, `repeat` |
-| `<c-text.marker>` | A stroke drawn under the words, once, as the page loads | `color`, `size`, `speed`, `delay` |
+| `<c-text.shimmer>` | A band of colour crossing words that keep their own colour | `variant`, `speed`, `frequency`, `repeat` |
+| `<c-text.marker>` | A stroke drawn under the words, once, as the page loads | `variant`, `size`, `speed`, `delay` |
 | `<c-text.typewriter>` | A line typed out a letter at a time, once | `text`, `speed`, `delay` |
 | `<c-text.wave>` | A ripple running along a line, letter by letter | `text`, `height`, `speed`, `repeat` |
 | `<c-text.glitch>` | Slices of the words jumping sideways for a moment, every few seconds | `from`, `to`, `intensity`, `frequency`, `repeat` |

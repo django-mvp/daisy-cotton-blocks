@@ -19,12 +19,12 @@
         Ship the page, <c-text.outline>not the CSS</c-text.outline>
       </c-demo.specimen>
       <c-demo.specimen note="In primary.">
-        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.outline color="primary">not the CSS</c-text.outline>{% endverbatim %}{% endfilter %}</c-slot>
-        Ship the page, <c-text.outline color="primary">not the CSS</c-text.outline>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.outline variant="primary">not the CSS</c-text.outline>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.outline variant="primary">not the CSS</c-text.outline>
       </c-demo.specimen>
       <c-demo.specimen note="A heavier line.">
-        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.outline color="accent" weight="3">not the CSS</c-text.outline>{% endverbatim %}{% endfilter %}</c-slot>
-        Ship the page, <c-text.outline color="accent" weight="3">not the CSS</c-text.outline>
+        <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.outline variant="accent" weight="3">not the CSS</c-text.outline>{% endverbatim %}{% endfilter %}</c-slot>
+        Ship the page, <c-text.outline variant="accent" weight="3">not the CSS</c-text.outline>
       </c-demo.specimen>
       <c-demo.specimen note="A hairline. Worth checking on a low-density screen.">
         <c-slot name="markup">{% filter force_escape %}{% verbatim %}Ship the page, <c-text.outline weight="0.75">not the CSS</c-text.outline>{% endverbatim %}{% endfilter %}</c-slot>

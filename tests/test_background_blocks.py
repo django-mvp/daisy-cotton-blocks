@@ -339,7 +339,7 @@ class TestHorizon:
 class TestParticles:
     @pytest.mark.parametrize("colour", PALETTE)
     def test_each_palette_colour_fills_the_dots(self, render, colour) -> None:
-        html = render(f'<c-background.particles color="{colour}" />')
+        html = render(f'<c-background.particles variant="{colour}" />')
 
         assert f"bg-{colour}" in html
 
@@ -372,6 +372,6 @@ class TestHyperspace:
 
     @pytest.mark.parametrize("colour", PALETTE)
     def test_each_palette_colour_colours_the_streaks(self, render, colour) -> None:
-        html = render(f'<c-background.hyperspace color="{colour}" />')
+        html = render(f'<c-background.hyperspace variant="{colour}" />')
 
         assert f"text-{colour}" in html

@@ -51,14 +51,14 @@ anything longer is a class. The reasoning is in
 _Avoid_: variant (see below), prop, parameter, setting.
 
 **Variant**:
-The name of one option and nothing else: the attribute that picks a component's colour from the
-theme, as in `variant="secondary"`. daisy-cotton names it that on every component, and a component
-here follows it.
+Not used as a term, and this entry exists to say why. The word reaches for both of the two ideas
+above — the tag suffix in `<c-hero.centred>` and the attribute in `size="lg"` — and a sentence
+using it for one reads fine to someone assuming the other. Say *layout* when a different block is
+meant, and *option* when an attribute is meant.
 
-As a general word it is not used. It reaches for both of the two ideas above — the tag suffix in
-`<c-hero.centred>` and the attribute in `size="lg"` — and a sentence using it for one reads fine
-to someone assuming the other. Say *layout* when a different block is meant, and *option* when an
-attribute is meant.
+The one place the word does appear is as an attribute name. `variant` is the option that picks a
+theme colour, as in `<c-text.glow variant="accent">`, because that is what daisy-cotton calls it
+and this package extends daisy-cotton. In prose it is still an option.
 
 **Blocks stylesheet**:
 `daisy_cotton_ext/static/css/daisy-cotton-ext.css`, the one stylesheet this package ships. It

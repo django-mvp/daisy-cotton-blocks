@@ -199,7 +199,7 @@ class TestHighlight:
     def test_each_colour_paints_a_fill_and_its_matching_foreground(
         self, render, colour
     ) -> None:
-        html = render(f'<c-hero.highlight color="{colour}">now</c-hero.highlight>')
+        html = render(f'<c-hero.highlight variant="{colour}">now</c-hero.highlight>')
 
         assert f"bg-{colour}" in html
         assert f"text-{colour}-content" in html
@@ -207,7 +207,7 @@ class TestHighlight:
     def test_an_unrecognised_colour_falls_back_to_the_default_pair(
         self, render
     ) -> None:
-        html = render('<c-hero.highlight color="chartreuse">now</c-hero.highlight>')
+        html = render('<c-hero.highlight variant="chartreuse">now</c-hero.highlight>')
 
         assert "bg-primary" in html
         assert "text-primary-content" in html
