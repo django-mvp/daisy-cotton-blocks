@@ -1,0 +1,22 @@
+{# @description One reason, used inside points: a mark, a few words in bold, and a sentence. #}
+{# @prop title:text | default:"Ten minutes to set up." | description:"The words in bold" #}
+{# @prop class:text | description:"Extra classes on the list item" #}
+{# @slot:mark — The mark before the words, in place of the tick. An icon. #}
+{# @slot The sentence — What follows the bold words. #}
+<c-vars title class />
+<li class="flex gap-3 {{ class }}" {{ attrs }}>
+  <span aria-hidden="true" class="text-primary">
+    {% if mark %}
+      {{ mark }}
+    {% else %}
+      <svg width="20"
+           height="20"
+           viewBox="0 0 20 20"
+           fill="currentColor"
+           class="mt-0.5">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.7-9.3a1 1 0 0 0-1.4-1.4L9 10.6 7.7 9.3a1 1 0 0 0-1.4 1.4l2 2a1 1 0 0 0 1.4 0l4-4Z" />
+      </svg>
+    {% endif %}
+  </span>
+  <span>{% if title %}<strong>{{ title }}</strong> {% endif %}{{ slot }}</span>
+</li>

@@ -1,0 +1,45 @@
+{# @description A stand-in for allauth's sign-up form, built from the base field, alert and button components. Posting it shows the error state. #}
+{# @prop state:text | description:"errors draws the form as it comes back with two fields refused" #}
+{# @prop submit:text | default:"Create account" | description:"The button's words" #}
+{# @prop action:text | default:"?state=errors" | description:"Where the stand-in form posts to" #}
+<c-vars state submit="Create account" action="?state=errors" />
+<form method="post" action="{{ action }}" class="flex flex-col gap-3">
+  {% csrf_token %}
+  {% if state == "errors" %}
+    <c-alert variant="error" soft class="items-start" only>
+      <div>
+        <p class="font-semibold">There is a problem</p>
+        <ul class="mt-1 text-sm">
+          <li><a class="link" href="#id_email">A user is already registered with this email address.</a></li>
+          <li><a class="link" href="#id_password1">This password is too short. It must contain at least 8 characters.</a></li>
+        </ul>
+      </div>
+    </c-alert>
+    <c-form.field type="email"
+                  label="Email"
+                  id="id_email"
+                  name="email"
+                  autocomplete="email"
+                  value="dana@northwind.example"
+                  errors="A user is already registered with this email address."
+                  only />
+    <c-form.field type="password"
+                  label="Password"
+                  id="id_password1"
+                  name="password1"
+                  autocomplete="new-password"
+                  errors="This password is too short. It must contain at least 8 characters."
+                  only />
+  {% else %}
+    <c-form.field type="email" label="Email" id="id_email" name="email" autocomplete="email" only />
+    <c-form.field type="password"
+                  label="Password"
+                  id="id_password1"
+                  name="password1"
+                  autocomplete="new-password"
+                  help-text="At least 8 characters, and not only numbers."
+                  only />
+  {% endif %}
+  <c-form.field type="password" label="Password again" id="id_password2" name="password2" autocomplete="new-password" only />
+  <c-button type="submit" variant="primary" class="btn-block" :text="submit" only />
+</form>

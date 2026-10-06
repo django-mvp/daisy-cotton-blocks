@@ -1,0 +1,15 @@
+{% extends "example/preview_base.html" %}
+
+{% block preview %}
+  <c-sign-in.providers class="bg-base-200"
+                       title="Sign in to Meridian"
+                       lead="Pick up where you left off."
+                       :open="failed">
+    <c-slot name="background"><c-background.glow /></c-slot>
+    <c-slot name="logo"><c-demo.logo class="text-primary-content" mark-class="" /></c-slot>
+    <c-slot name="aside">One press with the account you already use at work.</c-slot>
+    <c-slot name="providers"><c-demo.auth.providers size="lg" microsoft passkey /></c-slot>
+    <c-demo.auth.sign-in-form :state="state" />
+    <c-slot name="footer">New to Meridian? <a class="link" href="#">Create an account</a></c-slot>
+  </c-sign-in.providers>
+{% endblock preview %}

@@ -1,0 +1,31 @@
+{% extends "example/preview_base.html" %}
+
+{% block preview %}
+  <c-sign-up.pitch class="bg-base-200"
+                   eyebrow="Free for teams of five or fewer"
+                   headline="Know what shipped before your customers do"
+                   lead="Meridian watches your pipelines and tells you what changed, when it went out, and which change broke the graph.">
+    <c-slot name="background"><c-background.glow /></c-slot>
+    <c-slot name="logo"><c-demo.logo /></c-slot>
+    <c-slot name="nav">Already have an account? <a class="link" href="#">Sign in</a></c-slot>
+    <c-slot name="providers"><c-demo.auth.providers verb="Sign up with" /></c-slot>
+    <c-demo.auth.sign-up-form :state="state" />
+    <c-slot name="footer"><c-demo.auth.terms /></c-slot>
+    <c-slot name="points">
+      <c-points class="max-w-xl">
+        <c-points.point title="Ten minutes to set up.">
+          Connect a repository and your next deploy shows up on its own.
+        </c-points.point>
+        <c-points.point title="Every release has a name on it.">
+          See who shipped it and what went out with it.
+        </c-points.point>
+        <c-points.point title="A rollback names its cause.">
+          The change that broke things is the first line you read.
+        </c-points.point>
+      </c-points>
+      <c-quote.pull class="mt-10" name="Priya Raman" role="Platform lead at Northwind">
+        “We stopped asking whether a change had gone out. Meridian had already told everyone.”
+      </c-quote.pull>
+    </c-slot>
+  </c-sign-up.pitch>
+{% endblock preview %}

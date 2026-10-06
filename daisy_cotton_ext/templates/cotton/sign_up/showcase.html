@@ -1,0 +1,43 @@
+{# @description The form on one side and the product itself on the other, running off the edge of the screen. For when the best argument is a look at what is behind the door. #}
+{# @prop title:text | default:"Create your account" | description:"The heading. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The sentence under the heading" #}
+{# @prop caption:text | description:"The line above the picture, in the media pane" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"1" | description:"Heading level. 1 is right when this is the whole page." #}
+{# @prop divider:text | description:"The word between the provider buttons and the form. Left empty, it is a translated or." #}
+{# @prop surface:text | default:"bg-base-200" | description:"Surface and text colour of the media pane" #}
+{# @prop class:text | description:"Extra classes on the outer section" #}
+{# @slot:background — A background block, rendered into a layer behind the media pane only #}
+{# @slot:logo — The application's logo, at the top of the form column so it is still there when the pane is not #}
+{# @slot:nav — Opposite the logo. The link to the sign-in page. #}
+{# @slot:providers — Buttons that skip the form, one full-width button each: third-party providers, a passkey, an emailed code #}
+{# @slot:footer — Under the form. The terms the reader is agreeing to. #}
+{# @slot:media — The picture: a screenshot or a mockup of the application. Decoration only, hidden below the lg breakpoint, and it is cropped at the trailing edge and the foot. #}
+{# @slot The form — The application's own sign-up form, with its fields, its errors and its submit button. #}
+<c-vars title lead caption level="1" divider surface="bg-base-200" class />
+<section class="grid min-h-dvh grid-cols-1 bg-base-100 text-base-content lg:grid-cols-12
+                {{ class }}"
+         {{ attrs }}>
+  <div class="flex flex-col gap-8 px-6 py-6 sm:px-10 lg:col-span-5 lg:px-12">
+    <div class="flex items-center justify-between gap-4">
+      <div class="flex items-center">{{ logo }}</div>
+      {% if nav %}<div class="text-sm">{{ nav }}</div>{% endif %}
+    </div>
+    <div class="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center pb-8">
+      <c-auth.panel :title="title" :lead="lead" :level="level" :divider="divider" size="lg" only>
+        <c-slot name="providers">{{ providers }}</c-slot>
+        {{ slot }}
+        <c-slot name="footer">{{ footer }}</c-slot>
+      </c-auth.panel>
+    </div>
+  </div>
+  <div class="relative isolate hidden overflow-clip pt-16 pl-16 lg:col-span-7 lg:flex lg:flex-col lg:justify-between lg:gap-10
+              {{ surface }}">
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+    {% if caption %}
+      <p class="max-w-lg pr-16 text-3xl font-bold tracking-tight text-balance">{{ caption }}</p>
+    {% endif %}
+    <div aria-hidden="true" class="-mr-40 -mb-10 overflow-clip rounded-tl-2xl shadow-2xl">{{ media }}</div>
+  </div>
+</section>

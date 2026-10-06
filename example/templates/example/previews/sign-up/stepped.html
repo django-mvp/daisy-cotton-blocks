@@ -1,0 +1,50 @@
+{% extends "example/preview_base.html" %}
+
+{% block preview %}
+  {% if state == "verify" %}
+    <c-sign-up.stepped class="bg-base-200"
+                       title="Check your email"
+                       lead="We sent a six-digit code to dana@northwind.example. It works for the next 15 minutes.">
+      <c-slot name="logo"><c-demo.logo /></c-slot>
+      <c-slot name="steps">
+        <c-steps class="w-full text-sm">
+          <c-steps.step text="Your details" variant="primary" />
+          <c-steps.step text="Confirm your email" variant="primary" current />
+          <c-steps.step text="Done" />
+        </c-steps>
+      </c-slot>
+      <form method="post" action="?state=verify" class="flex flex-col gap-4">
+        {% csrf_token %}
+        <c-form.field label="Code"
+                      id="id_code"
+                      name="code"
+                      autocomplete="one-time-code"
+                      inputmode="numeric"
+                      class="input-lg" />
+        <c-button type="submit" variant="primary" class="btn-block" text="Confirm" />
+      </form>
+      <c-slot name="footer">
+        Nothing arrived? <a class="link" href="#">Send it again</a>, or
+        <a class="link" href="?state=details">use a different email</a>.
+      </c-slot>
+    </c-sign-up.stepped>
+  {% else %}
+    <c-sign-up.stepped class="bg-base-200" title="Create your account" lead="Three steps, and the first is the long one.">
+      <c-slot name="logo"><c-demo.logo /></c-slot>
+      <c-slot name="steps">
+        <c-steps class="w-full text-sm">
+          <c-steps.step text="Your details" variant="primary" current />
+          <c-steps.step text="Confirm your email" />
+          <c-steps.step text="Done" />
+        </c-steps>
+      </c-slot>
+      <c-slot name="providers"><c-demo.auth.providers verb="Sign up with" /></c-slot>
+      {% if state == "errors" %}
+        <c-demo.auth.sign-up-form state="errors" submit="Continue" />
+      {% else %}
+        <c-demo.auth.sign-up-form submit="Continue" action="?state=verify" />
+      {% endif %}
+      <c-slot name="footer">Already have an account? <a class="link" href="#">Sign in</a></c-slot>
+    </c-sign-up.stepped>
+  {% endif %}
+{% endblock preview %}

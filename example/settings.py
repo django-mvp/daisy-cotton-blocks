@@ -106,7 +106,8 @@ EASY_ICONS = {
         "packs": ["mvp.utils.BS5_ICONS"],
         "icons": {
             "home": "bi bi-house",
-            "block": "bi bi-square",
+            "block": "bi bi-columns-gap",
+            "component": "bi bi-puzzle",
             "gallery": "bi bi-grid-3x3-gap",
             # The figures on the stats pages.
             "deploys": "bi bi-rocket-takeoff",
@@ -115,6 +116,14 @@ EASY_ICONS = {
             "services": "bi bi-boxes",
             "money": "bi bi-cash-coin",
             "storage": "bi bi-hdd",
+            # The ways in on the sign-in and sign-up pages.
+            "google": "bi bi-google",
+            "github": "bi bi-github",
+            "gitlab": "bi bi-gitlab",
+            "bitbucket": "bi bi-bitbucket",
+            "microsoft": "bi bi-microsoft",
+            "passkey": "bi bi-fingerprint",
+            "mail": "bi bi-envelope",
         },
     }
 }

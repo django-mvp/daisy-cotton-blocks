@@ -1,0 +1,37 @@
+{# @description The form in one half of the screen and a brand pane in the other. Below the lg breakpoint the pane goes and the form has the page. #}
+{# @prop title:text | default:"Welcome back" | description:"The heading. Use the title slot instead when it contains markup." #}
+{# @prop lead:text | description:"The sentence under the heading" #}
+{# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"1" | description:"Heading level. 1 is right when this is the whole page." #}
+{# @prop divider:text | description:"The word between the provider buttons and the form. Left empty, it is a translated or." #}
+{# @prop reverse:boolean | default:False | description:"Put the brand pane on the leading edge" #}
+{# @prop surface:text | default:"bg-neutral text-neutral-content" | description:"Surface and text colour of the brand pane" #}
+{# @prop class:text | description:"Extra classes on the outer section" #}
+{# @slot:background — A background block, rendered into a layer behind the brand pane only #}
+{# @slot:logo — The application's logo, at the top of the form column so it is still there when the pane is not #}
+{# @slot:providers — Buttons that skip the form, one full-width button each: third-party providers, a passkey, an emailed code #}
+{# @slot:footer — The foot of the form column. The link to the sign-up page, usually. #}
+{# @slot:aside — What the brand pane says. A quotation, a release note, a picture. Decoration only: it is not shown on a narrow screen. #}
+{# @slot The form — The application's own sign-in form, with its fields, its errors and its submit button. #}
+<c-vars title lead level="1" divider reverse surface="bg-neutral text-neutral-content" class />
+<section class="grid min-h-dvh grid-cols-1 bg-base-100 text-base-content lg:grid-cols-2
+                {{ class }}"
+         {{ attrs }}>
+  <div class="flex flex-col gap-8 px-6 py-8 sm:px-10 lg:px-16 {% if reverse %}lg:order-2{% endif %}">
+    {% if logo %}<div class="flex items-center">{{ logo }}</div>{% endif %}
+    <div class="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center">
+      <c-auth.panel :title="title" :lead="lead" :level="level" :divider="divider" size="lg" only>
+        <c-slot name="providers">{{ providers }}</c-slot>
+        {{ slot }}
+      </c-auth.panel>
+    </div>
+    {% if footer %}<div class="mx-auto w-full max-w-sm text-sm">{{ footer }}</div>{% endif %}
+  </div>
+  <div class="relative isolate hidden overflow-clip p-16 lg:flex lg:flex-col lg:justify-end
+              {{ surface }}
+              {% if reverse %}lg:order-1{% endif %}">
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+    {{ aside }}
+  </div>
+</section>

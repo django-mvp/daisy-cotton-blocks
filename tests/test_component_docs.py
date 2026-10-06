@@ -37,6 +37,9 @@ class TestTheTemplateAPathIsReadFrom:
     def test_a_family_becomes_a_directory(self) -> None:
         assert template_name("c-background.image") == "cotton/background/image.html"
 
+    def test_a_component_with_children_is_read_from_its_directory(self, render) -> None:
+        assert description(render, "c-points").strip() != ""
+
 
 class TestTheAttributeAndSlotTables:
     def test_every_attribute_a_block_declares_is_listed(self, render) -> None:

@@ -1,0 +1,18 @@
+{% extends "example/preview_base.html" %}
+
+{% block preview %}
+  <c-sign-in.floating invert
+                      class="bg-neutral"
+                      title="Sign in"
+                      lead="Good to see you again."
+                      headline="Every release, and who shipped it.">
+    <c-slot name="background"><c-background.hyperspace /></c-slot>
+    <c-slot name="logo"><c-demo.logo mark-class="" /></c-slot>
+    <c-slot name="aside">
+      <p class="text-lg">New in 4.2: a rollback now names the change that caused it.</p>
+    </c-slot>
+    <c-demo.auth.sign-in-form :state="state" />
+    <c-slot name="providers"><c-demo.auth.providers only="alternatives" passkey code /></c-slot>
+    <c-slot name="footer">New to Meridian? <a class="link" href="#">Create an account</a></c-slot>
+  </c-sign-in.floating>
+{% endblock preview %}

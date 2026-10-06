@@ -67,10 +67,15 @@ def parse(tag: str) -> ParsedComponent | None:
     Returns:
         The parsed annotations, or None when no template or file can be found.
     """
+    name = template_name(tag)
     try:
-        found = get_template(template_name(tag))
+        found = get_template(name)
     except TemplateDoesNotExist:
-        return None
+        # A component with children of its own lives in a directory, as its index.
+        try:
+            found = get_template(name.removesuffix(".html") + "/index.html")
+        except TemplateDoesNotExist:
+            return None
     if found.origin is None or found.origin.name is None:
         return None
     return parser.parse(Path(found.origin.name).read_text(encoding="utf-8"))

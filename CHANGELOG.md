@@ -32,8 +32,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   up as it scrolls into view, and `<c-stats.change>` is the arrow badge by itself.
   `<c-stats.band>`, `<c-stats.split>` and `<c-stats.headline>` are blocks that set figures out
   across a page. Every stat takes an optional `icon`. None draws a chart.
+- Five sign-in pages and four sign-up pages, as blocks that fill the screen: `<c-sign-in.centred>`,
+  `<c-sign-in.split>`, `<c-sign-in.floating>`, `<c-sign-in.stepped>` and `<c-sign-in.providers>`,
+  and `<c-sign-up.pitch>`, `<c-sign-up.showcase>`, `<c-sign-up.bento>` and `<c-sign-up.stepped>`.
+  Each is the layout only. The logo, the form and the buttons that skip the form arrive as slots,
+  under the same names in all nine, so a django-allauth template fills them directly.
+- `<c-auth.panel>`, the heading, provider buttons, divider, form and foot that seven of those pages
+  draw their form in, with an optional card around it. For a page of the same kind that none of
+  them covers.
+- `<c-points>` and `<c-points.point>`, a short list of reasons with a tick or a mark of your own
+  beside each.
 - A translation catalogue, `locale/en`, for the few words the package supplies itself: the
-  direction a trend stat reads out to a screen reader, and a quote card's rating.
+  direction a trend stat reads out to a screen reader, a quote card's rating, and the word a
+  sign-in page puts between its provider buttons and its form.
 
 ### Changed
 

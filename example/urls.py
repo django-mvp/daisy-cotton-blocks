@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.urls import include, path
 
-from example.views import ComponentView, HomeView
+from example.views import ComponentView, HomeView, PreviewView
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
@@ -11,6 +11,11 @@ urlpatterns = [
         "components/<slug:family>/<slug:component>/",
         ComponentView.as_view(),
         name="component",
+    ),
+    path(
+        "components/<slug:family>/<slug:component>/preview/",
+        PreviewView.as_view(),
+        name="preview",
     ),
     path("__reload__/", include("django_browser_reload.urls")),
 ]

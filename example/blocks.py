@@ -17,11 +17,24 @@ class Component:
         label: The name shown in the sidebar and as the page title.
         group: The heading the component is listed under within its family's
             sidebar section, or empty when the family is not divided.
+        kind: The sidebar section the component is listed in, ``component`` or
+            ``block``, for one that differs from the rest of its family. Empty
+            to take the family's.
+        tag_name: The component's Cotton tag, for one whose tag is not its
+            family's slug followed by its own. Empty for the usual case.
+        states: The (slug, label) pairs of the states a whole-page block is
+            previewed in. Only read for a family that sets ``page``.
     """
 
     slug: str
     label: str
     group: str = ""
+    kind: str = ""
+    tag_name: str = ""
+    states: tuple[tuple[str, str], ...] = (
+        ("default", "As it loads"),
+        ("errors", "After a failed attempt"),
+    )
 
     def tag(self, family_slug: str) -> str:
         """Return the Cotton tag this component is used as, without its brackets.
@@ -32,7 +45,7 @@ class Component:
         Returns:
             The tag, for example ``c-hero.centred``.
         """
-        return f"c-{family_slug}.{self.slug}"
+        return self.tag_name or f"c-{family_slug}.{self.slug}"
 
     def template(self, family_slug: str) -> str:
         """Return the path of the demo page that shows this component.
@@ -44,6 +57,17 @@ class Component:
             The template path, relative to a template root.
         """
         return f"example/components/{family_slug}/{self.slug}.html"
+
+    def preview(self, family_slug: str) -> str:
+        """Return the path of the bare page that shows this block on its own.
+
+        Args:
+            family_slug: The slug of the family the component belongs to.
+
+        Returns:
+            The template path, relative to a template root.
+        """
+        return f"example/previews/{family_slug}/{self.slug}.html"
 
 
 @dataclass(frozen=True)
@@ -57,14 +81,37 @@ class Family:
         slug: The family's name, as used in its Cotton tags and URLs.
         label: The name shown as the sidebar section heading.
         components: The blocks in the family, in the order they are listed.
+        kind: The sidebar section the family's components are listed in unless
+            one says otherwise: ``block`` for a region of a page, ``component``
+            for a single piece that goes inside one.
+        page: The one demo page every component in the family is shown on, for
+            a family of whole-page blocks that are previewed in a frame. Empty
+            when each component has a demo page of its own.
     """
 
     slug: str
     label: str
     components: tuple[Component, ...]
+    kind: str = "component"
+    page: str = ""
 
-    def groups(self) -> list[tuple[str, list[Component]]]:
+    def kind_of(self, component: Component) -> str:
+        """Return the sidebar section a component of this family is listed in.
+
+        Args:
+            component: A component of this family.
+
+        Returns:
+            The component's own kind, or the family's when it names none.
+        """
+        return component.kind or self.kind
+
+    def groups(self, kind: str = "") -> list[tuple[str, list[Component]]]:
         """Return the components under their group headings, in declaration order.
+
+        Args:
+            kind: Keep only the components listed in this sidebar section.
+                Empty keeps them all.
 
         Returns:
             One (heading, components) pair per group. A family that is not
@@ -72,6 +119,8 @@ class Family:
         """
         grouped: dict[str, list[Component]] = {}
         for component in self.components:
+            if kind and self.kind_of(component) != kind:
+                continue
             grouped.setdefault(component.group, []).append(component)
         return list(grouped.items())
 
@@ -95,7 +144,8 @@ class Family:
 FAMILIES: tuple[Family, ...] = (
     Family(
         slug="hero",
-        label="Hero sections",
+        label="Heroes",
+        kind="block",
         components=(
             Component("centred", "Centred"),
             Component("split", "Split"),
@@ -154,9 +204,9 @@ FAMILIES: tuple[Family, ...] = (
             Component("mark", "Mark", group="Components"),
             Component("card", "Card", group="Components"),
             Component("bubble", "Bubble", group="Components"),
-            Component("centred", "Centred", group="Blocks"),
-            Component("split", "Split", group="Blocks"),
-            Component("wall", "Wall", group="Blocks"),
+            Component("centred", "Centred", group="Blocks", kind="block"),
+            Component("split", "Split", group="Blocks", kind="block"),
+            Component("wall", "Wall", group="Blocks", kind="block"),
             Component("byline", "Byline", group="Parts"),
         ),
     ),
@@ -173,11 +223,67 @@ FAMILIES: tuple[Family, ...] = (
             Component("progress", "Progress", group="Other figures"),
             Component("count", "Count up", group="Other figures"),
             Component("change", "Change", group="Parts"),
-            Component("band", "Band", group="Sections"),
-            Component("split", "Split", group="Sections"),
-            Component("headline", "Headline", group="Sections"),
+            Component("band", "Band", group="Sections", kind="block"),
+            Component("split", "Split", group="Sections", kind="block"),
+            Component("headline", "Headline", group="Sections", kind="block"),
         ),
     ),
+    Family(
+        slug="parts",
+        label="Page parts",
+        kind="component",
+        components=(
+            Component("points", "Points", tag_name="c-points"),
+            Component("panel", "Sign-in panel", tag_name="c-auth.panel"),
+        ),
+    ),
+    Family(
+        slug="sign-in",
+        label="Sign in",
+        kind="block",
+        page="example/entrance_page.html",
+        components=(
+            Component("centred", "Centred"),
+            Component("split", "Split"),
+            Component("floating", "Floating"),
+            Component(
+                "stepped",
+                "Stepped",
+                states=(
+                    ("email", "First question"),
+                    ("method", "Second question"),
+                    ("errors", "After a failed attempt"),
+                ),
+            ),
+            Component("providers", "Providers first"),
+        ),
+    ),
+    Family(
+        slug="sign-up",
+        label="Sign up",
+        kind="block",
+        page="example/entrance_page.html",
+        components=(
+            Component("pitch", "Pitch"),
+            Component("showcase", "Showcase"),
+            Component("bento", "Bento"),
+            Component(
+                "stepped",
+                "Stepped",
+                states=(
+                    ("details", "First step"),
+                    ("verify", "Second step"),
+                    ("errors", "After a failed attempt"),
+                ),
+            ),
+        ),
+    ),
+)
+
+# The sidebar sections, in the order they are listed, and the kind each holds.
+SECTIONS: tuple[tuple[str, str], ...] = (
+    ("component", "Components"),
+    ("block", "Sections"),
 )
 
 

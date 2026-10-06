@@ -1,0 +1,49 @@
+{% extends "example/preview_base.html" %}
+
+{% block preview %}
+  {% if state == "email" %}
+    <c-sign-in.stepped eyebrow="Step 1 of 2" lead="We will find your account and ask how you want to sign in.">
+      <c-slot name="logo"><c-demo.logo /></c-slot>
+      <c-slot name="nav">New here? <a class="link" href="#">Create an account</a></c-slot>
+      <c-slot name="title"><label for="id_login">What is your email address?</label></c-slot>
+      <form method="post" action="?state=method" class="flex flex-col gap-4 sm:flex-row sm:items-start">
+        {% csrf_token %}
+        <div class="flex-1">
+          <c-form.field type="email" id="id_login" name="login" autocomplete="email" class="input-xl" />
+        </div>
+        <c-button type="submit" variant="primary" class="btn-xl" text="Continue" />
+      </form>
+      <c-slot name="providers"><c-demo.auth.providers /></c-slot>
+    </c-sign-in.stepped>
+  {% else %}
+    <c-sign-in.stepped eyebrow="Step 2 of 2"
+                       title="How do you want to sign in?"
+                       lead="Signing in as dana@northwind.example.">
+      <c-slot name="logo"><c-demo.logo /></c-slot>
+      <c-slot name="nav"><a class="link" href="?state=email">Use a different email</a></c-slot>
+      <form method="post" action="?state=errors" class="flex flex-col gap-4">
+        {% csrf_token %}
+        <input type="hidden" name="login" value="dana@northwind.example" />
+        {% if state == "errors" %}
+          <c-form.field type="password"
+                        label="Password"
+                        id="id_password"
+                        name="password"
+                        autocomplete="current-password"
+                        class="input-lg"
+                        errors="The email address and/or password you specified are not correct." />
+        {% else %}
+          <c-form.field type="password"
+                        label="Password"
+                        id="id_password"
+                        name="password"
+                        autocomplete="current-password"
+                        class="input-lg" />
+        {% endif %}
+        <a class="link text-sm" href="#">Forgot your password?</a>
+        <c-button type="submit" variant="primary" size="lg" text="Sign in" />
+      </form>
+      <c-slot name="providers"><c-demo.auth.providers only="alternatives" passkey code /></c-slot>
+    </c-sign-in.stepped>
+  {% endif %}
+{% endblock preview %}

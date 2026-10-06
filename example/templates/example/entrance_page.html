@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}{{ component.label }}{% endblock title %}
+
+{% block content %}
+  <c-demo.head :tag="tag">
+    <p class="mt-4 max-w-3xl text-base-content/80">
+      A layout, and nothing behind it. What goes in it is daisy-cotton's own buttons, cards, fields and steps, with
+      the few pieces daisy-cotton has no answer for listed under <strong>Page parts</strong> in the
+      sidebar. A page is put together from components and not copied as markup. Only the form is a stand-in: in a project it comes
+      from the application, and with django-allauth each slot has an obvious thing to hold:
+    </p>
+    <ul class="mt-4 max-w-3xl list-disc space-y-2 ps-6 text-base-content/80">
+      <li>
+        <code>logo</code> takes the application's own logo: an image or inline SVG, usually inside a link home.
+      </li>
+      <li>
+        The default slot takes the form allauth hands the template, with its CSRF token, its redirect
+        field and its errors.
+      </li>
+      <li>
+        <code>providers</code> takes one full-width button for each third-party provider, and one
+        each for the passkey and sign-in code links when those are switched on.
+      </li>
+      <li><code>footer</code> and <code>nav</code> take the link across to the other page, and the terms.</li>
+    </ul>
+  </c-demo.head>
+
+  {% for slug, label in component.states %}
+    <section class="border-t border-base-300">
+      <c-container class="flex flex-wrap items-center justify-between gap-4 py-6">
+        <h2 id="{{ slug }}" class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">{{ label }}</h2>
+        <a class="btn btn-sm btn-outline"
+           href="{% url 'preview' family=family.slug component=component.slug %}?state={{ slug }}"
+           target="_blank"
+           rel="noopener noreferrer">Open as a full page</a>
+      </c-container>
+      {# A frame, so the block answers to its own width and not to the sidebar's. #}
+      <iframe class="block w-full border-t border-b border-base-300"
+              style="height: 52rem"
+              loading="lazy"
+              title="{{ component.label }}: {{ label|lower }}"
+              src="{% url 'preview' family=family.slug component=component.slug %}?state={{ slug }}"></iframe>
+    </section>
+  {% endfor %}
+
+  <section class="border-t border-base-300">
+    <c-container class="py-8">
+      <h2 class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">The page that drew these</h2>
+      <pre class="mt-4 w-full overflow-x-auto rounded-lg border border-base-300 bg-base-200 p-4 text-xs"><code>{{ source }}</code></pre>
+    </c-container>
+  </section>
+{% endblock content %}
+
+{% block extra_js %}
+  {{ block.super }}
+  {# The frames are pages of their own, so a theme picked in the bar above has to be handed on. #}
+  <script>
+    new MutationObserver(function () {
+      var theme = document.documentElement.getAttribute("data-theme");
+      document.querySelectorAll("iframe").forEach(function (frame) {
+        try {
+          frame.contentDocument.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      });
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  </script>
+{% endblock extra_js %}

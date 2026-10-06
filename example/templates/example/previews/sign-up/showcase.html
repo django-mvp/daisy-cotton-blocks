@@ -1,0 +1,19 @@
+{% extends "example/preview_base.html" %}
+
+{% block preview %}
+  <c-sign-up.showcase title="Create your account"
+                      lead="Free for teams of five or fewer. No card needed."
+                      caption="This is the page you will be looking at ten minutes from now.">
+    <c-slot name="logo"><c-demo.logo /></c-slot>
+    <c-slot name="nav"><a class="link" href="#">Sign in</a></c-slot>
+    <c-slot name="providers"><c-demo.auth.providers verb="Sign up with" /></c-slot>
+    <c-demo.auth.sign-up-form :state="state" />
+    <c-slot name="footer"><c-demo.auth.terms /></c-slot>
+    <c-slot name="background"><c-background.grid /></c-slot>
+    <c-slot name="media">
+      <c-mockup.browser url="app.meridian.example/overview">
+        <c-demo.screenshot />
+      </c-mockup.browser>
+    </c-slot>
+  </c-sign-up.showcase>
+{% endblock preview %}

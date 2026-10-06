@@ -1,0 +1,32 @@
+{% extends "example/preview_base.html" %}
+
+{% block preview %}
+  <c-sign-up.bento class="bg-base-200" title="Create your account" lead="Free for teams of five or fewer.">
+    <c-slot name="logo"><c-demo.logo /></c-slot>
+    <c-slot name="nav">Already have an account? <a class="link" href="#">Sign in</a></c-slot>
+    <c-slot name="providers"><c-demo.auth.providers verb="Sign up with" /></c-slot>
+    <c-demo.auth.sign-up-form :state="state" />
+    <c-slot name="footer"><c-demo.auth.terms /></c-slot>
+    <c-slot name="tiles">
+      <c-card class="bg-primary text-primary-content">
+        <p class="text-6xl font-bold tracking-tight">18 min</p>
+        <p>The median time from merge to live for a team on Meridian.</p>
+      </c-card>
+      <c-quote.card class="bg-base-100" name="Priya Raman" role="Platform lead at Northwind">
+        “We stopped asking whether a change had gone out. Meridian had already told everyone.”
+      </c-quote.card>
+      <c-card class="bg-base-100">
+        <p class="font-semibold">Connects to what you already deploy from</p>
+        <ul class="flex flex-col gap-3">
+          <li class="flex items-center gap-3"><c-icon name="github" class="text-xl" /> GitHub</li>
+          <li class="flex items-center gap-3"><c-icon name="gitlab" class="text-xl" /> GitLab</li>
+          <li class="flex items-center gap-3"><c-icon name="bitbucket" class="text-xl" /> Bitbucket</li>
+        </ul>
+      </c-card>
+      <c-card class="bg-neutral text-neutral-content">
+        <p class="text-2xl font-bold tracking-tight text-balance">Ten minutes from this form to your first tracked deploy.</p>
+        <p>Connect a repository. The next release shows up on its own.</p>
+      </c-card>
+    </c-slot>
+  </c-sign-up.bento>
+{% endblock preview %}

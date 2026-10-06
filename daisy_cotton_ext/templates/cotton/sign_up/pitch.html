@@ -1,0 +1,52 @@
+{# @description The case for signing up beside the form that does it. On a narrow screen the headline stays above the form and the rest of the case moves below it. #}
+{# @prop eyebrow:text | description:"Short line above the headline" #}
+{# @prop headline:text | default:"Know what shipped before your customers do" | description:"The page's heading: the reason to sign up. Use the headline slot instead when it contains markup." #}
+{# @prop lead:text | description:"The sentence under the headline" #}
+{# @prop title:text | default:"Create your account" | description:"The heading of the form card, one level below the headline" #}
+{# @prop level:select['1', '2', '3', '4', '5'] | default:"1" | description:"Level of the headline. The card's heading is drawn one level down." #}
+{# @prop divider:text | description:"The word between the provider buttons and the form. Left empty, it is a translated or." #}
+{# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
+{# @slot:background — A background block, rendered into a layer behind the page #}
+{# @slot:logo — The application's logo, at the leading end of the top bar #}
+{# @slot:nav — The trailing end of the top bar. The link to the sign-in page. #}
+{# @slot:points — The case, under the headline. A points component, a quote, a row of customer logos. #}
+{# @slot:providers — Buttons that skip the form, one full-width button each: third-party providers, a passkey, an emailed code #}
+{# @slot:footer — The foot of the card. The terms the reader is agreeing to. #}
+{# @slot The form — The application's own sign-up form, with its fields, its errors and its submit button. #}
+<c-vars eyebrow headline lead title level="1" divider class />
+<section class="relative isolate flex min-h-dvh flex-col overflow-clip text-base-content
+                {{ class }}"
+         {{ attrs }}>
+  {% if background %}
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+  {% endif %}
+  <div class="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
+    <div class="flex items-center">{{ logo }}</div>
+    {% if nav %}<div class="text-sm">{{ nav }}</div>{% endif %}
+  </div>
+  {% comment %}
+    Three cells in reading order, placed by column and row at width rather than
+    reordered, so the order a keyboard meets them in is the order they are seen in.
+  {% endcomment %}
+  <div class="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 content-center gap-x-16 gap-y-8 px-4 pt-6 pb-12 sm:px-6 lg:grid-cols-2 lg:grid-rows-[auto_auto] lg:px-8">
+    <div class="flex flex-col gap-4 lg:col-start-1 lg:row-start-1 lg:self-end">
+      {% if eyebrow %}
+        <p class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">{{ eyebrow }}</p>
+      {% endif %}
+      {# djlint:off #}
+      {% if headline %}<h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl">{{ headline }}</h{{ level }}>{% endif %}
+      {# djlint:on #}
+      {% if lead %}<p class="max-w-xl text-lg text-base-content/80 text-pretty">{{ lead }}</p>{% endif %}
+    </div>
+    <div class="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
+      <c-auth.panel :title="title" :lead="lead" level="{{ level|add:'1' }}" :divider="divider" card class="mx-auto w-full max-w-md" only>
+        <c-slot name="providers">{{ providers }}</c-slot>
+        {{ slot }}
+        <c-slot name="footer">{{ footer }}</c-slot>
+      </c-auth.panel>
+    </div>
+    {% if points %}
+      <div class="lg:col-start-1 lg:row-start-2 lg:self-start">{{ points }}</div>
+    {% endif %}
+  </div>
+</section>

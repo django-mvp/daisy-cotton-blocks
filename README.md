@@ -28,7 +28,7 @@ Blocks are configured through attributes and take their colours from whatever da
 
 ## Status
 
-Version 0.0.1. Six families are built: heroes, backgrounds, text effects, reveals, quotes and stats. Nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
+Version 0.0.1. Nine families are built: heroes, backgrounds, text effects, reveals, quotes, stats, points, sign-in pages and sign-up pages. Nothing here is stable. Block names, attributes and the set of classes the stylesheet emits all change between minor versions, and the [CHANGELOG](https://github.com/django-mvp/daisy-cotton-ext/blob/main/CHANGELOG.md) is how a project finds out.
 
 ## Scope & philosophy
 
@@ -389,6 +389,95 @@ Things to know before using one:
 The reasoning is in [ADR 0008](docs/adr/0008-stats-draw-no-charts.md) and [ADR 0009](docs/adr/0009-a-count-is-started-by-scroll-and-timed-by-the-clock.md).
 
 Every attribute, its accepted values and its default are listed on each block's and component's own page in the example project, built from the annotations in the block's template. Run it with `python manage.py runserver` from a checkout.
+
+### Sign in and sign up
+
+Whole-page blocks for the two pages in front of an application. Each one is the layout and nothing behind it: the logo, the form and the buttons that skip the form are the application's, and arrive as slots. Five are for signing in, four for signing up, and one is the panel most of them draw their form in.
+
+| Tag | What it does | Attributes of its own |
+|---|---|---|
+| `<c-sign-in.centred>` | A card in the middle of the screen with the logo above it | |
+| `<c-sign-in.split>` | The form in one half of the screen and a brand pane in the other | `reverse`, `surface` |
+| `<c-sign-in.floating>` | One background across the screen, a line of copy on it, and the form in a translucent card | `headline`, `invert` |
+| `<c-sign-in.stepped>` | One question to a screen, in large type, under a bar holding the logo | `eyebrow` |
+| `<c-sign-in.providers>` | A wide card in two panes, with the one-press ways in up front and the form behind a disclosure | `disclosure`, `open`, `surface` |
+| `<c-sign-up.pitch>` | The case for signing up beside the form that does it | `eyebrow`, `headline` |
+| `<c-sign-up.showcase>` | The form beside a picture of the product, running off the edge of the screen | `caption`, `surface` |
+| `<c-sign-up.bento>` | The form as the tall middle tile of a grid of reasons | |
+| `<c-sign-up.stepped>` | A run of steps across the top and one card for the current step | |
+| `<c-auth.panel>` | A heading, the buttons that skip the form, a word between, the form and a foot | `size`, `align`, `card`, `surface` |
+
+Every one takes `title`, `lead`, `level`, `divider` and `class`, and these slots:
+
+| Slot | What goes in it |
+|---|---|
+| `logo` | The application's logo: an image or inline SVG, usually inside a link home |
+| default | The application's form, with its fields, its errors and its submit button |
+| `providers` | One full-width button for each way in that skips the form |
+| `footer` | The link across to the other page, or the terms |
+| `background` | A background component, drawn behind the page or behind its pane |
+
+Several add slots of their own: `aside` for a brand pane, `nav` for the far end of a top bar, `points` on pitch, `media` on showcase, `tiles` on bento and `steps` on the stepped sign-up.
+
+With [django-allauth](https://docs.allauth.org/), a sign-in template comes out like this:
+
+```html
+{% load static socialaccount %}
+<c-sign-in.split title="Welcome back" lead="Sign in to pick up where you left off.">
+  <c-slot name="logo">
+    <a href="/"><img src="{% static 'brand/logo.svg' %}" alt="Acme" class="h-8"></a>
+  </c-slot>
+  <c-slot name="providers">
+    <c-button href="{% provider_login_url 'google' %}" outline class="btn-block" text="Continue with Google" />
+  </c-slot>
+
+  <form method="post" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <c-button type="submit" variant="primary" class="btn-block" text="Sign in" />
+  </form>
+
+  <c-slot name="footer">New here? <a class="link" href="{% url 'account_signup' %}">Create an account</a></c-slot>
+  <c-slot name="background"><c-background.grid /></c-slot>
+  <c-slot name="aside">
+    <c-quote.byline invert name="Amara Okafor" role="Head of Platform, Northwind" />
+  </c-slot>
+</c-sign-in.split>
+```
+
+Things to know before using one:
+
+- **Each block fills the screen.** It is the page, so put it straight inside `body` with no application shell around it.
+- **The logo is always a slot, and it is there at every width.** On the layouts with a brand pane, the pane is dropped below the `lg` breakpoint and the logo stays with the form.
+- **No block renders a field.** Use your own form rendering or daisy-cotton's form components. The demo's forms are stand-ins.
+- **The divider is drawn only between two things.** With no `providers`, or with no form, there is no word between them. `divider` is the word. Left out, it is “or”, translated with the rest of the package's own words.
+- **A block has no words of its own beyond that divider and the line that opens the disclosure.** A block given no `title` has no heading.
+- **The page keeps one heading.** `title` is an `h1` unless `level` says otherwise. On pitch the `headline` takes that level and the form's `title` sits one below it. The large line on floating and the caption on showcase are paragraphs.
+- **Give `<c-sign-in.providers>` `open` when the form comes back with errors,** or the errors are folded away with it.
+- **What is in a brand pane is decoration.** It is not shown on a narrow screen, so nothing a visitor needs belongs there. The picture on showcase is also hidden from a screen reader.
+- **`surface` is a pair of classes,** a background and the text colour that goes with it: `surface="bg-primary text-primary-content"`.
+- **`<c-sign-up.stepped>` takes the whole run of steps in its `steps` slot.** daisy-cotton's `<c-steps>` is the obvious thing to put there.
+- **`<c-auth.panel>` is for a page none of these covers:** a password reset, a code to confirm. It draws the same structure, with a card around it when given `card`.
+
+Why the blocks stop at the frame is in [ADR 0010](docs/adr/0010-sign-in-pages-own-the-frame-and-not-the-form.md).
+
+### Points
+
+A short list of reasons, each a mark, a few words in bold and a sentence. `<c-points>` is the list and `<c-points.point>` is one reason in it.
+
+```html
+<c-points>
+  <c-points.point title="Ten minutes to set up.">
+    Connect a repository and your next deploy shows up on its own.
+  </c-points.point>
+  <c-points.point title="Works where you already deploy from.">
+    <c-slot name="mark"><c-icon name="github" /></c-slot>
+    GitHub, GitLab and Bitbucket.
+  </c-points.point>
+</c-points>
+```
+
+The mark is a tick in the theme's primary colour unless the `mark` slot holds something else. Either way it is hidden from a screen reader, so the words have to carry the point alone.
 
 ## Contributing
 
