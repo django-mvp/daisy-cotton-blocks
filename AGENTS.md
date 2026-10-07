@@ -16,7 +16,7 @@ those belongs to the project, not here.
 ## Stack & commands
 
 - **Stack:** Python 3.12+ / Django 5.2, 6.0 and 6.1, uv-managed, built on Cotton and daisyUI
-- **Install:** `uv sync` **and** `npm install` (the stylesheet build)
+- **Install:** `uv sync` **and** `npm install` (the stylesheet build), then `uv run playwright install chromium` (the suite measures the cascade in a browser)
 - **Test:** `uv run pytest`
 - **Lint:** `uv run pre-commit run --all-files` (ruff lint + format, mypy, deptry)
 - **Type-check:** `uv run mypy`
@@ -43,14 +43,16 @@ site-packages.
 
 Three consequences worth knowing before editing `assets/daisy-cotton-ext.css`:
 
-1. **Overlap with the host is fine.** A project on django-mvp loads two stylesheets that both
-   define `py-20`. Do not try to trim it. The case that matters is a host on a different Tailwind
-   version, where one class name carries two different declarations and link order decides.
+1. **Every utility is prefixed `dce:`, in the stylesheet and in the templates.** Write
+   `dce:flex` and `dce:lg:grid-cols-2`, never the bare names. A bare `.hidden` here would sit in
+   the same layer as a host's `.md\:flex` and beat it by link order, which hid navigation on a
+   real host. A class without the prefix builds no rule and fails the suite. daisyUI classes stay
+   unprefixed.
 2. **daisyUI classes are the host's.** The ones blocks may rely on are listed in
    `HOST_PROVIDED_CLASSES` in `tests/test_stylesheet.py`. Using one that is not listed fails the
    suite, and adding one raises the daisyUI floor for every project — a minor-version change, per
    constitution Article XIV.
-3. **A named class can still emit nothing.** Listing a class is not proof it builds. `from-primary`
+3. **A named class can still emit nothing.** Listing a class is not proof it builds. `dce:from-primary`
    needs daisyUI's palette declared in the `@theme reference` block, or it silently produces no
    rule and the page renders unstyled markup.
 
@@ -149,6 +151,7 @@ Feature work follows a spec-driven process: spec → plan → tasks → implemen
 `docs/brainstorm.md` holds the working notes the package was founded on, chiefly the prior-art
 survey. Those are conclusions, not ratified decisions. Anything that has hardened is in
 `CONSTITUTION.md` or an ADR, and `docs/adr/0002` is the one to read before touching the stylesheet.
+`docs/adr/0012` is why every utility carries a prefix.
 `docs/adr/0003` is the one to read before giving a component a new option, `docs/adr/0004`
 before touching a background that moves, `docs/adr/0006` before touching a reveal, `docs/adr/0007` before writing markup a
 daisy-cotton component already renders, and `docs/adr/0008` and `docs/adr/0009` before touching a stat.

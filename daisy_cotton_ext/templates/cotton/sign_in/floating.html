@@ -13,27 +13,27 @@
 {# @slot:footer — The foot of the card. The link to the sign-up page, usually. #}
 {# @slot The form — The application's own sign-in form, with its fields, its errors and its submit button. #}
 <c-vars title lead headline level="1" divider invert class />
-<section class="relative isolate flex min-h-dvh flex-col overflow-clip
-                {% if invert %}text-neutral-content{% else %}text-base-content{% endif %}
+<section class="dce:relative dce:isolate dce:flex dce:min-h-dvh dce:flex-col dce:overflow-clip
+                {% if invert %}dce:text-neutral-content{% else %}dce:text-base-content{% endif %}
                 {{ class }}"
          {{ attrs }}>
   {% if background %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+    <div aria-hidden="true" class="dce:pointer-events-none dce:absolute dce:inset-0 dce:-z-10">{{ background }}</div>
   {% endif %}
-  <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-8 sm:px-6 lg:flex-row lg:gap-16 lg:px-8 lg:py-12">
-    <div class="flex flex-col lg:flex-1 lg:justify-between">
-      {% if logo %}<div class="flex items-center">{{ logo }}</div>{% endif %}
+  <div class="dce:mx-auto dce:flex dce:w-full dce:max-w-7xl dce:flex-1 dce:flex-col dce:gap-8 dce:px-4 dce:py-8 dce:sm:px-6 dce:lg:flex-row dce:lg:gap-16 dce:lg:px-8 dce:lg:py-12">
+    <div class="dce:flex dce:flex-col dce:lg:flex-1 dce:lg:justify-between">
+      {% if logo %}<div class="dce:flex dce:items-center">{{ logo }}</div>{% endif %}
       {% if headline or aside %}
-        <div class="hidden max-w-xl flex-col gap-6 lg:flex">
+        <div class="dce:hidden dce:max-w-xl dce:flex-col dce:gap-6 dce:lg:flex">
           {% if headline %}
-            <p class="text-5xl font-bold tracking-tight text-balance xl:text-6xl">{{ headline }}</p>
+            <p class="dce:text-5xl dce:font-bold dce:tracking-tight dce:text-balance dce:xl:text-6xl">{{ headline }}</p>
           {% endif %}
           {{ aside }}
         </div>
       {% endif %}
     </div>
-    <div class="flex flex-1 items-center justify-center lg:w-[28rem] lg:flex-none">
-      <c-auth.panel :title="title" :lead="lead" :level="level" :divider="divider" card surface="bg-base-100/90 text-base-content shadow-2xl backdrop-blur-md" class="w-full max-w-md" only>
+    <div class="dce:flex dce:flex-1 dce:items-center dce:justify-center dce:lg:w-[28rem] dce:lg:flex-none">
+      <c-auth.panel :title="title" :lead="lead" :level="level" :divider="divider" card surface="dce:bg-base-100/90 dce:text-base-content dce:shadow-2xl dce:backdrop-blur-md" class="dce:w-full dce:max-w-md" only>
         <c-slot name="providers">{{ providers }}</c-slot>
         {{ slot }}
         <c-slot name="footer">{{ footer }}</c-slot>

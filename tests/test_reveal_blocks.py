@@ -130,7 +130,7 @@ class TestMotion:
 
         timed = SCROLL_TIMED.findall(html)
         assert timed
-        assert all(cls.startswith("motion-safe:") for cls in timed)
+        assert all(cls.startswith("dce:motion-safe:") for cls in timed)
 
     @pytest.mark.parametrize("tag", [*SCROLL_DRIVEN, "c-reveal.words"])
     def test_it_stays_put_where_the_browser_has_no_scroll_timeline(
@@ -154,7 +154,7 @@ class TestMotion:
 
         moving = re.findall(r"[^\s\"]*(?:transition-|scale-\[)", html)
         assert moving
-        assert all(cls.startswith("motion-safe:") for cls in moving)
+        assert all(cls.startswith("dce:motion-safe:") for cls in moving)
 
 
 class TestEffect:
@@ -302,7 +302,7 @@ class TestWords:
     def test_the_words_share_the_paragraphs_timeline(self, render) -> None:
         html = render('<c-reveal.words text="Ship" />')
 
-        assert re.match(r'\s*<p class="\[view-timeline-name:--words\]', html)
+        assert re.match(r'\s*<p class="dce:\[view-timeline-name:--words\]', html)
         assert "[animation-timeline:--words]" in html
 
     def test_markup_in_the_text_is_escaped(self, render) -> None:
@@ -357,8 +357,8 @@ class TestHover:
     def test_the_caption_opens_on_focus_as_well_as_on_hover(self, render) -> None:
         html = render("<c-reveal.hover><b>inside</b></c-reveal.hover>")
 
-        on_hover = set(re.findall(r"(?<![\w:-])group-hover:([\w-]+)", html))
-        on_focus = set(re.findall(r"(?<![\w:-])group-focus-within:([\w-]+)", html))
+        on_hover = set(re.findall(r"(?<![\w:-])dce:group-hover:([\w-]+)", html))
+        on_focus = set(re.findall(r"(?<![\w:-])dce:group-focus-within:([\w-]+)", html))
         assert on_hover
         assert on_hover == on_focus
 
@@ -370,7 +370,7 @@ class TestHover:
             f'<c-reveal.hover effect="{effect}"><b>inside</b></c-reveal.hover>'
         )
 
-        on_hover = set(re.findall(r"(?<![\w:-])group-hover:([\w-]+)", html))
+        on_hover = set(re.findall(r"(?<![\w:-])dce:group-hover:([\w-]+)", html))
         without_hover = set(re.findall(r"\[@media\(hover:none\)\]:([\w-]+)", html))
         assert on_hover == without_hover
 
@@ -412,7 +412,7 @@ class TestStack:
     def test_every_panel_sticks(self, render) -> None:
         html = render("<c-reveal.stack><b>inside</b></c-reveal.stack>")
 
-        assert re.search(r'class="[^"]*(?<!\S)\*:sticky\b', html) is not None
+        assert re.search(r'class="[^"]*(?<!\S)dce:\*:sticky\b', html) is not None
 
     def test_each_of_the_first_twelve_panels_is_given_its_number(self, render) -> None:
         html = render("<c-reveal.stack><b>inside</b></c-reveal.stack>")

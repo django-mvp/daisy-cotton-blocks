@@ -6,7 +6,7 @@
 {# @prop variant:select['primary', 'secondary', 'accent', 'success', 'warning', 'error'] | default:"primary" | description:"The colour of the filled part. Reach for warning or error when the bar is a limit being approached." #}
 {# @prop icon:text | description:"An icon beside the figure, by the name the project's icon component knows it by. Left out, there is no icon." #}
 {# @prop class:text | description:"Extra classes on the stat" #}
-{# @slot:figure <img class="size-12 rounded-full" src="…" alt="" /> — Beside the figure in place of the icon, for anything that is not one: a picture, a logo, an avatar. #}
+{# @slot:figure <img class="dce:size-12 dce:rounded-full" src="…" alt="" /> — Beside the figure in place of the icon, for anything that is not one: a picture, a logo, an avatar. #}
 {% comment %}
   Built on daisy-cotton's stat and progress. A bar and not a ring: a length is
   read more accurately than an angle. The percentage is written beside it, so
@@ -14,16 +14,16 @@
   the icon's column as well, so the bar runs the full width underneath.
 {% endcomment %}
 <c-vars title value percent="0" desc variant="primary" icon class />
-<c-stat class="{% if icon or figure %}*:last:col-span-2{% endif %} {{ class }}" :attrs="attrs" only>
-  {% if icon or figure %}<c-slot name="figure">{% if figure %}{{ figure }}{% else %}<c-icon name="{{ icon }}" class="text-3xl opacity-60" aria-hidden="true" only />{% endif %}</c-slot>{% endif %}
-  {% if title %}<c-slot name="title"><span class="whitespace-normal">{{ title }}</span></c-slot>{% endif %}
-  <c-slot name="value"><span class="tabular-nums">{{ value }}</span></c-slot>
+<c-stat class="{% if icon or figure %}dce:*:last:col-span-2{% endif %} {{ class }}" :attrs="attrs" only>
+  {% if icon or figure %}<c-slot name="figure">{% if figure %}{{ figure }}{% else %}<c-icon name="{{ icon }}" class="dce:text-3xl dce:opacity-60" aria-hidden="true" only />{% endif %}</c-slot>{% endif %}
+  {% if title %}<c-slot name="title"><span class="dce:whitespace-normal">{{ title }}</span></c-slot>{% endif %}
+  <c-slot name="value"><span class="dce:tabular-nums">{{ value }}</span></c-slot>
   <c-slot name="desc">
-    <span class="block whitespace-normal">
-      <c-progress value="{{ percent|floatformat:'-2u'|default:'0' }}" variant="{{ variant }}" label="{% if title %}{{ title }}{% else %}{{ desc }}{% endif %}" class="mt-2 mb-1 h-2 w-full" only />
-      <span class="flex items-baseline justify-between gap-4">
+    <span class="dce:block dce:whitespace-normal">
+      <c-progress value="{{ percent|floatformat:'-2u'|default:'0' }}" variant="{{ variant }}" label="{% if title %}{{ title }}{% else %}{{ desc }}{% endif %}" class="dce:mt-2 dce:mb-1 dce:h-2 dce:w-full" only />
+      <span class="dce:flex dce:items-baseline dce:justify-between dce:gap-4">
         <span>{{ desc }}</span>
-        <span class="font-semibold tabular-nums">{{ percent|floatformat:'0'|default:'0' }}%</span>
+        <span class="dce:font-semibold dce:tabular-nums">{{ percent|floatformat:'0'|default:'0' }}%</span>
       </span>
     </span>
   </c-slot>

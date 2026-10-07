@@ -4,7 +4,7 @@
 {# @prop level:select['1', '2', '3', '4', '5', '6'] | default:"1" | description:"Heading level. 1 is right when this is the whole page." #}
 {# @prop disclosure:text | description:"The line that opens the form. Left empty, it is a translated Use your email and password." #}
 {# @prop open:boolean | default:False | description:"Start with the form showing. Set it when the form comes back with errors." #}
-{# @prop surface:text | default:"bg-primary text-primary-content" | description:"Surface and text colour of the brand pane" #}
+{# @prop surface:text | default:"dce:bg-primary dce:text-primary-content" | description:"Surface and text colour of the brand pane" #}
 {# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
 {# @slot:background — A background block, rendered into a layer behind the card #}
 {# @slot:logo — The application's logo, at the top of the brand pane. It needs to read on the pane's colour. #}
@@ -13,38 +13,38 @@
 {# @slot:footer — Under the disclosure. The link to the sign-up page, usually. #}
 {# @slot The form — The application's own sign-in form. Folded away until asked for. #}
 {% load i18n %}
-<c-vars title lead level="1" disclosure open surface="bg-primary text-primary-content" class />
-<section class="relative isolate flex min-h-dvh flex-col items-center justify-center overflow-clip px-4 py-12 text-base-content
+<c-vars title lead level="1" disclosure open surface="dce:bg-primary dce:text-primary-content" class />
+<section class="dce:relative dce:isolate dce:flex dce:min-h-dvh dce:flex-col dce:items-center dce:justify-center dce:overflow-clip dce:px-4 dce:py-12 dce:text-base-content
                 {{ class }}"
          {{ attrs }}>
   {% if background %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+    <div aria-hidden="true" class="dce:pointer-events-none dce:absolute dce:inset-0 dce:-z-10">{{ background }}</div>
   {% endif %}
-  <div class="card w-full max-w-4xl overflow-clip bg-base-100 shadow-xl">
-    <div class="grid grid-cols-1 md:grid-cols-5">
-      <div class="flex flex-col gap-10 p-8 md:col-span-2 md:justify-between {{ surface }}">
-        {% if logo %}<div class="flex items-center">{{ logo }}</div>{% endif %}
+  <div class="card dce:w-full dce:max-w-4xl dce:overflow-clip dce:bg-base-100 dce:shadow-xl">
+    <div class="dce:grid dce:grid-cols-1 dce:md:grid-cols-5">
+      <div class="dce:flex dce:flex-col dce:gap-10 dce:p-8 dce:md:col-span-2 dce:md:justify-between {{ surface }}">
+        {% if logo %}<div class="dce:flex dce:items-center">{{ logo }}</div>{% endif %}
         <div>
           {# djlint:off #}
-          {% if title %}<h{{ level }} class="text-3xl font-bold tracking-tight text-balance">{{ title }}</h{{ level }}>{% endif %}
+          {% if title %}<h{{ level }} class="dce:text-3xl dce:font-bold dce:tracking-tight dce:text-balance">{{ title }}</h{{ level }}>{% endif %}
           {# djlint:on #}
-          {% if lead %}<p class="mt-3 text-pretty">{{ lead }}</p>{% endif %}
+          {% if lead %}<p class="dce:mt-3 dce:text-pretty">{{ lead }}</p>{% endif %}
         </div>
-        {% if aside %}<div class="hidden text-sm md:block">{{ aside }}</div>{% endif %}
+        {% if aside %}<div class="dce:hidden dce:text-sm dce:md:block">{{ aside }}</div>{% endif %}
       </div>
-      <div class="flex flex-col justify-center gap-5 p-6 sm:p-8 md:col-span-3">
-        {% if providers %}<div class="flex flex-col gap-3">{{ providers }}</div>{% endif %}
+      <div class="dce:flex dce:flex-col dce:justify-center dce:gap-5 dce:p-6 dce:sm:p-8 dce:md:col-span-3">
+        {% if providers %}<div class="dce:flex dce:flex-col dce:gap-3">{{ providers }}</div>{% endif %}
         {% if slot.strip %}
           {% comment %}
             A plain disclosure, styled with utilities. daisyUI's own disclosure class shares its
             name with a Tailwind utility, which this package's stylesheet would emit over it.
           {% endcomment %}
-          <details class="rounded-xl border border-base-300" {% if open %}open{% endif %}>
-            <summary class="cursor-pointer px-4 py-3 font-medium">{% if disclosure %}{{ disclosure }}{% else %}{% translate "Use your email and password" %}{% endif %}</summary>
-            <div class="px-4 pt-2 pb-4">{{ slot }}</div>
+          <details class="dce:rounded-xl dce:border dce:border-base-300" {% if open %}open{% endif %}>
+            <summary class="dce:cursor-pointer dce:px-4 dce:py-3 dce:font-medium">{% if disclosure %}{{ disclosure }}{% else %}{% translate "Use your email and password" %}{% endif %}</summary>
+            <div class="dce:px-4 dce:pt-2 dce:pb-4">{{ slot }}</div>
           </details>
         {% endif %}
-        {% if footer %}<div class="text-center text-sm">{{ footer }}</div>{% endif %}
+        {% if footer %}<div class="dce:text-center dce:text-sm">{{ footer }}</div>{% endif %}
       </div>
     </div>
   </div>

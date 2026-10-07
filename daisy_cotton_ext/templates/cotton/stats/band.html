@@ -16,7 +16,7 @@
   child of the section body (docs/adr/0011).
 {% endcomment %}
 <c-vars eyebrow title lead level="2" cascade invert size="md" class />
-<c-section flush :invert="invert" class="{% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
+<c-section flush :invert="invert" class="{% if size == 'sm' %}dce:py-12 dce:md:py-16{% elif size == 'lg' %}dce:py-24 dce:md:py-32{% else %}dce:py-16 dce:md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
   {% if background %}<c-slot name="background">{{ background }}</c-slot>{% endif %}
   {% if eyebrow or title or lead %}
     <c-slot name="header">
@@ -24,8 +24,8 @@
     </c-slot>
   {% endif %}
   {% if cascade %}
-    <c-reveal.cascade class="grid justify-items-center gap-y-4 text-center sm:grid-cols-2 lg:auto-cols-fr lg:grid-flow-col lg:grid-cols-none lg:divide-x *:justify-items-center {% if invert %}divide-neutral-content/20{% else %}divide-base-300{% endif %}" only>{{ slot }}</c-reveal.cascade>
+    <c-reveal.cascade class="dce:grid dce:justify-items-center dce:gap-y-4 dce:text-center dce:sm:grid-cols-2 dce:lg:auto-cols-fr dce:lg:grid-flow-col dce:lg:grid-cols-none dce:lg:divide-x dce:*:justify-items-center {% if invert %}dce:divide-neutral-content/20{% else %}dce:divide-base-300{% endif %}" only>{{ slot }}</c-reveal.cascade>
   {% else %}
-    <div class="grid justify-items-center gap-y-4 text-center sm:grid-cols-2 lg:auto-cols-fr lg:grid-flow-col lg:grid-cols-none lg:divide-x *:justify-items-center {% if invert %}divide-neutral-content/20{% else %}divide-base-300{% endif %}">{{ slot }}</div>
+    <div class="dce:grid dce:justify-items-center dce:gap-y-4 dce:text-center dce:sm:grid-cols-2 dce:lg:auto-cols-fr dce:lg:grid-flow-col dce:lg:grid-cols-none dce:lg:divide-x dce:*:justify-items-center {% if invert %}dce:divide-neutral-content/20{% else %}dce:divide-base-300{% endif %}">{{ slot }}</div>
   {% endif %}
 </c-section>

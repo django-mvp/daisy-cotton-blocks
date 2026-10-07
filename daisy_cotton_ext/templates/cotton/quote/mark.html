@@ -15,20 +15,20 @@
   its own height, because the glyph sits in the top half of the line.
 {% endcomment %}
 <c-vars name role source href src variant="primary" align="start" size="md" class />
-<figure class="flex flex-col gap-4
-               {% if align == 'centre' %}mx-auto items-center text-center{% endif %}
-               {% if size == 'lg' %}max-w-3xl{% else %}max-w-2xl{% endif %}
+<figure class="dce:flex dce:flex-col dce:gap-4
+               {% if align == 'centre' %}dce:mx-auto dce:items-center dce:text-center{% endif %}
+               {% if size == 'lg' %}dce:max-w-3xl{% else %}dce:max-w-2xl{% endif %}
                {{ class }}"
         {{ attrs }}>
   <span aria-hidden="true"
-        class="h-[0.5em] font-serif leading-none select-none text-{{ variant }}
-               {% if size == 'lg' %}text-8xl{% else %}text-7xl{% endif %}">&ldquo;</span>
+        class="dce:h-[0.5em] dce:font-serif dce:leading-none dce:select-none dce:text-{{ variant }}
+               {% if size == 'lg' %}dce:text-8xl{% else %}dce:text-7xl{% endif %}">&ldquo;</span>
   <blockquote {% if href %}cite="{{ href }}"{% endif %}
-              class="font-medium text-balance
-                     {% if size == 'lg' %}text-2xl leading-snug sm:text-4xl{% else %}text-xl leading-relaxed sm:text-2xl{% endif %}">
+              class="dce:font-medium dce:text-balance
+                     {% if size == 'lg' %}dce:text-2xl dce:leading-snug dce:sm:text-4xl{% else %}dce:text-xl dce:leading-relaxed dce:sm:text-2xl{% endif %}">
     {{ slot }}
   </blockquote>
   {% if name or role or source %}
-    <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" src="{{ src }}" align="{{ align }}" class="mt-2" only />
+    <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" src="{{ src }}" align="{{ align }}" class="dce:mt-2" only />
   {% endif %}
 </figure>

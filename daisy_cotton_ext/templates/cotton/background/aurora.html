@@ -10,13 +10,13 @@
   fall into step (docs/adr/0004-moving-backgrounds-are-css-only.md).
 {% endcomment %}
 <c-vars from="primary" via="accent" to="secondary" intensity="0.2" speed="1" class />
-<div class="absolute inset-0 overflow-hidden
+<div class="dce:absolute dce:inset-0 dce:overflow-hidden
             {{ class }}"
      style="opacity: {{ intensity|floatformat:'-3u'|default:'0.2' }}; --aurora-speed: {{ speed|floatformat:'-3u'|default:'1' }}">
-  <div class="absolute -top-40 -left-32 h-[28rem] w-[28rem] rounded-full blur-3xl bg-{{ from }}
-              motion-safe:animate-[dce-drift_calc(26s/var(--aurora-speed,1))_ease-in-out_infinite]"></div>
-  <div class="absolute top-1/4 left-1/3 h-80 w-80 rounded-full blur-3xl bg-{{ via }}
-              motion-safe:animate-[dce-drift_calc(36.4s/var(--aurora-speed,1))_ease-in-out_-9s_infinite_reverse]"></div>
-  <div class="absolute -right-32 -bottom-48 h-[28rem] w-[28rem] rounded-full blur-3xl bg-{{ to }}
-              motion-safe:animate-[dce-drift_calc(20.8s/var(--aurora-speed,1))_ease-in-out_-5s_infinite]"></div>
+  <div class="dce:absolute dce:-top-40 dce:-left-32 dce:h-[28rem] dce:w-[28rem] dce:rounded-full dce:blur-3xl dce:bg-{{ from }}
+              dce:motion-safe:animate-[dce-drift_calc(26s/var(--aurora-speed,1))_ease-in-out_infinite]"></div>
+  <div class="dce:absolute dce:top-1/4 dce:left-1/3 dce:h-80 dce:w-80 dce:rounded-full dce:blur-3xl dce:bg-{{ via }}
+              dce:motion-safe:animate-[dce-drift_calc(36.4s/var(--aurora-speed,1))_ease-in-out_-9s_infinite_reverse]"></div>
+  <div class="dce:absolute dce:-right-32 dce:-bottom-48 dce:h-[28rem] dce:w-[28rem] dce:rounded-full dce:blur-3xl dce:bg-{{ to }}
+              dce:motion-safe:animate-[dce-drift_calc(20.8s/var(--aurora-speed,1))_ease-in-out_-5s_infinite]"></div>
 </div>

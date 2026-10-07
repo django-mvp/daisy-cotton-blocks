@@ -3,7 +3,7 @@
 {# @prop align:select['', 'start', 'center', 'end'] | description:"Where this column sits against taller neighbours, when it should differ from the section's align" #}
 {# @prop class:text | description:"Extra classes on the column" #}
 {# @slot:background — A background block, rendered into a layer behind this column alone. A plain surface colour goes in class instead. #}
-{# @slot <h2 class="text-3xl font-bold">Copy</h2> — What the column holds. Anything, including another section. #}
+{# @slot <h2 class="dce:text-3xl dce:font-bold">Copy</h2> — What the column holds. Anything, including another section. #}
 {% comment %}
   The span is a number on `style`, read by the stylesheet at the lg breakpoint
   only (docs/adr/0003-amounts-are-numbers-written-to-style.md). `min-w-0` lets
@@ -11,14 +11,14 @@
 {% endcomment %}
 <c-vars span="1" align class />
 <div data-section-col
-     class="min-w-0 {% if background %}relative isolate overflow-clip{% endif %}
-            lg:[grid-column:span_var(--section-span,1)]
-            {% if align == 'start' %}lg:self-start{% elif align == 'center' %}lg:self-center{% elif align == 'end' %}lg:self-end{% endif %}
+     class="dce:min-w-0 {% if background %}dce:relative dce:isolate dce:overflow-clip{% endif %}
+            dce:lg:[grid-column:span_var(--section-span,1)]
+            {% if align == 'start' %}dce:lg:self-start{% elif align == 'center' %}dce:lg:self-center{% elif align == 'end' %}dce:lg:self-end{% endif %}
             {{ class }}"
      style="--section-span: {{ span|floatformat:'0u'|default:'1' }}"
      {{ attrs }}>
   {% if background %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+    <div aria-hidden="true" class="dce:pointer-events-none dce:absolute dce:inset-0 dce:-z-10">{{ background }}</div>
   {% endif %}
   {{ slot }}
 </div>

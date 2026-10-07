@@ -10,9 +10,9 @@
   seam to hide (docs/adr/0004-moving-backgrounds-are-css-only.md).
 {% endcomment %}
 <c-vars from="primary" via="accent" to="secondary" opacity="0.2" speed="1" class />
-<div class="absolute inset-0 overflow-hidden
+<div class="dce:absolute dce:inset-0 dce:overflow-hidden
             {{ class }}"
      style="opacity: {{ opacity|floatformat:'-3u'|default:'0.2' }}; --flow-speed: {{ speed|floatformat:'-3u'|default:'1' }}">
-  <div class="absolute inset-y-0 left-0 w-[300%] bg-gradient-to-r from-{{ from }} via-{{ via }} to-{{ to }}
-              motion-safe:animate-[dce-pan_calc(18s/var(--flow-speed,1))_ease-in-out_infinite_alternate]"></div>
+  <div class="dce:absolute dce:inset-y-0 dce:left-0 dce:w-[300%] dce:bg-gradient-to-r dce:from-{{ from }} dce:via-{{ via }} dce:to-{{ to }}
+              dce:motion-safe:animate-[dce-pan_calc(18s/var(--flow-speed,1))_ease-in-out_infinite_alternate]"></div>
 </div>

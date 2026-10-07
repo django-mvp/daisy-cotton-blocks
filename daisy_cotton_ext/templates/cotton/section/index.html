@@ -7,7 +7,7 @@
 {# @prop reverse:boolean | default:False | description:"Run the columns the other way at wide widths, so the last one written comes first. No effect once they have stacked: on a phone the columns always read in the order written." #}
 {# @prop invert:boolean | default:False | description:"Light copy, for a dark background. Each background says whether it wants this." #}
 {# @prop class:text | description:"Extra classes on the outer section. A plain surface colour goes here: bg-base-200." #}
-{# @slot <c-section.col><h2 class="text-3xl font-bold">Copy</h2></c-section.col><c-section.col><div class="rounded-2xl bg-base-200 p-10">Media</div></c-section.col> — The content. Anything at all, or one section.col for each column. #}
+{# @slot <c-section.col><h2 class="dce:text-3xl dce:font-bold">Copy</h2></c-section.col><c-section.col><div class="dce:rounded-2xl dce:bg-base-200 dce:p-10">Media</div></c-section.col> — The content. Anything at all, or one section.col for each column. #}
 {# @slot:background — A background block, rendered into a layer behind the content #}
 {# @slot:header — Above the columns, across the whole width. A heading for the section, usually. #}
 {% comment %}
@@ -21,25 +21,25 @@
   section around it unless it inverts for itself.
 {% endcomment %}
 <c-vars height="content" flush container="default" gap="md" align="stretch" reverse invert class />
-<section class="relative isolate overflow-clip
-                {% if invert %}text-neutral-content{% else %}text-base-content in-data-section-body:text-inherit{% endif %}
-                {% if height == 'screen' %}flex min-h-screen items-center{% endif %}
-                {% if not flush %}py-16 md:py-24 in-data-section-body:py-0 in-data-section-body:md:py-0{% endif %}
+<section class="dce:relative dce:isolate dce:overflow-clip
+                {% if invert %}dce:text-neutral-content{% else %}dce:text-base-content dce:in-data-section-body:text-inherit{% endif %}
+                {% if height == 'screen' %}dce:flex dce:min-h-screen dce:items-center{% endif %}
+                {% if not flush %}dce:py-16 dce:md:py-24 dce:in-data-section-body:py-0 dce:in-data-section-body:md:py-0{% endif %}
                 {{ class }}"
          data-section
          {{ attrs }}>
   {% if background %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+    <div aria-hidden="true" class="dce:pointer-events-none dce:absolute dce:inset-0 dce:-z-10">{{ background }}</div>
   {% endif %}
   <div data-section-body
-       class="mx-auto w-full
-              {% if container == 'full' %}max-w-none{% else %}px-4 sm:px-6 lg:px-8 in-data-section-body:px-0 in-data-section-body:sm:px-0 in-data-section-body:lg:px-0{% endif %}
-              {% if container == 'narrow' %}max-w-2xl{% elif container == 'wide' %}max-w-7xl{% elif container != 'full' %}max-w-6xl{% endif %}">
-    {% if header %}<div class="mb-10 md:mb-14">{{ header }}</div>{% endif %}
-    <div class="auto-cols-fr has-[>[data-section-col]]:grid lg:grid-flow-col
-                {% if reverse %}lg:*:nth-2:order-[-1] lg:*:nth-3:order-[-2] lg:*:nth-4:order-[-3] lg:*:nth-5:order-[-4] lg:*:nth-6:order-[-5]{% endif %}
-                {% if gap == 'sm' %}gap-6 lg:gap-8{% elif gap == 'lg' %}gap-14 lg:gap-24{% elif gap != 'none' %}gap-10 lg:gap-16{% endif %}
-                {% if align == 'start' %}lg:items-start{% elif align == 'center' %}lg:items-center{% elif align == 'end' %}lg:items-end{% endif %}">
+       class="dce:mx-auto dce:w-full
+              {% if container == 'full' %}dce:max-w-none{% else %}dce:px-4 dce:sm:px-6 dce:lg:px-8 dce:in-data-section-body:px-0 dce:in-data-section-body:sm:px-0 dce:in-data-section-body:lg:px-0{% endif %}
+              {% if container == 'narrow' %}dce:max-w-2xl{% elif container == 'wide' %}dce:max-w-7xl{% elif container != 'full' %}dce:max-w-6xl{% endif %}">
+    {% if header %}<div class="dce:mb-10 dce:md:mb-14">{{ header }}</div>{% endif %}
+    <div class="dce:auto-cols-fr dce:has-[>[data-section-col]]:grid dce:lg:grid-flow-col
+                {% if reverse %}dce:lg:*:nth-2:order-[-1] dce:lg:*:nth-3:order-[-2] dce:lg:*:nth-4:order-[-3] dce:lg:*:nth-5:order-[-4] dce:lg:*:nth-6:order-[-5]{% endif %}
+                {% if gap == 'sm' %}dce:gap-6 dce:lg:gap-8{% elif gap == 'lg' %}dce:gap-14 dce:lg:gap-24{% elif gap != 'none' %}dce:gap-10 dce:lg:gap-16{% endif %}
+                {% if align == 'start' %}dce:lg:items-start{% elif align == 'center' %}dce:lg:items-center{% elif align == 'end' %}dce:lg:items-end{% endif %}">
       {{ slot }}
     </div>
   </div>

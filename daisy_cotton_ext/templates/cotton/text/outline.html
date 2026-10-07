@@ -8,8 +8,8 @@
   follow the theme.
 {% endcomment %}
 <c-vars variant="base-content" weight="1.5" class />
-<span class="text-{{ variant }} [-webkit-text-fill-color:transparent] [-webkit-text-stroke-color:currentColor]
-             [-webkit-text-stroke-width:calc(var(--outline-weight,1.5)*1px)]
+<span class="dce:text-{{ variant }} dce:[-webkit-text-fill-color:transparent] dce:[-webkit-text-stroke-color:currentColor]
+             dce:[-webkit-text-stroke-width:calc(var(--outline-weight,1.5)*1px)]
              {{ class }}"
       style="--outline-weight: {{ weight|floatformat:'-3u'|default:'1.5' }}"
       {{ attrs }}>{{ slot }}</span>

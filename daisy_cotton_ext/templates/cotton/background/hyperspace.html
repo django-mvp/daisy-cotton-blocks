@@ -10,16 +10,16 @@
 {% endcomment %}
 <c-vars variant="base-100" density="1" intensity="0.6" speed="1" class />
 {% widthratio density|floatformat:'-3u'|default:'1' 1 40 as count %}
-<div class="absolute inset-0 overflow-hidden [container-type:size] text-{{ variant }}
+<div class="dce:absolute dce:inset-0 dce:overflow-hidden dce:[container-type:size] dce:text-{{ variant }}
             {{ class }}"
      style="opacity: {{ intensity|floatformat:'-3u'|default:'0.6' }}; --hyperspace-speed: {{ speed|floatformat:'-3u'|default:'1' }}">
   {% if count|add:0 > 0 %}
     {% with limit=":"|add:count %}
       {% for streak in ""|center:300|slice:limit %}
-        <span class="absolute top-1/2 left-1/2 h-0 w-0 rotate-[calc(var(--i)*137.508deg)]" style="--i: {{ forloop.counter0 }}">
-          <span class="absolute -top-0.5 left-[calc(mod(var(--i)*7.3,26)*1cqmax_+_3cqmax)] h-[calc(2px_+_mod(var(--i),3)*1px)] w-[10cqmax] origin-left
-                       bg-[radial-gradient(ellipse_100%_50%_at_100%_50%,currentColor,transparent)]
-                       motion-safe:animate-[dce-warp_calc((1.7s_+_mod(var(--i)*0.37s,1.7s))/var(--hyperspace-speed,1))_ease-in_calc(mod(var(--i)*1.3s,6s)*-1)_infinite]"></span>
+        <span class="dce:absolute dce:top-1/2 dce:left-1/2 dce:h-0 dce:w-0 dce:rotate-[calc(var(--i)*137.508deg)]" style="--i: {{ forloop.counter0 }}">
+          <span class="dce:absolute dce:-top-0.5 dce:left-[calc(mod(var(--i)*7.3,26)*1cqmax_+_3cqmax)] dce:h-[calc(2px_+_mod(var(--i),3)*1px)] dce:w-[10cqmax] dce:origin-left
+                       dce:bg-[radial-gradient(ellipse_100%_50%_at_100%_50%,currentColor,transparent)]
+                       dce:motion-safe:animate-[dce-warp_calc((1.7s_+_mod(var(--i)*0.37s,1.7s))/var(--hyperspace-speed,1))_ease-in_calc(mod(var(--i)*1.3s,6s)*-1)_infinite]"></span>
         </span>
       {% endfor %}
     {% endwith %}

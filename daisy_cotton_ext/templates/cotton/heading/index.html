@@ -13,22 +13,22 @@
 {% endcomment %}
 <c-vars eyebrow title lead level="2" size="md" align="center" invert class />
 {% if eyebrow or title or lead %}
-  <div class="flex flex-col
-              {% if size == 'md' %}gap-4{% else %}gap-6{% endif %}
-              {% if align == 'center' %}mx-auto max-w-3xl items-center text-center{% elif align == 'start' %}items-start text-start{% elif align == 'end' %}items-end text-end{% endif %}
+  <div class="dce:flex dce:flex-col
+              {% if size == 'md' %}dce:gap-4{% else %}dce:gap-6{% endif %}
+              {% if align == 'center' %}dce:mx-auto dce:max-w-3xl dce:items-center dce:text-center{% elif align == 'start' %}dce:items-start dce:text-start{% elif align == 'end' %}dce:items-end dce:text-end{% endif %}
               {{ class }}"
        {{ attrs }}>
     {% if eyebrow %}
-      <p class="text-sm font-semibold tracking-widest uppercase
-                {% if not invert %}text-base-content/80{% endif %}">{{ eyebrow }}</p>
+      <p class="dce:text-sm dce:font-semibold dce:tracking-widest dce:uppercase
+                {% if not invert %}dce:text-base-content/80{% endif %}">{{ eyebrow }}</p>
     {% endif %}
     {# djlint:off #}
-    {% if title %}<h{{ level }} class="font-bold tracking-tight text-balance {% if size == 'xl' %}text-4xl sm:text-5xl lg:text-6xl{% elif size == 'lg' %}text-4xl sm:text-5xl{% else %}text-3xl sm:text-4xl{% endif %}">{{ title }}</h{{ level }}>{% endif %}
+    {% if title %}<h{{ level }} class="dce:font-bold dce:tracking-tight dce:text-balance {% if size == 'xl' %}dce:text-4xl dce:sm:text-5xl dce:lg:text-6xl{% elif size == 'lg' %}dce:text-4xl dce:sm:text-5xl{% else %}dce:text-3xl dce:sm:text-4xl{% endif %}">{{ title }}</h{{ level }}>{% endif %}
     {# djlint:on #}
     {% if lead %}
-      <p class="max-w-2xl leading-relaxed text-pretty
-                {% if size == 'md' %}text-lg{% else %}text-lg sm:text-xl{% endif %}
-                {% if not invert %}text-base-content/80{% endif %}">{{ lead }}</p>
+      <p class="dce:max-w-2xl dce:leading-relaxed dce:text-pretty
+                {% if size == 'md' %}dce:text-lg{% else %}dce:text-lg dce:sm:text-xl{% endif %}
+                {% if not invert %}dce:text-base-content/80{% endif %}">{{ lead }}</p>
     {% endif %}
   </div>
 {% endif %}

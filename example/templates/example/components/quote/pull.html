@@ -5,12 +5,12 @@
 
 {% block content %}
   <c-demo.head tag="c-quote.pull">
-    <p class="mt-4 max-w-3xl text-base-content/80">For a quotation in the middle of something longer. The rule down its leading edge is what sets it apart, so it needs no box and no background, and it keeps to the width of the text around it.</p>
-    <p class="mt-4 max-w-3xl text-base-content/80">The rule takes a colour of the theme. The words never do.</p>
+    <p class="mt-4 max-w-3xl dce:text-base-content/80">For a quotation in the middle of something longer. The rule down its leading edge is what sets it apart, so it needs no box and no background, and it keeps to the width of the text around it.</p>
+    <p class="mt-4 max-w-3xl dce:text-base-content/80">The rule takes a colour of the theme. The words never do.</p>
   </c-demo.head>
 
   <c-demo.live label="In the middle of an article" anchor="article">
-    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<article class="max-w-prose space-y-6 text-lg leading-relaxed">
+    <c-slot name="markup">{% filter force_escape %}{% verbatim %}<article class="max-w-prose dce:space-y-6 text-lg leading-relaxed">
   <p>The team had a rule nobody had written down: nothing goes out after Thursday lunch. It had been true for so long that new joiners learned it from the calendar, where Friday was always empty.</p>
   <c-quote.pull name="Amara Okafor" role="Head of Platform, Northwind">
     “We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.”
@@ -18,7 +18,7 @@
   <p>What changed was not courage. A release that could be undone in under a minute stopped being something to plan a week around.</p>
 </article>{% endverbatim %}{% endfilter %}</c-slot>
 <c-container class="py-12">
-<article class="max-w-prose space-y-6 text-lg leading-relaxed">
+<article class="max-w-prose dce:space-y-6 text-lg leading-relaxed">
   <p>The team had a rule nobody had written down: nothing goes out after Thursday lunch. It had been true for so long that new joiners learned it from the calendar, where Friday was always empty.</p>
   <c-quote.pull name="Amara Okafor" role="Head of Platform, Northwind">
     “We stopped booking releases for Friday afternoon, because Friday afternoon stopped being frightening.”
@@ -51,7 +51,7 @@
   “Programs must be written for people to read, and only incidentally for machines to execute.”
 </c-quote.pull>{% endverbatim %}{% endfilter %}</c-slot>
 <c-container class="py-12">
-<p class="mb-8 max-w-3xl text-base-content/80">With <code>source</code>, the title is marked up as a citation. With <code>href</code> as well, it becomes a link.</p>
+<p class="mb-8 max-w-3xl dce:text-base-content/80">With <code>source</code>, the title is marked up as a citation. With <code>href</code> as well, it becomes a link.</p>
 <c-quote.pull variant="neutral"
               name="Harold Abelson"
               source="Structure and Interpretation of Computer Programs"

@@ -11,12 +11,12 @@
 {# @slot:background — A background block, rendered into a layer behind the words #}
 {# @slot:logo — Above the words. The mark of the company the person speaks for. #}
 <c-vars name role source href src invert size="md" class />
-<c-section flush :invert="invert" class="{% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
+<c-section flush :invert="invert" class="{% if size == 'sm' %}dce:py-12 dce:md:py-16{% elif size == 'lg' %}dce:py-24 dce:md:py-32{% else %}dce:py-16 dce:md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
   {% if background %}<c-slot name="background">{{ background }}</c-slot>{% endif %}
-  <figure class="mx-auto flex max-w-4xl flex-col items-center gap-8 text-center">
+  <figure class="dce:mx-auto dce:flex dce:max-w-4xl dce:flex-col dce:items-center dce:gap-8 dce:text-center">
     {% if logo %}<div>{{ logo }}</div>{% endif %}
     <blockquote {% if href %}cite="{{ href }}"{% endif %}
-                class="text-2xl leading-snug font-semibold tracking-tight text-balance sm:text-3xl lg:text-4xl">
+                class="dce:text-2xl dce:leading-snug dce:font-semibold dce:tracking-tight dce:text-balance dce:sm:text-3xl dce:lg:text-4xl">
       {{ slot }}
     </blockquote>
     {% if name or role or source %}

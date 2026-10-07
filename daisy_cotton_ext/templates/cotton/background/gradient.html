@@ -10,6 +10,6 @@
   themes, so an opacity of 1 needs `invert` on the block (#21).
 {% endcomment %}
 <c-vars from="primary" via to="secondary" direction="br" opacity="0.2" class />
-<div class="absolute inset-0 bg-gradient-to-{{ direction }} from-{{ from }} {% if via %}via-{{ via }}{% endif %} to-{{ to }}
+<div class="dce:absolute dce:inset-0 dce:bg-gradient-to-{{ direction }} dce:from-{{ from }} {% if via %}dce:via-{{ via }}{% endif %} dce:to-{{ to }}
             {{ class }}"
      style="opacity: {{ opacity|floatformat:'-3u'|default:'0.2' }}"></div>

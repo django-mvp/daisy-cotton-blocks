@@ -14,20 +14,20 @@
   set. The figure is read out with its title: together they are the heading.
 {% endcomment %}
 <c-vars value title lead level="2" icon speed="0" size="md" class />
-<c-section flush class="{% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
-  <div class="mx-auto flex max-w-3xl flex-col items-center gap-4 text-center">
+<c-section flush class="{% if size == 'sm' %}dce:py-12 dce:md:py-16{% elif size == 'lg' %}dce:py-24 dce:md:py-32{% else %}dce:py-16 dce:md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
+  <div class="dce:mx-auto dce:flex dce:max-w-3xl dce:flex-col dce:items-center dce:gap-4 dce:text-center">
     {% if figure %}
       <div>{{ figure }}</div>
     {% elif icon %}
-      <c-icon name="{{ icon }}" class="text-4xl opacity-60" aria-hidden="true" only />
+      <c-icon name="{{ icon }}" class="dce:text-4xl dce:opacity-60" aria-hidden="true" only />
     {% endif %}
     {# djlint:off #}
-    <h{{ level }} class="flex w-full flex-col items-center gap-3">
-      <span class="max-w-full text-7xl leading-none font-extrabold tracking-tight wrap-anywhere tabular-nums sm:text-8xl lg:text-9xl"><c-text.gradient speed="{{ speed }}" only>{{ value }}</c-text.gradient></span>
-      {% if title %}<span class="text-2xl font-bold tracking-tight text-balance sm:text-3xl">{{ title }}</span>{% endif %}
+    <h{{ level }} class="dce:flex dce:w-full dce:flex-col dce:items-center dce:gap-3">
+      <span class="dce:max-w-full dce:text-7xl dce:leading-none dce:font-extrabold dce:tracking-tight dce:wrap-anywhere dce:tabular-nums dce:sm:text-8xl dce:lg:text-9xl"><c-text.gradient speed="{{ speed }}" only>{{ value }}</c-text.gradient></span>
+      {% if title %}<span class="dce:text-2xl dce:font-bold dce:tracking-tight dce:text-balance dce:sm:text-3xl">{{ title }}</span>{% endif %}
     </h{{ level }}>
     {# djlint:on #}
-    {% if lead %}<p class="max-w-2xl text-lg leading-relaxed text-pretty text-base-content/80">{{ lead }}</p>{% endif %}
-    {% if actions %}<div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>{% endif %}
+    {% if lead %}<p class="dce:max-w-2xl dce:text-lg dce:leading-relaxed dce:text-pretty dce:text-base-content/80">{{ lead }}</p>{% endif %}
+    {% if actions %}<div class="dce:flex dce:flex-wrap dce:items-center dce:justify-center dce:gap-3 dce:pt-2">{{ actions }}</div>{% endif %}
   </div>
 </c-section>

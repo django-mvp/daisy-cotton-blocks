@@ -113,9 +113,12 @@ order of how load-bearing they are:
    the generator the scale without writing any of it out, and the emitted utilities resolve against
    the custom properties the host's daisyUI build defines on `:root`. That is also what makes a
    block follow whatever theme is active, for free.
-3. **Overlap with a host's build is expected and untested.** Two identical rules cost bytes and
-   nothing else. The case that is worth knowing about is a host on a different Tailwind version,
-   where one class name can carry two different declarations and link order decides.
+3. **Every class it emits carries the `dce:` prefix, and shares no name with a host's.** Two
+   stylesheets that both define `.hidden` leave link order to decide between one file's `hidden`
+   and the other's `md:flex`, and no order is right for both files. A template writes
+   `dce:flex`, never `flex`; daisyUI's classes stay unprefixed because they are the host's. The
+   suite fails on an unprefixed class in the stylesheet, and measures both stylesheets together
+   in a browser (`docs/adr/0012-package-utilities-carry-a-prefix.md`).
 4. **The host contract is written down, never assumed.** The daisyUI classes a block may rely on
    are listed in `HOST_PROVIDED_CLASSES` in `tests/test_stylesheet.py`. Reaching for one that is
    not listed fails the suite, which is the prompt to decide whether a host should really be
@@ -262,4 +265,4 @@ first. Do not cite it as an enforced standard until it runs in CI.
 
 ---
 
-**Version**: 3.0.0 | **Ratified**: 2026-09-17 | **Last Amended**: 2026-09-28
+**Version**: 3.1.0 | **Ratified**: 2026-09-17 | **Last Amended**: 2026-10-07

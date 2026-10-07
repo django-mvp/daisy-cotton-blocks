@@ -2,7 +2,7 @@
 {# @prop markup:text | description:"The escaped markup shown under the live block" #}
 {# @slot A hero block — The live block to show. #}
 <c-vars markup />
-<div class="flex min-w-0 flex-col overflow-clip rounded-xl ring-1 ring-base-300">
+<div class="flex min-w-0 flex-col dce:overflow-clip rounded-xl dce:ring-1 dce:ring-base-300">
   <div class="flex-1">{{ slot }}</div>
   <div class="border-t border-base-300 bg-base-200 p-3">
     <code class="text-xs">{{ markup }}</code>

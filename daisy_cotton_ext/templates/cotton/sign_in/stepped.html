@@ -13,31 +13,31 @@
 {# @slot The answer — One field and its button, or the list of ways to continue. #}
 {% load i18n %}
 <c-vars eyebrow title lead level="1" divider class />
-<section class="relative isolate flex min-h-dvh flex-col overflow-clip bg-base-100 text-base-content
+<section class="dce:relative dce:isolate dce:flex dce:min-h-dvh dce:flex-col dce:overflow-clip dce:bg-base-100 dce:text-base-content
                 {{ class }}"
          {{ attrs }}>
   {% if background %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+    <div aria-hidden="true" class="dce:pointer-events-none dce:absolute dce:inset-0 dce:-z-10">{{ background }}</div>
   {% endif %}
-  <div class="flex items-center justify-between gap-4 px-6 py-5 sm:px-10">
-    <div class="flex items-center">{{ logo }}</div>
-    {% if nav %}<div class="text-sm">{{ nav }}</div>{% endif %}
+  <div class="dce:flex dce:items-center dce:justify-between dce:gap-4 dce:px-6 dce:py-5 dce:sm:px-10">
+    <div class="dce:flex dce:items-center">{{ logo }}</div>
+    {% if nav %}<div class="dce:text-sm">{{ nav }}</div>{% endif %}
   </div>
-  <div class="mx-auto flex w-full max-w-xl flex-1 flex-col justify-center gap-8 px-6 pt-8 pb-24">
-    <div class="flex flex-col gap-4">
+  <div class="dce:mx-auto dce:flex dce:w-full dce:max-w-xl dce:flex-1 dce:flex-col dce:justify-center dce:gap-8 dce:px-6 dce:pt-8 dce:pb-24">
+    <div class="dce:flex dce:flex-col dce:gap-4">
       {% if eyebrow %}
-        <p class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">{{ eyebrow }}</p>
+        <p class="dce:text-sm dce:font-semibold dce:tracking-widest dce:text-base-content/80 dce:uppercase">{{ eyebrow }}</p>
       {% endif %}
       {# djlint:off #}
-      {% if title %}<h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl">{{ title }}</h{{ level }}>{% endif %}
+      {% if title %}<h{{ level }} class="dce:text-4xl dce:font-bold dce:tracking-tight dce:text-balance dce:sm:text-5xl">{{ title }}</h{{ level }}>{% endif %}
       {# djlint:on #}
-      {% if lead %}<p class="text-lg text-base-content/80 text-pretty">{{ lead }}</p>{% endif %}
+      {% if lead %}<p class="dce:text-lg dce:text-base-content/80 dce:text-pretty">{{ lead }}</p>{% endif %}
     </div>
     {{ slot }}
     {% if providers %}
-      <c-divider class="my-0 text-sm text-base-content/80" only>{% if divider %}{{ divider }}{% else %}{% translate "or" %}{% endif %}</c-divider>
-      <div class="flex flex-col gap-3 sm:flex-row">{{ providers }}</div>
+      <c-divider class="dce:my-0 dce:text-sm dce:text-base-content/80" only>{% if divider %}{{ divider }}{% else %}{% translate "or" %}{% endif %}</c-divider>
+      <div class="dce:flex dce:flex-col dce:gap-3 dce:sm:flex-row">{{ providers }}</div>
     {% endif %}
-    {% if footer %}<div class="text-sm text-base-content/80">{{ footer }}</div>{% endif %}
+    {% if footer %}<div class="dce:text-sm dce:text-base-content/80">{{ footer }}</div>{% endif %}
   </div>
 </section>

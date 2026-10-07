@@ -72,7 +72,7 @@ and this package extends daisy-cotton. In prose it is still an option.
 
 **Blocks stylesheet**:
 `daisy_cotton_ext/static/css/daisy-cotton-ext.css`, the one stylesheet this package ships. It
-carries the plain Tailwind utilities the blocks use and nothing else. It is built from
+carries the plain Tailwind utilities the blocks use, each under the prefix, and nothing else. It is built from
 `assets/daisy-cotton-ext.css`, and the built file is committed so installing the package needs
 no Node toolchain.
 _Avoid_: the theme, the framework, the CSS bundle, the supplement (it no longer supplements
@@ -99,11 +99,15 @@ daisyUI's named colour roles: `primary`, `secondary`, `accent`, `neutral`, `base
 `base-300` and their `-content` pairs. The blocks stylesheet declares these as reference-only theme
 colours so it can emit gradient stops against them without writing a single custom property.
 
+**Prefix**:
+`dce:`, written in front of every plain utility in a package template and carried by every class
+the blocks stylesheet emits. It exists so that no class name is defined both here and in a host's
+build. daisyUI classes never carry it.
+
 **Overlap**:
-Class selectors defined both by this package's stylesheet and by a host's own build. Expected, and
-not measured: two identical rules cost bytes and nothing else. The case that does matter is a host
-on a different Tailwind version, where the same class name can carry different declarations and
-link order decides which one applies.
+Class selectors defined both by this package's stylesheet and by a host's own build. There are
+none, and the suite fails if one appears. Overlap is a defect because the cascade settles a shared
+name by link order: one file's `hidden` against the other's `md:flex`.
 
 **Application chrome**:
 Navigation, forms, tables, CRUD pages — anything whose content comes from the application rather

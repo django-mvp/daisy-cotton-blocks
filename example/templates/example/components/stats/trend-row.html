@@ -5,10 +5,10 @@
 
 {% block content %}
   <c-demo.head tag="c-stats.trend-row">
-    <p class="mt-4 max-w-3xl text-base-content/80">
+    <p class="mt-4 max-w-3xl dce:text-base-content/80">
       The stat laid on its side: what it counts on the left, the figure and its change on the right. One figure takes one short row, so a handful stack into a compact list.
     </p>
-    <p class="mt-4 max-w-3xl text-base-content/80">
+    <p class="mt-4 max-w-3xl dce:text-base-content/80">
       One of six arrangements of the same parts. They take the same attributes, so changing layout is changing the tag. All six are side by side on the <a class="link" href="{% url 'component' family='stats' component='trend' %}#layouts">stacked layout's page</a>.
     </p>
   </c-demo.head>
@@ -52,7 +52,7 @@
   …
 </c-stat.group>{% endverbatim %}{% endfilter %}</c-slot>
     <c-container class="py-16">
-      <p class="mb-8 max-w-3xl text-base-content/80">Stacked one above another in a vertical <code>c-stat.group</code>, which is where this layout belongs.</p>
+      <p class="mb-8 max-w-3xl dce:text-base-content/80">Stacked one above another in a vertical <code>c-stat.group</code>, which is where this layout belongs.</p>
       <div class="mx-auto max-w-xl">
         <c-stat.group vertical class="w-full">
           <c-stats.trend-row icon="deploys" title="Deploys a day" value="31" change="12%" desc="since last month" />

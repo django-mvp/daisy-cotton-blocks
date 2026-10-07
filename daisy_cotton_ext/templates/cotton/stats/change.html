@@ -10,8 +10,8 @@
 {% endcomment %}
 {% load i18n %}
 <c-vars change direction="up" inverse class />
-<c-badge variant="{% if direction == 'flat' %}neutral{% elif direction == 'up' and not inverse or direction == 'down' and inverse %}success{% else %}error{% endif %}" size="sm" class="badge-soft gap-1 font-semibold tabular-nums {{ class }}" only>
-  <svg aria-hidden="true" class="size-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<c-badge variant="{% if direction == 'flat' %}neutral{% elif direction == 'up' and not inverse or direction == 'down' and inverse %}success{% else %}error{% endif %}" size="sm" class="badge-soft dce:gap-1 dce:font-semibold dce:tabular-nums {{ class }}" only>
+  <svg aria-hidden="true" class="dce:size-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     {% if direction == 'flat' %}
       <path d="M2 6h8" />
     {% elif direction == 'down' %}
@@ -20,6 +20,6 @@
       <path d="M6 10V2M2.5 5.5 6 2l3.5 3.5" />
     {% endif %}
   </svg>
-  <span class="sr-only">{% if direction == 'flat' %}{% translate "No change" %}{% elif direction == 'down' %}{% translate "Down" %}{% else %}{% translate "Up" %}{% endif %}</span>
+  <span class="dce:sr-only">{% if direction == 'flat' %}{% translate "No change" %}{% elif direction == 'down' %}{% translate "Down" %}{% else %}{% translate "Up" %}{% endif %}</span>
   {{ change }}
 </c-badge>

@@ -6,24 +6,24 @@
 {# @prop align:select['start', 'center'] | default:"start" | description:"Where the heading and the foot sit" #}
 {# @prop divider:text | description:"The word between the provider buttons and the form. Left empty, it is a translated or." #}
 {# @prop card:boolean | default:False | description:"Draw a card around the panel" #}
-{# @prop surface:text | default:"bg-base-100 shadow-xl" | description:"Surface classes of the card. No effect without card." #}
+{# @prop surface:text | default:"dce:bg-base-100 dce:shadow-xl" | description:"Surface classes of the card. No effect without card." #}
 {# @prop class:text | description:"Extra classes on the panel's outer element" #}
 {# @slot:providers — Buttons that skip the form, one full-width button each: third-party providers, a passkey, an emailed code #}
 {# @slot:footer — The foot of the panel. The link across to the other page, or the terms. #}
 {# @slot The form — The application's own form, with its fields, its errors and its submit button. #}
 {% load i18n %}
-<c-vars title lead level="1" size="md" align="start" divider card surface="bg-base-100 shadow-xl" class />
+<c-vars title lead level="1" size="md" align="start" divider card surface="dce:bg-base-100 dce:shadow-xl" class />
 {# djlint:off #}
-{% if card %}<div class="card {{ surface }} {{ class }}" {{ attrs }}><div class="card-body gap-6 p-6 sm:p-8">{% else %}<div class="flex flex-col gap-6 {{ class }}" {{ attrs }}>{% endif %}
-  <div {% if align == 'center' %}class="text-center"{% endif %}>
-    {% if title %}<h{{ level }} class="font-bold tracking-tight text-balance {% if size == 'lg' %}text-3xl{% else %}text-2xl{% endif %}">{{ title }}</h{{ level }}>{% endif %}
-    {% if lead %}<p class="mt-2 text-base-content/80 text-pretty">{{ lead }}</p>{% endif %}
+{% if card %}<div class="card {{ surface }} {{ class }}" {{ attrs }}><div class="card-body dce:gap-6 dce:p-6 dce:sm:p-8">{% else %}<div class="dce:flex dce:flex-col dce:gap-6 {{ class }}" {{ attrs }}>{% endif %}
+  <div {% if align == 'center' %}class="dce:text-center"{% endif %}>
+    {% if title %}<h{{ level }} class="dce:font-bold dce:tracking-tight dce:text-balance {% if size == 'lg' %}dce:text-3xl{% else %}dce:text-2xl{% endif %}">{{ title }}</h{{ level }}>{% endif %}
+    {% if lead %}<p class="dce:mt-2 dce:text-base-content/80 dce:text-pretty">{{ lead }}</p>{% endif %}
   </div>
   {% if providers.strip %}
-    <div class="flex flex-col gap-3">{{ providers }}</div>
-    {% if slot.strip %}<c-divider class="my-0 text-sm text-base-content/80" only>{% if divider %}{{ divider }}{% else %}{% translate "or" %}{% endif %}</c-divider>{% endif %}
+    <div class="dce:flex dce:flex-col dce:gap-3">{{ providers }}</div>
+    {% if slot.strip %}<c-divider class="dce:my-0 dce:text-sm dce:text-base-content/80" only>{% if divider %}{{ divider }}{% else %}{% translate "or" %}{% endif %}</c-divider>{% endif %}
   {% endif %}
   {{ slot }}
-  {% if footer.strip %}<div class="text-sm {% if align == 'center' %}text-center{% endif %}">{{ footer }}</div>{% endif %}
+  {% if footer.strip %}<div class="dce:text-sm {% if align == 'center' %}dce:text-center{% endif %}">{{ footer }}</div>{% endif %}
 {% if card %}</div></div>{% else %}</div>{% endif %}
 {# djlint:on #}

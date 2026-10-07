@@ -6,9 +6,10 @@ utilities this package's own templates ask for, because a host's build scans the
 host's source and never reaches site-packages.
 
 So the stylesheet shipped here has to be self-sufficient for those utilities, and
-that is what these tests measure. Overlap with a host's own build is expected and
-deliberately not tested: a project running django-mvp loads two stylesheets that
-both define ``py-20``, which costs bytes and nothing else.
+that is what these tests measure. It also has to leave the host's own utilities
+alone, which it does by sharing no class name with them: every class it emits is
+prefixed ``dce:``. A shared name is settled by link order, and no order is right
+for both files (docs/adr/0012-package-utilities-carry-a-prefix.md).
 
 django-mvp appears below only as a stand-in host. The example project runs on it,
 so its stylesheet is what the example's markup is checked against.
@@ -28,6 +29,7 @@ from pathlib import Path
 import pytest
 from django.contrib.staticfiles import finders
 from django_cotton_gallery.core.annotations import AnnotationParser
+from playwright.sync_api import sync_playwright
 
 BLOCKS_STYLESHEET = "css/daisy-cotton-ext.css"
 HOST_STYLESHEET = "css/django-mvp.css"
@@ -254,6 +256,16 @@ class TestStylesheetStaysOutOfTheHostsWay:
         assert ":root" not in css, "the stylesheet re-emits Tailwind's theme layer"
         assert "box-sizing" not in css, "the stylesheet re-emits Tailwind's preflight"
 
+    def test_every_class_carries_the_package_prefix(
+        self, blocks_classes: set[str]
+    ) -> None:
+        bare = sorted(name for name in blocks_classes if not name.startswith("dce:"))
+        assert not bare, (
+            f"the stylesheet emits {len(bare)} class(es) a host's build could also "
+            f"define: {', '.join(bare[:10])}. Shared names are settled by link "
+            "order (docs/adr/0012-package-utilities-carry-a-prefix.md)."
+        )
+
     def test_stylesheet_emits_no_daisyui_component_rules(
         self, blocks_classes: set[str]
     ) -> None:
@@ -292,8 +304,8 @@ class TestBlocksAreSelfSufficient:
         self, tmp_path: Path, blocks_classes: set[str]
     ) -> None:
         (tmp_path / "block.html").write_text(
-            '<section class="py-16 space-y-4\n'
-            "               {% if size == 'sm' %}md:py-16"
+            '<section class="dce:py-16 dce:space-y-4\n'
+            "               {% if size == 'sm' %}dce:md:py-16"
             '{% else %}not-a-utility-anything-emits{% endif %}">',
             encoding="utf-8",
         )
@@ -371,4 +383,106 @@ class TestClassesComposedAtRenderTime:
 
         missing = rendered - (blocks_classes | HOST_PROVIDED_CLASSES)
 
-        assert missing == {"bg-chartreuse"}
+        assert missing == {"dce:bg-chartreuse"}
+
+
+# A host's Tailwind build in miniature, in Tailwind's order: preflight in `base`,
+# plain utilities, then responsive ones.
+MINIATURE_HOST = r"""
+@layer theme, base, components, utilities;
+@layer base {
+  * { padding: 0; }
+}
+@layer utilities {
+  .hidden { display: none; }
+  .flex { display: flex; }
+  .grid { display: grid; }
+  .p-4 { padding: 1rem; }
+  @media (width >= 40rem) { .sm\:hidden { display: none; } }
+  @media (width >= 48rem) { .md\:flex { display: flex; } }
+}
+"""
+
+WIDER_THAN_EVERY_BREAKPOINT = {"width": 1280, "height": 800}
+
+
+@pytest.fixture(scope="module")
+def page():
+    with sync_playwright() as playwright:
+        if not Path(playwright.chromium.executable_path).exists():
+            pytest.skip(
+                "Chromium is not installed: run `uv run playwright install chromium`"
+            )
+        browser = playwright.chromium.launch()
+        yield browser.new_page(viewport=WIDER_THAN_EVERY_BREAKPOINT)
+        browser.close()
+
+
+def host_stylesheet(name: str) -> str:
+    if name == "a miniature host":
+        return MINIATURE_HOST
+    return locate(HOST_STYLESHEET).read_text(encoding="utf-8")
+
+
+class TestBothStylesheetsOnOnePage:
+    """Measured in a browser, because the cascade is what is under test.
+
+    The README asks for the host's stylesheet first. The other order is measured
+    too, because a project that gets it wrong should not lose its own page to it.
+    """
+
+    @pytest.fixture(
+        params=[
+            (host, order)
+            for host in ("a miniature host", "django-mvp")
+            for order in ("host linked first", "host linked second")
+        ],
+        ids=", ".join,
+    )
+    def styled(self, request, page, render):
+        host, order = request.param
+        sheets = [
+            host_stylesheet(host),
+            locate(BLOCKS_STYLESHEET).read_text(encoding="utf-8"),
+        ]
+        if order == "host linked second":
+            sheets.reverse()
+        page.set_content(
+            "<!doctype html><html><head>"
+            + "".join(f"<style>{sheet}</style>" for sheet in sheets)
+            + '</head><body><a id="shown-when-wide" class="hidden md:flex">Account</a>'
+            '<a id="hidden-when-wide" class="flex sm:hidden">Menu</a>'
+            '<div id="padded" class="p-4">Padded</div>'
+            '<div id="host-over-package" class="dce:flex hidden">Passed in</div>'
+            '<a id="package-over-daisyui" class="btn dce:hidden">Button</a>'
+            f"{render('<c-hero.split />')}</body></html>"
+        )
+        return page
+
+    def computed(self, page, selector: str, css_property: str) -> str:
+        return page.locator(selector).evaluate(
+            f"element => getComputedStyle(element).{css_property}"
+        )
+
+    def test_a_host_element_hidden_until_wide_is_shown(self, styled) -> None:
+        assert self.computed(styled, "#shown-when-wide", "display") == "flex"
+
+    def test_a_host_element_shown_until_wide_is_hidden(self, styled) -> None:
+        assert self.computed(styled, "#hidden-when-wide", "display") == "none"
+
+    def test_a_host_utility_still_outranks_the_hosts_preflight(self, styled) -> None:
+        assert self.computed(styled, "#padded", "paddingTop") == "16px"
+
+    def test_a_host_utility_outranks_a_package_utility(self, styled) -> None:
+        assert self.computed(styled, "#host-over-package", "display") == "none"
+
+    def test_a_package_utility_outranks_a_daisyui_component(self, styled) -> None:
+        assert self.computed(styled, "#package-over-daisyui", "display") == "none"
+
+    def test_the_split_hero_reaches_two_columns(self, styled) -> None:
+        tracks = self.computed(
+            styled,
+            "[data-section-body] > :has(> [data-section-col])",
+            "gridTemplateColumns",
+        )
+        assert len(tracks.split()) == 2

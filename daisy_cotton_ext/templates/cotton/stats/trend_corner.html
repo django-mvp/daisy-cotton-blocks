@@ -15,19 +15,19 @@
 <c-vars title value change direction="up" inverse desc icon class />
 <c-stat class="{{ class }}" :attrs="attrs" only>
   <c-slot name="title">
-    <span class="flex items-start justify-between gap-3 whitespace-normal">
-      <span class="flex items-center gap-2">
-        {% if icon %}<c-icon name="{{ icon }}" class="opacity-60" aria-hidden="true" only />{% endif %}
+    <span class="dce:flex dce:items-start dce:justify-between dce:gap-3 dce:whitespace-normal">
+      <span class="dce:flex dce:items-center dce:gap-2">
+        {% if icon %}<c-icon name="{{ icon }}" class="dce:opacity-60" aria-hidden="true" only />{% endif %}
         <span>{{ title }}</span>
       </span>
       {% if change %}<c-stats.change :change="change" :direction="direction" :inverse="inverse" only />{% endif %}
     </span>
   </c-slot>
-  <c-slot name="value"><span class="tabular-nums">{{ value }}</span></c-slot>
+  <c-slot name="value"><span class="dce:tabular-nums">{{ value }}</span></c-slot>
   {% if desc or slot.strip %}
     <c-slot name="desc">
-      {% if desc %}<div class="whitespace-normal">{{ desc }}</div>{% endif %}
-      {% if slot.strip %}<div class="mt-3 whitespace-normal">{{ slot }}</div>{% endif %}
+      {% if desc %}<div class="dce:whitespace-normal">{{ desc }}</div>{% endif %}
+      {% if slot.strip %}<div class="dce:mt-3 dce:whitespace-normal">{{ slot }}</div>{% endif %}
     </c-slot>
   {% endif %}
 </c-stat>

@@ -1,16 +1,35 @@
 /* Plain Tailwind, with no daisyUI plugin and no preflight. `theme(reference)` lets
  * utilities resolve against the host's daisyUI properties on :root, so blocks
  * follow the host's theme (docs/adr/0002-stylesheet-carries-what-a-host-cannot.md). */
-@import "tailwindcss/theme.css" theme(reference);
-@import "tailwindcss/utilities.css" layer(utilities) source(none);
+
+/* `prefix(dce)` names every class `dce:…`, so none shares a name with a class in
+ * the host's build. A shared name is settled by link order, and no order is right
+ * for both files (docs/adr/0012-package-utilities-carry-a-prefix.md). */
+/* Tailwind's own layer order, stated here in case this file is linked ahead of the
+ * host's. Layers rank by first mention, and `utilities` mentioned alone would land
+ * below the host's `base`, putting its preflight above every utility on the page. */
+@layer theme, base, components, utilities;
+
+/* The utilities sit in a layer of their own inside `utilities`. A layer nested in
+ * another ranks below the outer layer's own rules, so any utility of the host's
+ * beats one of these: a class a template author passes to a block overrides the
+ * block's default. daisyUI keeps its components in `utilities.daisyui`, and naming
+ * it first keeps these above it whichever file is linked first. */
+@layer utilities.daisyui, utilities.dce;
+
+@import "tailwindcss/theme.css" theme(reference) prefix(dce);
+@import "tailwindcss/utilities.css" layer(utilities.dce) source(none);
 
 /* `source(none)` stops Tailwind scanning the example project and tests, whose
  * classes would be dead weight in every install. */
 @source "../daisy_cotton_ext/templates";
 
 /* `reference` registers daisyUI's colour names without emitting properties. Left
- * out, `from-primary` and `text-primary-content` silently build nothing. */
+ * out, `dce:from-primary` and `dce:text-primary-content` silently build nothing. */
 @theme reference {
+  /* The prefix reaches theme variables: a utility reads `--dce-spacing` and falls
+   * back to the value here, so naming the host's own property keeps blocks on it. */
+  --spacing: var(--spacing, 0.25rem);
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
   --color-accent: var(--color-accent);
@@ -27,28 +46,28 @@
 
 /* Inline entries cover classes composed at render time, which the scanner cannot
  * see, and utilities listed ahead of the blocks that will use them. */
-@source inline("{,md:,lg:}{p,px,py,pt,pb}-{14,16,20,24,28,32,40}");
-@source inline("{,md:,lg:}{m,mx,my,mt,mb}-{14,16,20,24,28,32,40}");
-@source inline("{,md:,lg:}space-y-{2,3,4,6,8,10,12}");
-@source inline("{,md:,lg:}order-{1,2,first,last}");
-@source inline("{,md:,lg:}grid-flow-{row,col,dense}");
-@source inline("bg-gradient-to-{t,tr,r,br,b,bl,l,tl}");
-@source inline("{from,via,to}-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
-@source inline("bg-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
-@source inline("text-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
-@source inline("text-base-content");
-@source inline("text-{primary,secondary,accent,neutral}-content");
-@source inline("border-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
-@source inline("lg:columns-{2,3,4}");
-@source inline("text-shadow-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
-@source inline("opacity-{5,10,20,30,40,50,60,70,80,85,90,100}");
-@source inline("object-{cover,contain,center,top,bottom,left,right}");
-@source inline("{,hover:}{scale-{95,100,105,110},translate-y-{0,1,2,4,8},-translate-y-{1,2,4,8}}");
-@source inline("transition-{all,transform,colors,opacity,shadow}");
-@source inline("duration-{75,500,700,1000}");
-@source inline("ease-{linear,in,out,in-out}");
-@source inline("animate-{none,spin,ping,pulse,bounce}");
-@source inline("aspect-{auto,square,video}");
+@source inline("dce:{,md:,lg:}{p,px,py,pt,pb}-{14,16,20,24,28,32,40}");
+@source inline("dce:{,md:,lg:}{m,mx,my,mt,mb}-{14,16,20,24,28,32,40}");
+@source inline("dce:{,md:,lg:}space-y-{2,3,4,6,8,10,12}");
+@source inline("dce:{,md:,lg:}order-{1,2,first,last}");
+@source inline("dce:{,md:,lg:}grid-flow-{row,col,dense}");
+@source inline("dce:bg-gradient-to-{t,tr,r,br,b,bl,l,tl}");
+@source inline("dce:{from,via,to}-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
+@source inline("dce:bg-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
+@source inline("dce:text-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
+@source inline("dce:text-base-content");
+@source inline("dce:text-{primary,secondary,accent,neutral}-content");
+@source inline("dce:border-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
+@source inline("dce:lg:columns-{2,3,4}");
+@source inline("dce:text-shadow-{primary,secondary,accent,neutral,base-100,base-200,base-300}");
+@source inline("dce:opacity-{5,10,20,30,40,50,60,70,80,85,90,100}");
+@source inline("dce:object-{cover,contain,center,top,bottom,left,right}");
+@source inline("dce:{,hover:}{scale-{95,100,105,110},translate-y-{0,1,2,4,8},-translate-y-{1,2,4,8}}");
+@source inline("dce:transition-{all,transform,colors,opacity,shadow}");
+@source inline("dce:duration-{75,500,700,1000}");
+@source inline("dce:ease-{linear,in,out,in-out}");
+@source inline("dce:animate-{none,spin,ping,pulse,bounce}");
+@source inline("dce:aspect-{auto,square,video}");
 
 /* Motion for the moving backgrounds. Tailwind ships no keyframes for travel, and
  * every one of these moves by `translate`, `scale` or `opacity` only, so nothing

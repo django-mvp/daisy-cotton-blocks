@@ -13,16 +13,16 @@
   right-to-left page. It is decoration: the words keep the page's own colour.
 {% endcomment %}
 <c-vars name role source href src variant="primary" size="md" class />
-<figure class="border-s-4 border-{{ variant }} ps-6
-               {% if size == 'lg' %}max-w-3xl{% else %}max-w-prose{% endif %}
+<figure class="dce:border-s-4 dce:border-{{ variant }} dce:ps-6
+               {% if size == 'lg' %}dce:max-w-3xl{% else %}dce:max-w-prose{% endif %}
                {{ class }}"
         {{ attrs }}>
   <blockquote {% if href %}cite="{{ href }}"{% endif %}
-              class="font-medium text-pretty
-                     {% if size == 'lg' %}text-2xl leading-snug sm:text-3xl{% else %}text-xl leading-relaxed{% endif %}">
+              class="dce:font-medium dce:text-pretty
+                     {% if size == 'lg' %}dce:text-2xl dce:leading-snug dce:sm:text-3xl{% else %}dce:text-xl dce:leading-relaxed{% endif %}">
     {{ slot }}
   </blockquote>
   {% if name or role or source %}
-    <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" src="{{ src }}" class="mt-4" only />
+    <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" src="{{ src }}" class="dce:mt-4" only />
   {% endif %}
 </figure>

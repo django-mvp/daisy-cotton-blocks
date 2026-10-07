@@ -12,18 +12,18 @@
   The icon is small and leads the title.
 {% endcomment %}
 <c-vars title value change direction="up" inverse desc icon class />
-<c-stat class="grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 *:nth-2:col-start-2 *:nth-2:row-span-2 *:nth-2:row-start-1 *:nth-3:row-start-2 {{ class }}" :attrs="attrs" only>
+<c-stat class="dce:grid-cols-[minmax(0,1fr)_auto] dce:items-center dce:gap-x-4 dce:*:nth-2:col-start-2 dce:*:nth-2:row-span-2 dce:*:nth-2:row-start-1 dce:*:nth-3:row-start-2 {{ class }}" :attrs="attrs" only>
   <c-slot name="title">
-    <span class="flex items-center gap-2 whitespace-normal">
-      {% if icon %}<c-icon name="{{ icon }}" class="opacity-60" aria-hidden="true" only />{% endif %}
+    <span class="dce:flex dce:items-center dce:gap-2 dce:whitespace-normal">
+      {% if icon %}<c-icon name="{{ icon }}" class="dce:opacity-60" aria-hidden="true" only />{% endif %}
       <span>{{ title }}</span>
     </span>
   </c-slot>
   <c-slot name="value">
-    <span class="flex flex-col items-end gap-1">
-      <span class="tabular-nums">{{ value }}</span>
+    <span class="dce:flex dce:flex-col dce:items-end dce:gap-1">
+      <span class="dce:tabular-nums">{{ value }}</span>
       {% if change %}<c-stats.change :change="change" :direction="direction" :inverse="inverse" only />{% endif %}
     </span>
   </c-slot>
-  <c-slot name="desc"><span class="whitespace-normal">{{ desc }}</span></c-slot>
+  <c-slot name="desc"><span class="dce:whitespace-normal">{{ desc }}</span></c-slot>
 </c-stat>

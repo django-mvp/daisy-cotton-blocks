@@ -77,6 +77,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   well.
 - daisy-cotton is now a dependency, and `daisy_cotton` goes in `INSTALLED_APPS`. The quote family
   shows a portrait with its `<c-avatar>`.
+- **Breaking.** Every class the stylesheet emits is prefixed `dce:`, and the blocks' markup uses
+  the prefixed names: `dce:flex`, `dce:lg:grid-cols-2`. The stylesheet emits no unprefixed
+  utility. A project that relied on it for a utility in its own templates, `py-20` or
+  `bg-base-200` for instance, needs that class from its own build, or can write `dce:py-20`. CSS
+  written against a block's old class names needs the new ones.
+- A utility from the project's own build always beats one of the stylesheet's, whichever file is
+  linked first, so a class passed to a block overrides the block's default.
+- Type sizes, radii and container widths inside a block come from Tailwind's defaults and no
+  longer follow a project that has redefined `--text-5xl` and the like. Colours and `--spacing`
+  still follow the project. Setting the `--dce-` form of a property, `--dce-text-5xl`, overrides
+  it for the blocks.
+
+### Fixed
+
+- The stylesheet no longer overrides a project's own responsive utilities. Linked after the
+  project's stylesheet, as the README says to, its `.hidden` beat the project's `.md\:flex`, so
+  an element written `hidden md:flex` in the project's templates stayed hidden at every width.
+  `hidden lg:block`, `hidden sm:grid` and `sm:hidden` failed the same way.
 
 ## [v0.2.0] - 2026-10-05
 

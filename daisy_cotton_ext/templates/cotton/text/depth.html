@@ -8,8 +8,8 @@
   edge keeps its proportion at any size.
 {% endcomment %}
 <c-vars variant="primary" depth="1" class />
-<span class="text-shadow-{{ variant }}
-             [text-shadow:calc(var(--depth,1)*0.012em)_calc(var(--depth,1)*0.012em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.024em)_calc(var(--depth,1)*0.024em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.036em)_calc(var(--depth,1)*0.036em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.048em)_calc(var(--depth,1)*0.048em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.06em)_calc(var(--depth,1)*0.06em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.072em)_calc(var(--depth,1)*0.072em)_0_var(--tw-text-shadow-color)]
+<span class="dce:text-shadow-{{ variant }}
+             dce:[text-shadow:calc(var(--depth,1)*0.012em)_calc(var(--depth,1)*0.012em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.024em)_calc(var(--depth,1)*0.024em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.036em)_calc(var(--depth,1)*0.036em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.048em)_calc(var(--depth,1)*0.048em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.06em)_calc(var(--depth,1)*0.06em)_0_var(--tw-text-shadow-color),calc(var(--depth,1)*0.072em)_calc(var(--depth,1)*0.072em)_0_var(--tw-text-shadow-color)]
              {{ class }}"
       style="--depth: {{ depth|floatformat:'-3u'|default:'1' }}"
       {{ attrs }}>{{ slot }}</span>

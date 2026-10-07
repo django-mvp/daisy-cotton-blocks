@@ -12,10 +12,10 @@
   read as evidence for a claim already made. An odd figure out takes a whole row.
 {% endcomment %}
 <c-vars eyebrow title lead level="2" size="md" class />
-<c-section flush align="center" class="{% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
-  <c-section.col class="flex flex-col items-start gap-4" only>
+<c-section flush align="center" class="{% if size == 'sm' %}dce:py-12 dce:md:py-16{% elif size == 'lg' %}dce:py-24 dce:md:py-32{% else %}dce:py-16 dce:md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
+  <c-section.col class="dce:flex dce:flex-col dce:items-start dce:gap-4" only>
     <c-heading :eyebrow="eyebrow" :title="title" :lead="lead" level="{{ level }}" align="start" only />
-    {% if actions %}<div class="flex flex-wrap items-center gap-3 pt-2">{{ actions }}</div>{% endif %}
+    {% if actions %}<div class="dce:flex dce:flex-wrap dce:items-center dce:gap-3 dce:pt-2">{{ actions }}</div>{% endif %}
   </c-section.col>
-  <c-section.col class="grid gap-4 sm:grid-cols-2 *:rounded-[var(--radius-box)] *:bg-base-200 sm:*:last:odd:col-span-2" only>{{ slot }}</c-section.col>
+  <c-section.col class="dce:grid dce:gap-4 dce:sm:grid-cols-2 dce:*:rounded-[var(--radius-box)] dce:*:bg-base-200 dce:sm:*:last:odd:col-span-2" only>{{ slot }}</c-section.col>
 </c-section>

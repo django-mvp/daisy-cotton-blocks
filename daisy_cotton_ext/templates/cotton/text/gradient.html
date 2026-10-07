@@ -13,9 +13,9 @@
 {% endcomment %}
 <c-vars from="primary" via="accent" to="secondary" speed="1" repeat class />
 {% with pace=speed|floatformat:'-3u'|default:'1' %}
-<span class="bg-linear-to-r from-{{ from }} via-{{ via }} to-{{ to }} bg-clip-text text-transparent
-             [background-size:200%_100%] [-webkit-box-decoration-break:clone] [box-decoration-break:clone]
-             {% if pace != '0' %}motion-safe:animate-[dce-text-slide_calc(6s/var(--gradient-speed,1))_ease-in-out_var(--gradient-repeat,infinite)_alternate]{% endif %}
+<span class="dce:bg-linear-to-r dce:from-{{ from }} dce:via-{{ via }} dce:to-{{ to }} dce:bg-clip-text dce:text-transparent
+             dce:[background-size:200%_100%] dce:[-webkit-box-decoration-break:clone] dce:[box-decoration-break:clone]
+             {% if pace != '0' %}dce:motion-safe:animate-[dce-text-slide_calc(6s/var(--gradient-speed,1))_ease-in-out_var(--gradient-repeat,infinite)_alternate]{% endif %}
              {{ class }}"
       style="--gradient-speed: {{ pace|default:'1' }}; --gradient-repeat: {{ repeat|floatformat:'-3u'|default:'infinite' }}"
       {{ attrs }}>{{ slot }}</span>

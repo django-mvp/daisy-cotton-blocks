@@ -164,7 +164,7 @@ class TestSplitHero:
 
         moved = re.findall(r"[^\s\"]*order-\[[^\s\"]*", html)
         assert moved
-        assert all(name.startswith("lg:") for name in moved)
+        assert all(name.startswith("dce:lg:") for name in moved)
 
     def test_the_media_slot_renders_the_authors_own_markup(self, render) -> None:
         html = render(f'<c-hero.split title="T">{self.MEDIA}</c-hero.split>')

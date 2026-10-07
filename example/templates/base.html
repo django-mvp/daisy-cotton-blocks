@@ -3,7 +3,7 @@
 
 {% comment %}
   A host's Tailwind build never scans site-packages, so the blocks' own utilities need this link (docs/adr/0002-stylesheet-carries-what-a-host-cannot.md).
-  It comes after the host's stylesheet so it wins where the two overlap.
+  It comes after the host's stylesheet, which is the order the README gives.
 {% endcomment %}
 
 {% block styles %}

@@ -12,22 +12,22 @@
 {# @slot:footnote — Under the actions, above the visual #}
 {# @slot:media — The visual. This block frames and lifts it, so pass the bare thing. #}
 <c-vars eyebrow title lead level="1" invert size="md" class />
-<c-section flush :invert="invert" class="{% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
+<c-section flush :invert="invert" class="{% if size == 'sm' %}dce:py-12 dce:md:py-16{% elif size == 'lg' %}dce:py-24 dce:md:py-32{% else %}dce:py-16 dce:md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
   {% if background %}<c-slot name="background">{{ background }}</c-slot>{% endif %}
-  <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+  <div class="dce:mx-auto dce:flex dce:max-w-3xl dce:flex-col dce:items-center dce:gap-6 dce:text-center">
     {{ announcement }}
     <c-heading :eyebrow="eyebrow" :title="title" :lead="lead" level="{{ level }}" size="xl" :invert="invert" only />
     {% if actions %}
-      <div class="flex flex-wrap items-center justify-center gap-3 pt-2">{{ actions }}</div>
+      <div class="dce:flex dce:flex-wrap dce:items-center dce:justify-center dce:gap-3 dce:pt-2">{{ actions }}</div>
     {% endif %}
     {% if footnote %}
-      <div class="pt-2 text-sm {% if not invert %}text-base-content/80{% endif %}">{{ footnote }}</div>
+      <div class="dce:pt-2 dce:text-sm {% if not invert %}dce:text-base-content/80{% endif %}">{{ footnote }}</div>
     {% endif %}
   </div>
   {% if media %}
     {# A ring as well as a shadow: a shadow alone reads flat on a dark theme (#21). #}
-    <div class="mx-auto mt-14 max-w-240 overflow-hidden rounded-2xl shadow-2xl ring-1
-                {% if invert %}ring-neutral-content/20{% else %}ring-base-300{% endif %}">
+    <div class="dce:mx-auto dce:mt-14 dce:max-w-240 dce:overflow-hidden dce:rounded-2xl dce:shadow-2xl dce:ring-1
+                {% if invert %}dce:ring-neutral-content/20{% else %}dce:ring-base-300{% endif %}">
       {{ media }}
     </div>
   {% endif %}
