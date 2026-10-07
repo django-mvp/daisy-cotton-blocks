@@ -15,9 +15,9 @@
 <span class="{{ class }}"
       style="--wave-height: {{ height|floatformat:'-3u'|default:'0.2' }}; --wave-speed: {{ pace|default:'1' }}; --wave-repeat: {{ repeat|floatformat:'-3u'|default:'infinite' }}"
       {{ attrs }}>
-  <span class="sr-only">{{ line|escape }}</span>
+  <span class="dce:sr-only">{{ line|escape }}</span>
   {# djlint:off #}
-  <span aria-hidden="true">{% for word in line.split %}<span class="inline-block whitespace-nowrap" style="--w: {{ forloop.counter0 }}">{% for letter in word %}<span class="inline-block {% if pace != '0' %}motion-safe:animate-[dce-text-wave_calc(2s/var(--wave-speed,1))_ease-in-out_calc((var(--w)*5_+_var(--i))*0.09s/var(--wave-speed,1))_var(--wave-repeat,infinite)]{% endif %}" style="--i: {{ forloop.counter0 }}">{{ letter|escape }}</span>{% endfor %}</span>{% if not forloop.last %} {% endif %}{% endfor %}</span>
+  <span aria-hidden="true">{% for word in line.split %}<span class="dce:inline-block dce:whitespace-nowrap" style="--w: {{ forloop.counter0 }}">{% for letter in word %}<span class="dce:inline-block {% if pace != '0' %}dce:motion-safe:animate-[dce-text-wave_calc(2s/var(--wave-speed,1))_ease-in-out_calc((var(--w)*5_+_var(--i))*0.09s/var(--wave-speed,1))_var(--wave-repeat,infinite)]{% endif %}" style="--i: {{ forloop.counter0 }}">{{ letter|escape }}</span>{% endfor %}</span>{% if not forloop.last %} {% endif %}{% endfor %}</span>
   {# djlint:on #}
 </span>
 {% endwith %}

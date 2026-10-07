@@ -8,15 +8,15 @@
   The shimmer near the vanishing line cannot be styled away (docs/adr/0004-moving-backgrounds-are-css-only.md).
 {% endcomment %}
 <c-vars size="3.5" intensity="0.2" speed="1" class />
-<div class="absolute inset-0 overflow-hidden [container-type:size] [mask-image:linear-gradient(to_top,black,transparent_36%)]
+<div class="dce:absolute dce:inset-0 dce:overflow-hidden dce:[container-type:size] dce:[mask-image:linear-gradient(to_top,black,transparent_36%)]
             {{ class }}"
      style="opacity: {{ intensity|floatformat:'-3u'|default:'0.2' }}; --horizon-speed: {{ speed|floatformat:'-3u'|default:'1' }}; --horizon-tile: {{ size|floatformat:'-3u'|default:'3.5' }}rem">
-  <div class="absolute inset-0 [perspective:80cqh] [perspective-origin:50%_85%]">
-    <div class="absolute inset-0 origin-bottom [transform:rotateX(70deg)]">
-      <div class="absolute -inset-x-[150%] -top-[400%] bottom-0 will-change-transform
-                  bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_3px,transparent_3px)]
-                  bg-[size:var(--horizon-tile)_var(--horizon-tile)]
-                  motion-safe:animate-[dce-advance_calc(2s/var(--horizon-speed,1))_linear_infinite]"></div>
+  <div class="dce:absolute dce:inset-0 dce:[perspective:80cqh] dce:[perspective-origin:50%_85%]">
+    <div class="dce:absolute dce:inset-0 dce:origin-bottom dce:[transform:rotateX(70deg)]">
+      <div class="dce:absolute dce:-inset-x-[150%] dce:-top-[400%] dce:bottom-0 dce:will-change-transform
+                  dce:bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_3px,transparent_3px)]
+                  dce:bg-[size:var(--horizon-tile)_var(--horizon-tile)]
+                  dce:motion-safe:animate-[dce-advance_calc(2s/var(--horizon-speed,1))_linear_infinite]"></div>
     </div>
   </div>
 </div>

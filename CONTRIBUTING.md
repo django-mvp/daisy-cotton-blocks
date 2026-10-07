@@ -6,9 +6,10 @@
 uv sync
 npm install
 uv run pre-commit install
+uv run playwright install chromium
 ```
 
-`npm install` is only for building the stylesheet. Nothing under `node_modules` is needed at runtime.
+`npm install` is only for building the stylesheet. Nothing under `node_modules` is needed at runtime. Chromium is for the tests that load the stylesheet beside a host's and read computed styles back. Without it those tests skip, and say so.
 
 ## Checks
 
@@ -27,6 +28,8 @@ The built CSS is committed, so installing the package needs no Node toolchain. A
 ```bash
 npm run build:css     # or watch:css
 ```
+
+Every utility in a template is written with the `dce:` prefix, `dce:flex` and `dce:md:py-16`, and daisyUI classes are written without it. The prefix keeps this stylesheet from overriding a host's own utilities ([ADR 0012](docs/adr/0012-package-utilities-carry-a-prefix.md)).
 
 `assets/daisy-cotton-ext.css` is the entry. It scans this package's own templates, so a utility a new block uses is picked up by rebuilding. The `@source inline(...)` entries cover what scanning cannot see: classes composed at render time, and the utilities the next blocks are being designed against. `tests/test_stylesheet.py` measures the result.
 

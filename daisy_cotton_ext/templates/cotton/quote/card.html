@@ -16,15 +16,15 @@
 {% endcomment %}
 {% load i18n %}
 <c-vars name role source href src rating variant="accent" class />
-<figure class="card gap-4 bg-base-100 p-6 ring-1 ring-base-300 {{ class }}" {{ attrs }}>
+<figure class="card dce:gap-4 dce:bg-base-100 dce:p-6 dce:ring-1 dce:ring-base-300 {{ class }}" {{ attrs }}>
   {% with stars=rating|stringformat:"s" %}
     {% if stars|length == 1 and stars in "12345" %}
-      <div role="img" aria-label="{% blocktranslate %}{{ rating }} out of 5{% endblocktranslate %}" class="flex gap-0.5 text-lg leading-none">
-        {% for star in "12345" %}<span aria-hidden="true" class="{% if star <= stars %}text-{{ variant }}{% else %}text-base-content/20{% endif %}">&#9733;</span>{% endfor %}
+      <div role="img" aria-label="{% blocktranslate %}{{ rating }} out of 5{% endblocktranslate %}" class="dce:flex dce:gap-0.5 dce:text-lg dce:leading-none">
+        {% for star in "12345" %}<span aria-hidden="true" class="{% if star <= stars %}dce:text-{{ variant }}{% else %}dce:text-base-content/20{% endif %}">&#9733;</span>{% endfor %}
       </div>
     {% endif %}
   {% endwith %}
-  <blockquote {% if href %}cite="{{ href }}"{% endif %} class="flex-1 leading-relaxed text-pretty">{{ slot }}</blockquote>
+  <blockquote {% if href %}cite="{{ href }}"{% endif %} class="dce:flex-1 dce:leading-relaxed dce:text-pretty">{{ slot }}</blockquote>
   {% if name or role or source %}
     <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" src="{{ src }}" only />
   {% endif %}

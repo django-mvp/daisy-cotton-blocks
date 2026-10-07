@@ -12,18 +12,18 @@
 {# @slot:footer — The foot of the form tile. The terms the reader is agreeing to. #}
 {# @slot The form — The application's own sign-up form, with its fields, its errors and its submit button. #}
 <c-vars title lead level="1" divider class />
-<section class="relative isolate flex min-h-dvh flex-col overflow-clip text-base-content
+<section class="dce:relative dce:isolate dce:flex dce:min-h-dvh dce:flex-col dce:overflow-clip dce:text-base-content
                 {{ class }}"
          {{ attrs }}>
   {% if background %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+    <div aria-hidden="true" class="dce:pointer-events-none dce:absolute dce:inset-0 dce:-z-10">{{ background }}</div>
   {% endif %}
-  <div class="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-5 sm:px-6">
-    <div class="flex items-center">{{ logo }}</div>
-    {% if nav %}<div class="text-sm">{{ nav }}</div>{% endif %}
+  <div class="dce:mx-auto dce:flex dce:w-full dce:max-w-6xl dce:items-center dce:justify-between dce:gap-4 dce:px-4 dce:py-5 dce:sm:px-6">
+    <div class="dce:flex dce:items-center">{{ logo }}</div>
+    {% if nav %}<div class="dce:text-sm">{{ nav }}</div>{% endif %}
   </div>
-  <div class="mx-auto grid w-full max-w-6xl flex-1 grid-cols-1 content-center gap-4 px-4 pt-4 pb-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-3 lg:grid-rows-2">
-    <c-auth.panel :title="title" :lead="lead" :level="level" :divider="divider" card class="sm:col-span-2 lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1" only>
+  <div class="dce:mx-auto dce:grid dce:w-full dce:max-w-6xl dce:flex-1 dce:grid-cols-1 dce:content-center dce:gap-4 dce:px-4 dce:pt-4 dce:pb-12 dce:sm:grid-cols-2 dce:sm:px-6 dce:lg:grid-cols-3 dce:lg:grid-rows-2">
+    <c-auth.panel :title="title" :lead="lead" :level="level" :divider="divider" card class="dce:sm:col-span-2 dce:lg:col-span-1 dce:lg:col-start-2 dce:lg:row-span-2 dce:lg:row-start-1" only>
       <c-slot name="providers">{{ providers }}</c-slot>
       {{ slot }}
       <c-slot name="footer">{{ footer }}</c-slot>

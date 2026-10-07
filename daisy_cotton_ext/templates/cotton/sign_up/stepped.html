@@ -11,19 +11,19 @@
 {# @slot:footer — Under the card. The link to the sign-in page, or the way back a step. #}
 {# @slot The form — The current step's form, with its fields, its errors and its submit button. #}
 <c-vars title lead level="1" divider class />
-<section class="relative isolate flex min-h-dvh flex-col items-center justify-center overflow-clip px-4 py-10 text-base-content
+<section class="dce:relative dce:isolate dce:flex dce:min-h-dvh dce:flex-col dce:items-center dce:justify-center dce:overflow-clip dce:px-4 dce:py-10 dce:text-base-content
                 {{ class }}"
          {{ attrs }}>
   {% if background %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+    <div aria-hidden="true" class="dce:pointer-events-none dce:absolute dce:inset-0 dce:-z-10">{{ background }}</div>
   {% endif %}
-  <div class="flex w-full max-w-lg flex-col gap-8">
-    {% if logo %}<div class="flex justify-center">{{ logo }}</div>{% endif %}
+  <div class="dce:flex dce:w-full dce:max-w-lg dce:flex-col dce:gap-8">
+    {% if logo %}<div class="dce:flex dce:justify-center">{{ logo }}</div>{% endif %}
     {{ steps }}
     <c-auth.panel :title="title" :lead="lead" :level="level" :divider="divider" card only>
       <c-slot name="providers">{{ providers }}</c-slot>
       {{ slot }}
     </c-auth.panel>
-    {% if footer %}<div class="text-center text-sm">{{ footer }}</div>{% endif %}
+    {% if footer %}<div class="dce:text-center dce:text-sm">{{ footer }}</div>{% endif %}
   </div>
 </section>

@@ -3,10 +3,10 @@
 {# @prop note:text | description:"One line on what this specimen shows" #}
 {# @slot The words, with the effect applied — Set as a large heading-weight line. #}
 <c-vars markup note />
-<div class="flex flex-col overflow-clip rounded-xl ring-1 ring-base-300">
+<div class="flex flex-col dce:overflow-clip rounded-xl dce:ring-1 dce:ring-base-300">
   <div class="flex flex-1 flex-col items-center justify-center gap-3 px-6 py-12 text-center">
-    <p class="text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">{{ slot }}</p>
-    {% if note %}<p class="max-w-md text-sm text-base-content/80">{{ note }}</p>{% endif %}
+    <p class="text-4xl font-extrabold tracking-tight dce:text-balance dce:sm:text-5xl">{{ slot }}</p>
+    {% if note %}<p class="max-w-md text-sm dce:text-base-content/80">{{ note }}</p>{% endif %}
   </div>
   <div class="overflow-x-auto border-t border-base-300 bg-base-200 p-3">
     <code class="text-xs whitespace-nowrap">{{ markup }}</code>

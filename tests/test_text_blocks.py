@@ -202,7 +202,7 @@ class TestMotion:
         html = render(markup(tag, 'pulse="1"' if tag == "c-text.glow" else ""))
 
         animated = re.findall(r'[^\s"]*animate-\[', html)
-        assert all(cls.startswith("motion-safe:") for cls in animated)
+        assert all(cls.startswith("dce:motion-safe:") for cls in animated)
 
     @pytest.mark.parametrize(("tag", "option"), PACED)
     def test_an_effect_given_a_pace_is_animated(self, render, tag, option) -> None:
@@ -365,7 +365,7 @@ class TestTypewriter:
     def test_the_line_is_given_whole_to_a_screen_reader(self, render) -> None:
         html = render('<c-text.typewriter text="Ship it" />')
 
-        assert '<span class="sr-only">Ship it</span>' in html
+        assert '<span class="dce:sr-only">Ship it</span>' in html
 
     def test_the_caret_stops_blinking(self, render) -> None:
         html = render('<c-text.typewriter text="Ship" />')
@@ -394,7 +394,7 @@ class TestWave:
     def test_every_word_is_kept_whole(self, render) -> None:
         html = render('<c-text.wave text="Ship it now" />')
 
-        assert html.count("inline-block whitespace-nowrap") == 3
+        assert html.count("dce:inline-block dce:whitespace-nowrap") == 3
 
     def test_a_letter_takes_its_turn_from_its_word_and_its_place_in_it(
         self, render
@@ -407,7 +407,7 @@ class TestWave:
     def test_the_line_is_given_whole_to_a_screen_reader(self, render) -> None:
         html = render('<c-text.wave text="Ship it" />')
 
-        assert '<span class="sr-only">Ship it</span>' in html
+        assert '<span class="dce:sr-only">Ship it</span>' in html
 
     def test_markup_in_the_line_is_escaped_letter_by_letter(self, render) -> None:
         html = render('<c-text.wave text="{{ line }}" />', line="a<b>")

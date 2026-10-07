@@ -8,9 +8,9 @@
 {% endcomment %}
 <c-vars variant="primary" class />
 {% if variant == 'secondary' %}
-  <span class="rounded-lg bg-secondary px-2 text-secondary-content {{ class }}" {{ attrs }}>{{ slot }}</span>
+  <span class="dce:rounded-lg dce:bg-secondary dce:px-2 dce:text-secondary-content {{ class }}" {{ attrs }}>{{ slot }}</span>
 {% elif variant == 'accent' %}
-  <span class="rounded-lg bg-accent px-2 text-accent-content {{ class }}" {{ attrs }}>{{ slot }}</span>
+  <span class="dce:rounded-lg dce:bg-accent dce:px-2 dce:text-accent-content {{ class }}" {{ attrs }}>{{ slot }}</span>
 {% else %}
-  <span class="rounded-lg bg-primary px-2 text-primary-content {{ class }}" {{ attrs }}>{{ slot }}</span>
+  <span class="dce:rounded-lg dce:bg-primary dce:px-2 dce:text-primary-content {{ class }}" {{ attrs }}>{{ slot }}</span>
 {% endif %}

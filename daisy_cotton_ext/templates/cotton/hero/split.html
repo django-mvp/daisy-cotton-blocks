@@ -13,16 +13,16 @@
 {# @slot:footnote — Under the actions #}
 {# @slot:media — The visual. An image, a mockup, a card, an SVG, a form. #}
 <c-vars eyebrow title lead level="1" reverse invert size="md" class />
-<c-section flush container="wide" align="center" reverse="{{ reverse }}" :invert="invert" class="{% if size == 'sm' %}py-12 md:py-16{% elif size == 'lg' %}py-24 md:py-32{% else %}py-16 md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
+<c-section flush container="wide" align="center" reverse="{{ reverse }}" :invert="invert" class="{% if size == 'sm' %}dce:py-12 dce:md:py-16{% elif size == 'lg' %}dce:py-24 dce:md:py-32{% else %}dce:py-16 dce:md:py-24{% endif %} {{ class }}" :attrs="attrs" only>
   {% if background %}<c-slot name="background">{{ background }}</c-slot>{% endif %}
-  <c-section.col class="flex flex-col gap-6 text-center lg:text-left" only>
+  <c-section.col class="dce:flex dce:flex-col dce:gap-6 dce:text-center dce:lg:text-left" only>
     {{ announcement }}
     <c-heading :eyebrow="eyebrow" :title="title" :lead="lead" level="{{ level }}" size="lg" align="none" :invert="invert" only />
     {% if actions %}
-      <div class="flex flex-wrap items-center justify-center gap-3 pt-2 lg:justify-start">{{ actions }}</div>
+      <div class="dce:flex dce:flex-wrap dce:items-center dce:justify-center dce:gap-3 dce:pt-2 dce:lg:justify-start">{{ actions }}</div>
     {% endif %}
     {% if footnote %}
-      <div class="pt-2 text-sm {% if not invert %}text-base-content/80{% endif %}">{{ footnote }}</div>
+      <div class="dce:pt-2 dce:text-sm {% if not invert %}dce:text-base-content/80{% endif %}">{{ footnote }}</div>
     {% endif %}
   </c-section.col>
   <c-section.col only>{{ media }}</c-section.col>

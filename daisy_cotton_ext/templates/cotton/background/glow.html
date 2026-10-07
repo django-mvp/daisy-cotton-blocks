@@ -8,8 +8,8 @@
   stacking, which is why a background belongs in a `background` slot only (#21).
 {% endcomment %}
 <c-vars from="primary" to="secondary" intensity="0.2" class />
-<div class="absolute inset-0 overflow-hidden {{ class }}"
+<div class="dce:absolute dce:inset-0 dce:overflow-hidden {{ class }}"
      style="opacity: {{ intensity|floatformat:'-3u'|default:'0.2' }}">
-  <div class="absolute -top-32 -left-24 h-96 w-96 rounded-full blur-3xl bg-{{ from }}"></div>
-  <div class="absolute -right-24 -bottom-40 h-96 w-96 rounded-full blur-3xl bg-{{ to }}"></div>
+  <div class="dce:absolute dce:-top-32 dce:-left-24 dce:h-96 dce:w-96 dce:rounded-full dce:blur-3xl dce:bg-{{ from }}"></div>
+  <div class="dce:absolute dce:-right-24 dce:-bottom-40 dce:h-96 dce:w-96 dce:rounded-full dce:blur-3xl dce:bg-{{ to }}"></div>
 </div>

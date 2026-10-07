@@ -12,11 +12,11 @@
 {% endcomment %}
 <c-vars variant="primary" speed="1" frequency="1" repeat class />
 {% with often=frequency|floatformat:'-3u'|default:'1' %}
-<span class="bg-linear-[110deg] from-current via-{{ variant }} to-current bg-clip-text
-             [--tw-gradient-from-position:calc(50%_-_1.2em)] [--tw-gradient-via-position:50%] [--tw-gradient-to-position:calc(50%_+_1.2em)]
-             [-webkit-text-fill-color:transparent] [background-position:0%_50%]
-             [background-size:calc(max(2.6,1_+_2.9*var(--shimmer-speed,1)/var(--shimmer-frequency,1))*100%)_100%]
-             {% if often != '0' %}motion-safe:animate-[dce-text-sweep_calc(3.5s/var(--shimmer-frequency,1))_linear_var(--shimmer-repeat,infinite)]{% endif %}
+<span class="dce:bg-linear-[110deg] dce:from-current dce:via-{{ variant }} dce:to-current dce:bg-clip-text
+             dce:[--tw-gradient-from-position:calc(50%_-_1.2em)] dce:[--tw-gradient-via-position:50%] dce:[--tw-gradient-to-position:calc(50%_+_1.2em)]
+             dce:[-webkit-text-fill-color:transparent] dce:[background-position:0%_50%]
+             dce:[background-size:calc(max(2.6,1_+_2.9*var(--shimmer-speed,1)/var(--shimmer-frequency,1))*100%)_100%]
+             {% if often != '0' %}dce:motion-safe:animate-[dce-text-sweep_calc(3.5s/var(--shimmer-frequency,1))_linear_var(--shimmer-repeat,infinite)]{% endif %}
              {{ class }}"
       style="--shimmer-speed: {{ speed|floatformat:'-3u'|default:'1' }}; --shimmer-frequency: {% if often != '0' %}{{ often|default:'1' }}{% else %}1{% endif %}; --shimmer-repeat: {{ repeat|floatformat:'-3u'|default:'infinite' }}"
       {{ attrs }}>{{ slot }}</span>

@@ -86,7 +86,7 @@ class TestEveryBackgroundIsALayer:
     def test_it_roots_at_absolute_inset_zero(self, render, tag) -> None:
         html = render(f"<{tag} />")
 
-        assert re.search(r'class="[^"]*\babsolute inset-0\b', html) is not None
+        assert re.search(r'class="[^"]*\bdce:absolute dce:inset-0\b', html) is not None
 
     @pytest.mark.parametrize("tag", BACKGROUNDS)
     def test_extra_classes_reach_the_layer(self, render, tag) -> None:
@@ -141,7 +141,7 @@ class TestMotion:
         html = render(f"<{tag} />")
 
         animated = re.findall(r"\S*animate-\[", html)
-        assert all(cls.startswith("motion-safe:") for cls in animated)
+        assert all(cls.startswith("dce:motion-safe:") for cls in animated)
 
     @pytest.mark.parametrize(("tag", "variable"), LOOPING)
     def test_the_animation_runs_at_the_speed_it_was_given(

@@ -13,17 +13,17 @@
 {% endcomment %}
 <c-vars from="primary" to="secondary" intensity="1" frequency="1" repeat class />
 {% with pace=frequency|floatformat:'-3u'|default:'1' %}
-<span class="relative inline-block {{ class }}"
+<span class="dce:relative dce:inline-block {{ class }}"
       style="--glitch-intensity: {{ intensity|floatformat:'-3u'|default:'1' }}; --glitch-frequency: {{ pace|default:'1' }}; --glitch-repeat: {{ repeat|floatformat:'-3u'|default:'infinite' }}"
       {{ attrs }}>
   {{ slot }}
   <span aria-hidden="true"
-        class="pointer-events-none absolute inset-0 opacity-0 select-none text-{{ from }}
-               [--glitch-shift:calc(var(--glitch-intensity,1)*-0.06em)]
-               {% if pace != '0' %}motion-safe:animate-[dce-text-glitch_calc(4s/var(--glitch-frequency,1))_step-end_var(--glitch-repeat,infinite)]{% endif %}">{{ slot }}</span>
+        class="dce:pointer-events-none dce:absolute dce:inset-0 dce:opacity-0 dce:select-none dce:text-{{ from }}
+               dce:[--glitch-shift:calc(var(--glitch-intensity,1)*-0.06em)]
+               {% if pace != '0' %}dce:motion-safe:animate-[dce-text-glitch_calc(4s/var(--glitch-frequency,1))_step-end_var(--glitch-repeat,infinite)]{% endif %}">{{ slot }}</span>
   <span aria-hidden="true"
-        class="pointer-events-none absolute inset-0 opacity-0 select-none text-{{ to }}
-               [--glitch-shift:calc(var(--glitch-intensity,1)*0.06em)]
-               {% if pace != '0' %}motion-safe:animate-[dce-text-glitch_calc(4s/var(--glitch-frequency,1))_step-end_calc(-0.07s/var(--glitch-frequency,1))_var(--glitch-repeat,infinite)_reverse]{% endif %}">{{ slot }}</span>
+        class="dce:pointer-events-none dce:absolute dce:inset-0 dce:opacity-0 dce:select-none dce:text-{{ to }}
+               dce:[--glitch-shift:calc(var(--glitch-intensity,1)*0.06em)]
+               {% if pace != '0' %}dce:motion-safe:animate-[dce-text-glitch_calc(4s/var(--glitch-frequency,1))_step-end_calc(-0.07s/var(--glitch-frequency,1))_var(--glitch-repeat,infinite)_reverse]{% endif %}">{{ slot }}</span>
 </span>
 {% endwith %}

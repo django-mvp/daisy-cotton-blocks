@@ -8,35 +8,35 @@
   dot rises by a share of the block's height (docs/adr/0004-moving-backgrounds-are-css-only.md).
 {% endcomment %}
 <c-vars variant="primary" intensity="0.4" speed="1" class />
-<div class="absolute inset-0 overflow-hidden [container-type:size]
+<div class="dce:absolute dce:inset-0 dce:overflow-hidden dce:[container-type:size]
             {{ class }}"
      style="opacity: {{ intensity|floatformat:'-3u'|default:'0.4' }}; --particles-speed: {{ speed|floatformat:'-3u'|default:'1' }}">
-  <span class="absolute top-[82%] left-[6%] size-1.5 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(16s/var(--particles-speed,1))_linear_-3s_infinite]"></span>
-  <span class="absolute top-[64%] left-[14%] size-1 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(20.8s/var(--particles-speed,1))_linear_-11s_infinite]"></span>
-  <span class="absolute top-[90%] left-[23%] size-2 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(12.8s/var(--particles-speed,1))_linear_-6s_infinite]"></span>
-  <span class="absolute top-[40%] left-[31%] size-1 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(17.6s/var(--particles-speed,1))_linear_-1s_infinite]"></span>
-  <span class="absolute top-[72%] left-[38%] size-1.5 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(24s/var(--particles-speed,1))_linear_-14s_infinite]"></span>
-  <span class="absolute top-[55%] left-[47%] size-1 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(14.4s/var(--particles-speed,1))_linear_-8s_infinite]"></span>
-  <span class="absolute top-[86%] left-[54%] size-2 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(19.2s/var(--particles-speed,1))_linear_-4s_infinite]"></span>
-  <span class="absolute top-[30%] left-[61%] size-1 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(22.4s/var(--particles-speed,1))_linear_-12s_infinite]"></span>
-  <span class="absolute top-[68%] left-[69%] size-1.5 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(13.6s/var(--particles-speed,1))_linear_-2s_infinite]"></span>
-  <span class="absolute top-[94%] left-[76%] size-1 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(20s/var(--particles-speed,1))_linear_-9s_infinite]"></span>
-  <span class="absolute top-[48%] left-[83%] size-2 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(16.8s/var(--particles-speed,1))_linear_-7s_infinite]"></span>
-  <span class="absolute top-[78%] left-[91%] size-1 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(21.6s/var(--particles-speed,1))_linear_-5s_infinite]"></span>
-  <span class="absolute top-[20%] left-[18%] size-1 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(18.4s/var(--particles-speed,1))_linear_-10s_infinite]"></span>
-  <span class="absolute top-[25%] left-[88%] size-1.5 rounded-full bg-{{ variant }}
-               motion-safe:animate-[dce-rise_calc(15.2s/var(--particles-speed,1))_linear_-13s_infinite]"></span>
+  <span class="dce:absolute dce:top-[82%] dce:left-[6%] dce:size-1.5 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(16s/var(--particles-speed,1))_linear_-3s_infinite]"></span>
+  <span class="dce:absolute dce:top-[64%] dce:left-[14%] dce:size-1 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(20.8s/var(--particles-speed,1))_linear_-11s_infinite]"></span>
+  <span class="dce:absolute dce:top-[90%] dce:left-[23%] dce:size-2 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(12.8s/var(--particles-speed,1))_linear_-6s_infinite]"></span>
+  <span class="dce:absolute dce:top-[40%] dce:left-[31%] dce:size-1 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(17.6s/var(--particles-speed,1))_linear_-1s_infinite]"></span>
+  <span class="dce:absolute dce:top-[72%] dce:left-[38%] dce:size-1.5 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(24s/var(--particles-speed,1))_linear_-14s_infinite]"></span>
+  <span class="dce:absolute dce:top-[55%] dce:left-[47%] dce:size-1 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(14.4s/var(--particles-speed,1))_linear_-8s_infinite]"></span>
+  <span class="dce:absolute dce:top-[86%] dce:left-[54%] dce:size-2 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(19.2s/var(--particles-speed,1))_linear_-4s_infinite]"></span>
+  <span class="dce:absolute dce:top-[30%] dce:left-[61%] dce:size-1 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(22.4s/var(--particles-speed,1))_linear_-12s_infinite]"></span>
+  <span class="dce:absolute dce:top-[68%] dce:left-[69%] dce:size-1.5 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(13.6s/var(--particles-speed,1))_linear_-2s_infinite]"></span>
+  <span class="dce:absolute dce:top-[94%] dce:left-[76%] dce:size-1 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(20s/var(--particles-speed,1))_linear_-9s_infinite]"></span>
+  <span class="dce:absolute dce:top-[48%] dce:left-[83%] dce:size-2 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(16.8s/var(--particles-speed,1))_linear_-7s_infinite]"></span>
+  <span class="dce:absolute dce:top-[78%] dce:left-[91%] dce:size-1 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(21.6s/var(--particles-speed,1))_linear_-5s_infinite]"></span>
+  <span class="dce:absolute dce:top-[20%] dce:left-[18%] dce:size-1 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(18.4s/var(--particles-speed,1))_linear_-10s_infinite]"></span>
+  <span class="dce:absolute dce:top-[25%] dce:left-[88%] dce:size-1.5 dce:rounded-full dce:bg-{{ variant }}
+               dce:motion-safe:animate-[dce-rise_calc(15.2s/var(--particles-speed,1))_linear_-13s_infinite]"></span>
 </div>

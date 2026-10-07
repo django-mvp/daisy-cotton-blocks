@@ -14,20 +14,20 @@
 <div tabindex="0"
      role="group"
      {% if label %}aria-label="{{ label }}"{% endif %}
-     class="group relative isolate overflow-clip outline-offset-2 outline-primary focus-visible:outline-2
+     class="dce:group dce:relative dce:isolate dce:overflow-clip dce:outline-offset-2 dce:outline-primary dce:focus-visible:outline-2
             {{ class }}"
      style="--hover-zoom: {{ zoom|floatformat:'-3u'|default:'1.05' }}"
      {{ attrs }}>
-  <div class="h-full w-full motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out
-              motion-safe:group-hover:scale-[var(--hover-zoom,1.05)]
-              motion-safe:group-focus-within:scale-[var(--hover-zoom,1.05)]">{{ slot }}</div>
+  <div class="dce:h-full dce:w-full dce:motion-safe:transition-transform dce:motion-safe:duration-500 dce:motion-safe:ease-out
+              dce:motion-safe:group-hover:scale-[var(--hover-zoom,1.05)]
+              dce:motion-safe:group-focus-within:scale-[var(--hover-zoom,1.05)]">{{ slot }}</div>
   {% if effect == 'cover' %}
-    <div class="absolute inset-0 flex flex-col justify-end gap-2 bg-neutral/90 p-6 text-neutral-content opacity-0
-                motion-safe:transition-opacity motion-safe:duration-300
-                group-hover:opacity-100 group-focus-within:opacity-100 [@media(hover:none)]:opacity-100">{{ caption }}</div>
+    <div class="dce:absolute dce:inset-0 dce:flex dce:flex-col dce:justify-end dce:gap-2 dce:bg-neutral/90 dce:p-6 dce:text-neutral-content dce:opacity-0
+                dce:motion-safe:transition-opacity dce:motion-safe:duration-300
+                dce:group-hover:opacity-100 dce:group-focus-within:opacity-100 dce:[@media(hover:none)]:opacity-100">{{ caption }}</div>
   {% else %}
-    <div class="absolute inset-x-0 bottom-0 flex translate-y-full flex-col gap-1 bg-neutral/90 p-4 text-neutral-content
-                motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out
-                group-hover:translate-y-0 group-focus-within:translate-y-0 [@media(hover:none)]:translate-y-0">{{ caption }}</div>
+    <div class="dce:absolute dce:inset-x-0 dce:bottom-0 dce:flex dce:translate-y-full dce:flex-col dce:gap-1 dce:bg-neutral/90 dce:p-4 dce:text-neutral-content
+                dce:motion-safe:transition-transform dce:motion-safe:duration-300 dce:motion-safe:ease-out
+                dce:group-hover:translate-y-0 dce:group-focus-within:translate-y-0 dce:[@media(hover:none)]:translate-y-0">{{ caption }}</div>
   {% endif %}
 </div>

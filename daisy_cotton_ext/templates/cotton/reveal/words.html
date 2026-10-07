@@ -12,11 +12,11 @@
 <c-vars text dim="0.25" start="0.1" end="0.5" class />
 {% firstof text as escaped %}
 {% with words=escaped.split %}
-<p class="[view-timeline-name:--words] {{ class }}"
+<p class="dce:[view-timeline-name:--words] {{ class }}"
    style="--words-dim: {{ dim|floatformat:'-3u'|default:'0.25' }}; --words-start: {{ start|floatformat:'-3u'|default:'0.1' }}; --words-end: {{ end|floatformat:'-3u'|default:'0.5' }}; --words-n: {{ words|length }}"
    {{ attrs }}>
   {# djlint:off #}
-  {% for word in words %}<span class="motion-safe:supports-[animation-timeline:view()]:animate-[dce-words_1ms_linear_both] motion-safe:supports-[animation-timeline:view()]:[animation-timeline:--words] motion-safe:supports-[animation-timeline:view()]:[animation-range:cover_calc((var(--words-start,0.1)_+_(var(--words-end,0.5)_-_var(--words-start,0.1))*var(--i)/var(--words-n))*100%)_cover_calc((var(--words-start,0.1)_+_(var(--words-end,0.5)_-_var(--words-start,0.1))*(var(--i)_+_2)/var(--words-n))*100%)]" style="--i: {{ forloop.counter0 }}">{{ word|safe }}</span>{% if not forloop.last %} {% endif %}{% endfor %}
+  {% for word in words %}<span class="dce:motion-safe:supports-[animation-timeline:view()]:animate-[dce-words_1ms_linear_both] dce:motion-safe:supports-[animation-timeline:view()]:[animation-timeline:--words] dce:motion-safe:supports-[animation-timeline:view()]:[animation-range:cover_calc((var(--words-start,0.1)_+_(var(--words-end,0.5)_-_var(--words-start,0.1))*var(--i)/var(--words-n))*100%)_cover_calc((var(--words-start,0.1)_+_(var(--words-end,0.5)_-_var(--words-start,0.1))*(var(--i)_+_2)/var(--words-n))*100%)]" style="--i: {{ forloop.counter0 }}">{{ word|safe }}</span>{% if not forloop.last %} {% endif %}{% endfor %}
   {# djlint:on #}
 </p>
 {% endwith %}

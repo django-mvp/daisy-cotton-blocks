@@ -5,10 +5,10 @@
 
 {% block content %}
   <c-demo.head tag="c-stats.trend-footer">
-    <p class="mt-4 max-w-3xl text-base-content/80">
+    <p class="mt-4 max-w-3xl dce:text-base-content/80">
       The change is ruled off into a footer along the bottom, apart from the figure. The footer runs the full width, under the icon as well.
     </p>
-    <p class="mt-4 max-w-3xl text-base-content/80">
+    <p class="mt-4 max-w-3xl dce:text-base-content/80">
       One of six arrangements of the same parts. They take the same attributes, so changing layout is changing the tag. All six are side by side on the <a class="link" href="{% url 'component' family='stats' component='trend' %}#layouts">stacked layout's page</a>.
     </p>
   </c-demo.head>
@@ -45,7 +45,7 @@
       </c-demo.tile>
       <c-demo.tile>
         <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.trend-footer title="Northern region" value="€84k" change="6%" desc="since last quarter"><c-slot name="figure"><img … /></c-slot></c-stats.trend-footer>{% endverbatim %}{% endfilter %}</c-slot>
-        <c-stat.group class="w-full"><c-stats.trend-footer title="Northern region" value="€84k" change="6%" desc="since last quarter"><c-slot name="figure"><img class="size-12 rounded-full object-cover" src="{% static 'example/ridgeline.svg' %}" alt="" /></c-slot></c-stats.trend-footer></c-stat.group>
+        <c-stat.group class="w-full"><c-stats.trend-footer title="Northern region" value="€84k" change="6%" desc="since last quarter"><c-slot name="figure"><img class="dce:size-12 rounded-full object-cover" src="{% static 'example/ridgeline.svg' %}" alt="" /></c-slot></c-stats.trend-footer></c-stat.group>
       </c-demo.tile>
       <c-demo.tile>
         <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.trend-footer title="Deploys a day" value="31" change="12%" desc="since last month">…a chart from django-mvp-charts…</c-stats.trend-footer>{% endverbatim %}{% endfilter %}</c-slot>

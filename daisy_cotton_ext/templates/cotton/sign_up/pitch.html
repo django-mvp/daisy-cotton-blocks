@@ -14,39 +14,39 @@
 {# @slot:footer — The foot of the card. The terms the reader is agreeing to. #}
 {# @slot The form — The application's own sign-up form, with its fields, its errors and its submit button. #}
 <c-vars eyebrow headline lead title level="1" divider class />
-<section class="relative isolate flex min-h-dvh flex-col overflow-clip text-base-content
+<section class="dce:relative dce:isolate dce:flex dce:min-h-dvh dce:flex-col dce:overflow-clip dce:text-base-content
                 {{ class }}"
          {{ attrs }}>
   {% if background %}
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">{{ background }}</div>
+    <div aria-hidden="true" class="dce:pointer-events-none dce:absolute dce:inset-0 dce:-z-10">{{ background }}</div>
   {% endif %}
-  <div class="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
-    <div class="flex items-center">{{ logo }}</div>
-    {% if nav %}<div class="text-sm">{{ nav }}</div>{% endif %}
+  <div class="dce:mx-auto dce:flex dce:w-full dce:max-w-7xl dce:items-center dce:justify-between dce:gap-4 dce:px-4 dce:py-5 dce:sm:px-6 dce:lg:px-8">
+    <div class="dce:flex dce:items-center">{{ logo }}</div>
+    {% if nav %}<div class="dce:text-sm">{{ nav }}</div>{% endif %}
   </div>
   {% comment %}
     Three cells in reading order, placed by column and row at width rather than
     reordered, so the order a keyboard meets them in is the order they are seen in.
   {% endcomment %}
-  <div class="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 content-center gap-x-16 gap-y-8 px-4 pt-6 pb-12 sm:px-6 lg:grid-cols-2 lg:grid-rows-[auto_auto] lg:px-8">
-    <div class="flex flex-col gap-4 lg:col-start-1 lg:row-start-1 lg:self-end">
+  <div class="dce:mx-auto dce:grid dce:w-full dce:max-w-7xl dce:flex-1 dce:grid-cols-1 dce:content-center dce:gap-x-16 dce:gap-y-8 dce:px-4 dce:pt-6 dce:pb-12 dce:sm:px-6 dce:lg:grid-cols-2 dce:lg:grid-rows-[auto_auto] dce:lg:px-8">
+    <div class="dce:flex dce:flex-col dce:gap-4 dce:lg:col-start-1 dce:lg:row-start-1 dce:lg:self-end">
       {% if eyebrow %}
-        <p class="text-sm font-semibold tracking-widest text-base-content/80 uppercase">{{ eyebrow }}</p>
+        <p class="dce:text-sm dce:font-semibold dce:tracking-widest dce:text-base-content/80 dce:uppercase">{{ eyebrow }}</p>
       {% endif %}
       {# djlint:off #}
-      {% if headline %}<h{{ level }} class="text-4xl font-bold tracking-tight text-balance sm:text-5xl">{{ headline }}</h{{ level }}>{% endif %}
+      {% if headline %}<h{{ level }} class="dce:text-4xl dce:font-bold dce:tracking-tight dce:text-balance dce:sm:text-5xl">{{ headline }}</h{{ level }}>{% endif %}
       {# djlint:on #}
-      {% if lead %}<p class="max-w-xl text-lg text-base-content/80 text-pretty">{{ lead }}</p>{% endif %}
+      {% if lead %}<p class="dce:max-w-xl dce:text-lg dce:text-base-content/80 dce:text-pretty">{{ lead }}</p>{% endif %}
     </div>
-    <div class="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
-      <c-auth.panel :title="title" :lead="lead" level="{{ level|add:'1' }}" :divider="divider" card class="mx-auto w-full max-w-md" only>
+    <div class="dce:lg:col-start-2 dce:lg:row-span-2 dce:lg:row-start-1 dce:lg:self-center">
+      <c-auth.panel :title="title" :lead="lead" level="{{ level|add:'1' }}" :divider="divider" card class="dce:mx-auto dce:w-full dce:max-w-md" only>
         <c-slot name="providers">{{ providers }}</c-slot>
         {{ slot }}
         <c-slot name="footer">{{ footer }}</c-slot>
       </c-auth.panel>
     </div>
     {% if points %}
-      <div class="lg:col-start-1 lg:row-start-2 lg:self-start">{{ points }}</div>
+      <div class="dce:lg:col-start-1 dce:lg:row-start-2 dce:lg:self-start">{{ points }}</div>
     {% endif %}
   </div>
 </section>

@@ -8,9 +8,9 @@
   because the string "False" is truthy in a Django template (#21).
 {% endcomment %}
 <c-vars size="3.5" intensity="0.1" flat class />
-<div class="absolute inset-0
-            bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)]
-            bg-[size:var(--grid-size)_var(--grid-size)]
-            {% if not flat %}[mask-image:linear-gradient(to_bottom,black,transparent)]{% endif %}
+<div class="dce:absolute dce:inset-0
+            dce:bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)]
+            dce:bg-[size:var(--grid-size)_var(--grid-size)]
+            {% if not flat %}dce:[mask-image:linear-gradient(to_bottom,black,transparent)]{% endif %}
             {{ class }}"
      style="opacity: {{ intensity|floatformat:'-3u'|default:'0.1' }}; --grid-size: {{ size|floatformat:'-3u'|default:'3.5' }}rem"></div>

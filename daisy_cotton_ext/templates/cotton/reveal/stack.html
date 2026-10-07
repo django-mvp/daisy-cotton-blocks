@@ -8,8 +8,8 @@
   the page stops it sticking (docs/adr/0006-reveals-follow-the-scroll-position.md).
 {% endcomment %}
 <c-vars top="0" step="0" class />
-<div class="*:nth-2:[--stack-i:1] *:nth-3:[--stack-i:2] *:nth-4:[--stack-i:3] *:nth-5:[--stack-i:4] *:nth-6:[--stack-i:5] *:nth-7:[--stack-i:6] *:nth-8:[--stack-i:7] *:nth-9:[--stack-i:8] *:nth-10:[--stack-i:9] *:nth-11:[--stack-i:10] *:nth-12:[--stack-i:11]
-            *:sticky *:top-[calc((var(--stack-top,0)_+_var(--stack-i,0)*var(--stack-step,0))*1rem)]
+<div class="dce:*:nth-2:[--stack-i:1] dce:*:nth-3:[--stack-i:2] dce:*:nth-4:[--stack-i:3] dce:*:nth-5:[--stack-i:4] dce:*:nth-6:[--stack-i:5] dce:*:nth-7:[--stack-i:6] dce:*:nth-8:[--stack-i:7] dce:*:nth-9:[--stack-i:8] dce:*:nth-10:[--stack-i:9] dce:*:nth-11:[--stack-i:10] dce:*:nth-12:[--stack-i:11]
+            dce:*:sticky dce:*:top-[calc((var(--stack-top,0)_+_var(--stack-i,0)*var(--stack-step,0))*1rem)]
             {{ class }}"
      style="--stack-top: {{ top|floatformat:'-3u'|default:'0' }}; --stack-step: {{ step|floatformat:'-3u'|default:'0' }}"
      {{ attrs }}>{{ slot }}</div>

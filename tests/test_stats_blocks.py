@@ -122,12 +122,12 @@ class TestChange:
     ) -> None:
         html = render(f'<c-stats.change change="4" direction="{direction}" />')
 
-        assert re.search(rf'<span class="sr-only">{spoken}</span>', html)
+        assert re.search(rf'<span class="dce:sr-only">{spoken}</span>', html)
 
     def test_a_change_with_no_direction_given_is_a_rise(self, render) -> None:
         html = render('<c-stats.change change="4" />')
 
-        assert '<span class="sr-only">Up</span>' in html
+        assert '<span class="dce:sr-only">Up</span>' in html
 
     def test_the_arrow_is_hidden_from_a_screen_reader(self, render) -> None:
         html = render('<c-stats.change change="4" />')
@@ -157,7 +157,7 @@ class TestChange:
         html = render(f'<{tag} value="18m" change="26m" direction="down" inverse />')
 
         assert "badge-success" in badge(html)
-        assert '<span class="sr-only">Down</span>' in html
+        assert '<span class="dce:sr-only">Down</span>' in html
 
     def test_extra_classes_reach_the_badge(self, render) -> None:
         html = render('<c-stats.change change="4" class="ms-2" />')
@@ -321,7 +321,7 @@ class TestCount:
 
         moving = re.findall(r"[\w:\[\]()-]*(?:animate-|transition:)[^\s\"]*", html)
         assert moving
-        assert all(name.startswith("motion-safe:") for name in moving)
+        assert all(name.startswith("dce:motion-safe:") for name in moving)
 
 
 class TestSections:

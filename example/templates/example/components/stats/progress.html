@@ -5,10 +5,10 @@
 
 {% block content %}
   <c-demo.head tag="c-stats.progress">
-    <p class="mt-4 max-w-3xl text-base-content/80">
+    <p class="mt-4 max-w-3xl dce:text-base-content/80">
       A figure and how far it has come: towards a target, or towards a limit. The bar is daisy-cotton's <code>c-progress</code>, a real <code>progress</code> element, so a screen reader announces it, and the percentage is written out beside it.
     </p>
-    <p class="mt-4 max-w-3xl text-base-content/80">
+    <p class="mt-4 max-w-3xl dce:text-base-content/80">
       <strong>You work out the percentage.</strong> The figure arrives already formatted, as words, so the component has nothing to divide.
     </p>
   </c-demo.head>
@@ -68,12 +68,12 @@
   <c-demo.live label="With an icon" anchor="icon">
     <c-slot name="markup">{% filter force_escape %}{% verbatim %}<c-stats.progress icon="money" title="Raised this quarter" value="€42k" percent="70" desc="of a €60k target" />{% endverbatim %}{% endfilter %}</c-slot>
     <c-container class="py-16">
-      <p class="mb-8 max-w-3xl text-base-content/80">The icon is optional on every one of these. <code>icon</code> takes a name and hands it to the project's own <code>c-icon</code>, so it draws whatever icon set the project already uses. For anything that is not an icon, fill the <code>figure</code> slot.</p>
+      <p class="mb-8 max-w-3xl dce:text-base-content/80">The icon is optional on every one of these. <code>icon</code> takes a name and hands it to the project's own <code>c-icon</code>, so it draws whatever icon set the project already uses. For anything that is not an icon, fill the <code>figure</code> slot.</p>
       <div class="overflow-x-auto">
         <c-stat.group class="w-full">
           <c-stats.progress icon="money" title="Raised this quarter" value="€42k" percent="70" desc="of a €60k target" />
           <c-stats.progress icon="storage" title="Storage" value="9.4 GB" percent="94" variant="warning" desc="of 10 GB" />
-          <c-stats.progress title="Northern region" value="118" percent="59" variant="secondary" desc="of 200 customers"><c-slot name="figure"><img class="size-12 rounded-full object-cover" src="{% static 'example/ridgeline.svg' %}" alt="" /></c-slot></c-stats.progress>
+          <c-stats.progress title="Northern region" value="118" percent="59" variant="secondary" desc="of 200 customers"><c-slot name="figure"><img class="dce:size-12 rounded-full object-cover" src="{% static 'example/ridgeline.svg' %}" alt="" /></c-slot></c-stats.progress>
         </c-stat.group>
       </div>
       <div class="mt-6 grid gap-6 md:grid-cols-2">

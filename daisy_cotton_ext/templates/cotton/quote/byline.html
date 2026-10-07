@@ -14,16 +14,16 @@
   source and never the person: the element names a work.
 {% endcomment %}
 <c-vars name role source href src align="start" size="md" invert class />
-<figcaption class="flex items-center gap-3 {% if align == 'centre' %}flex-col text-center{% endif %} {{ class }}"
+<figcaption class="dce:flex dce:items-center dce:gap-3 {% if align == 'centre' %}dce:flex-col dce:text-center{% endif %} {{ class }}"
             {{ attrs }}>
   {% if src %}
     <c-avatar src="{{ src }}" alt="" only />
   {% endif %}
-  <div class="min-w-0 {% if size == 'lg' %}text-base{% else %}text-sm{% endif %}">
-    {% if name %}<div class="font-semibold">{{ name }}</div>{% endif %}
+  <div class="dce:min-w-0 {% if size == 'lg' %}dce:text-base{% else %}dce:text-sm{% endif %}">
+    {% if name %}<div class="dce:font-semibold">{{ name }}</div>{% endif %}
     {% if role or source %}
-      <div class="{% if not invert %}text-base-content/80{% endif %}">
-        {{ role }}{% if role and source %}, {% endif %}{% if source %}<cite class="italic">{% if href %}<a class="link" href="{{ href }}">{{ source }}</a>{% else %}{{ source }}{% endif %}</cite>{% endif %}
+      <div class="{% if not invert %}dce:text-base-content/80{% endif %}">
+        {{ role }}{% if role and source %}, {% endif %}{% if source %}<cite class="dce:italic">{% if href %}<a class="link" href="{{ href }}">{{ source }}</a>{% else %}{{ source }}{% endif %}</cite>{% endif %}
       </div>
     {% endif %}
   </div>

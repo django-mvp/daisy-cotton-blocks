@@ -7,7 +7,7 @@
 {# @prop desc:text | description:"A line under the figure" #}
 {# @prop icon:text | description:"An icon beside the figure, by the name the project's icon component knows it by. Left out, there is no icon." #}
 {# @prop class:text | description:"Extra classes on the stat" #}
-{# @slot:figure <img class="size-12 rounded-full" src="…" alt="" /> — Beside the figure in place of the icon, for anything that is not one: a picture, a logo, an avatar. #}
+{# @slot:figure <img class="dce:size-12 dce:rounded-full" src="…" alt="" /> — Beside the figure in place of the icon, for anything that is not one: a picture, a logo, an avatar. #}
 {% comment %}
   Built on daisy-cotton's stat. The scroll position only starts the count: it
   runs on the clock from there, so the number never rests on a figure that is
@@ -16,16 +16,16 @@
 {% endcomment %}
 <c-vars title to="0" prefix suffix time="2" desc icon class />
 <c-stat class="{{ class }}" :attrs="attrs" only>
-  {% if icon or figure %}<c-slot name="figure">{% if figure %}{{ figure }}{% else %}<c-icon name="{{ icon }}" class="text-3xl opacity-60" aria-hidden="true" only />{% endif %}</c-slot>{% endif %}
-  {% if title %}<c-slot name="title"><span class="whitespace-normal">{{ title }}</span></c-slot>{% endif %}
-  <c-slot name="value"><span class="inline-block tabular-nums
-               motion-safe:supports-[animation-timeline:view()]:animate-[dce-seen_1ms_linear_both]
-               motion-safe:supports-[animation-timeline:view()]:[animation-timeline:view()]
-               motion-safe:supports-[animation-timeline:view()]:[animation-range:entry_0%_cover_20%]">{{ prefix }}<span class="motion-safe:supports-[animation-timeline:view()]:sr-only">{{ to|floatformat:'0u'|default:'0' }}</span><span aria-hidden="true"
-          class="motion-safe:supports-[animation-timeline:view()]:[counter-reset:dce-count_var(--dce-count)]
-                 motion-safe:supports-[animation-timeline:view()]:[transition:--dce-count_calc(var(--count-time,2)*1s)_ease-out]
-                 motion-safe:supports-[animation-timeline:view()]:after:content-[counter(dce-count)]
-                 motion-safe:supports-[animation-timeline:view()]:[@container_style(--dce-seen:1)]:[--dce-count:var(--count-to)]"
+  {% if icon or figure %}<c-slot name="figure">{% if figure %}{{ figure }}{% else %}<c-icon name="{{ icon }}" class="dce:text-3xl dce:opacity-60" aria-hidden="true" only />{% endif %}</c-slot>{% endif %}
+  {% if title %}<c-slot name="title"><span class="dce:whitespace-normal">{{ title }}</span></c-slot>{% endif %}
+  <c-slot name="value"><span class="dce:inline-block dce:tabular-nums
+               dce:motion-safe:supports-[animation-timeline:view()]:animate-[dce-seen_1ms_linear_both]
+               dce:motion-safe:supports-[animation-timeline:view()]:[animation-timeline:view()]
+               dce:motion-safe:supports-[animation-timeline:view()]:[animation-range:entry_0%_cover_20%]">{{ prefix }}<span class="dce:motion-safe:supports-[animation-timeline:view()]:sr-only">{{ to|floatformat:'0u'|default:'0' }}</span><span aria-hidden="true"
+          class="dce:motion-safe:supports-[animation-timeline:view()]:[counter-reset:dce-count_var(--dce-count)]
+                 dce:motion-safe:supports-[animation-timeline:view()]:[transition:--dce-count_calc(var(--count-time,2)*1s)_ease-out]
+                 dce:motion-safe:supports-[animation-timeline:view()]:after:content-[counter(dce-count)]
+                 dce:motion-safe:supports-[animation-timeline:view()]:[@container_style(--dce-seen:1)]:[--dce-count:var(--count-to)]"
           style="--count-to: {{ to|floatformat:'0u'|default:'0' }}; --count-time: {{ time|floatformat:'-3u'|default:'2' }}"></span>{{ suffix }}</span></c-slot>
-  {% if desc %}<c-slot name="desc"><span class="whitespace-normal">{{ desc }}</span></c-slot>{% endif %}
+  {% if desc %}<c-slot name="desc"><span class="dce:whitespace-normal">{{ desc }}</span></c-slot>{% endif %}
 </c-stat>

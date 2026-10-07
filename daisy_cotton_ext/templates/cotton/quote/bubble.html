@@ -13,17 +13,17 @@
   Not daisyUI's chat bubble, which is a turn in a conversation and has a side.
 {% endcomment %}
 <c-vars name role source href src variant="base-200" align="start" class />
-<figure class="flex max-w-prose flex-col gap-5 {% if align == 'centre' %}mx-auto{% endif %} {{ class }}"
+<figure class="dce:flex dce:max-w-prose dce:flex-col dce:gap-5 {% if align == 'centre' %}dce:mx-auto{% endif %} {{ class }}"
         {{ attrs }}>
   <blockquote {% if href %}cite="{{ href }}"{% endif %}
-              class="relative rounded-2xl p-6 text-lg leading-relaxed text-pretty bg-{{ variant }}
-                     {% if 'base-' in variant %}text-base-content{% else %}text-{{ variant }}-content{% endif %}">
+              class="dce:relative dce:rounded-2xl dce:p-6 dce:text-lg dce:leading-relaxed dce:text-pretty dce:bg-{{ variant }}
+                     {% if 'base-' in variant %}dce:text-base-content{% else %}dce:text-{{ variant }}-content{% endif %}">
     {{ slot }}
     <span aria-hidden="true"
-          class="absolute -bottom-2 size-4 rotate-45 bg-{{ variant }}
-                 {% if align == 'centre' %}start-1/2 -translate-x-1/2 rtl:translate-x-1/2{% else %}start-8{% endif %}"></span>
+          class="dce:absolute dce:-bottom-2 dce:size-4 dce:rotate-45 dce:bg-{{ variant }}
+                 {% if align == 'centre' %}dce:start-1/2 dce:-translate-x-1/2 dce:rtl:translate-x-1/2{% else %}dce:start-8{% endif %}"></span>
   </blockquote>
   {% if name or role or source %}
-    <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" src="{{ src }}" align="{{ align }}" class="{% if align != 'centre' %}ps-4{% endif %}" only />
+    <c-quote.byline name="{{ name }}" role="{{ role }}" source="{{ source }}" href="{{ href }}" src="{{ src }}" align="{{ align }}" class="{% if align != 'centre' %}dce:ps-4{% endif %}" only />
   {% endif %}
 </figure>

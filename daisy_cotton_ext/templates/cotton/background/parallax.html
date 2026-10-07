@@ -7,11 +7,11 @@
   and the page stops it moving (docs/adr/0004-moving-backgrounds-are-css-only.md).
 {% endcomment %}
 <c-vars speed="0.8" class />
-<div class="absolute inset-0 overflow-clip [container-type:size] [view-timeline-name:--parallax] {{ class }}"
+<div class="dce:absolute dce:inset-0 dce:overflow-clip dce:[container-type:size] dce:[view-timeline-name:--parallax] {{ class }}"
      style="--parallax-speed: {{ speed|floatformat:'-3u'|default:'0.8' }}">
-  <div class="absolute inset-x-0
-              [--parallax-shift:calc(clamp(0,1_-_var(--parallax-speed,0.8),1)_*_(100vh_+_100cqh)_/_2)]
-              -inset-y-[var(--parallax-shift)]
-              motion-safe:supports-[animation-timeline:view()]:animate-[dce-parallax_1ms_linear_both]
-              motion-safe:supports-[animation-timeline:view()]:[animation-timeline:--parallax]">{{ slot }}</div>
+  <div class="dce:absolute dce:inset-x-0
+              dce:[--parallax-shift:calc(clamp(0,1_-_var(--parallax-speed,0.8),1)_*_(100vh_+_100cqh)_/_2)]
+              dce:-inset-y-[var(--parallax-shift)]
+              dce:motion-safe:supports-[animation-timeline:view()]:animate-[dce-parallax_1ms_linear_both]
+              dce:motion-safe:supports-[animation-timeline:view()]:[animation-timeline:--parallax]">{{ slot }}</div>
 </div>

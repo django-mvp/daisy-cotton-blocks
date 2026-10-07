@@ -55,7 +55,7 @@ class TestSection:
 
         moved = re.findall(r"[^\s\"]*order-\[[^\s\"]*", html)
         assert moved
-        assert all(name.startswith("lg:") for name in moved)
+        assert all(name.startswith("dce:lg:") for name in moved)
 
     def test_nothing_is_reordered_unless_asked(self, render) -> None:
         html = render(f"<c-section>{COLUMNS}</c-section>")
@@ -89,7 +89,7 @@ class TestSection:
         html = render(f'<c-section container="{container}">Body</c-section>')
 
         body = re.search(r'<div data-section-body\s+class="([^"]*)"', html)
-        assert width in body.group(1).split()
+        assert f"dce:{width}" in body.group(1).split()
 
     def test_full_width_content_has_no_gutter(self, render) -> None:
         html = render('<c-section container="full">Body</c-section>')

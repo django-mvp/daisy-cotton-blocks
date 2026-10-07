@@ -76,14 +76,18 @@ INSTALLED_APPS = [
 
 `daisy_cotton` holds the base components some of these are built from, such as the avatar beside a quotation's name. A project that already has a component of the same name, its own or another package's, keeps it: Django uses the first one it finds in `INSTALLED_APPS` order. django-mvp ships a `<c-section>` of its own, a titled section with a toolbar, so a project that uses both packages gets whichever is listed first.
 
-Then load its stylesheet alongside the one carrying daisyUI:
+Then load its stylesheet after the one carrying daisyUI:
 
 ```html
 <link rel="stylesheet" href="{% static 'css/your-daisyui-build.css' %}">
 <link rel="stylesheet" href="{% static 'css/daisy-cotton-ext.css' %}">
 ```
 
-The two stylesheets do different jobs. Yours carries daisyUI, its themes and Tailwind's preflight. This one carries the plain Tailwind utilities the blocks need and which your build has no way to know about, because it scans your source and these templates live in site-packages. Some rules will appear in both, which costs bytes and nothing else.
+The two stylesheets do different jobs. Yours carries daisyUI, its themes and Tailwind's preflight. This one carries the plain Tailwind utilities the blocks need and which your build has no way to know about, because it scans your source and these templates live in site-packages.
+
+Every class in this stylesheet is prefixed `dce:`, as in `dce:flex` and `dce:lg:grid-cols-2`, so none of them shares a name with a class in your build and neither stylesheet can override the other's utilities. Link them in the order shown. The other order is tested and works against a Tailwind 4 build, but yours first is the one to rely on.
+
+A class you pass to a block yourself, through its `class` attribute or inside a slot, is yours and comes from your build. This stylesheet emits nothing unprefixed.
 
 Blocks are then available as Cotton tags:
 

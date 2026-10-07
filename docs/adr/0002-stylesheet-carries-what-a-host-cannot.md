@@ -1,6 +1,11 @@
 # ADR 0002 — The stylesheet carries what a host cannot, not what a host lacks
 
-**Status:** accepted
+**Status:** accepted, amended by [0012](0012-package-utilities-carry-a-prefix.md)
+
+What this record says about overlap turned out to be wrong. Two stylesheets that share class names
+are not harmless on the same Tailwind version: link order decides between one file's `hidden` and
+the other's `md:flex`. The package's utilities now carry a prefix so that no name is shared, and
+0012 has the reasoning. The rest of this record stands.
 
 Supersedes [0001](0001-supplementary-stylesheet.md), which designed the stylesheet as a supplement
 to django-mvp's.

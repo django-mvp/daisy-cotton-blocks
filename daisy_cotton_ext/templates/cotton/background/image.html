@@ -8,11 +8,11 @@
   injection surface that HTML escaping does not close (#21).
 {% endcomment %}
 <c-vars src dim="0.7" position="center" class />
-<div class="absolute inset-0 {{ class }}">
+<div class="dce:absolute dce:inset-0 {{ class }}">
   {% if src %}
     <img src="{{ src }}"
          alt=""
-         class="absolute inset-0 h-full w-full object-cover object-{{ position }}" />
+         class="dce:absolute dce:inset-0 dce:h-full dce:w-full dce:object-cover dce:object-{{ position }}" />
   {% endif %}
-  <div class="absolute inset-0 bg-neutral" style="opacity: {{ dim|floatformat:'-3u'|default:'0.7' }}"></div>
+  <div class="dce:absolute dce:inset-0 dce:bg-neutral" style="opacity: {{ dim|floatformat:'-3u'|default:'0.7' }}"></div>
 </div>

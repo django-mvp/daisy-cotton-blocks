@@ -4,7 +4,7 @@
 
 {% block content %}
   <c-demo.head tag="c-section.col">
-    <p class="mt-4 max-w-3xl text-base-content/80">
+    <p class="mt-4 max-w-3xl dce:text-base-content/80">
       Nothing says how many columns a section has. Each <code>&lt;c-section.col&gt;</code> opens one, and they share the width equally unless <code>span</code> says otherwise.
       Narrow the window past the <code>lg</code> breakpoint and every example below becomes one column, in the order it is written.
     </p>
@@ -62,11 +62,11 @@
 </c-section>{% endverbatim %}{% endfilter %}</c-slot>
     <c-section>
       <c-section.col align="center">
-        <h2 class="text-3xl font-bold tracking-tight text-balance sm:text-4xl">Start with one service</h2>
-        <p class="mt-4 text-lg leading-relaxed text-base-content/80">Connect a single pipeline and leave the rest where they are. Most teams move the second one inside a week.</p>
+        <h2 class="text-3xl font-bold tracking-tight dce:text-balance dce:sm:text-4xl">Start with one service</h2>
+        <p class="mt-4 text-lg leading-relaxed dce:text-base-content/80">Connect a single pipeline and leave the rest where they are. Most teams move the second one inside a week.</p>
       </c-section.col>
       <c-section.col class="rounded-2xl bg-primary p-10 text-primary-content">
-        <p class="text-sm font-semibold tracking-widest uppercase">Free for 30 days</p>
+        <p class="text-sm font-semibold dce:tracking-widest uppercase">Free for 30 days</p>
         <p class="mt-4 text-2xl font-bold">No card, no sales call, and your data leaves with you.</p>
         <p class="mt-6"><a class="btn" href="#surface">Start a free trial</a></p>
       </c-section.col>

@@ -12,9 +12,9 @@
 {% endcomment %}
 <c-vars variant="primary" size="0.25" speed="1" delay="0.3" class />
 {% with pace=speed|floatformat:'-3u'|default:'1' %}
-<span class="bg-linear-to-r from-{{ variant }} to-{{ variant }} bg-no-repeat
-             [background-position:0_100%] [background-size:100%_calc(var(--marker-size,0.25)*1em)]
-             {% if pace != '0' %}motion-safe:animate-[dce-text-draw_calc(0.9s/var(--marker-speed,1))_ease-out_calc(var(--marker-delay,0.3)*1s)_backwards]{% endif %}
+<span class="dce:bg-linear-to-r dce:from-{{ variant }} dce:to-{{ variant }} dce:bg-no-repeat
+             dce:[background-position:0_100%] dce:[background-size:100%_calc(var(--marker-size,0.25)*1em)]
+             {% if pace != '0' %}dce:motion-safe:animate-[dce-text-draw_calc(0.9s/var(--marker-speed,1))_ease-out_calc(var(--marker-delay,0.3)*1s)_backwards]{% endif %}
              {{ class }}"
       style="--marker-size: {{ size|floatformat:'-3u'|default:'0.25' }}; --marker-speed: {{ pace|default:'1' }}; --marker-delay: {{ delay|floatformat:'-3u'|default:'0.3' }}"
       {{ attrs }}>{{ slot }}</span>
