@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.3.1] - 2026-10-07
+
 ### Changed
 
 - **Breaking.** Every class the stylesheet emits is prefixed `dce:`, and the blocks' markup uses
